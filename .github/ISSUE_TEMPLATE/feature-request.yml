@@ -1,0 +1,38 @@
+name: Feature Request
+description: |
+  Explain what improvement or addition you believe the game should have
+title: "[FEATURE] <name your feature here>"
+labels:
+  - feature
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this feature request!
+  - type: textarea
+    id: feature-request
+    attributes:
+      label: Feature Request
+      description: |
+        Explain what the desired feature is
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Supplemental attachments?
+      description: |
+        Please provide provide screenshots, videos, or whatever gets your point across
+
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: |
+        Explain what resolution would make you consider this feature implemented
+    validations:
+      required: true
