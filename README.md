@@ -1,6 +1,6 @@
 # Video Game Design
 
-This is the source code repository for our shared Georgia Tech unity project
+This is the source code repository for our game: **Kitty Hawk Pro Farmer**
 
 Physics: Weird but not QWOP-like
 
