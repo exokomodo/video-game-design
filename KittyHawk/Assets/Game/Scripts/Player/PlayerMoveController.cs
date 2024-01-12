@@ -21,5 +21,9 @@ public class PlayerMoveController : MonoBehaviour
         }
         transform.position += transform.forward * Input.GetAxis("Vertical") * acceleration * Time.deltaTime;
         transform.position += transform.right * Input.GetAxis("Horizontal") * acceleration * Time.deltaTime;
+        if (InputMap.IsJumping)
+        {
+                
+        }
     }
 }

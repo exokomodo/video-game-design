@@ -18,7 +18,7 @@ public class GodCameraController : MonoBehaviour
             Input.GetAxis("Mouse Y"));
         
         transform.eulerAngles += new Vector3(
-            -mouse.y,
+            0,
             mouse.x,
             0) * this.sensitivity * Time.deltaTime;
     }
