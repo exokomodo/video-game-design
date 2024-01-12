@@ -7,8 +7,15 @@ public class PlayerMoveController : MonoBehaviour
     #region Inputs
     public float speed = 15.0f;
     public float sprintFactor = 3.0f;
+
+    private Animator anim;
     #endregion
-    
+
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+    }
+
     void Update()
     {
         // SOURCE: https://medium.com/@mikeyoung_97230/creating-a-simple-camera-controller-in-unity3d-using-c-ec1a79584687
@@ -19,11 +26,20 @@ public class PlayerMoveController : MonoBehaviour
         {
             acceleration *= this.sprintFactor;
         }
-        transform.position += transform.forward * Input.GetAxis("Vertical") * acceleration * Time.deltaTime;
-        transform.position += transform.right * Input.GetAxis("Horizontal") * acceleration * Time.deltaTime;
+
+        var movementForward = Input.GetAxis("Vertical");
+        var movementRight = Input.GetAxis("Horizontal");
+
+        transform.position += transform.forward * movementForward * acceleration * Time.deltaTime;
+        transform.position += transform.right * movementRight * acceleration * Time.deltaTime;
         if (InputMap.IsJumping)
         {
-                
+            anim.SetTrigger("Jump");
         }
+
+        // animation
+
+        anim.SetFloat("Speed", movementForward);
+
     }
 }
