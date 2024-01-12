@@ -34,7 +34,7 @@ public class CursorController : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyUp(InputMap.ToggleCursor))
+        if (InputMap.ShouldToggleCursor)
         {
             this.toggleLock();
         }

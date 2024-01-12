@@ -17,7 +17,7 @@ public class ControlsUIController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(InputMap.ToggleControlsUI)) {
+        if (InputMap.ShouldToggleControlsUI) {
             this.controlsUi.SetActive(!this.controlsUi.activeInHierarchy);
         }
     }
