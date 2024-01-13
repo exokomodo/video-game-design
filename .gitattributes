@@ -1,3 +1,7 @@
+# Custom
+* text=auto
+
+# SOURCE: https://raw.githubusercontent.com/gitattributes/gitattributes/master/Unity.gitattributes
 # Define macros (only works in top-level gitattributes files)
 [attr]lfs               filter=lfs diff=lfs merge=lfs -text
 [attr]unity-yaml        merge=unityyamlmerge eol=lf linguist-language=yaml
