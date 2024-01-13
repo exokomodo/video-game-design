@@ -11,7 +11,7 @@ public static class InputMap
     public const KeyCode SprintAlt = KeyCode.RightShift;
     public const KeyCode Jump = KeyCode.Space;
 
-    public static bool IsJumping => Input.GetKey(InputMap.Sprint) || Input.GetKey(InputMap.SprintAlt);
+    public static bool IsJumping => Input.GetKey(InputMap.Jump);
     public static bool IsSprinting => Input.GetKey(InputMap.Sprint) || Input.GetKey(InputMap.SprintAlt);
     public static bool ShouldQuitApplication => Input.GetKeyUp(InputMap.HardQuit);
     public static bool ShouldToggleControlsUI => Input.GetKeyUp(InputMap.ToggleControlsUI);
