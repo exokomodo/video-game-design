@@ -8,6 +8,7 @@ public class CatTextureSwap : MonoBehaviour
     private Renderer rend;
     
     private const int NUM_TEXTURES = 6;
+    private const int baseCode = (int)KeyCode.Alpha1; // This had to be added to get the KeyCode to work properly
     
     // Start is called before the first frame update
     void Start()
@@ -18,39 +19,26 @@ public class CatTextureSwap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check for key presses from 1-6 and sets the texture accordingly
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        for (int i = 0; i < NUM_TEXTURES; i++)
         {
-            SetTexture(0);
+            KeyCode codeToCheck = (KeyCode)(CatTextureSwap.baseCode + i);
+            if (Input.GetKeyDown(codeToCheck))
+            {
+                if (SetTexture(i))
+                {
+                    break;
+                }
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetTexture(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetTexture(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetTexture(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SetTexture(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            SetTexture(5);
-        }
-
     }
-    
-    void SetTexture(int index)
+
+    private bool SetTexture(int index)
     {
         if (index >= 0 && index < NUM_TEXTURES)
         {
             rend.material.mainTexture = textures[index];
+            return true;
         }
+        return false;
     }
 }
