@@ -16,7 +16,7 @@ public class PlayerInventoryUIController : MonoBehaviour
 
     void UpdateLives(int lives)
     {
-        Debug.Log("Kitty Hawk has " + lives + " lives.");
+        Debug.Log($"Kitty Hawk has {lives} lives.");
     }
 
     void OnDestroy()
