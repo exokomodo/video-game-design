@@ -11,7 +11,7 @@ public class PlayerInventoryUIController : MonoBehaviour
 
     void UpdateCatnip(int catnip)
     {
-        Debug.Log("Kitty Hawk has " + catnip + " catnip.");
+        Debug.Log($"Kitty Hawk has {catnip} catnip.");
     }
 
     void UpdateLives(int lives)
