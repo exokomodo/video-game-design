@@ -52,7 +52,7 @@ public class PlayerInventory : MonoBehaviour
 
             if (newLives < 1)
             {
-                // game over
+                // TODO: game over
             }
 
             if (!(newLives > maxLives))
