@@ -8,7 +8,7 @@ public class CatTextureSwap : MonoBehaviour
     private Renderer rend;
     
     private const int NUM_TEXTURES = 6;
-    private const int baseCode = (int)KeyCode.Alpha1; // This had to be added to get the KeyCode to work properly
+    private const int baseCode = (int)KeyCode.Alpha1;
     
     // Start is called before the first frame update
     void Start()
