@@ -104,6 +104,8 @@ GameObject:
   - component: {fileID: 7648750460097253114}
   - component: {fileID: 7648750460097253116}
   - component: {fileID: 7648750460097253115}
+  - component: {fileID: 2553975406585034678}
+  - component: {fileID: 6264638290088380449}
   - component: {fileID: 7648750460097253118}
   - component: {fileID: 7648750460097253117}
   - component: {fileID: 7648750460097253119}
@@ -158,6 +160,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   sprintFactor: 3
+--- !u!114 &2553975406585034678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7648750460097253112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5182486b23d373445ad691e85a3dac4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingLives: 3
+  startingCatnip: 0
+  maxLives: 3
+  maxCatnip: 100
+--- !u!114 &6264638290088380449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7648750460097253112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b15e1ac5b1ea6e40be65fb40b1593bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &7648750460097253118
 Rigidbody:
   m_ObjectHideFlags: 0
