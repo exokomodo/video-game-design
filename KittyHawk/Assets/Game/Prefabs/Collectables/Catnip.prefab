@@ -92,11 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8641381264083102584}
-  - component: {fileID: 8099410590022997575}
   - component: {fileID: 8099410590022997574}
   m_Layer: 0
   m_Name: Catnip
-  m_TagString: Untagged
+  m_TagString: Catnip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,19 +116,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 270, y: 90, z: 0}
---- !u!114 &8099410590022997575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8982300630803804610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821ae08adf99ec04f99472a875199c10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  catnipAmount: 1
 --- !u!65 &8099410590022997574
 BoxCollider:
   m_ObjectHideFlags: 0

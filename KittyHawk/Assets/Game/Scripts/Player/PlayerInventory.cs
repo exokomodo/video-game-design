@@ -50,11 +50,6 @@ public class PlayerInventory : MonoBehaviour
         {
             int newLives = lives + value;
 
-            if (newLives < 1)
-            {
-                // TODO: game over
-            }
-
             if (!(newLives > maxLives))
             {
                 lives = newLives;
