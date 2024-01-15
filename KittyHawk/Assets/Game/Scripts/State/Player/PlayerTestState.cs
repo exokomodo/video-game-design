@@ -19,14 +19,19 @@ public class PlayerTestState : PlayerBaseState
         movement.x = stateMachine.InputReader.MovementValue.x;
         movement.y = 0;
         movement.z = stateMachine.InputReader.MovementValue.y;
-        // stateMachine.transform.Translate(movement * deltaTime);
-        stateMachine.Controller.Move(movement * stateMachine.FreeMovementSpeed * deltaTime);
-        // if (stateMachine.InputReader.MovementValue == Vector2.zero) {
-        //     stateMachine.Animator.SetFloat("FreeMoveSpeed", 0, 0.1f, deltaTime);
-        // }
-        stateMachine.Animator.SetFloat("FreeMoveSpeed", 1, 0.5f, deltaTime);
-        stateMachine.transform.rotation = Quaternion.LookRotation(movement);
+
+        Vector3 dmove = movement * stateMachine.FreeMovementSpeed * deltaTime;
+        Debug.Log("-------------");
+        Debug.Log(dmove.x);
+        Debug.Log(dmove.y);
+        Debug.Log(dmove.z);
+        stateMachine.Controller.Move(dmove);
         // Debug.Log(stateMachine.InputReader.MovementValue);
+        if (stateMachine.InputReader.MovementValue == Vector2.zero) {
+            stateMachine.Animator.SetFloat("FreeMoveSpeed", 0, 0.1f, deltaTime);
+        }
+        stateMachine.Animator.SetFloat("FreeMoveSpeed", 1, 0.1f, deltaTime);
+        stateMachine.transform.rotation = Quaternion.LookRotation(movement);
     }
 
     public override void Exit()
