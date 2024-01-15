@@ -11,10 +11,6 @@ GameObject:
   - component: {fileID: 1699712407736572014}
   - component: {fileID: 1699712407736572008}
   - component: {fileID: 1699712407736572015}
-  - component: {fileID: 4262373068902335548}
-  - component: {fileID: 8516903741200049697}
-  - component: {fileID: 876891997759803773}
-  - component: {fileID: 2772355949942379596}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -65,73 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   sprintFactor: 3
---- !u!143 &4262373068902335548
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699712407736572012}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8516903741200049697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699712407736572012}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &876891997759803773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699712407736572012}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6dfef050a7be498c9031abc99ece509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Controller>k__BackingField: {fileID: 4262373068902335548}
-  <InputReader>k__BackingField: {fileID: 8516903741200049697}
-  <Animator>k__BackingField: {fileID: 2772355949942379596}
-  <FreeMovementSpeed>k__BackingField: 6
---- !u!95 &2772355949942379596
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699712407736572012}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba4bb5079747ef946b9f79c1eeaf1dbb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1699712407393544008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,6 +193,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Model
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: abe1fd55125ea0f4a88315a57c83e03b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6895803831830117640, guid: abe1fd55125ea0f4a88315a57c83e03b,
         type: 3}
       propertyPath: m_IsActive
@@ -301,6 +235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6960746528512267610, guid: abe1fd55125ea0f4a88315a57c83e03b,
         type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960746528512267610, guid: abe1fd55125ea0f4a88315a57c83e03b,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
@@ -308,6 +247,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960746528512267610, guid: abe1fd55125ea0f4a88315a57c83e03b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960746528512267610, guid: abe1fd55125ea0f4a88315a57c83e03b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6960746528512267610, guid: abe1fd55125ea0f4a88315a57c83e03b,
         type: 3}
@@ -394,7 +343,8 @@ MonoBehaviour:
   <Controller>k__BackingField: {fileID: 2397811280960997986}
   <InputReader>k__BackingField: {fileID: 1849809174094788362}
   <Animator>k__BackingField: {fileID: 1699712407700487054}
-  <FreeMovementSpeed>k__BackingField: 6
+  <FreeMovementSpeed>k__BackingField: 4
+  <RotationDamping>k__BackingField: 5
 --- !u!1 &5198357254365436480 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6895803831830117640, guid: abe1fd55125ea0f4a88315a57c83e03b,
