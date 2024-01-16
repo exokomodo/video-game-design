@@ -314,8 +314,50 @@ MonoBehaviour:
   <Controller>k__BackingField: {fileID: 2397811280960997986}
   <InputReader>k__BackingField: {fileID: 1849809174094788362}
   <Animator>k__BackingField: {fileID: 1699712407700487054}
+  <ForceReceiver>k__BackingField: {fileID: 4947891869650244854}
   <FreeMovementSpeed>k__BackingField: 4
   <RotationDamping>k__BackingField: 5
+--- !u!114 &4947891869650244854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970323446261422617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf33c7b0efc849a291598e4b4cbc2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 2397811280960997986}
+--- !u!114 &9071940747921485938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970323446261422617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b15e1ac5b1ea6e40be65fb40b1593bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5648592008845922287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970323446261422617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5182486b23d373445ad691e85a3dac4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingLives: 3
+  startingCatnip: 0
+  maxLives: 3
+  maxCatnip: 100
 --- !u!1 &5198357254365436480 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6895803831830117640, guid: abe1fd55125ea0f4a88315a57c83e03b,
