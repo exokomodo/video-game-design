@@ -18,9 +18,4 @@ public class PlayerStateMachine : StateMachine
         MainCameraTransform = Camera.main.transform;
         SwitchState(new PlayerFreeLookState(this));
     }
-
-    protected void Move(Vector3 movement, float deltaTime)
-    {
-
-    }
 }
