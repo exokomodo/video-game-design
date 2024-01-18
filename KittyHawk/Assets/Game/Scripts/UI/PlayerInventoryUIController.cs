@@ -1,7 +1,13 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerInventoryUIController : MonoBehaviour
 {
+
+    [SerializeField]
+    private TextMeshProUGUI catnipTextObject;
+    [SerializeField]
+    private TextMeshProUGUI lifeTextObject;
 
     void Start()
     {
@@ -11,12 +17,12 @@ public class PlayerInventoryUIController : MonoBehaviour
 
     void UpdateCatnip(int catnip)
     {
-        Debug.Log($"Kitty Hawk has {catnip} catnip.");
+        catnipTextObject.text = catnip.ToString();
     }
 
     void UpdateLives(int lives)
     {
-        Debug.Log($"Kitty Hawk has {lives} lives.");
+        lifeTextObject.text = lives.ToString();
     }
 
     void OnDestroy()
