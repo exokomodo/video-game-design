@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class PlayerFreeLookState : PlayerBaseState
 {
-    public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine) {}
-
-    private readonly int FreeMoveSpeed = Animator.StringToHash("FreeMoveSpeed");
+    private bool shouldFade;
+    private readonly int FreeLookBlendTreeHash = Animator.StringToHash("FreeLookBlendTree");
+    private readonly int FreeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
     private const float AnimatorDampTime = 0.1f;
+    private const float CrossFadeDuration = 0.1f;
+
+    public PlayerFreeLookState(PlayerStateMachine stateMachine, bool shouldFade = true) : base(stateMachine)
+    {
+        this.shouldFade = shouldFade;
+    }
 
     public override void Enter()
     {
         stateMachine.InputReader.JumpEvent += OnJump;
+        stateMachine.Animator.SetFloat(FreeLookBlendTreeHash, 0f);
+
+        if (shouldFade)
+        {
+            stateMachine.Animator.CrossFadeInFixedTime(FreeLookBlendTreeHash, CrossFadeDuration);
+        }
+        else
+        {
+            stateMachine.Animator.Play(FreeLookBlendTreeHash);
+        }
     }
 
     public override void Tick(float deltaTime)
@@ -21,9 +37,10 @@ public class PlayerFreeLookState : PlayerBaseState
         Move(movement * stateMachine.FreeMovementSpeed, deltaTime);
         if (stateMachine.InputReader.MovementValue == Vector2.zero)
         {
-            stateMachine.Animator.SetFloat(FreeMoveSpeed, 0, AnimatorDampTime, deltaTime);
+            stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
+            return;
         }
-        stateMachine.Animator.SetFloat(FreeMoveSpeed, 1, AnimatorDampTime, deltaTime);
+        stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime);
         FaceMovementDirection(movement, deltaTime);
     }
 
@@ -34,17 +51,8 @@ public class PlayerFreeLookState : PlayerBaseState
 
     private void OnJump()
     {
-        Debug.Log("ON JUMP");
-    }
-
-    private void FaceMovementDirection(Vector3 movement, float deltaTime)
-    {
-        stateMachine.transform.rotation = Quaternion.Lerp(
-            stateMachine.transform.rotation,
-            Quaternion.LookRotation(movement),
-            deltaTime * stateMachine.RotationDamping
-        );
-
+        stateMachine.SwitchState(new PlayerJumpingState(stateMachine));
+        // stateMachine.SwitchState(new PlayerJumpState(stateMachine));
     }
 
     private Vector3 CalculateMovement()
@@ -55,6 +63,16 @@ public class PlayerFreeLookState : PlayerBaseState
         right.y = 0f;
         forward.Normalize();
         right.Normalize();
-        return forward * stateMachine.InputReader.MovementValue.y + right * stateMachine.InputReader.MovementValue.x;
+        return forward * stateMachine.InputReader.MovementValue.y +
+            right * stateMachine.InputReader.MovementValue.x;
+    }
+
+    private void FaceMovementDirection(Vector3 movement, float deltaTime)
+    {
+        stateMachine.transform.rotation = Quaternion.Lerp(
+            stateMachine.transform.rotation,
+            Quaternion.LookRotation(movement),
+            deltaTime * stateMachine.RotationDamping
+        );
     }
 }
