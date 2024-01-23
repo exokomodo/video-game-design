@@ -5,11 +5,21 @@ using UnityEngine;
 public class PlayerMoveBase : PlayerBaseState
 {
     public PlayerMoveBase(PlayerStateMachine stateMachine) : base(stateMachine) {}
-    public override void Enter() {}
+    public override void Enter()
+    {
+        stateMachine.InputReader.RunEvent += OnRun;
+        stateMachine.InputReader.RunStopEvent += OnRunStop;
+    }
 
     public override void Tick(float deltaTime) {}
 
-    public override void Exit() {}
+    public override void Exit()
+    {
+        stateMachine.InputReader.RunEvent -= OnRun;
+        stateMachine.InputReader.RunStopEvent -= OnRunStop;
+    }
+
+    protected bool isRunning = false;
 
     protected Vector3 CalculateMovement()
     {
@@ -30,5 +40,15 @@ public class PlayerMoveBase : PlayerBaseState
             Quaternion.LookRotation(movement),
             deltaTime * stateMachine.RotationDamping
         );
+    }
+
+    protected void OnRun()
+    {
+        isRunning = true;
+    }
+
+    protected void OnRunStop()
+    {
+        isRunning = false;
     }
 }

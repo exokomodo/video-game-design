@@ -17,6 +17,7 @@ public class PlayerFreeLookState : PlayerMoveBase
 
     public override void Enter()
     {
+        base.Enter();
         stateMachine.InputReader.JumpEvent += OnJump;
         stateMachine.Animator.SetFloat(FreeLookBlendTreeHash, 0f);
 
@@ -33,19 +34,20 @@ public class PlayerFreeLookState : PlayerMoveBase
     public override void Tick(float deltaTime)
     {
         Vector3 movement = CalculateMovement();
-
-        Move(movement * stateMachine.FreeMovementSpeed, deltaTime);
+        float speed = isRunning? stateMachine.RunningSpeed : stateMachine.FreeMovementSpeed;
+        Move(movement * speed, deltaTime);
         if (stateMachine.InputReader.MovementValue == Vector2.zero)
         {
             stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
             return;
         }
-        stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime);
+        stateMachine.Animator.SetFloat(FreeLookSpeedHash, isRunning? 1.0f : 0.75f, AnimatorDampTime, deltaTime);
         FaceMovementDirection(movement, deltaTime);
     }
 
     public override void Exit()
     {
+        base.Exit();
         stateMachine.InputReader.JumpEvent -= OnJump;
     }
 
