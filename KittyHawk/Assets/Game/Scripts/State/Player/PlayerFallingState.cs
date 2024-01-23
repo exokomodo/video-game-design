@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFallingState : PlayerBaseState
+public class PlayerFallingState : PlayerMoveBase
 {
     private readonly int FallHash = Animator.StringToHash("Cat_Fall");
 
     private Vector3 momentum;
     private const float CrossFadeDuration = 0.1f;
 
-    public PlayerFallingState(PlayerStateMachine stateMachine) : base(stateMachine) {}
+    public PlayerFallingState(PlayerStateMachine stateMachine, bool isRunning) : base(stateMachine, isRunning) {}
 
     public override void Enter()
     {
@@ -24,12 +24,7 @@ public class PlayerFallingState : PlayerBaseState
 
         if (stateMachine.Controller.isGrounded)
         {
-            stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));
+            stateMachine.SwitchState(new PlayerFreeLookState(stateMachine, isRunning));
         }
-    }
-
-    public override void Exit()
-    {
-
     }
 }

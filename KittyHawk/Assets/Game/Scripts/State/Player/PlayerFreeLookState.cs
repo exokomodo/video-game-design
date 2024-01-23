@@ -10,7 +10,7 @@ public class PlayerFreeLookState : PlayerMoveBase
     private const float AnimatorDampTime = 0.1f;
     private const float CrossFadeDuration = 0.1f;
 
-    public PlayerFreeLookState(PlayerStateMachine stateMachine, bool shouldFade = true) : base(stateMachine)
+    public PlayerFreeLookState(PlayerStateMachine stateMachine, bool isRunning = false, bool shouldFade = true) : base(stateMachine, isRunning)
     {
         this.shouldFade = shouldFade;
     }
@@ -53,6 +53,6 @@ public class PlayerFreeLookState : PlayerMoveBase
 
     private void OnJump()
     {
-        stateMachine.SwitchState(new PlayerJumpingState(stateMachine));
+        stateMachine.SwitchState(new PlayerJumpingState(stateMachine, isRunning));
     }
 }
