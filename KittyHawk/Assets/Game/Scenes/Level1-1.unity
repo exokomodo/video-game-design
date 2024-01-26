@@ -892,12 +892,12 @@ PrefabInstance:
     - target: {fileID: 3187611446183074859, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.22389029
+      value: -0.22389035
       objectReference: {fileID: 0}
     - target: {fileID: 3187611446183074859, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.041978966
+      value: 0.041978978
       objectReference: {fileID: 0}
     - target: {fileID: 3187611446383393767, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -907,17 +907,17 @@ PrefabInstance:
     - target: {fileID: 3187611446383393767, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.13898061
+      value: 0.1389806
       objectReference: {fileID: 0}
     - target: {fileID: 3187611446383393767, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.22545946
+      value: -0.22545947
       objectReference: {fileID: 0}
     - target: {fileID: 3187611446383393767, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.03251342
+      value: 0.03251341
       objectReference: {fileID: 0}
     - target: {fileID: 3187611446533891480, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -3695,7 +3695,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1484387044856830, guid: 91504193aeac4a34283f087f036a6087, type: 3}
       propertyPath: m_Name
-      value: SM_Prop_Tyre_01 (2)
+      value: BottomTire
       objectReference: {fileID: 0}
     - target: {fileID: 4778773843462190, guid: 91504193aeac4a34283f087f036a6087, type: 3}
       propertyPath: m_RootOrder
@@ -4116,7 +4116,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1330644702739168, guid: e9d9549d1086e054eb75d419081440c4, type: 3}
       propertyPath: m_Name
-      value: SM_Prop_Fence_Wire_Gate_01
+      value: Gate
       objectReference: {fileID: 0}
     - target: {fileID: 4633136277069460, guid: e9d9549d1086e054eb75d419081440c4, type: 3}
       propertyPath: m_RootOrder
@@ -5145,7 +5145,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1484387044856830, guid: 91504193aeac4a34283f087f036a6087, type: 3}
       propertyPath: m_Name
-      value: SM_Prop_Tyre_01 (1)
+      value: TopTire
       objectReference: {fileID: 0}
     - target: {fileID: 4778773843462190, guid: 91504193aeac4a34283f087f036a6087, type: 3}
       propertyPath: m_RootOrder
@@ -8026,6 +8026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1656850796}
+  - component: {fileID: 1656850797}
   m_Layer: 0
   m_Name: TireStack
   m_TagString: Untagged
@@ -8041,7 +8042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656850795}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.052, y: 0, z: -0.913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8051,6 +8052,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1656850797
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656850795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1421135c232b14786b177cca005297c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1660648153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8656,7 +8678,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764639405}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9621,7 +9643,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1484387044856830, guid: 91504193aeac4a34283f087f036a6087, type: 3}
       propertyPath: m_Name
-      value: SM_Prop_Tyre_01
+      value: MiddleTire
       objectReference: {fileID: 0}
     - target: {fileID: 4778773843462190, guid: 91504193aeac4a34283f087f036a6087, type: 3}
       propertyPath: m_RootOrder

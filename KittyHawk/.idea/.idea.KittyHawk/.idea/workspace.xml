@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c7808b13-9e60-4ac4-80a8-e9453fb269d2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.KittyHawk/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KittyHawk/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ChickenAnimationScript.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ChickenAnimationScript.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Animations/ChickenAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Animations/ChickenAnimator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Animations/GateOpen.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Animations/GateOpen.anim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Scenes/Level1-1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scenes/Level1-1.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,6 +104,9 @@
       <workItem from="1706211192909" duration="914000" />
       <workItem from="1706212257780" duration="82000" />
       <workItem from="1706212351793" duration="684000" />
+      <workItem from="1706223782324" duration="31000" />
+      <workItem from="1706226375261" duration="96000" />
+      <workItem from="1706260085351" duration="308000" />
     </task>
     <servers />
   </component>
