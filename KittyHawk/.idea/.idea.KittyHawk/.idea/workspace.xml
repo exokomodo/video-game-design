@@ -7,9 +7,8 @@
     <list default="true" id="c7808b13-9e60-4ac4-80a8-e9453fb269d2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.KittyHawk/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KittyHawk/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Demo/Animations/TireSquashStretch.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Demo/Animations/TireSquashStretch.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Demo/AnimatorControllers/TireAnimator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Demo/AnimatorControllers/TireAnimator.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Scenes/Level1-1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scenes/Level1-1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/ForceReceiver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/ForceReceiver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TireController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TireController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +108,8 @@
       <workItem from="1706226375261" duration="96000" />
       <workItem from="1706260085351" duration="308000" />
       <workItem from="1707330019094" duration="4243000" />
+      <workItem from="1707335471074" duration="878000" />
+      <workItem from="1707336877713" duration="663000" />
     </task>
     <servers />
   </component>
