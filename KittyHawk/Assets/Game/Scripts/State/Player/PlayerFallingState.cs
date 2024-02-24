@@ -18,7 +18,7 @@ public class PlayerFallingState : PlayerMoveBase
         stateMachine.Animator.CrossFadeInFixedTime(FallHash, CrossFadeDuration);
     }
 
-    public override void Tick(float deltaTime)
+    public override void Execute(float deltaTime)
     {
         Move(momentum, deltaTime);
 

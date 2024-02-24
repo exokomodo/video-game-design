@@ -5,9 +5,11 @@ using UnityEngine;
 public abstract class StateMachine : MonoBehaviour
 {
     private State currentState;
+    private State previousState;
 
     public void SwitchState(State newState)
     {
+        previousState = currentState;
         currentState?.Exit();
         currentState = newState;
         currentState?.Enter();
@@ -15,6 +17,14 @@ public abstract class StateMachine : MonoBehaviour
 
     private void Update()
     {
-        currentState?.Tick(Time.deltaTime);
+        currentState?.Execute(Time.deltaTime);
+    }
+
+    public void RevertState()
+    {
+        if (previousState != null)
+        {
+            SwitchState(previousState);
+        }
     }
 }

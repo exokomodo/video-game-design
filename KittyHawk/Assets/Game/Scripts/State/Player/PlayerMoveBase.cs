@@ -14,7 +14,7 @@ public class PlayerMoveBase : PlayerBaseState
         stateMachine.InputReader.RunStopEvent += OnRunStop;
     }
 
-    public override void Tick(float deltaTime) {}
+    public override void Execute(float deltaTime) {}
 
     public override void Exit()
     {

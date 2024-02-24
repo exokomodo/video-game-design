@@ -31,7 +31,7 @@ public class PlayerFreeLookState : PlayerMoveBase
         }
     }
 
-    public override void Tick(float deltaTime)
+    public override void Execute(float deltaTime)
     {
         Vector3 movement = CalculateMovement();
         float speed = isRunning? stateMachine.RunningSpeed : stateMachine.FreeMovementSpeed;

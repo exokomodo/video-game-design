@@ -15,7 +15,7 @@ public class PlayerJumpingState : PlayerMoveBase
         stateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
     }
 
-    public override void Tick(float deltaTime)
+    public override void Execute(float deltaTime)
     {
         Vector3 movement = CalculateMovement();
         float speed = isRunning? stateMachine.RunningSpeed : stateMachine.FreeMovementSpeed;

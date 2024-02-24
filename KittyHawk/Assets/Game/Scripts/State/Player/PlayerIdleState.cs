@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    private float timer = 5.0f;
+    private float timer;
+
+    public int range = 0;
+
+    public static int StateID = 0;
+
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine) {}
 
     public override void Enter()
     {
-        Debug.Log("Enter");
+        timer = Mathf.Floor(Random.Range(10, 20));
+        stateMachine.Animator.SetInteger(StateIDHash, StateID);
     }
 
-    public override void Tick(float deltaTime)
+    public override void Execute(float deltaTime)
     {
-        Debug.Log("Tick");
         timer -= deltaTime;
         if (timer <= 0 ) {
-            stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+            stateMachine.SwitchState(new PlayerSitState(stateMachine));
         }
     }
 
     public override void Exit()
     {
-        Debug.Log("Exit");
+
     }
 }
