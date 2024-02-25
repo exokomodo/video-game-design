@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    private State currentState;
-    private State previousState;
+    protected State currentState;
+    protected State previousState;
 
     public void SwitchState(State newState)
     {
@@ -15,10 +15,7 @@ public abstract class StateMachine : MonoBehaviour
         currentState?.Enter();
     }
 
-    private void Update()
-    {
-        currentState?.Execute(Time.deltaTime);
-    }
+    protected abstract void Update();
 
     public void RevertState()
     {

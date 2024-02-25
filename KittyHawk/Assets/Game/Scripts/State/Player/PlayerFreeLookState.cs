@@ -53,6 +53,6 @@ public class PlayerFreeLookState : PlayerMoveBase
 
     private void OnJump()
     {
-        stateMachine.SwitchState(new PlayerJumpingState(stateMachine, isRunning));
+        stateMachine.SwitchState(new PlayerJumpState(stateMachine));
     }
 }

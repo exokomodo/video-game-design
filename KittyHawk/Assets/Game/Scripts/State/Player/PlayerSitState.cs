@@ -8,12 +8,11 @@ public class PlayerSitState : PlayerBaseState
 
     public int range = 0;
 
-    public static int StateID = 1;
-
     public PlayerSitState(PlayerStateMachine stateMachine) : base(stateMachine) {}
 
     public override void Enter()
     {
+        this.StateID = 1;
         Debug.Log("PlayerSit State Enter");
         timer = Mathf.Floor(Random.Range(10, 20));
         stateMachine.Animator.SetInteger(StateIDHash, StateID);

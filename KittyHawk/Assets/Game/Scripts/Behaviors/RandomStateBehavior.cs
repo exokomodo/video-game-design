@@ -11,7 +11,7 @@ public class RandomStateBehavior : StateMachineBehaviour
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("OnStateEnter");
+        // Debug.Log("RandomStateBehavior: OnStateEnter");
         SetRandomInt();
         animator.SetInteger(RandomHash, randInt);
     }

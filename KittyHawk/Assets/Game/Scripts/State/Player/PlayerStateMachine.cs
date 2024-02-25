@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
@@ -18,8 +17,7 @@ public class PlayerStateMachine : StateMachine
         IDLE,
         SIT,
         LIE,
-        WALK,
-        RUN,
+        MOVE,
         JUMP,
         FALL,
         CLIMB,
@@ -31,9 +29,62 @@ public class PlayerStateMachine : StateMachine
 
     public Transform MainCameraTransform { get; private set; }
 
+    public bool isJumping = false;
+    private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE};
+
+    protected AnimationClip[] clips;
+
     private void Start()
     {
         MainCameraTransform = Camera.main.transform;
+        // AddAnimationEndEvent();
+        InputReader.JumpEvent += OnJump;
         SwitchState(new PlayerIdleState(this));
+        // InputReader.JumpEvent -= OnJump;
+    }
+
+    protected override void Update()
+    {
+        if (!motionStates.Contains(currentState.StateID) && InputReader.MovementValue != Vector2.zero) {
+            Debug.Log("Switch to PlayerMoveState");
+            SwitchState(new PlayerMoveState(this));
+            return;
+        }
+        currentState?.Execute(Time.deltaTime);
+    }
+
+    private void AddAnimationEndEvent()
+    {
+        clips = Animator.runtimeAnimatorController.animationClips;
+        AnimationEvent evt = new AnimationEvent();
+        Debug.Log("clips: " + clips);
+        foreach(AnimationClip clip in clips)
+        {
+            Debug.Log("CLIP: " + clip.name + ", LENGTH: " + clip.length);
+            evt.time = clip.length - 0.05f;
+            evt.stringParameter = clip.name;
+            evt.functionName = "OnClipEnd";
+            clip.AddEvent(evt);
+        }
+
+    }
+
+    public void OnClipEnd(string clipName)
+    {
+        Debug.Log("OnClipEnd: " + clipName + " called at: " + Time.time);
+        if (isJumping)
+        {
+            SwitchState(new PlayerMoveState(this));
+            isJumping = false;
+        }
+    }
+
+    private void OnJump()
+    {
+        Debug.Log("OnJump");
+        if (!isJumping)
+        {
+            SwitchState(new PlayerJumpState(this));
+        }
     }
 }
