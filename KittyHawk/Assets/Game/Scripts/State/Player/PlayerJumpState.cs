@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerMoveBase
 {
-    private readonly int StateHash = Animator.StringToHash("JumpState");
+    private readonly int StateHash = Animator.StringToHash("Jump");
     private readonly int VelocityXHash = Animator.StringToHash("VelocityX");
     private readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
     private const float AnimatorDampTime = 0.1f;
@@ -18,7 +18,8 @@ public class PlayerJumpState : PlayerMoveBase
         Debug.Log("Enter PlayerJumpState");
         base.Enter();
         stateMachine.isJumping = true;
-        stateMachine.Animator.SetInteger(StateIDHash, StateID);
+        // stateMachine.Animator.SetInteger(StateIDHash, StateID);
+        Debug.Log(stateMachine.Animator.GetInteger(StateIDHash));
         stateMachine.Animator.Play(StateHash);
         stateMachine.ForceReceiver.Jump(stateMachine.JumpForce);
         // stateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
