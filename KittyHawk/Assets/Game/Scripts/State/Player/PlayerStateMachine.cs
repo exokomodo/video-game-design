@@ -38,9 +38,7 @@ public class PlayerStateMachine : StateMachine
     {
         MainCameraTransform = Camera.main.transform;
         // AddAnimationEndEvent();
-        InputReader.JumpEvent += OnJump;
         SwitchState(new PlayerIdleState(this));
-        // InputReader.JumpEvent -= OnJump;
     }
 
     protected override void Update()
@@ -72,19 +70,10 @@ public class PlayerStateMachine : StateMachine
     public void OnClipEnd(string clipName)
     {
         Debug.Log("OnClipEnd: " + clipName + " called at: " + Time.time);
-        if (isJumping)
-        {
-            SwitchState(new PlayerMoveState(this));
-            isJumping = false;
-        }
-    }
-
-    private void OnJump()
-    {
-        Debug.Log("OnJump");
-        if (!isJumping)
-        {
-            SwitchState(new PlayerJumpState(this));
-        }
+        // if (isJumping)
+        // {
+        //     SwitchState(new PlayerMoveState(this));
+        //     isJumping = false;
+        // }
     }
 }
