@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ForceReceiver : MonoBehaviour
 {
-    [SerializeField] private PlayerController controller;
-    private float verticalVelocity;
+    [SerializeField] private CharacterController controller;
+    // Paul changed this to public to see if it would help with the tire interaction
+    public float verticalVelocity;
 
     public Vector3 Movement => Vector3.up * verticalVelocity;
 

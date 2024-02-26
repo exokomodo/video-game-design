@@ -66,8 +66,13 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+<<<<<<< HEAD:KittyHawk/Assets/Game/Animations/CatAnimator.controller
   - m_Name: RandomInt
     m_Type: 3
+=======
+  - m_Name: FreeLookBlendTree
+    m_Type: 1
+>>>>>>> 1677ad3019613ae7c3eb7a0e3a2b8978aa74def6:KittyHawk/Assets/Game/AnimatorControllers/CatAnimator.controller
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
