@@ -20,6 +20,7 @@ public class PlayerIdleState : PlayerBaseState
         Debug.Log("PlayerIdleState Enter");
         timer = Mathf.Floor(Random.Range(10, 20));
         stateMachine.Animator.SetInteger(StateIDHash, StateID);
+        stateMachine.Animator.applyRootMotion = false;
     }
 
     public override void Execute(float deltaTime)

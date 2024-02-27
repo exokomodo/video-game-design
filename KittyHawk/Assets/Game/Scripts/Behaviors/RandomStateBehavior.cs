@@ -9,9 +9,9 @@ public class RandomStateBehavior : StateMachineBehaviour
     private static int RandomHash = Animator.StringToHash("RandomInt");
     private static int randInt = -1;
 
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
     {
-        // Debug.Log("RandomStateBehavior: OnStateEnter");
+        Debug.Log("RandomStateBehavior: OnStateEnter");
         SetRandomInt();
         animator.SetInteger(RandomHash, randInt);
     }

@@ -37,6 +37,13 @@ public class PlayerController : MonoBehaviour {
 
     stateMachine = GetComponent<PlayerStateMachine>();
     if (stateMachine == null) throw new Exception("PlayerStateMachine could not be found");
+
+    EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+  }
+
+  private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
+  {
+    Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
   }
 
   private void Start()
@@ -51,10 +58,12 @@ public class PlayerController : MonoBehaviour {
     {
       if (_jump && !_isJumping) {
         _isJumping = true;
+        // anim.applyRootMotion = false;
         stateMachine.SwitchState(new PlayerJumpState(stateMachine));
       }
       if (!_isJumping && !_prevGrounded)
       {
+        anim.applyRootMotion = true;
         stateMachine.SwitchState(new PlayerMoveState(stateMachine));
       }
     }
@@ -68,17 +77,17 @@ public class PlayerController : MonoBehaviour {
 
   public void Move(Vector3 motion)
   {
-
+    transform.position += motion;
   }
 
   private void CheckGrounded()
   {
     _prevGrounded = _isGrounded;
     float dist = col.height/2f + groundCheckDistance;
-    Vector3 origin = col.transform.position;
+    Vector3 origin = transform.position;
     origin.y += col.radius;
 
-    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, dist, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, dist, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
     if (hit)
     {
       _isGrounded = true;

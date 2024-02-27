@@ -28,7 +28,7 @@ public class PlayerMoveState : PlayerMoveBase
     public override void Execute(float deltaTime)
     {
         Vector3 movement = CalculateMovement();
-        // Move(movement, deltaTime);
+        Move(movement, deltaTime);
         Debug.Log("movement:" + movement);
         if (stateMachine.InputReader.MovementValue == Vector2.zero)
         {
