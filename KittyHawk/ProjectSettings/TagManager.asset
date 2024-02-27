@@ -9,6 +9,7 @@ TagManager:
   - ground
   - Catnip
   - HorseWaypoints
+  - HorseWaypoint
   layers:
   - Default
   - TransparentFX

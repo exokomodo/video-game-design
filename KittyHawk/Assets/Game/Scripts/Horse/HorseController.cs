@@ -21,6 +21,7 @@ public class HorseController : MonoBehaviour
             direction.z);
     }
     private int GetNumberOfWaypoints() => _waypointRoot.transform.childCount;
+    private void NextWaypoint() => _waypointIndex = (_waypointIndex + 1) % GetNumberOfWaypoints();
     private Transform GetWaypointTransform() => _waypointRoot.transform.GetChild(_waypointIndex);
     #endregion
 
@@ -28,7 +29,8 @@ public class HorseController : MonoBehaviour
     private void Start()
     {
         var waypoints = GameObject.FindGameObjectsWithTag("HorseWaypoints");
-        if (waypoints.Length > 0) {
+        if (waypoints.Length > 0)
+        {
             _waypointRoot = waypoints[0];
         }
         _animator = GetComponentInChildren<Animator>();
@@ -37,7 +39,6 @@ public class HorseController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _animator.SetFloat("Speed", Velocity);
         transform.position += (
             Time.fixedDeltaTime *
             Velocity *
@@ -45,8 +46,18 @@ public class HorseController : MonoBehaviour
             transform.forward);
     }
 
+    private void OnTriggerEnter(Collider c)
+    {
+        Debug.Log("Touched waypoint");
+        if (c.CompareTag("HorseWaypoint"))
+        {
+            NextWaypoint();
+        }
+    }
+
     private void Update()
     {
+        _animator.SetFloat("Speed", Velocity);
         FaceWaypoint();
     }
     #endregion
