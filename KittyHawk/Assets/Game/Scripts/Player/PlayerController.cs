@@ -72,13 +72,18 @@ public class PlayerController : MonoBehaviour {
     Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
     switch (eventName)
     {
-      case AnimationStateEvent.LAND_COMPLETE:
+      case AnimationStateEvent.JUMP_COMPLETE:
+        _isJumping = false;
+        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        break;
 
-        stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+      case AnimationStateEvent.LAND_COMPLETE:
+        _isFalling = false;
+        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
         break;
 
       default:
-        Debug.LogError("Unhandled event: " + eventType);
+        Debug.LogError("Unhandled event: " + eventType + ", " + eventName);
         break;
     }
   }
@@ -98,41 +103,42 @@ public class PlayerController : MonoBehaviour {
     CheckGrounded();
     if (_isGrounded)
     {
-      if (_prevGrounded && _isGrounded && _isJumping) {
-        _isJumping = false;
-      }
+      // if (_prevGrounded && _isGrounded && _isJumping) {
+      //   _isJumping = false;
+      // }
       if (_jump && !_isJumping) {
+        _jump = false;
         _isJumping = true;
         // anim.applyRootMotion = false;
         stateMachine.SwitchState(new PlayerJumpState(stateMachine));
       }
-      if (!_isFalling && !_isJumping && !_prevGrounded)
-      {
-        // anim.applyRootMotion = true;
-        stateMachine.SwitchState(new PlayerIdleState(stateMachine));
-      }
+      // if (!_isFalling && !_isJumping && !_prevGrounded)
+      // {
+      //   stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+      // }
       if (isMoving) CheckGroundAngle();
 
     }
     else
     {
-      if (!_isJumping && !_fall && !_isFalling)
+      if (_prevGrounded && !_jump && !_isJumping && !_fall && !_isFalling)
       {
-        // _fall = true;
-        // _isFalling = true;
-        // stateMachine.SwitchState(new PlayerFallState(stateMachine));
+        Debug.Log("_jump: " + _jump + ", _isJumping: " + _isJumping);
+        Debug.Log("_fall: " + _fall + ", _isFalling: " + _isFalling);
+        _fall = true;
+        _isFalling = true;
+        stateMachine.SwitchState(new PlayerFallState(stateMachine));
+      }
+      if (_isFalling)
+      {
+        float distance = CheckGroundDistance();
+        float fallModifier = Mathf.Clamp(distance / 10, 0, 1);
+        anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
 
-    if (_isFalling)
-    {
-      float distance = CheckGroundDistance();
-      float fallModifier = Mathf.Clamp(distance / 10, 0, 1);
-      anim.SetFloat(FallModifierHash, fallModifier);
-    }
-
     // anim.applyRootMotion = _isGrounded;
-    _jump = false;
+
     _fall = false;
     if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
   }
