@@ -12,8 +12,7 @@ public class PlayerJumpState : PlayerBaseState
 
     private float elapsedTime;
     private Vector3 previousVelocity;
-
-    private bool firstTime = true;
+    private float prevY;
 
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -36,20 +35,15 @@ public class PlayerJumpState : PlayerBaseState
         // stateMachine.Animator.applyRootMotion = true;
         elapsedTime = 0;
         previousVelocity = Vector3.zero;
-        stateMachine.Animator.Play(AnimStateHash); // Begin moving immediately
+        prevY = -1;
+        // stateMachine.Animator.Play(AnimStateHash); // Begin moving immediately
         // stateMachine.Animator.SetBool("StateChange", true);
-        stateMachine.Animator.SetInteger(Animator.StringToHash("StateID"), StateID);
-        stateMachine.Animator.SetBool("StateChange", true);
+        // stateMachine.Animator.SetInteger(Animator.StringToHash("StateID"), StateID);
+        // stateMachine.Animator.SetBool("StateChange", true);
     }
 
     public override void Execute(float deltaTime)
     {
-        // if (firstTime)
-        // {
-        //     stateMachine.Animator.SetBool("StateChange", true);
-        //     firstTime = false;
-        // }
-
         // Debug.Log("StateIDHash: " + stateMachine.Animator.GetInteger(StateIDHash));
         // Vector3 movement = CalculateMovement();
         // // Move(movement, deltaTime);
@@ -62,14 +56,15 @@ public class PlayerJumpState : PlayerBaseState
         // Jump(movement * speed, deltaTime);
         // Jump(new Vector3(0, 1, 0) * stateMachine.JumpForce, deltaTime);
         float y = stateMachine.transform.position.y;
-        // Debug.Log("StateMachine velocity: " + stateMachine.Controller.velocity.y + ", " + y + ", " + elapsedTime);
+        Debug.Log("StateMachine velocity: " + stateMachine.Controller.velocity.y + ", " + y);
 
-        // if (stateMachine.Controller.velocity.y <= 0.01f && y > 0.2f)
+        // if (stateMachine.Controller.velocity.y <= 0.01f && y < prevY && y > 0.5f)
         // {
         //     stateMachine.SwitchState(new PlayerFallState(stateMachine));
         // }
         elapsedTime += deltaTime;
         previousVelocity = stateMachine.Controller.velocity;
+        prevY = y;
         // FaceMovementDirection(movement, deltaTime);
     }
 

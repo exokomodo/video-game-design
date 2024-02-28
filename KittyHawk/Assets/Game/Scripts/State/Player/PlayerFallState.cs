@@ -26,10 +26,10 @@ public class PlayerFallState : PlayerMoveBase
         Debug.Log("PlayerFallState Execute");
         // Move(momentum, deltaTime);
 
-        if (stateMachine.Controller.isGrounded)
-        {
-            stateMachine.SwitchState(new PlayerMoveState(stateMachine));
-        }
+        // if (stateMachine.Controller.isGrounded)
+        // {
+        //     stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        // }
     }
 
     public override void Exit()

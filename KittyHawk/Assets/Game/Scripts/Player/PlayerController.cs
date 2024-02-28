@@ -11,10 +11,15 @@ public class PlayerController : MonoBehaviour {
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
   public Vector3 velocity => rb.velocity;
+
+  private GameObject frontPivot;
+  private GameObject backPivot;
   private bool _isGrounded = true;
   private bool _prevGrounded = true;
   private bool _isJumping = false;
   private bool _jump = false;
+  private bool _fall = false;
+  private bool _isFalling = false;
   private float groundCheckDistance = 0.01f;
 
   public bool isGrounded => _isGrounded;
@@ -39,6 +44,11 @@ public class PlayerController : MonoBehaviour {
     stateMachine = GetComponent<PlayerStateMachine>();
     if (stateMachine == null) throw new Exception("PlayerStateMachine could not be found");
 
+    frontPivot = GameObject.Find("front_pivot");
+    backPivot = GameObject.Find("back_pivot");
+    Debug.Log("frontPivot: " + frontPivot);
+    Debug.Log("backPivot: " + backPivot);
+
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
   }
 
@@ -50,7 +60,7 @@ public class PlayerController : MonoBehaviour {
   private void Start()
   {
     Application.targetFrameRate = 60;
-    Time.timeScale = 1;
+    Time.timeScale = 1.0f;
     input.JumpEvent += OnJump;
     anim.applyRootMotion = RootMotion;
   }
@@ -65,17 +75,25 @@ public class PlayerController : MonoBehaviour {
         // anim.applyRootMotion = false;
         stateMachine.SwitchState(new PlayerJumpState(stateMachine));
       }
-      if (!_isJumping && !_prevGrounded)
+      if (!_isFalling && !_isJumping && !_prevGrounded)
       {
         // anim.applyRootMotion = true;
         stateMachine.SwitchState(new PlayerMoveState(stateMachine));
       }
+      if (!_isJumping) CheckGroundAngle();
     }
-    else{
-
+    else
+    {
+      if (!_isJumping && !_fall)
+      {
+        _fall = true;
+        _isFalling = true;
+        stateMachine.SwitchState(new PlayerFallState(stateMachine));
+      }
     }
     // anim.applyRootMotion = _isGrounded;
     _jump = false;
+    _fall = false;
     if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
   }
 
@@ -142,11 +160,38 @@ public class PlayerController : MonoBehaviour {
     {
       _isGrounded = false;
     }
-    if (_prevGrounded && _isGrounded && _isJumping)
+    if (_prevGrounded && _isGrounded && (_isJumping || _isFalling))
     {
       _isJumping = false;
+      _isFalling = false;
     }
     // _isGrounded = true;
+  }
+
+  private void CheckGroundAngle()
+  {
+    Vector3 frontOrigin = frontPivot.transform.position;
+    Vector3 backOrigin = backPivot.transform.position;
+    RaycastHit frontHit;
+    RaycastHit backHit;
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(frontOrigin, Vector3.down, out frontHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, Vector3.down, out backHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+    float deltaHeight = frontHit.distance - backHit.distance;
+    Vector3 newVector = (frontOrigin - new Vector3(0, deltaHeight, 0)) - backOrigin;
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, newVector, 1.0f, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+
+    if (Math.Abs(deltaHeight) > 0.01f)
+    {
+
+      // Rotate player along up axis
+      float rootTurnSpeed = 1.0f;
+      Quaternion newRootRotation = anim.rootRotation;
+      Quaternion rot = Quaternion.LookRotation(newVector);
+      newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, rot, rootTurnSpeed);
+      Debug.Log("newRootRotation: " + newRootRotation);
+      rb.MoveRotation(newRootRotation);
+    }
+
   }
 
   private void OnJump()

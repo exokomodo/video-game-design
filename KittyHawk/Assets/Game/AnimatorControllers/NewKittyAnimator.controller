@@ -1783,7 +1783,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JumpingState
+  m_Name: Jump
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 7873047349637946999}
@@ -1868,11 +1868,11 @@ AnimatorStateMachine:
   m_AnyStateTransitions:
   - {fileID: 2776232856046160566}
   - {fileID: -1982148559562682875}
+  - {fileID: -8364601991566178057}
   - {fileID: 1485765591727460995}
   - {fileID: 1472592735752222803}
   - {fileID: -7044473110335467814}
   - {fileID: 509572087446567133}
-  - {fileID: -8364601991566178057}
   m_EntryTransitions: []
   m_StateMachineTransitions:
   - first: {fileID: 763047665634786395}
