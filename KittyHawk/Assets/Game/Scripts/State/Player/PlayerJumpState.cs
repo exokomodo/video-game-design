@@ -3,13 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerBaseState
+public class PlayerJumpState : PlayerMoveBase
 {
     private readonly int AnimStateHash = Animator.StringToHash("JumpingState");
-    private readonly int VelocityXHash = Animator.StringToHash("VelocityX");
-    private readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
-    private const float AnimatorDampTime = 0.1f;
-
     private float elapsedTime;
     private Vector3 previousVelocity;
     private float prevY;
@@ -44,8 +40,16 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void Execute(float deltaTime)
     {
+        base.Execute(deltaTime);
+        Vector3 movement = CalculateMovement();
+        Debug.Log("VelX: " + movement.x + ", VelZ: " + movement.z);
+    }
+
+    /*
+    public override void Execute(float deltaTime)
+    {
         // Debug.Log("StateIDHash: " + stateMachine.Animator.GetInteger(StateIDHash));
-        // Vector3 movement = CalculateMovement();
+        Vector3 movement = CalculateMovement();
         // // Move(movement, deltaTime);
         // Debug.Log("PlayerJumpSate movement:" + movement);
         // stateMachine.Animator.SetFloat(VelocityXHash, movement.x, AnimatorDampTime, deltaTime);
@@ -65,8 +69,9 @@ public class PlayerJumpState : PlayerBaseState
         elapsedTime += deltaTime;
         previousVelocity = stateMachine.Controller.velocity;
         prevY = y;
-        // FaceMovementDirection(movement, deltaTime);
+        FaceMovementDirection(movement, deltaTime);
     }
+    */
 
     public override void Exit()
     {

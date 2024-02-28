@@ -20,16 +20,24 @@ public class PlayerController : MonoBehaviour {
   private bool _jump = false;
   private bool _fall = false;
   private bool _isFalling = false;
+  private bool _isRunning = false;
   private float groundCheckDistance = 0.01f;
 
   public bool isGrounded => _isGrounded;
+  public bool isRunning => _isRunning;
 
-  public bool RootMotion = true;
+  [field: SerializeField] public bool RootMotion = true;
+
+  [field: SerializeField] public float WalkSpeed = 1.0f;
+  [field: SerializeField] public float RunSpeed = 2.0f;
+
+  [field: SerializeField] public float TurnSpeed = 1.0f;
 
   public void Awake()
   {
     anim = GetComponent<Animator>();
     if (anim == null) throw new Exception("Animator could not be found");
+    anim.applyRootMotion = RootMotion;
 
     rb = GetComponent<Rigidbody>();
     if (rb == null) throw new Exception("Rigid body could not be found");
@@ -62,7 +70,8 @@ public class PlayerController : MonoBehaviour {
     Application.targetFrameRate = 60;
     Time.timeScale = 1.0f;
     input.JumpEvent += OnJump;
-    anim.applyRootMotion = RootMotion;
+    input.RunEvent += OnRun;
+    input.RunStopEvent += OnRunStop;
   }
 
   private void FixedUpdate()
@@ -78,18 +87,20 @@ public class PlayerController : MonoBehaviour {
       if (!_isFalling && !_isJumping && !_prevGrounded)
       {
         // anim.applyRootMotion = true;
-        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        stateMachine.SwitchState(new PlayerIdleState(stateMachine));
       }
-      if (!_isJumping) CheckGroundAngle();
+      if (stateMachine.isMoving) CheckGroundAngle();
     }
     else
     {
-      if (!_isJumping && !_fall)
+      /*
+      if (!_isJumping && !_fall && !_isFalling)
       {
         _fall = true;
         _isFalling = true;
         stateMachine.SwitchState(new PlayerFallState(stateMachine));
       }
+      */
     }
     // anim.applyRootMotion = _isGrounded;
     _jump = false;
@@ -184,10 +195,8 @@ public class PlayerController : MonoBehaviour {
     {
 
       // Rotate player along up axis
-      float rootTurnSpeed = 1.0f;
-      Quaternion newRootRotation = anim.rootRotation;
       Quaternion rot = Quaternion.LookRotation(newVector);
-      newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, rot, rootTurnSpeed);
+      Quaternion newRootRotation = Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
       Debug.Log("newRootRotation: " + newRootRotation);
       rb.MoveRotation(newRootRotation);
     }
@@ -199,8 +208,20 @@ public class PlayerController : MonoBehaviour {
       if (!_jump) _jump = true;
   }
 
+  protected void OnRun()
+    {
+        _isRunning = true;
+    }
+
+    protected void OnRunStop()
+    {
+        _isRunning = false;
+    }
+
   private void OnDestroy()
   {
     input.JumpEvent -= OnJump;
+    input.RunEvent -= OnRun;
+    input.RunStopEvent -= OnRunStop;
   }
 }

@@ -7,8 +7,6 @@ public class PlayerFreeLookState : PlayerMoveBase
     private bool shouldFade;
     private readonly int FreeLookBlendTreeHash = Animator.StringToHash("FreeLookBlendTree");
     private readonly int FreeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
-    private const float AnimatorDampTime = 0.1f;
-    private const float CrossFadeDuration = 0.1f;
 
     public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine) {}
 
@@ -31,14 +29,14 @@ public class PlayerFreeLookState : PlayerMoveBase
     public override void Execute(float deltaTime)
     {
         Vector3 movement = CalculateMovement();
-        float speed = isRunning? stateMachine.RunningSpeed : stateMachine.FreeMovementSpeed;
+        float speed = stateMachine.Controller.WalkSpeed;
         Move(movement * speed, deltaTime);
         if (stateMachine.InputReader.MovementValue == Vector2.zero)
         {
             stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
             return;
         }
-        stateMachine.Animator.SetFloat(FreeLookSpeedHash, isRunning? 1.0f : 0.75f, AnimatorDampTime, deltaTime);
+        stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0.75f, AnimatorDampTime, deltaTime);
         FaceMovementDirection(movement, deltaTime);
     }
 

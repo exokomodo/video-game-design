@@ -5,9 +5,7 @@ using UnityEngine;
 public class PlayerFallState : PlayerMoveBase
 {
     private readonly int AnimHash = Animator.StringToHash("Fall");
-
     private Vector3 momentum;
-    private const float CrossFadeDuration = 0.1f;
 
     public PlayerFallState(PlayerStateMachine stateMachine) : base(stateMachine) {
         StateID = 5;
@@ -23,13 +21,13 @@ public class PlayerFallState : PlayerMoveBase
 
     public override void Execute(float deltaTime)
     {
-        Debug.Log("PlayerFallState Execute");
+        // Debug.Log("PlayerFallState Execute");
         // Move(momentum, deltaTime);
 
-        // if (stateMachine.Controller.isGrounded)
-        // {
-        //     stateMachine.SwitchState(new PlayerMoveState(stateMachine));
-        // }
+        if (stateMachine.Controller.isGrounded)
+        {
+            stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        }
     }
 
     public override void Exit()

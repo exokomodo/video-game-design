@@ -7,7 +7,6 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public InputReader InputReader { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
-    [field: SerializeField] public float FreeMovementSpeed { get; private set; }
     [field: SerializeField] public float RunningSpeed { get; private set; }
     [field: SerializeField] public float JumpForce { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
@@ -29,8 +28,14 @@ public class PlayerStateMachine : StateMachine
 
     public Transform MainCameraTransform { get; private set; }
 
-    public bool isJumping = false;
-    public bool isRunning = false;
+    public bool isJumping => currentState?.StateID == (int) StateEnum.JUMP;
+    public bool isRunning => Controller.isRunning;
+
+    public bool isMoving => currentState?.StateID == (int) StateEnum.MOVE;
+    public bool isFalling => currentState?.StateID == (int) StateEnum.FALL;
+    public bool isCrawling => currentState?.StateID == (int) StateEnum.CRAWL;
+
+    // Incomplete... add crawl, fall, climb, etc
     private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE};
     private int StateChangeIDHash = Animator.StringToHash("StateChange");
 
@@ -56,30 +61,26 @@ public class PlayerStateMachine : StateMachine
         firstUpdate = true;
         Animator.SetInteger(StateIDHash, currentState.StateID);
 
-        // base.SwitchState(newState);
-
         if (!previousSateID.Equals(null)) Animator.SetInteger(PrevStateIDHash, (int) previousSateID);
     }
 
     protected override void Update()
     {
-
-        // if (Animator.GetBool(StateChangeIDHash))
-        Animator.SetBool(StateChangeIDHash, false);
+        if (Animator.GetBool(StateChangeIDHash))
+            Animator.SetBool(StateChangeIDHash, false);
         if (!motionStates.Contains(currentState.StateID) && InputReader.MovementValue != Vector2.zero) {
-            Debug.Log("Switch to PlayerMoveState");
             SwitchState(new PlayerMoveState(this));
             return;
         }
         currentState?.Execute(Time.deltaTime);
         if (firstUpdate && currentState != null)
         {
-
             Animator.SetBool(StateChangeIDHash, true);
             firstUpdate = false;
         }
     }
 
+    /*
     private void AddAnimationEndEvent()
     {
         clips = Animator.runtimeAnimatorController.animationClips;
@@ -104,4 +105,5 @@ public class PlayerStateMachine : StateMachine
         //     isJumping = false;
         // }
     }
+    */
 }
