@@ -22,6 +22,8 @@ public class PlayerMoveBase : PlayerBaseState
         stateMachine.Animator.SetFloat(VelocityZHash, movement.z, AnimatorDampTime, deltaTime);
         if (stateMachine.InputReader.MovementValue == Vector2.zero && (!stateMachine.isJumping || !stateMachine.isFalling))
         {
+            stateMachine.Animator.SetFloat(VelocityXHash, 0, AnimatorDampTime, deltaTime);
+            stateMachine.Animator.SetFloat(VelocityZHash, 0, AnimatorDampTime, deltaTime);
             // If player is not moving, switch to Idle State
             stateMachine.SwitchState(new PlayerIdleState(stateMachine));
         }
@@ -43,7 +45,7 @@ public class PlayerMoveBase : PlayerBaseState
         // return forward * stateMachine.InputReader.MovementValue.y +
         //     right * stateMachine.InputReader.MovementValue.x;
         Vector2 mv = stateMachine.InputReader.MovementValue;
-        Debug.Log("isRunning" + stateMachine.isRunning);
+        // Debug.Log("isRunning: " + stateMachine.isRunning);
         mv = stateMachine.isRunning? mv * stateMachine.Controller.RunSpeed : mv * stateMachine.Controller.WalkSpeed;
         return new Vector3(mv.x, 0, mv.y);
     }

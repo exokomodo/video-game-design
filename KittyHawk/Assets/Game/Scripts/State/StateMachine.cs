@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class StateMachine : MonoBehaviour
 {
     protected State currentState;
+    public State CurrentState => currentState;
     protected State previousState;
     protected int StateIDHash = Animator.StringToHash("StateID");
     protected int PrevStateIDHash = Animator.StringToHash("PrevStateID");

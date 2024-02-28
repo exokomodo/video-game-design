@@ -37,7 +37,8 @@ public class PlayerStateMachine : StateMachine
     public bool isCrawling => currentState?.StateID == (int) StateEnum.CRAWL;
 
     // Incomplete... add crawl, fall, climb, etc
-    private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE, (int)StateEnum.FALL};
+    public int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE, (int)StateEnum.FALL};
+    public int[] idleStates = {(int) StateEnum.IDLE, (int) StateEnum.SIT, (int)StateEnum.LIE};
     private int StateChangeIDHash = Animator.StringToHash("StateChange");
 
     protected AnimationClip[] clips;
@@ -53,14 +54,15 @@ public class PlayerStateMachine : StateMachine
 
     public override void SwitchState(State newState)
     {
-        previousState = currentState;
+        previousState = currentState == null? newState : currentState;
         int? previousSateID = previousState?.StateID;
         currentState?.Exit();
 
         currentState = newState;
         currentState?.Enter();
+        // Animator.SetInteger(StateIDHash, currentState.StateID);
         firstUpdate = true;
-        Animator.SetInteger(StateIDHash, currentState.StateID);
+
 
         if (!previousSateID.Equals(null)) Animator.SetInteger(PrevStateIDHash, (int) previousSateID);
     }
@@ -76,6 +78,7 @@ public class PlayerStateMachine : StateMachine
         currentState?.Execute(Time.deltaTime);
         if (firstUpdate && currentState != null)
         {
+            Animator.SetInteger(StateIDHash, currentState.StateID);
             Animator.SetBool(StateChangeIDHash, true);
             firstUpdate = false;
         }

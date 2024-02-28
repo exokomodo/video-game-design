@@ -6,17 +6,14 @@ using UnityEngine;
 public class PlayerJumpState : PlayerMoveBase
 {
     private readonly int AnimStateHash = Animator.StringToHash("JumpingState");
-    private float elapsedTime;
-    private Vector3 previousVelocity;
-    private float prevY;
+    // private float elapsedTime;
+    // private Vector3 previousVelocity;
+    // private float prevY;
 
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.StateID = 4;
     }
-
-
-
 
     public override void Enter()
     {
@@ -24,9 +21,14 @@ public class PlayerJumpState : PlayerMoveBase
         base.Enter();
         stateMachine.ForceReceiver.Jump(stateMachine.JumpForce);
         // stateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
-        elapsedTime = 0;
-        previousVelocity = Vector3.zero;
-        prevY = -1;
+        // elapsedTime = 0;
+        // previousVelocity = Vector3.zero;
+        // prevY = -1;
+    }
+
+    public override void Execute(float deltaTime)
+    {
+        // Override base state
     }
 
     /*

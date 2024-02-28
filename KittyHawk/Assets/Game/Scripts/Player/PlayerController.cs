@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour {
 
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
+
+  public bool isMoving => stateMachine.isMoving;
 
 
   [field: SerializeField] public bool RootMotion = true;
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour {
     switch (eventName)
     {
       case AnimationStateEvent.LAND_COMPLETE:
+
         stateMachine.SwitchState(new PlayerIdleState(stateMachine));
         break;
 
@@ -90,10 +94,13 @@ public class PlayerController : MonoBehaviour {
 
   private void FixedUpdate()
   {
+    _prevGrounded = _isGrounded;
     CheckGrounded();
     if (_isGrounded)
     {
-      _isFalling = false;
+      if (_prevGrounded && _isGrounded && _isJumping) {
+        _isJumping = false;
+      }
       if (_jump && !_isJumping) {
         _isJumping = true;
         // anim.applyRootMotion = false;
@@ -104,24 +111,26 @@ public class PlayerController : MonoBehaviour {
         // anim.applyRootMotion = true;
         stateMachine.SwitchState(new PlayerIdleState(stateMachine));
       }
-      if (!stateMachine.isIdle) CheckGroundAngle();
+      if (isMoving) CheckGroundAngle();
+
     }
     else
     {
       if (!_isJumping && !_fall && !_isFalling)
       {
-        _fall = true;
-        _isFalling = true;
-        stateMachine.SwitchState(new PlayerFallState(stateMachine));
+        // _fall = true;
+        // _isFalling = true;
+        // stateMachine.SwitchState(new PlayerFallState(stateMachine));
       }
     }
+
     if (_isFalling)
     {
       float distance = CheckGroundDistance();
       float fallModifier = Mathf.Clamp(distance / 10, 0, 1);
-      // Debug.Log(fallModifier);
       anim.SetFloat(FallModifierHash, fallModifier);
     }
+
     // anim.applyRootMotion = _isGrounded;
     _jump = false;
     _fall = false;
@@ -177,7 +186,7 @@ public class PlayerController : MonoBehaviour {
 
   private void CheckGrounded()
   {
-    _prevGrounded = _isGrounded;
+    // _prevGrounded = _isGrounded;
     float dist = col.height/2f + groundCheckTolerance;
     Vector3 pos = transform.position;
     Vector3 origin = new Vector3(pos.x, pos.y, pos.z);
@@ -196,10 +205,9 @@ public class PlayerController : MonoBehaviour {
       anim.SetBool(isGroundedHash, false);
     }
 
-    if (_prevGrounded && _isGrounded && (_isJumping || _isFalling))
+    if (_prevGrounded && _isGrounded && _isJumping)
     {
-      _isJumping = false;
-      _isFalling = false;
+      // _isJumping = false;
     }
   }
 
@@ -237,11 +245,9 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-
-
   private void OnJump()
   {
-      if (!_jump) _jump = true;
+      if (!_isJumping && !_isFalling) _jump = true;
   }
 
   protected void OnRun()
