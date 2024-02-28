@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour {
       // {
       //   stateMachine.SwitchState(new PlayerIdleState(stateMachine));
       // }
-      if (isMoving) CheckGroundAngle();
+      // if (isMoving) CheckGroundAngle();
 
     }
     else
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour {
 
   // If OnAnimatorMove is present, root motion does not automatically change the player position
   // This is leading to excessive camera shake
-  /*
+
   void OnAnimatorMove()
   {
     Vector3 newRootPosition;
@@ -163,12 +163,13 @@ public class PlayerController : MonoBehaviour {
     }
     newRootPosition = anim.rootPosition;
     newRootRotation = anim.rootRotation;
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.FreeMovementSpeed);
+    float speed = isRunning? RunSpeed : WalkSpeed;
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
     newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, 1);
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
   }
-  */
+
   public void Move(Vector3 motion)
   {
     // transform.position += motion;
@@ -246,7 +247,7 @@ public class PlayerController : MonoBehaviour {
       // Rotate player along up axis
       Quaternion rot = Quaternion.LookRotation(newVector);
       Quaternion newRootRotation = Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
-      Debug.Log("newRootRotation: " + newRootRotation);
+      // Debug.Log("newRootRotation: " + newRootRotation);
       rb.MoveRotation(newRootRotation);
     }
   }
