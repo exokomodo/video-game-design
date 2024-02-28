@@ -22,9 +22,11 @@ public class PlayerController : MonoBehaviour {
   private bool _isFalling = false;
   private bool _isRunning = false;
   private float groundCheckDistance = 0.01f;
+  private readonly int RunHash = Animator.StringToHash("isRunning");
 
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
+
 
   [field: SerializeField] public bool RootMotion = true;
 
@@ -211,11 +213,13 @@ public class PlayerController : MonoBehaviour {
   protected void OnRun()
     {
         _isRunning = true;
+        anim.SetBool(RunHash, true);
     }
 
     protected void OnRunStop()
     {
         _isRunning = false;
+        anim.SetBool(RunHash, false);
     }
 
   private void OnDestroy()
