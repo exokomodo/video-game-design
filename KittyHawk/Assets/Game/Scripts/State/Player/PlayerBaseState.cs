@@ -6,6 +6,8 @@ public abstract class PlayerBaseState : State
 {
     protected PlayerStateMachine stateMachine;
 
+    protected int StateIDHash = Animator.StringToHash("StateID");
+
     public PlayerBaseState(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -14,5 +16,10 @@ public abstract class PlayerBaseState : State
     protected void Move(Vector3 movement, float deltaTime)
     {
         stateMachine.Controller.Move((movement + stateMachine.ForceReceiver.Movement) * deltaTime);
+    }
+
+    protected void Jump(Vector3 movement, float deltaTime)
+    {
+        stateMachine.Controller.Jump((movement + stateMachine.ForceReceiver.Movement) * deltaTime);
     }
 }

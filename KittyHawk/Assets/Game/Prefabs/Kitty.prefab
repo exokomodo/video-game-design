@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446078441638}
-  m_LocalRotation: {x: 0.18428667, y: 0.00000001464595, z: -0.0000000027460865, w: 0.98287255}
+  m_LocalRotation: {x: -0.0000000019468032, y: 0.97406036, z: -0.22628854, w: -0.0000000083800265}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 35
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -229,7 +229,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446183074857}
-  m_LocalRotation: {x: 0.18428667, y: 0.000000029291884, z: -0.0000000054921707, w: 0.98287255}
+  m_LocalRotation: {x: -0.000000001951535, y: 0.97406036, z: -0.22628854, w: -0.000000008400392}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 35
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -307,7 +307,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446383393765}
-  m_LocalRotation: {x: 0.14273316, y: 8.271806e-25, z: -1.3768221e-32, w: 0.98976123}
+  m_LocalRotation: {x: 0.0000000016940785, y: 0.980421, z: -0.19691285, w: 0.000000008434747}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 35
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -515,7 +515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446533891486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -4}
+  m_LocalPosition: {x: 0, y: 3, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Follow: {fileID: 4332609799439366564}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 35
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -969,6 +969,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: abe1fd55125ea0f4a88315a57c83e03b,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: abe1fd55125ea0f4a88315a57c83e03b,
+        type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -1045,24 +1050,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4299315680664673871}
   m_PrefabAsset: {fileID: 0}
---- !u!143 &971114091770164069
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3993378973873988382}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 0
-  m_Radius: 0.25
-  m_SlopeLimit: 60
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.05
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!95 &4299315680022577801
 Animator:
   serializedVersion: 5
@@ -1073,7 +1060,7 @@ Animator:
   m_GameObject: {fileID: 3993378973873988382}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba4bb5079747ef946b9f79c1eeaf1dbb, type: 2}
+  m_Controller: {fileID: 9100000, guid: ef1698afd62ad4b87b89c8f91f868e06, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1084,26 +1071,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &795579815449831473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3993378973873988382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6dfef050a7be498c9031abc99ece509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Controller>k__BackingField: {fileID: 971114091770164069}
-  <InputReader>k__BackingField: {fileID: 3861691666274536973}
-  <Animator>k__BackingField: {fileID: 4299315680022577801}
-  <ForceReceiver>k__BackingField: {fileID: 7536451580485643761}
-  <FreeMovementSpeed>k__BackingField: 4
-  <RunningSpeed>k__BackingField: 10
-  <JumpForce>k__BackingField: 4
-  <RotationDamping>k__BackingField: 10
 --- !u!114 &3861691666274536973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,6 +1083,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4124475953836222329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993378973873988382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2375762fd14f49249c66c0fcfe9fef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 4299315680022577801}
+  FSM: {fileID: 7435317416413036474}
+  velocity: {x: 0, y: 0, z: 0}
+  isGrounded: 1
 --- !u!114 &5898213249921091957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,6 +1111,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15e1ac5b1ea6e40be65fb40b1593bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6627306548782798526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993378973873988382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf33c7b0efc849a291598e4b4cbc2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 4124475953836222329}
 --- !u!114 &7088524224718173928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,7 +1140,7 @@ MonoBehaviour:
   startingCatnip: 0
   maxLives: 9
   maxCatnip: 100
---- !u!114 &7536451580485643761
+--- !u!114 &7435317416413036474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1153,10 +1149,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3993378973873988382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf33c7b0efc849a291598e4b4cbc2cd, type: 3}
+  m_Script: {fileID: 11500000, guid: d6dfef050a7be498c9031abc99ece509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 971114091770164069}
+  <Controller>k__BackingField: {fileID: 4124475953836222329}
+  <InputReader>k__BackingField: {fileID: 3861691666274536973}
+  <Animator>k__BackingField: {fileID: 4299315680022577801}
+  <ForceReceiver>k__BackingField: {fileID: 6627306548782798526}
+  <FreeMovementSpeed>k__BackingField: 4
+  <RunningSpeed>k__BackingField: 10
+  <JumpForce>k__BackingField: 4
+  <RotationDamping>k__BackingField: 10
+  isJumping: 0
 --- !u!4 &4332609799439366564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: abe1fd55125ea0f4a88315a57c83e03b,
