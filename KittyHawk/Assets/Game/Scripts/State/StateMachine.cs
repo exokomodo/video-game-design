@@ -6,8 +6,10 @@ public abstract class StateMachine : MonoBehaviour
 {
     protected State currentState;
     protected State previousState;
+    protected int StateIDHash = Animator.StringToHash("StateID");
+    protected int PrevStateIDHash = Animator.StringToHash("PrevStateID");
 
-    public void SwitchState(State newState)
+    public virtual void SwitchState(State newState)
     {
         previousState = currentState;
         currentState?.Exit();

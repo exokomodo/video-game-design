@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446078441638}
-  m_LocalRotation: {x: -0.0000000035829861, y: 0.97713673, z: -0.21261193, w: -0.000000016466938}
+  m_LocalRotation: {x: -0.0000000036808605, y: 0.97713673, z: -0.21261193, w: -0.000000016916756}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -229,8 +229,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446183074857}
-  m_LocalRotation: {x: -0.0000000035742127, y: 0.97713673, z: -0.21261193, w: -0.000000016426613}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.0000000037197394, y: 0.9771368, z: -0.21261191, w: 0.000000017095442}
+  m_LocalPosition: {x: -1.7473862e-15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -307,7 +307,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446383393765}
-  m_LocalRotation: {x: 0.0000000031452316, y: 0.98382944, z: -0.17910786, w: 0.00000001727658}
+  m_LocalRotation: {x: -0.0000000030726461, y: 0.98382944, z: -0.17910786, w: -0.000000016877873}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -515,7 +515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446533891486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0000000028331535, y: 3, z: 4}
+  m_LocalPosition: {x: -1.0753146e-16, y: 3, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -925,6 +925,16 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
       propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1001,6 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2375762fd14f49249c66c0fcfe9fef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RootMotion: 1
 --- !u!114 &5880034425804953106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,3 +1047,4 @@ MonoBehaviour:
   <JumpForce>k__BackingField: 4
   <RotationDamping>k__BackingField: 4
   isJumping: 0
+  isRunning: 0

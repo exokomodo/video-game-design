@@ -18,18 +18,20 @@ public class PlayerMoveState : PlayerMoveBase
 
     public override void Enter()
     {
+        Debug.Log("PlayerMoveState Enter");
         base.Enter();
-        stateMachine.Animator.SetInteger(StateIDHash, StateID);
+        // stateMachine.Animator.SetInteger(StateIDHash, StateID);
         stateMachine.Animator.SetFloat(VelocityXHash, 0f);
         stateMachine.Animator.SetFloat(VelocityZHash, 0f);
-        stateMachine.Animator.Play(MoveHash);
+        // stateMachine.Animator.Play(MoveHash);
     }
 
     public override void Execute(float deltaTime)
     {
+        Debug.Log("PlayerMoveState Execute");
         Vector3 movement = CalculateMovement();
-        Move(movement, deltaTime);
-        Debug.Log("movement:" + movement);
+        // Move(movement, deltaTime);
+        // Debug.Log("movement:" + movement);
         if (stateMachine.InputReader.MovementValue == Vector2.zero)
         {
             stateMachine.Animator.SetFloat(VelocityXHash, 0, AnimatorDampTime, deltaTime);

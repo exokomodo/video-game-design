@@ -30,7 +30,9 @@ public class PlayerStateMachine : StateMachine
     public Transform MainCameraTransform { get; private set; }
 
     public bool isJumping = false;
+    public bool isRunning = false;
     private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE};
+    private int StateChangeIDHash = Animator.StringToHash("StateChange");
 
     protected AnimationClip[] clips;
 
@@ -41,8 +43,18 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerIdleState(this));
     }
 
+    public override void SwitchState(State newState)
+    {
+        int? previousSateID = previousState?.StateID;
+        base.SwitchState(newState);
+        Animator.SetInteger(StateIDHash, newState.StateID);
+        Animator.SetBool(StateChangeIDHash, true);
+        if (!previousSateID.Equals(null)) Animator.SetInteger(PrevStateIDHash, (int) previousSateID);
+    }
+
     protected override void Update()
     {
+        Animator.SetBool(StateChangeIDHash, false);
         if (!motionStates.Contains(currentState.StateID) && InputReader.MovementValue != Vector2.zero) {
             Debug.Log("Switch to PlayerMoveState");
             SwitchState(new PlayerMoveState(this));
@@ -64,7 +76,6 @@ public class PlayerStateMachine : StateMachine
             evt.functionName = "OnClipEnd";
             clip.AddEvent(evt);
         }
-
     }
 
     public void OnClipEnd(string clipName)

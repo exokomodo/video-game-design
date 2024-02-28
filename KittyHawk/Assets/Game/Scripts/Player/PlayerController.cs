@@ -15,10 +15,11 @@ public class PlayerController : MonoBehaviour {
   private bool _prevGrounded = true;
   private bool _isJumping = false;
   private bool _jump = false;
-
-  public bool isGrounded => _isGrounded;
   private float groundCheckDistance = 0.01f;
 
+  public bool isGrounded => _isGrounded;
+
+  public bool RootMotion = true;
 
   public void Awake()
   {
@@ -48,7 +49,10 @@ public class PlayerController : MonoBehaviour {
 
   private void Start()
   {
+    Application.targetFrameRate = 60;
+    Time.timeScale = 1;
     input.JumpEvent += OnJump;
+    anim.applyRootMotion = RootMotion;
   }
 
   private void FixedUpdate()
@@ -63,7 +67,7 @@ public class PlayerController : MonoBehaviour {
       }
       if (!_isJumping && !_prevGrounded)
       {
-        anim.applyRootMotion = true;
+        // anim.applyRootMotion = true;
         stateMachine.SwitchState(new PlayerMoveState(stateMachine));
       }
     }
@@ -72,12 +76,54 @@ public class PlayerController : MonoBehaviour {
     }
     // anim.applyRootMotion = _isGrounded;
     _jump = false;
-    Debug.Log("_isGrounded: " + _isGrounded);
+    if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
   }
 
+  // If OnAnimatorMove is present, root motion does not automatically change the player position
+  // This is leading to excessive camera shake
+  /*
+  void OnAnimatorMove()
+  {
+    Vector3 newRootPosition;
+    Quaternion newRootRotation;
+
+    if (isGrounded)
+    {
+      //use root motion as is if on the ground
+        newRootPosition = anim.rootPosition;
+    }
+    else
+    {
+        //Simple trick to keep model from climbing other rigidbodies that aren't the ground
+        newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
+    }
+    newRootPosition = anim.rootPosition;
+    newRootRotation = anim.rootRotation;
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.FreeMovementSpeed);
+    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, 1);
+    rb.MovePosition(newRootPosition);
+    rb.MoveRotation(newRootRotation);
+  }
+  */
   public void Move(Vector3 motion)
   {
-    transform.position += motion;
+    // transform.position += motion;
+    // rb.AddForce(motion);
+    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
+    Vector3 newRootPosition = anim.rootPosition;
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.JumpForce);
+    rb.MovePosition(newRootPosition + motion);
+  }
+
+  public void Jump(Vector3 motion)
+  {
+    // transform.position += motion;
+    // rb.AddForce(motion);
+    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
+    // Vector3 newRootPosition = anim.rootPosition;
+    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.JumpForce);
+    // rb.MovePosition(newRootPosition + motion);
+    // rb.AddForce(new Vector3(0, 1, 0), ForceMode.Impulse);
   }
 
   private void CheckGrounded()
@@ -100,6 +146,7 @@ public class PlayerController : MonoBehaviour {
     {
       _isJumping = false;
     }
+    // _isGrounded = true;
   }
 
   private void OnJump()

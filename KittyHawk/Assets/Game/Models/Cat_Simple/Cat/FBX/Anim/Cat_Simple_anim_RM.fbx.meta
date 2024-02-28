@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 7145d2b6212c8c24d8f566acd5a42ad8
 ModelImporter:
-  serializedVersion: 20300
+  serializedVersion: 21300
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -19,6 +19,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -28,10 +29,10 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 0
-    animationRotationError: 0.5
-    animationPositionError: 0.5
-    animationScaleError: 0.5
+    animationCompression: 1
+    animationRotationError: 0.05
+    animationPositionError: 0.05
+    animationScaleError: 0.05
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
@@ -1213,7 +1214,7 @@ ModelImporter:
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -1221,8 +1222,114 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Arm_Cat
+        weight: 1
+      - path: Arm_Cat/root_bone
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/mouth
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/mouth/tongue_01
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/mouth/tongue_01/tongue_02
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/mouth/tongue_01/tongue_02/tongue_03
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/ear_1.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/ear_1.L/ear_2.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/eyelid.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/mustache.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/ear_1.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/ear_1.R/ear_2.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/eyelid.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/mustache.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/eye.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/neck/head/eye.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.L/hip_f.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.L/hip_f.L/leg_f.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.L/hip_f.L/leg_f.L/foot_f.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.L/hip_f.L/leg_f.L/foot_f.L/claw_f.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.R/hip_f.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.R/hip_f.R/leg_f.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.R/hip_f.R/leg_f.R/foot_f.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_02/spine_03/spine_04/spine_05/shoulder_blade.R/hip_f.R/leg_f.R/foot_f.R/claw_f.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_01
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_01/tail_01
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_01/tail_01/tail_02
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_01/tail_01/tail_02/tail_03
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_01/tail_01/tail_02/tail_03/tail_04
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/spine_01/tail_01/tail_02/tail_03/tail_04/tail_05
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.L/leg_b.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.L/leg_b.L/foot_b.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.L/leg_b.L/foot_b.L/claw_b.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.R/leg_b.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.R/leg_b.R/foot_b.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Spine_base/hip_b.R/leg_b.R/foot_b.R/claw_b.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Helper_claw_b.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Helper_claw_b.R
+        weight: 1
+      - path: Arm_Cat/root_bone/Helper_foot_f.L
+        weight: 1
+      - path: Arm_Cat/root_bone/Helper_foot_f.R
+        weight: 1
+      - path: Cat_1
+        weight: 1
+      maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
@@ -1732,10 +1839,10 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -3615,6 +3722,7 @@ ModelImporter:
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -3626,6 +3734,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -3662,7 +3771,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1

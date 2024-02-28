@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class PlayerMoveBase : PlayerBaseState
 {
-    public PlayerMoveBase(PlayerStateMachine stateMachine, bool isRunning = false) : base(stateMachine)
-    {
-        this.isRunning = isRunning;
-    }
+    public PlayerMoveBase(PlayerStateMachine stateMachine) : base(stateMachine) {}
     public override void Enter()
     {
         stateMachine.InputReader.RunEvent += OnRun;
