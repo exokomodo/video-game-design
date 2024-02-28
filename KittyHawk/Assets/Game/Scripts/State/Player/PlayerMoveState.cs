@@ -23,7 +23,7 @@ public class PlayerMoveState : PlayerMoveBase
         // stateMachine.Animator.SetInteger(StateIDHash, StateID);
         stateMachine.Animator.SetFloat(VelocityXHash, 0f);
         stateMachine.Animator.SetFloat(VelocityZHash, 0f);
-        // stateMachine.Animator.Play(MoveHash);
+        stateMachine.Animator.Play(MoveHash); // Begin moving immediately
     }
 
     public override void Execute(float deltaTime)

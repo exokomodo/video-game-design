@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446078441638}
-  m_LocalRotation: {x: -0.0000000036808605, y: 0.97713673, z: -0.21261193, w: -0.000000016916756}
+  m_LocalRotation: {x: 0.0000000037197394, y: 0.9771368, z: -0.21261191, w: 0.000000017095442}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -229,8 +229,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446183074857}
-  m_LocalRotation: {x: 0.0000000037197394, y: 0.9771368, z: -0.21261191, w: 0.000000017095442}
-  m_LocalPosition: {x: -1.7473862e-15, y: 0, z: 0}
+  m_LocalRotation: {x: -0.0000000037196524, y: 0.9771368, z: -0.21261191, w: -0.000000017095038}
+  m_LocalPosition: {x: -1.01297755e-16, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -307,7 +307,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446383393765}
-  m_LocalRotation: {x: -0.0000000030726461, y: 0.98382944, z: -0.17910786, w: -0.000000016877873}
+  m_LocalRotation: {x: -0.0000000010497373, y: 0.9838295, z: -0.17910784, w: -0.0000000057661502}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -515,7 +515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3187611446533891486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0753146e-16, y: 3, z: 4}
+  m_LocalPosition: {x: -6.233708e-18, y: 3, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1048,3 +1048,23 @@ MonoBehaviour:
   <RotationDamping>k__BackingField: 4
   isJumping: 0
   isRunning: 0
+--- !u!1 &8583609969370047798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7498501455821733326, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 6985333081812150020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &4682611347982289475
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8583609969370047798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.050592225
+  m_Height: 0.12422546
+  m_Direction: 1
+  m_Center: {x: -0.0008807523, y: 0.018010443, z: 0.016138384}

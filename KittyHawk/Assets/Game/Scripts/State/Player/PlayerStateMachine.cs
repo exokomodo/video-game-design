@@ -36,6 +36,8 @@ public class PlayerStateMachine : StateMachine
 
     protected AnimationClip[] clips;
 
+    private bool firstUpdate;
+
     private void Start()
     {
         MainCameraTransform = Camera.main.transform;
@@ -45,15 +47,24 @@ public class PlayerStateMachine : StateMachine
 
     public override void SwitchState(State newState)
     {
+        previousState = currentState;
         int? previousSateID = previousState?.StateID;
-        base.SwitchState(newState);
-        Animator.SetInteger(StateIDHash, newState.StateID);
-        Animator.SetBool(StateChangeIDHash, true);
+        currentState?.Exit();
+
+        currentState = newState;
+        currentState?.Enter();
+        firstUpdate = true;
+        Animator.SetInteger(StateIDHash, currentState.StateID);
+
+        // base.SwitchState(newState);
+
         if (!previousSateID.Equals(null)) Animator.SetInteger(PrevStateIDHash, (int) previousSateID);
     }
 
     protected override void Update()
     {
+
+        // if (Animator.GetBool(StateChangeIDHash))
         Animator.SetBool(StateChangeIDHash, false);
         if (!motionStates.Contains(currentState.StateID) && InputReader.MovementValue != Vector2.zero) {
             Debug.Log("Switch to PlayerMoveState");
@@ -61,6 +72,12 @@ public class PlayerStateMachine : StateMachine
             return;
         }
         currentState?.Execute(Time.deltaTime);
+        if (firstUpdate && currentState != null)
+        {
+
+            Animator.SetBool(StateChangeIDHash, true);
+            firstUpdate = false;
+        }
     }
 
     private void AddAnimationEndEvent()

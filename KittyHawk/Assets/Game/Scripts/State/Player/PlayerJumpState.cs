@@ -3,49 +3,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerMoveBase
+public class PlayerJumpState : PlayerBaseState
 {
-    private readonly int StateHash = Animator.StringToHash("Jump");
+    private readonly int AnimStateHash = Animator.StringToHash("JumpingState");
     private readonly int VelocityXHash = Animator.StringToHash("VelocityX");
     private readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
     private const float AnimatorDampTime = 0.1f;
 
-    public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine) {
+    private float elapsedTime;
+    private Vector3 previousVelocity;
+
+    private bool firstTime = true;
+
+    public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
+    {
         this.StateID = 4;
     }
 
-    private float elapsedTime;
-    private Vector3 previousVelocity;
+
+
 
     public override void Enter()
     {
         Debug.Log("Enter PlayerJumpState");
-        base.Enter();
+        // base.Enter();
         // stateMachine.isJumping = true;
         // stateMachine.Animator.SetInteger(StateIDHash, StateID);
-        Debug.Log("StateIDHash: " + stateMachine.Animator.GetInteger(StateIDHash));
+        Debug.Log("PlayerJumpState StateIDHash: " + stateMachine.Animator.GetInteger(StateIDHash));
         // stateMachine.Animator.Play(StateHash);
         stateMachine.ForceReceiver.Jump(stateMachine.JumpForce);
         // stateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
         // stateMachine.Animator.applyRootMotion = true;
         elapsedTime = 0;
         previousVelocity = Vector3.zero;
+        stateMachine.Animator.Play(AnimStateHash); // Begin moving immediately
+        // stateMachine.Animator.SetBool("StateChange", true);
+        stateMachine.Animator.SetInteger(Animator.StringToHash("StateID"), StateID);
+        stateMachine.Animator.SetBool("StateChange", true);
     }
 
     public override void Execute(float deltaTime)
     {
+        // if (firstTime)
+        // {
+        //     stateMachine.Animator.SetBool("StateChange", true);
+        //     firstTime = false;
+        // }
+
+        // Debug.Log("StateIDHash: " + stateMachine.Animator.GetInteger(StateIDHash));
         // Vector3 movement = CalculateMovement();
         // // Move(movement, deltaTime);
         // Debug.Log("PlayerJumpSate movement:" + movement);
         // stateMachine.Animator.SetFloat(VelocityXHash, movement.x, AnimatorDampTime, deltaTime);
         // stateMachine.Animator.SetFloat(VelocityZHash, movement.z, AnimatorDampTime, deltaTime);
         // FaceMovementDirection(movement, deltaTime);
-        Vector3 movement = CalculateMovement();
+        // Vector3 movement = CalculateMovement();
         // float speed = stateMachine.isRunning? stateMachine.RunningSpeed : stateMachine.FreeMovementSpeed;
         // Jump(movement * speed, deltaTime);
         // Jump(new Vector3(0, 1, 0) * stateMachine.JumpForce, deltaTime);
         float y = stateMachine.transform.position.y;
-        Debug.Log("StateMachine velocity: " + stateMachine.Controller.velocity.y + ", " + y + ", " + elapsedTime);
+        // Debug.Log("StateMachine velocity: " + stateMachine.Controller.velocity.y + ", " + y + ", " + elapsedTime);
 
         // if (stateMachine.Controller.velocity.y <= 0.01f && y > 0.2f)
         // {
@@ -53,13 +70,13 @@ public class PlayerJumpState : PlayerMoveBase
         // }
         elapsedTime += deltaTime;
         previousVelocity = stateMachine.Controller.velocity;
-        FaceMovementDirection(movement, deltaTime);
+        // FaceMovementDirection(movement, deltaTime);
     }
 
     public override void Exit()
     {
         Debug.Log("Exit PlayerJumpState");
-        base.Exit();
-        stateMachine.isJumping = false;
+        // base.Exit();
+        // stateMachine.isJumping = false;
     }
 }
