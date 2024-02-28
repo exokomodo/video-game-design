@@ -28,6 +28,7 @@ public class PlayerStateMachine : StateMachine
 
     public Transform MainCameraTransform { get; private set; }
 
+    public bool isIdle => currentState?.StateID == (int) StateEnum.IDLE;
     public bool isJumping => currentState?.StateID == (int) StateEnum.JUMP;
     public bool isRunning => Controller.isRunning;
 
@@ -36,7 +37,7 @@ public class PlayerStateMachine : StateMachine
     public bool isCrawling => currentState?.StateID == (int) StateEnum.CRAWL;
 
     // Incomplete... add crawl, fall, climb, etc
-    private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE};
+    private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE, (int)StateEnum.FALL};
     private int StateChangeIDHash = Animator.StringToHash("StateChange");
 
     protected AnimationClip[] clips;

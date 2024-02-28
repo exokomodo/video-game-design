@@ -20,12 +20,11 @@ public class PlayerMoveBase : PlayerBaseState
         // FaceMovementDirection(movement, deltaTime);
         stateMachine.Animator.SetFloat(VelocityXHash, movement.x, AnimatorDampTime, deltaTime);
         stateMachine.Animator.SetFloat(VelocityZHash, movement.z, AnimatorDampTime, deltaTime);
-        if (stateMachine.InputReader.MovementValue == Vector2.zero && !stateMachine.isJumping)
+        if (stateMachine.InputReader.MovementValue == Vector2.zero && (!stateMachine.isJumping || !stateMachine.isFalling))
         {
             // If player is not moving, switch to Idle State
             stateMachine.SwitchState(new PlayerIdleState(stateMachine));
         }
-
     }
 
     public override void Exit()
