@@ -8,6 +8,8 @@ TagManager:
   - grabbable
   - ground
   - Catnip
+  - HorseWaypoints
+  - HorseWaypoint
   layers:
   - Default
   - TransparentFX
