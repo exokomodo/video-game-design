@@ -8,16 +8,14 @@ public class PlayerSitState : PlayerBaseState
 
     public int range = 0;
 
-    public PlayerSitState(PlayerStateMachine stateMachine) : base(stateMachine) {}
+    public PlayerSitState(PlayerStateMachine stateMachine) : base(stateMachine) {
+        this.StateID = 1;
+    }
 
     public override void Enter()
     {
-        this.StateID = 1;
-        Debug.Log("PlayerSit State Enter");
+        Debug.Log("PlayerSitState Enter");
         timer = Mathf.Floor(Random.Range(10, 20));
-        stateMachine.Animator.SetInteger(StateIDHash, StateID);
-
-
     }
 
     public override void Execute(float deltaTime)
@@ -34,6 +32,6 @@ public class PlayerSitState : PlayerBaseState
 
     public override void Exit()
     {
-
+        Debug.Log("PlayerSitState Exit");
     }
 }
