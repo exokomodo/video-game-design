@@ -19,6 +19,8 @@ public abstract class StateMachine : MonoBehaviour
     }
 
     protected abstract void Update();
+    protected abstract void FixedUpdate();
+    protected abstract void Execute(float deltaTime);
 
     public void RevertState()
     {

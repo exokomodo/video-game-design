@@ -31,14 +31,14 @@ public class PlayerController : MonoBehaviour {
   public bool isRunning => _isRunning;
 
   public bool isMoving => stateMachine.isMoving;
-
-
   [field: SerializeField] public bool RootMotion = true;
 
   [field: SerializeField] public float WalkSpeed = 1.0f;
   [field: SerializeField] public float RunSpeed = 2.0f;
 
   [field: SerializeField] public float TurnSpeed = 1.0f;
+
+  public float speed => isRunning? RunSpeed : WalkSpeed;
 
   public void Awake()
   {
@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour {
     if (rb == null) throw new Exception("Rigid body could not be found");
 
     col = GetComponent<CapsuleCollider>();
-    Debug.Log("col" + col.height + ", " + col.radius);
     if (col == null) throw new Exception("Collider could not be found");
 
     input = GetComponent<InputReader>();
@@ -61,10 +60,17 @@ public class PlayerController : MonoBehaviour {
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
-    Debug.Log("frontPivot: " + frontPivot);
-    Debug.Log("backPivot: " + backPivot);
 
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+  }
+
+  private void Start()
+  {
+    Application.targetFrameRate = 60;
+    Time.timeScale = 1.0f;
+    input.JumpEvent += OnJump;
+    input.RunEvent += OnRun;
+    input.RunStopEvent += OnRunStop;
   }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
@@ -88,16 +94,7 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  private void Start()
-  {
-    Application.targetFrameRate = 60;
-    Time.timeScale = 1.0f;
-    input.JumpEvent += OnJump;
-    input.RunEvent += OnRun;
-    input.RunStopEvent += OnRunStop;
-  }
-
-  private void Update()
+  private void FixedUpdate()
   {
     _prevGrounded = _isGrounded;
     CheckGrounded();
@@ -116,7 +113,7 @@ public class PlayerController : MonoBehaviour {
       // {
       //   stateMachine.SwitchState(new PlayerIdleState(stateMachine));
       // }
-      // if (isMoving) CheckGroundAngle();
+      if (isMoving) CheckGroundAngle();
 
     }
     else
@@ -136,18 +133,20 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-
-    // anim.applyRootMotion = _isGrounded;
-
     _fall = false;
     if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
   }
 
   // If OnAnimatorMove is present, root motion does not automatically change the player position
-  // This is leading to excessive camera shake
 
   void OnAnimatorMove()
   {
+    if (_isJumping)
+    {
+      anim.ApplyBuiltinRootMotion(); // prefer root motion for jumping animations
+      return;
+    }
+
     Vector3 newRootPosition;
     Quaternion newRootRotation;
 
@@ -161,10 +160,11 @@ public class PlayerController : MonoBehaviour {
         //Simple trick to keep model from climbing other rigidbodies that aren't the ground
         newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
     }
-    newRootPosition = anim.rootPosition;
+    // newRootPosition = anim.rootPosition;
     newRootRotation = anim.rootRotation;
-    float speed = isRunning? RunSpeed : WalkSpeed;
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
+    float newY = Mathf.Max(0, newRootPosition.y);
+    newRootPosition.y = newY;
     newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
@@ -176,7 +176,6 @@ public class PlayerController : MonoBehaviour {
     // transform.position += motion;
     // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
     Vector3 newRootPosition = rb.transform.position + motion;
-    float speed = isRunning? RunSpeed : WalkSpeed;
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, 1);
     // rb.MovePosition(newRootPosition);
     rb.transform.position = newRootPosition;

@@ -16,7 +16,6 @@ public class PlayerJumpState : PlayerMoveBase
     {
         Debug.Log("PlayerJumpState Enter");
         base.Enter();
-        stateMachine.ForceReceiver.Jump(stateMachine.JumpForce);
         momentum = stateMachine.Controller.velocity;
         momentum.y = 0;
         // stateMachine.Controller.Jump(new Vector3(0, stateMachine.JumpForce, 0));
@@ -30,7 +29,7 @@ public class PlayerJumpState : PlayerMoveBase
     {
         // Override base state
         // Jump(momentum, deltaTime);
-        Move(momentum, deltaTime);
+        // Move(momentum, deltaTime);
     }
 
     /*
