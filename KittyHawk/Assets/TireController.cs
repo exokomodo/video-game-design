@@ -54,8 +54,7 @@ public class TireController : MonoBehaviour
             Invoke("ResetAnimator", anim.GetCurrentAnimatorStateInfo(0).length);
             
             // TODO: Main camera pans up? 
-            
-            //TODO: Add boing sound effect, do we need an audio engine?
+            EventManager.TriggerEvent<TireStackBounceEvent, Vector3>(transform.position);
         }
     }
     
