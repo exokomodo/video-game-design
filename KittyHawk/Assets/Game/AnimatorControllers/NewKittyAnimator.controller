@@ -538,12 +538,12 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.1
   m_TransitionOffset: 0
-  m_ExitTime: 0.8
-  m_HasExitTime: 1
+  m_ExitTime: 0.2
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1109 &-6287301993673889137
@@ -1965,7 +1965,7 @@ MonoBehaviour:
   enterEventValue: 
   exitEventValue: 
   timeEventValue: LandComplete
-  sendTime: 0.33
+  sendTime: 0.8
 --- !u!114 &3071299935930097686
 MonoBehaviour:
   m_ObjectHideFlags: 1

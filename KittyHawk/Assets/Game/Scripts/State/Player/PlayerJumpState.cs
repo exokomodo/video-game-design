@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerMoveBase
 {
-    private readonly int AnimStateHash = Animator.StringToHash("JumpingState");
-    // private float elapsedTime;
-    // private Vector3 previousVelocity;
-    // private float prevY;
+    private Vector3 momentum;
 
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -17,9 +14,12 @@ public class PlayerJumpState : PlayerMoveBase
 
     public override void Enter()
     {
-        Debug.Log("Enter PlayerJumpState");
+        Debug.Log("PlayerJumpState Enter");
         base.Enter();
         stateMachine.ForceReceiver.Jump(stateMachine.JumpForce);
+        momentum = stateMachine.Controller.velocity;
+        momentum.y = 0;
+        // stateMachine.Controller.Jump(new Vector3(0, stateMachine.JumpForce, 0));
         // stateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
         // elapsedTime = 0;
         // previousVelocity = Vector3.zero;
@@ -29,6 +29,8 @@ public class PlayerJumpState : PlayerMoveBase
     public override void Execute(float deltaTime)
     {
         // Override base state
+        // Jump(momentum, deltaTime);
+        Move(momentum, deltaTime);
     }
 
     /*
@@ -51,6 +53,6 @@ public class PlayerJumpState : PlayerMoveBase
 
     public override void Exit()
     {
-        Debug.Log("Exit PlayerJumpState");
+        Debug.Log("PlayerJumpState Exit");
     }
 }

@@ -20,6 +20,7 @@ public abstract class PlayerBaseState : State
 
     protected void Jump(Vector3 movement, float deltaTime)
     {
-        stateMachine.Controller.Jump((movement + stateMachine.ForceReceiver.Movement) * deltaTime);
+        // stateMachine.Controller.Jump((movement + stateMachine.ForceReceiver.Movement) * deltaTime);
+        stateMachine.Controller.Jump(movement);
     }
 }

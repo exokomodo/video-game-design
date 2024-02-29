@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
     input.RunStopEvent += OnRunStop;
   }
 
-  private void FixedUpdate()
+  private void Update()
   {
     _prevGrounded = _isGrounded;
     CheckGrounded();
@@ -107,9 +107,9 @@ public class PlayerController : MonoBehaviour {
       //   _isJumping = false;
       // }
       if (_jump && !_isJumping) {
+        Debug.Log("SWITCHING TO JUMP STATE");
         _jump = false;
         _isJumping = true;
-        // anim.applyRootMotion = false;
         stateMachine.SwitchState(new PlayerJumpState(stateMachine));
       }
       // if (!_isFalling && !_isJumping && !_prevGrounded)
@@ -165,35 +165,30 @@ public class PlayerController : MonoBehaviour {
     newRootRotation = anim.rootRotation;
     float speed = isRunning? RunSpeed : WalkSpeed;
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
-    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, 1);
+    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
   }
 
   public void Move(Vector3 motion)
   {
+    Debug.Log("MOVE: " + motion);
     // transform.position += motion;
-    // rb.AddForce(motion);
     // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
-    Vector3 newRootPosition = anim.rootPosition;
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.JumpForce);
-    rb.MovePosition(newRootPosition + motion);
+    Vector3 newRootPosition = rb.transform.position + motion;
+    float speed = isRunning? RunSpeed : WalkSpeed;
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, 1);
+    // rb.MovePosition(newRootPosition);
+    rb.transform.position = newRootPosition;
   }
 
   public void Jump(Vector3 motion)
   {
-    // transform.position += motion;
-    // rb.AddForce(motion);
-    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
-    // Vector3 newRootPosition = anim.rootPosition;
-    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.JumpForce);
-    // rb.MovePosition(newRootPosition + motion);
-    // rb.AddForce(new Vector3(0, 1, 0), ForceMode.Impulse);
+    rb.AddForce(motion, ForceMode.VelocityChange);
   }
 
   private void CheckGrounded()
   {
-    // _prevGrounded = _isGrounded;
     float dist = col.height/2f + groundCheckTolerance;
     Vector3 pos = transform.position;
     Vector3 origin = new Vector3(pos.x, pos.y, pos.z);
@@ -210,11 +205,6 @@ public class PlayerController : MonoBehaviour {
     {
       _isGrounded = false;
       anim.SetBool(isGroundedHash, false);
-    }
-
-    if (_prevGrounded && _isGrounded && _isJumping)
-    {
-      // _isJumping = false;
     }
   }
 
