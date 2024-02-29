@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    private readonly int AnimHash = Animator.StringToHash("Idle");
+    protected readonly int VelocityXHash = Animator.StringToHash("VelocityX");
+    protected readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
+    protected const float AnimatorDampTime = 0.1f;
     private float timer;
     public int range = 0;
 
@@ -20,6 +22,8 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void Execute(float deltaTime)
     {
+        stateMachine.Animator.SetFloat(VelocityXHash, 0, AnimatorDampTime, deltaTime);
+        stateMachine.Animator.SetFloat(VelocityZHash, 0, AnimatorDampTime, deltaTime);
         timer -= deltaTime;
         if (timer <= 0)
         {

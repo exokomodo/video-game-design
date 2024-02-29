@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,11 +22,15 @@ public class PlayerController : MonoBehaviour {
   private bool _fall = false;
   private bool _isFalling = false;
   private bool _isRunning = false;
-  private float groundCheckDistance = 0.01f;
-  private readonly int RunHash = Animator.StringToHash("isRunning");
+  private float groundCheckTolerance = 0.01f;
+  private readonly int isRunningHash = Animator.StringToHash("isRunning");
+  private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
+  private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
 
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
+
+  public bool isMoving => stateMachine.isMoving;
 
 
   [field: SerializeField] public bool RootMotion = true;
@@ -65,6 +70,22 @@ public class PlayerController : MonoBehaviour {
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
     Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
+    switch (eventName)
+    {
+      case AnimationStateEvent.JUMP_COMPLETE:
+        _isJumping = false;
+        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        break;
+
+      case AnimationStateEvent.LAND_COMPLETE:
+        _isFalling = false;
+        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        break;
+
+      default:
+        Debug.LogError("Unhandled event: " + eventType + ", " + eventName);
+        break;
+    }
   }
 
   private void Start()
@@ -76,43 +97,55 @@ public class PlayerController : MonoBehaviour {
     input.RunStopEvent += OnRunStop;
   }
 
-  private void FixedUpdate()
+  private void Update()
   {
+    _prevGrounded = _isGrounded;
     CheckGrounded();
     if (_isGrounded)
     {
+      // if (_prevGrounded && _isGrounded && _isJumping) {
+      //   _isJumping = false;
+      // }
       if (_jump && !_isJumping) {
+        Debug.Log("SWITCHING TO JUMP STATE");
+        _jump = false;
         _isJumping = true;
-        // anim.applyRootMotion = false;
         stateMachine.SwitchState(new PlayerJumpState(stateMachine));
       }
-      if (!_isFalling && !_isJumping && !_prevGrounded)
-      {
-        // anim.applyRootMotion = true;
-        stateMachine.SwitchState(new PlayerIdleState(stateMachine));
-      }
-      if (stateMachine.isMoving) CheckGroundAngle();
+      // if (!_isFalling && !_isJumping && !_prevGrounded)
+      // {
+      //   stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+      // }
+      // if (isMoving) CheckGroundAngle();
+
     }
     else
     {
-      /*
-      if (!_isJumping && !_fall && !_isFalling)
+      if (_prevGrounded && !_jump && !_isJumping && !_fall && !_isFalling)
       {
+        Debug.Log("_jump: " + _jump + ", _isJumping: " + _isJumping);
+        Debug.Log("_fall: " + _fall + ", _isFalling: " + _isFalling);
         _fall = true;
         _isFalling = true;
         stateMachine.SwitchState(new PlayerFallState(stateMachine));
       }
-      */
+      if (_isFalling)
+      {
+        float distance = CheckGroundDistance();
+        float fallModifier = Mathf.Clamp(distance / 10, 0, 1);
+        anim.SetFloat(FallModifierHash, fallModifier);
+      }
     }
+
     // anim.applyRootMotion = _isGrounded;
-    _jump = false;
+
     _fall = false;
     if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
   }
 
   // If OnAnimatorMove is present, root motion does not automatically change the player position
   // This is leading to excessive camera shake
-  /*
+
   void OnAnimatorMove()
   {
     Vector3 newRootPosition;
@@ -130,55 +163,61 @@ public class PlayerController : MonoBehaviour {
     }
     newRootPosition = anim.rootPosition;
     newRootRotation = anim.rootRotation;
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.FreeMovementSpeed);
-    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, 1);
+    float speed = isRunning? RunSpeed : WalkSpeed;
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
+    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
   }
-  */
+
   public void Move(Vector3 motion)
   {
+    Debug.Log("MOVE: " + motion);
     // transform.position += motion;
-    // rb.AddForce(motion);
     // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
-    Vector3 newRootPosition = anim.rootPosition;
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.JumpForce);
-    rb.MovePosition(newRootPosition + motion);
+    Vector3 newRootPosition = rb.transform.position + motion;
+    float speed = isRunning? RunSpeed : WalkSpeed;
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, 1);
+    // rb.MovePosition(newRootPosition);
+    rb.transform.position = newRootPosition;
   }
 
   public void Jump(Vector3 motion)
   {
-    // transform.position += motion;
-    // rb.AddForce(motion);
-    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
-    // Vector3 newRootPosition = anim.rootPosition;
-    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, stateMachine.JumpForce);
-    // rb.MovePosition(newRootPosition + motion);
-    // rb.AddForce(new Vector3(0, 1, 0), ForceMode.Impulse);
+    rb.AddForce(motion, ForceMode.VelocityChange);
   }
 
   private void CheckGrounded()
   {
-    _prevGrounded = _isGrounded;
-    float dist = col.height/2f + groundCheckDistance;
-    Vector3 origin = transform.position;
+    float dist = col.height/2f + groundCheckTolerance;
+    Vector3 pos = transform.position;
+    Vector3 origin = new Vector3(pos.x, pos.y, pos.z);
     origin.y += col.radius;
+    origin.z += 0.1f;
 
     bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, dist, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
     if (hit)
     {
       _isGrounded = true;
+      anim.SetBool(isGroundedHash, true);
     }
     else
     {
       _isGrounded = false;
+      anim.SetBool(isGroundedHash, false);
     }
-    if (_prevGrounded && _isGrounded && (_isJumping || _isFalling))
+  }
+
+  private float CheckGroundDistance()
+  {
+    Vector3 origin = anim.rootPosition;
+    RaycastHit hitInfo;
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hitInfo, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.None);
+    if (hit)
     {
-      _isJumping = false;
-      _isFalling = false;
+      return hitInfo.distance;
     }
-    // _isGrounded = true;
+    return float.PositiveInfinity;
   }
 
   private void CheckGroundAngle()
@@ -195,31 +234,29 @@ public class PlayerController : MonoBehaviour {
 
     if (Math.Abs(deltaHeight) > 0.01f)
     {
-
       // Rotate player along up axis
       Quaternion rot = Quaternion.LookRotation(newVector);
       Quaternion newRootRotation = Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
-      Debug.Log("newRootRotation: " + newRootRotation);
+      // Debug.Log("newRootRotation: " + newRootRotation);
       rb.MoveRotation(newRootRotation);
     }
-
   }
 
   private void OnJump()
   {
-      if (!_jump) _jump = true;
+      if (!_isJumping && !_isFalling) _jump = true;
   }
 
   protected void OnRun()
     {
         _isRunning = true;
-        anim.SetBool(RunHash, true);
+        anim.SetBool(isRunningHash, true);
     }
 
     protected void OnRunStop()
     {
         _isRunning = false;
-        anim.SetBool(RunHash, false);
+        anim.SetBool(isRunningHash, false);
     }
 
   private void OnDestroy()
