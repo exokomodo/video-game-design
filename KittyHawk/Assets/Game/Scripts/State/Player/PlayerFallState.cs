@@ -14,6 +14,8 @@ public class PlayerFallState : PlayerMoveBase
     public override void Enter()
     {
         Debug.Log("PlayerFallState Enter");
+        momentum = stateMachine.Controller.velocity;
+        momentum.y = 0;
         // momentum = stateMachine.Controller.velocity;
         // momentum.y = 0;
         // stateMachine.Animator.CrossFadeInFixedTime(AnimHash, CrossFadeDuration);

@@ -7,7 +7,6 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public InputReader InputReader { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
-    [field: SerializeField] public float RunningSpeed { get; private set; }
     [field: SerializeField] public float JumpForce { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
 
@@ -69,13 +68,25 @@ public class PlayerStateMachine : StateMachine
 
     protected override void Update()
     {
+        if (Animator.updateMode == AnimatorUpdateMode.AnimatePhysics) return;
+        Execute(Time.deltaTime);
+    }
+
+    protected override void FixedUpdate()
+    {
+        if (Animator.updateMode != AnimatorUpdateMode.AnimatePhysics) return;
+        Execute(Time.fixedDeltaTime);
+    }
+
+    protected override void Execute(float deltaTime)
+    {
         if (Animator.GetBool(StateChangeIDHash))
             Animator.SetBool(StateChangeIDHash, false);
         if (!motionStates.Contains(currentState.StateID) && InputReader.MovementValue != Vector2.zero) {
             SwitchState(new PlayerMoveState(this));
             return;
         }
-        currentState?.Execute(Time.deltaTime);
+        currentState?.Execute(deltaTime);
         if (firstUpdate && currentState != null)
         {
             Animator.SetInteger(StateIDHash, currentState.StateID);
