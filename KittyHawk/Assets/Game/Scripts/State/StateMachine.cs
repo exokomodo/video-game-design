@@ -4,17 +4,27 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    private State currentState;
+    protected State currentState;
+    public State CurrentState => currentState;
+    protected State previousState;
+    protected int StateIDHash = Animator.StringToHash("StateID");
+    protected int PrevStateIDHash = Animator.StringToHash("PrevStateID");
 
-    public void SwitchState(State newState)
+    public virtual void SwitchState(State newState)
     {
+        previousState = currentState;
         currentState?.Exit();
         currentState = newState;
         currentState?.Enter();
     }
 
-    private void Update()
+    protected abstract void Update();
+
+    public void RevertState()
     {
-        currentState?.Tick(Time.deltaTime);
+        if (previousState != null)
+        {
+            SwitchState(previousState);
+        }
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class State
 {
+    public int StateID;
     public abstract void Enter();
-    public abstract void Tick(float deltaTime);
+    public abstract void Execute(float deltaTime);
     public abstract void Exit();
 }

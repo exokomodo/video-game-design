@@ -4,36 +4,50 @@ using UnityEngine;
 
 public class PlayerMoveBase : PlayerBaseState
 {
-    public PlayerMoveBase(PlayerStateMachine stateMachine, bool isRunning = false) : base(stateMachine)
-    {
-        this.isRunning = isRunning;
-    }
+    protected readonly int VelocityXHash = Animator.StringToHash("VelocityX");
+    protected readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
+    protected const float AnimatorDampTime = 0.1f;
+    protected const float CrossFadeDuration = 0.1f;
+
+    public PlayerMoveBase(PlayerStateMachine stateMachine) : base(stateMachine) {}
     public override void Enter()
     {
-        stateMachine.InputReader.RunEvent += OnRun;
-        stateMachine.InputReader.RunStopEvent += OnRunStop;
+
     }
 
-    public override void Tick(float deltaTime) {}
+    public override void Execute(float deltaTime) {
+        Vector3 movement = CalculateMovement();
+        // FaceMovementDirection(movement, deltaTime);
+        stateMachine.Animator.SetFloat(VelocityXHash, movement.x, AnimatorDampTime, deltaTime);
+        stateMachine.Animator.SetFloat(VelocityZHash, movement.z, AnimatorDampTime, deltaTime);
+        if (stateMachine.InputReader.MovementValue == Vector2.zero && (!stateMachine.isJumping || !stateMachine.isFalling))
+        {
+            stateMachine.Animator.SetFloat(VelocityXHash, 0, AnimatorDampTime, deltaTime);
+            stateMachine.Animator.SetFloat(VelocityZHash, 0, AnimatorDampTime, deltaTime);
+            // If player is not moving, switch to Idle State
+            stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+        }
+    }
 
     public override void Exit()
     {
-        stateMachine.InputReader.RunEvent -= OnRun;
-        stateMachine.InputReader.RunStopEvent -= OnRunStop;
-    }
 
-    protected bool isRunning = false;
+    }
 
     protected Vector3 CalculateMovement()
     {
-        Vector3 forward = stateMachine.MainCameraTransform.forward;
-        Vector3 right = stateMachine.MainCameraTransform.right;
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
-        return forward * stateMachine.InputReader.MovementValue.y +
-            right * stateMachine.InputReader.MovementValue.x;
+        // Vector3 forward = stateMachine.MainCameraTransform.forward;
+        // Vector3 right = stateMachine.MainCameraTransform.right;
+        // forward.y = 0f;
+        // right.y = 0f;
+        // forward.Normalize();
+        // right.Normalize();
+        // return forward * stateMachine.InputReader.MovementValue.y +
+        //     right * stateMachine.InputReader.MovementValue.x;
+        Vector2 mv = stateMachine.InputReader.MovementValue;
+        // Debug.Log("isRunning: " + stateMachine.isRunning);
+        mv = stateMachine.isRunning? mv * stateMachine.Controller.RunSpeed : mv * stateMachine.Controller.WalkSpeed;
+        return new Vector3(mv.x, 0, mv.y);
     }
 
     protected void FaceMovementDirection(Vector3 movement, float deltaTime)
@@ -45,13 +59,5 @@ public class PlayerMoveBase : PlayerBaseState
         );
     }
 
-    protected void OnRun()
-    {
-        isRunning = true;
-    }
 
-    protected void OnRunStop()
-    {
-        isRunning = false;
-    }
 }
