@@ -13,6 +13,10 @@ public class GateController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    public void setGateOpen()
+    {
+        gateOpen = true;
+    }
     // Update is called once per frame
     
     void Update()
