@@ -19,7 +19,7 @@ public class PlayerFallState : PlayerMoveBase
 
     public override void Execute(float deltaTime)
     {
-        AddForce(momentum * deltaTime, ForceMode.VelocityChange);
+        AddForce(momentum * deltaTime, ForceMode.Acceleration);
     }
 
     public override void Exit()

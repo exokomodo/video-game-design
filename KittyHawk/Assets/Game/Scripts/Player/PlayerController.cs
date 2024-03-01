@@ -21,13 +21,17 @@ public class PlayerController : MonoBehaviour {
   private bool _jump = false;
   private bool _isFalling = false;
   private bool _isRunning = false;
-  private float groundCheckTolerance = 0.01f;
+  private bool _isLanding = false;
+  private float groundCheckTolerance = 0.1f;
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
   private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
+  private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
 
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
+
+  public bool isLanding => _isLanding;
 
   public bool isMoving => stateMachine.isMoving;
   [field: SerializeField] public bool RootMotion = true;
@@ -89,10 +93,15 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case AnimationStateEvent.LAND_BEGIN:
+        // _isLanding = true;
         float dist = CheckGroundDistance();
-        if (dist > 1.5f)
+        if (dist > 2.0f)
         {
           SwitchToFallState();
+        }
+        else
+        {
+          _isLanding = true;
         }
         break;
 
@@ -106,16 +115,29 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  private void Update()
+  {
+    if (anim.updateMode != AnimatorUpdateMode.AnimatePhysics) Execute();
+  }
+
   private void FixedUpdate()
   {
+    if (anim.updateMode == AnimatorUpdateMode.AnimatePhysics) Execute();
+  }
+
+  private void Execute()
+  {
     _prevGrounded = _isGrounded;
-    CheckGrounded();
+    float distance = CheckGroundDistance();
+    _isGrounded = CheckGrounded() || distance < 0.01f;
+    anim.SetBool(isGroundedHash, _isGrounded);
+    anim.SetFloat(GroundDistanceHash, distance);
+
     if (_isGrounded)
     {
       if (_jump && !_isJumping) {
         SwitchToJumpState();
       }
-      if (isMoving) CheckGroundAngle();
     }
     else
     {
@@ -125,8 +147,7 @@ public class PlayerController : MonoBehaviour {
       }
       if (_isFalling)
       {
-        float distance = CheckGroundDistance();
-        float fallModifier = Mathf.Clamp(distance / 10, 0, 1);
+        float fallModifier = Mathf.Clamp(distance / 7.5f, 0, 1);
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
@@ -142,8 +163,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     Vector3 newRootPosition;
-    Quaternion newRootRotation;
-
     if (isGrounded)
     {
       //use root motion as is if on the ground
@@ -155,7 +174,9 @@ public class PlayerController : MonoBehaviour {
         newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
     }
     // newRootPosition = anim.rootPosition;
-    newRootRotation = anim.rootRotation;
+    Quaternion newRootRotation = anim.rootRotation;
+    if (isMoving || _isLanding) newRootRotation = GetGroundAngle();
+
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
@@ -184,6 +205,7 @@ public class PlayerController : MonoBehaviour {
     _jump = false;
     _isJumping = true;
     _isFalling = false;
+    _isLanding = false;
     stateMachine.SwitchState(new PlayerJumpState(stateMachine));
   }
 
@@ -198,61 +220,52 @@ public class PlayerController : MonoBehaviour {
   {
     _isJumping = false;
     _isFalling = false;
+    _isLanding = false;
     stateMachine.SwitchState(new PlayerMoveState(stateMachine));
   }
 
-  private void CheckGrounded()
+  private bool CheckGrounded()
   {
-    float dist = col.radius + groundCheckTolerance;
     Vector3 pos = rb.transform.position;
-    Vector3 origin = new Vector3(pos.x, pos.y + col.radius, pos.z + 0.1f);
-
-    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, dist, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
-    if (hit)
+    if (_isFalling)
     {
-      _isGrounded = true;
-      anim.SetBool(isGroundedHash, true);
+      pos = frontPivot.transform.position;
+      pos.y -= 0.25f;
     }
-    else
-    {
-      _isGrounded = false;
-      anim.SetBool(isGroundedHash, false);
-    }
+    Vector3 origin = new Vector3(pos.x, pos.y + 0.01f, pos.z);
+    return RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, groundCheckTolerance, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
   }
 
   private float CheckGroundDistance()
   {
     Vector3 origin = rb.transform.position;
-    origin.y +=  + col.radius;
+    origin.y += col.radius;
     RaycastHit hitInfo;
-    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hitInfo, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
-    if (hit)
-    {
-      return hitInfo.distance;
-    }
-    return float.PositiveInfinity;
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hitInfo, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+    return hit? hitInfo.distance : float.PositiveInfinity;
   }
 
-  private void CheckGroundAngle()
+  private Quaternion GetGroundAngle()
   {
     Vector3 frontOrigin = frontPivot.transform.position;
     Vector3 backOrigin = backPivot.transform.position;
     RaycastHit frontHit;
     RaycastHit backHit;
-    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(frontOrigin, Vector3.down, out frontHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
-    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, Vector3.down, out backHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
-    float deltaHeight = frontHit.distance - backHit.distance;
-    Vector3 newVector = (frontOrigin - new Vector3(0, deltaHeight, 0)) - backOrigin;
-    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, newVector, 1.0f, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(frontOrigin, Vector3.down, out frontHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, Vector3.down, out backHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
 
+    float deltaHeight = frontHit.distance - backHit.distance;
+    float clampThreshold = _isLanding? 0.01f : .1f;
     if (Math.Abs(deltaHeight) > 0.01f)
     {
+      deltaHeight = Mathf.Clamp(deltaHeight, -clampThreshold, clampThreshold);
+      Vector3 newVector = (frontOrigin - new Vector3(0, deltaHeight, 0)) - backOrigin;
+      RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, newVector, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
       // Rotate player along up axis
       Quaternion rot = Quaternion.LookRotation(newVector);
-      Quaternion newRootRotation = Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
-      // Debug.Log("newRootRotation: " + newRootRotation);
-      rb.MoveRotation(newRootRotation);
+      return Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
     }
+    return anim.rootRotation;
   }
 
   private void OnJump()

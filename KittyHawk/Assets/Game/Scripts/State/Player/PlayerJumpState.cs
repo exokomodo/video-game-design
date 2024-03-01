@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerMoveBase
 {
-    private Vector3 momentum;
-
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.StateID = 4;
@@ -16,21 +14,9 @@ public class PlayerJumpState : PlayerMoveBase
     {
         Debug.Log("PlayerJumpState Enter");
         base.Enter();
-        momentum = stateMachine.Controller.velocity;
-        momentum.y = 0;
-        // stateMachine.Controller.Jump(new Vector3(0, stateMachine.JumpForce, 0));
-        // stateMachine.Animator.CrossFadeInFixedTime(JumpHash, CrossFadeDuration);
-        // elapsedTime = 0;
-        // previousVelocity = Vector3.zero;
-        // prevY = -1;
     }
 
-    public override void Execute(float deltaTime)
-    {
-        // Override base state
-        // Jump(momentum, deltaTime);
-        // Move(momentum, deltaTime);
-    }
+    public override void Execute(float deltaTime) {}
 
     /*
     public override void Execute(float deltaTime)

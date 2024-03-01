@@ -7,7 +7,7 @@ public class PlayerMoveBase : PlayerBaseState
     protected readonly int VelocityXHash = Animator.StringToHash("VelocityX");
     protected readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
     protected const float AnimatorDampTime = 0.1f;
-    protected const float CrossFadeDuration = 0.1f;
+    protected const float CrossFadeDuration = 0.2f;
 
     public PlayerMoveBase(PlayerStateMachine stateMachine) : base(stateMachine) {}
     public override void Enter()
