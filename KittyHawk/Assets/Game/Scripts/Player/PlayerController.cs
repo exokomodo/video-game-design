@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
-  public Vector3 velocity => rb.velocity;
+  public Vector3 velocity => stateMachine.Animator.velocity;
 
   private GameObject frontPivot;
   private GameObject backPivot;
@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour {
   private bool _prevGrounded = true;
   private bool _isJumping = false;
   private bool _jump = false;
-  private bool _fall = false;
   private bool _isFalling = false;
   private bool _isRunning = false;
   private float groundCheckTolerance = 0.01f;
@@ -79,13 +78,26 @@ public class PlayerController : MonoBehaviour {
     switch (eventName)
     {
       case AnimationStateEvent.JUMP_COMPLETE:
-        _isJumping = false;
-        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        if (isGrounded)
+        {
+          SwitchToMoveState();
+        }
+        else
+        {
+          SwitchToFallState();
+        }
+        break;
+
+      case AnimationStateEvent.LAND_BEGIN:
+        float dist = CheckGroundDistance();
+        if (dist > 1.5f)
+        {
+          SwitchToFallState();
+        }
         break;
 
       case AnimationStateEvent.LAND_COMPLETE:
-        _isFalling = false;
-        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        SwitchToMoveState();
         break;
 
       default:
@@ -100,31 +112,16 @@ public class PlayerController : MonoBehaviour {
     CheckGrounded();
     if (_isGrounded)
     {
-      // if (_prevGrounded && _isGrounded && _isJumping) {
-      //   _isJumping = false;
-      // }
       if (_jump && !_isJumping) {
-        Debug.Log("SWITCHING TO JUMP STATE");
-        _jump = false;
-        _isJumping = true;
-        stateMachine.SwitchState(new PlayerJumpState(stateMachine));
+        SwitchToJumpState();
       }
-      // if (!_isFalling && !_isJumping && !_prevGrounded)
-      // {
-      //   stateMachine.SwitchState(new PlayerIdleState(stateMachine));
-      // }
       if (isMoving) CheckGroundAngle();
-
     }
     else
     {
-      if (_prevGrounded && !_jump && !_isJumping && !_fall && !_isFalling)
+      if (_prevGrounded && !_jump && !_isJumping && !_isFalling)
       {
-        Debug.Log("_jump: " + _jump + ", _isJumping: " + _isJumping);
-        Debug.Log("_fall: " + _fall + ", _isFalling: " + _isFalling);
-        _fall = true;
-        _isFalling = true;
-        stateMachine.SwitchState(new PlayerFallState(stateMachine));
+        SwitchToFallState();
       }
       if (_isFalling)
       {
@@ -133,11 +130,8 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    _fall = false;
     if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
   }
-
-  // If OnAnimatorMove is present, root motion does not automatically change the player position
 
   void OnAnimatorMove()
   {
@@ -172,27 +166,46 @@ public class PlayerController : MonoBehaviour {
 
   public void Move(Vector3 motion)
   {
-    Debug.Log("MOVE: " + motion);
-    // transform.position += motion;
-    // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMovementSpeed);
-    Vector3 newRootPosition = rb.transform.position + motion;
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, 1);
-    // rb.MovePosition(newRootPosition);
-    rb.transform.position = newRootPosition;
+    if (isGrounded)
+    {
+      Vector3 newRootPosition = anim.rootPosition + motion * 1000;
+      newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
+      rb.MovePosition(newRootPosition);
+    }
   }
 
-  public void Jump(Vector3 motion)
+  public void AddForce(Vector3 motion, ForceMode mode = ForceMode.Impulse)
   {
-    rb.AddForce(motion, ForceMode.VelocityChange);
+    rb.AddForce(motion, mode);
+  }
+
+  private void SwitchToJumpState()
+  {
+    _jump = false;
+    _isJumping = true;
+    _isFalling = false;
+    stateMachine.SwitchState(new PlayerJumpState(stateMachine));
+  }
+
+  private void SwitchToFallState()
+  {
+    _isJumping = false;
+    _isFalling = true;
+    stateMachine.SwitchState(new PlayerFallState(stateMachine));
+  }
+
+  private void SwitchToMoveState()
+  {
+    _isJumping = false;
+    _isFalling = false;
+    stateMachine.SwitchState(new PlayerMoveState(stateMachine));
   }
 
   private void CheckGrounded()
   {
-    float dist = col.height/2f + groundCheckTolerance;
-    Vector3 pos = transform.position;
-    Vector3 origin = new Vector3(pos.x, pos.y, pos.z);
-    origin.y += col.radius;
-    origin.z += 0.1f;
+    float dist = col.radius + groundCheckTolerance;
+    Vector3 pos = rb.transform.position;
+    Vector3 origin = new Vector3(pos.x, pos.y + col.radius, pos.z + 0.1f);
 
     bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, dist, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
     if (hit)
@@ -209,9 +222,10 @@ public class PlayerController : MonoBehaviour {
 
   private float CheckGroundDistance()
   {
-    Vector3 origin = anim.rootPosition;
+    Vector3 origin = rb.transform.position;
+    origin.y +=  + col.radius;
     RaycastHit hitInfo;
-    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hitInfo, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.None);
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hitInfo, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
     if (hit)
     {
       return hitInfo.distance;

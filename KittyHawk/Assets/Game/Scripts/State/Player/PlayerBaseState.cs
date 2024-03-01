@@ -18,8 +18,8 @@ public abstract class PlayerBaseState : State
         stateMachine.Controller.Move((movement + stateMachine.ForceReceiver.Movement) * deltaTime);
     }
 
-    protected void Jump(Vector3 movement, float deltaTime)
+    protected void AddForce(Vector3 movement, ForceMode mode = ForceMode.Impulse)
     {
-        stateMachine.Controller.Jump(movement);
+        stateMachine.Controller.AddForce(movement, mode);
     }
 }
