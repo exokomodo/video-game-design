@@ -1,4 +1,5 @@
 // NOTE: Based on Assets/Scripts/AppEvents/AudioEventManager.cs in example project
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,11 +14,44 @@ public class AudioManager : MonoBehaviour
     private UnityAction<Vector3> tireStackBounceListener;
     private UnityAction<Vector3, string> audioEventListener;
 
+    private Dictionary<string, AudioClip> soundEffects;
+
+    #region Public Setters
+
+    public float Volume
+    {
+        get { return volume; }
+        set
+        {
+            if (value < 0)
+            {
+                volume = 0f;
+            }
+            else if (value > 1)
+            {
+                volume = 1f;
+            }
+            else
+            {
+                volume = value;
+            }
+        }
+    }
+
+    #endregion
+
     #region Unity Hooks
     private void Awake()
     {
         tireStackBounceListener = new UnityAction<Vector3>(tireStackBounceEventHandler);
         audioEventListener = new UnityAction<Vector3, string>(audioEventHandler);
+
+        soundEffects = new Dictionary<string, AudioClip>();
+
+        foreach (AudioClip audioClip in audioClips)
+        {
+            soundEffects.Add(audioClip.name, audioClip);
+        }
     }
 
     private void OnEnable()
@@ -33,7 +67,9 @@ public class AudioManager : MonoBehaviour
         EventManager.StopListening<TireStackBounceEvent, Vector3>(tireStackBounceListener);
         EventManager.StopListening<AudioEvent, Vector3, string>(audioEventListener);
     }
-    #endregion 
+    #endregion
+
+    #region Event Handlers
 
     void tireStackBounceEventHandler(Vector3 position)
     {
@@ -43,12 +79,13 @@ public class AudioManager : MonoBehaviour
 
     void audioEventHandler(Vector3 position, string clipName)
     {
-        foreach (AudioClip audioClip in audioClips)
+
+        if (soundEffects[clipName] != null)
         {
-            if (audioClip.name == clipName)
-            {
-                AudioSource.PlayClipAtPoint(audioClip, position, volume);
-            }
+            AudioSource.PlayClipAtPoint(soundEffects[clipName], position, volume);
         }
+
     }
+
+    #endregion
 }
