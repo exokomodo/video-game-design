@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006468607994081305}
-  m_LocalRotation: {x: 0.00000003471279, y: 0.9024138, z: -0.43087044, w: 0.00000007270236}
+  m_LocalRotation: {x: 0.0000000146037324, y: 0.9024138, z: -0.43087044, w: 0.000000030586015}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2866940072119156193}
-  m_LocalRotation: {x: 0.000000033388176, y: 0.9100819, z: -0.41442844, w: 0.0000000733202}
+  m_LocalRotation: {x: 0.000000038644117, y: 0.9100819, z: -0.4144284, w: 0.000000084862215}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -450,6 +450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4299315680059761001}
+  - component: {fileID: 4559533678796212257}
   m_Layer: 0
   m_Name: Kitty2.0
   m_TagString: Untagged
@@ -474,6 +475,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &4559533678796212257
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4299315680059761003}
+  m_Enabled: 1
 --- !u!1 &4486649166671934767
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,8 +694,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6886807148342054549}
-  m_LocalRotation: {x: 0.000015463107, y: 0.8944272, z: -0.44721362, w: 0.000030926214}
-  m_LocalPosition: {x: -0.00020700792, y: 0, z: 0}
+  m_LocalRotation: {x: 0.000000036180595, y: 0.89442724, z: -0.44721362, w: 0.00000007236118}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

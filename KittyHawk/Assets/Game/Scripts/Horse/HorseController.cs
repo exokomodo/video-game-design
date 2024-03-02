@@ -3,6 +3,7 @@ using UnityEngine;
 public class HorseController : MonoBehaviour
 {
     #region Unity Components
+    private AudioSource _gallopAudio;
     private GameObject _waypointRoot;
     private Animator _animator;
     private int _waypointIndex;
@@ -34,6 +35,7 @@ public class HorseController : MonoBehaviour
             _waypointRoot = waypoints[0];
         }
         _animator = GetComponentInChildren<Animator>();
+        _gallopAudio = GetComponent<AudioSource>();
         _waypointIndex = 0;
     }
 
@@ -55,10 +57,29 @@ public class HorseController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void UpdateAnimation()
     {
         _animator.SetFloat("Speed", Velocity);
         FaceWaypoint();
+    }
+
+    private void UpdateAudio()
+    {
+        if (Velocity > 0f && !_gallopAudio.isPlaying)
+        {
+            _gallopAudio.Play();
+        }
+        else if (Velocity <= 0f && _gallopAudio.isPlaying)
+        {
+            _gallopAudio.Stop();
+        }
+    }
+
+    private void Update()
+    {
+        UpdateAnimation();
+        UpdateAudio();
+
     }
     #endregion
 }
