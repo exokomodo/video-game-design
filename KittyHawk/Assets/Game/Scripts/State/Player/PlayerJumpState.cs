@@ -5,36 +5,27 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerMoveBase
 {
+    private float elapsedTime;
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.StateID = 4;
+        elapsedTime = 0;
     }
 
     public override void Enter()
     {
         Debug.Log("PlayerJumpState Enter");
-        base.Enter();
     }
 
-    public override void Execute(float deltaTime) {}
-
-    /*
-    public override void Execute(float deltaTime)
-    {
-        // Jump(movement * speed, deltaTime);
-        float y = stateMachine.transform.position.y;
-        Debug.Log("StateMachine velocity: " + stateMachine.Controller.velocity.y + ", " + y);
-
-        // if (stateMachine.Controller.velocity.y <= 0.01f && y < prevY && y > 0.5f)
-        // {
-        //     stateMachine.SwitchState(new PlayerFallState(stateMachine));
-        // }
+    public override void Execute(float deltaTime) {
         elapsedTime += deltaTime;
-        previousVelocity = stateMachine.Controller.velocity;
-        prevY = y;
-        FaceMovementDirection(movement, deltaTime);
+        if (elapsedTime > 2f)
+        {
+            // Sometimes KH gets stuck in the jump state
+            // This will help her transition back to a moveable state
+            EventManager.TriggerEvent<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(AnimationStateEventBehavior.AnimationEventType.TIME, AnimationStateEvent.JUMP_COMPLETE);
+        }
     }
-    */
 
     public override void Exit()
     {

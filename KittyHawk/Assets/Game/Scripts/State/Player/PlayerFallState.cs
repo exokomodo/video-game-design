@@ -5,21 +5,32 @@ using UnityEngine;
 public class PlayerFallState : PlayerMoveBase
 {
     private Vector3 momentum;
+    private float elapsedTime;
 
     public PlayerFallState(PlayerStateMachine stateMachine) : base(stateMachine) {
         StateID = 5;
+        elapsedTime = 0;
     }
 
     public override void Enter()
     {
         Debug.Log("PlayerFallState Enter");
+        // Store player momentum at the time they enter the fall state
         momentum = stateMachine.Controller.velocity;
         momentum.y = 0;
     }
 
     public override void Execute(float deltaTime)
     {
-        AddForce(momentum * deltaTime, ForceMode.Acceleration);
+        // Add player's previous momentum so they don't fall straight down
+        AddForce(momentum * deltaTime, ForceMode.VelocityChange);
+        elapsedTime += deltaTime;
+        if (elapsedTime > 2f)
+        {
+            // Sometimes KH gets stuck in the fall state
+            // This will help her transition back to a moveable state
+            EventManager.TriggerEvent<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(AnimationStateEventBehavior.AnimationEventType.TIME, AnimationStateEvent.LAND_COMPLETE);
+        }
     }
 
     public override void Exit()

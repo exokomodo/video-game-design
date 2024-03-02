@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
   private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
   private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
+  protected const float AnimatorDampTime = 0.1f;
 
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
@@ -93,9 +94,8 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case AnimationStateEvent.LAND_BEGIN:
-        // _isLanding = true;
         float dist = CheckGroundDistance();
-        if (dist > 2.0f)
+        if (dist > 2.5f)
         {
           SwitchToFallState();
         }
@@ -117,15 +117,15 @@ public class PlayerController : MonoBehaviour {
 
   private void Update()
   {
-    if (anim.updateMode != AnimatorUpdateMode.AnimatePhysics) Execute();
+    if (anim.updateMode != AnimatorUpdateMode.AnimatePhysics) Execute(Time.deltaTime);
   }
 
   private void FixedUpdate()
   {
-    if (anim.updateMode == AnimatorUpdateMode.AnimatePhysics) Execute();
+    if (anim.updateMode == AnimatorUpdateMode.AnimatePhysics) Execute(Time.fixedDeltaTime);
   }
 
-  private void Execute()
+  private void Execute(float deltaTime)
   {
     _prevGrounded = _isGrounded;
     float distance = CheckGroundDistance();
@@ -151,7 +151,15 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
+    // if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
+    if (stateMachine.InputReader.MovementValue == Vector2.zero && isMoving)
+    {
+      SwitchToIdleState();
+    }
+    Quaternion newRootRotation = GetGroundAngle();
+    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, deltaTime);
+    rb.MoveRotation(newRootRotation);
+
   }
 
   void OnAnimatorMove()
@@ -175,7 +183,9 @@ public class PlayerController : MonoBehaviour {
     }
     // newRootPosition = anim.rootPosition;
     Quaternion newRootRotation = anim.rootRotation;
-    if (isMoving || _isLanding) newRootRotation = GetGroundAngle();
+    if (isMoving) {
+      newRootRotation = GetGroundAngle();
+    }
 
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
     float newY = Mathf.Max(0, newRootPosition.y);
@@ -189,7 +199,7 @@ public class PlayerController : MonoBehaviour {
   {
     if (isGrounded)
     {
-      Vector3 newRootPosition = anim.rootPosition + motion * 1000;
+      Vector3 newRootPosition = anim.rootPosition + motion;
       newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
       rb.MovePosition(newRootPosition);
     }
@@ -198,6 +208,21 @@ public class PlayerController : MonoBehaviour {
   public void AddForce(Vector3 motion, ForceMode mode = ForceMode.Impulse)
   {
     rb.AddForce(motion, mode);
+  }
+  private void SwitchToIdleState()
+  {
+    _isJumping = false;
+    _isFalling = false;
+    _isLanding = false;
+    stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+  }
+
+  private void SwitchToMoveState()
+  {
+    _isJumping = false;
+    _isFalling = false;
+    _isLanding = false;
+    stateMachine.SwitchState(new PlayerMoveState(stateMachine));
   }
 
   private void SwitchToJumpState()
@@ -213,15 +238,8 @@ public class PlayerController : MonoBehaviour {
   {
     _isJumping = false;
     _isFalling = true;
-    stateMachine.SwitchState(new PlayerFallState(stateMachine));
-  }
-
-  private void SwitchToMoveState()
-  {
-    _isJumping = false;
-    _isFalling = false;
     _isLanding = false;
-    stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+    stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
   private bool CheckGrounded()
@@ -255,7 +273,7 @@ public class PlayerController : MonoBehaviour {
     RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, Vector3.down, out backHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
 
     float deltaHeight = frontHit.distance - backHit.distance;
-    float clampThreshold = _isLanding? 0.01f : .1f;
+    float clampThreshold = 0.1f;
     if (Math.Abs(deltaHeight) > 0.01f)
     {
       deltaHeight = Mathf.Clamp(deltaHeight, -clampThreshold, clampThreshold);
@@ -274,16 +292,16 @@ public class PlayerController : MonoBehaviour {
   }
 
   protected void OnRun()
-    {
-        _isRunning = true;
-        anim.SetBool(isRunningHash, true);
-    }
+  {
+      _isRunning = true;
+      anim.SetBool(isRunningHash, true);
+  }
 
-    protected void OnRunStop()
-    {
-        _isRunning = false;
-        anim.SetBool(isRunningHash, false);
-    }
+  protected void OnRunStop()
+  {
+      _isRunning = false;
+      anim.SetBool(isRunningHash, false);
+  }
 
   private void OnDestroy()
   {
