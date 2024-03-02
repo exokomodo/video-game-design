@@ -10,7 +10,7 @@ public class RockingChairController : MonoBehaviour
     [SerializeField]
     float collisionThreshold = 0.25f;
     [SerializeField]
-    string audioName = "CreakingChair";
+    string audioName = "Sound/CreakingChair";
 
     private Rigidbody rb;
     private float nextTriggerTime = 0f;
