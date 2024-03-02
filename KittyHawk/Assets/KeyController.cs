@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class KeyController : MonoBehaviour
 {
-
-    public GameObject player;
-    public GameObject gate;
-
+    private GameObject player;
+    private GameObject gate;
     private float playerDistance;
     public float playerDistanceToActivate = 5.0f;
     private Animator animGate;
     private Animator animKey;
     private GateController gateController;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        animGate = gate.GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player");
+
         animKey = GetComponent<Animator>();
+
+        gate = GameObject.FindWithTag("Gate");
         gateController = gate.GetComponent<GateController>();
+        animGate = gate.GetComponent<Animator>();
     }
 
     public bool DetermineNearby()
