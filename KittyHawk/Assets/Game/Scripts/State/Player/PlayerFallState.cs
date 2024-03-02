@@ -23,7 +23,7 @@ public class PlayerFallState : PlayerMoveBase
     public override void Execute(float deltaTime)
     {
         // Add player's previous momentum so they don't fall straight down
-        AddForce(momentum * deltaTime, ForceMode.VelocityChange);
+        AddForce(momentum * deltaTime, ForceMode.Acceleration);
         elapsedTime += deltaTime;
         if (elapsedTime > 2f)
         {
