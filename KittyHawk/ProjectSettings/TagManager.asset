@@ -10,6 +10,7 @@ TagManager:
   - Catnip
   - HorseWaypoints
   - HorseWaypoint
+  - Gate
   layers:
   - Default
   - TransparentFX
