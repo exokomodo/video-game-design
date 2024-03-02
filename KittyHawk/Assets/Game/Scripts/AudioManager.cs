@@ -1,5 +1,6 @@
 // NOTE: Based on Assets/Scripts/AppEvents/AudioEventManager.cs in example project
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +23,8 @@ public class AudioManager : MonoBehaviour
             return audioManager;
         }
     }
+    [SerializeField]
+    string pathPrefix = "Sound";
     private float volume = 1f;
     private Dictionary<string, AudioClip> soundEffects;
     private UnityAction<Vector3, string> audioEventListener;
@@ -99,14 +102,13 @@ public class AudioManager : MonoBehaviour
         tireStackBounceListener = new UnityAction<Vector3>(tireStackBounceEventHandler);
         audioEventListener = new UnityAction<Vector3, string>(audioEventHandler);
         soundEffects = new Dictionary<string, AudioClip>();
-
-        tireStackBounceAudio = LoadAudioClip("Sound/tire-stack-bounce");
+        tireStackBounceAudio = LoadAudioClip("tire-stack-bounce");
     }
 
-    private AudioClip LoadAudioClip(string path)
+    private AudioClip LoadAudioClip(string name)
     {
-        var clip = Resources.Load<AudioClip>(path);
-        soundEffects.Add(path, clip);
+        var clip = Resources.Load<AudioClip>(Path.Join(pathPrefix, name));
+        soundEffects.Add(name, clip);
         return clip;
     }
     #endregion

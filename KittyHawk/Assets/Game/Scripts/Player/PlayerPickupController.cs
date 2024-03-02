@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerPickupController : MonoBehaviour
 {
 
-    private string catnipAudio = "Sound/CatnipMunch";
+    private string catnipAudio = "CatnipMunch";
 
     PlayerInventory inventory;
 
