@@ -20,13 +20,6 @@ public class PlayerMoveBase : PlayerBaseState
         // FaceMovementDirection(movement, deltaTime);
         stateMachine.Animator.SetFloat(VelocityXHash, movement.x, AnimatorDampTime, deltaTime);
         stateMachine.Animator.SetFloat(VelocityZHash, movement.z, AnimatorDampTime, deltaTime);
-        // if (stateMachine.InputReader.MovementValue == Vector2.zero && (!stateMachine.isJumping || !stateMachine.isFalling))
-        // {
-        //     stateMachine.Animator.SetFloat(VelocityXHash, 0, AnimatorDampTime, deltaTime);
-        //     stateMachine.Animator.SetFloat(VelocityZHash, 0, AnimatorDampTime, deltaTime);
-        //     // If player is not moving, switch to Idle State
-        //     stateMachine.SwitchState(new PlayerIdleState(stateMachine));
-        // }
     }
 
     public override void Exit()
@@ -36,18 +29,32 @@ public class PlayerMoveBase : PlayerBaseState
 
     protected Vector3 CalculateMovement()
     {
-        // Vector3 forward = stateMachine.MainCameraTransform.forward;
-        // Vector3 right = stateMachine.MainCameraTransform.right;
-        // forward.y = 0f;
-        // right.y = 0f;
-        // forward.Normalize();
-        // right.Normalize();
-        // return forward * stateMachine.InputReader.MovementValue.y +
-        //     right * stateMachine.InputReader.MovementValue.x;
+        /*
+        Vector3 forward = stateMachine.MainCameraTransform.forward;
+        Vector3 right = stateMachine.MainCameraTransform.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+        return forward * stateMachine.InputReader.MovementValue.y +
+            right * stateMachine.InputReader.MovementValue.x;
+        */
         Vector2 mv = stateMachine.InputReader.MovementValue;
         // Debug.Log("isRunning: " + stateMachine.isRunning);
-        mv = stateMachine.isRunning? mv * stateMachine.Controller.RunSpeed : mv * stateMachine.Controller.WalkSpeed;
+        mv *= stateMachine.Controller.Speed;
         return new Vector3(mv.x, 0, mv.y);
+    }
+
+    protected Vector3 CalculateRelativeMovement()
+    {
+        Vector3 forward = stateMachine.MainCameraTransform.forward;
+        Vector3 right = stateMachine.MainCameraTransform.right;
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+        return forward * stateMachine.InputReader.MovementValue.y +
+            right * stateMachine.InputReader.MovementValue.x;
     }
 
     protected void FaceMovementDirection(Vector3 movement, float deltaTime)

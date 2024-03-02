@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour {
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
-  public Vector3 velocity => stateMachine.Animator.velocity;
-
   private GameObject frontPivot;
   private GameObject backPivot;
   private bool _isGrounded = true;
@@ -27,8 +25,9 @@ public class PlayerController : MonoBehaviour {
   private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
   private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
-  protected const float AnimatorDampTime = 0.1f;
+  private Vector3 pendingMotion = Vector3.zero;
 
+  public Vector3 velocity => stateMachine.Animator.velocity;
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
 
@@ -40,9 +39,14 @@ public class PlayerController : MonoBehaviour {
   [field: SerializeField] public float WalkSpeed = 1.0f;
   [field: SerializeField] public float RunSpeed = 2.0f;
 
+  [field: SerializeField] public float BaseJumpForce = 8.0f;
+
   [field: SerializeField] public float TurnSpeed = 1.0f;
 
-  public float speed => isRunning? RunSpeed : WalkSpeed;
+  public float Speed => isRunning? RunSpeed : WalkSpeed;
+  public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
+
+
 
   public void Awake()
   {
@@ -95,7 +99,7 @@ public class PlayerController : MonoBehaviour {
 
       case AnimationStateEvent.LAND_BEGIN:
         float dist = CheckGroundDistance();
-        if (dist > 2.5f)
+        if (dist > 3f)
         {
           SwitchToFallState();
         }
@@ -152,7 +156,7 @@ public class PlayerController : MonoBehaviour {
       }
     }
     // if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
-    if (stateMachine.InputReader.MovementValue == Vector2.zero && isMoving)
+    if (input.MovementValue == Vector2.zero && isMoving)
     {
       SwitchToIdleState();
     }
@@ -164,12 +168,6 @@ public class PlayerController : MonoBehaviour {
 
   void OnAnimatorMove()
   {
-    if (_isJumping)
-    {
-      anim.ApplyBuiltinRootMotion(); // prefer root motion for jumping animations
-      return;
-    }
-
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -181,13 +179,15 @@ public class PlayerController : MonoBehaviour {
         //Simple trick to keep model from climbing other rigidbodies that aren't the ground
         newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
     }
+    newRootPosition = newRootPosition + pendingMotion;
+    pendingMotion = Vector3.zero;
     // newRootPosition = anim.rootPosition;
     Quaternion newRootRotation = anim.rootRotation;
     if (isMoving) {
       newRootRotation = GetGroundAngle();
     }
 
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
     newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
@@ -197,12 +197,7 @@ public class PlayerController : MonoBehaviour {
 
   public void Move(Vector3 motion)
   {
-    if (isGrounded)
-    {
-      Vector3 newRootPosition = anim.rootPosition + motion;
-      newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
-      rb.MovePosition(newRootPosition);
-    }
+    pendingMotion = motion;
   }
 
   public void AddForce(Vector3 motion, ForceMode mode = ForceMode.Impulse)
