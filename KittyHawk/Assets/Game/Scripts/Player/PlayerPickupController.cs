@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerPickupController : MonoBehaviour
 {
 
-    private string catnipAudio = "Sound/CatnipMunch";
+    private string catnipAudio = "CatnipMunch";
 
     PlayerInventory inventory;
 
@@ -22,7 +22,7 @@ public class PlayerPickupController : MonoBehaviour
             case "Catnip":
                 inventory.Catnip = 1;
                 Destroy(other.gameObject);
-                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatnipMunch");
                 break;
             case "Life":
                 inventory.Lives = 1;
