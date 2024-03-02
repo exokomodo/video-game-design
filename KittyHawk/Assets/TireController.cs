@@ -6,26 +6,17 @@ using UnityEngine;
 public class TireController : MonoBehaviour
 {
     private Animator anim;
-    public float distanceFromKitty;
-    public GameObject mainCamera;
+    private float velx;
+    private float velz;
     public GameObject player;
+    private Rigidbody rb;
     public float bounceForce = 10f;
     
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-    }
-
-    
-    private void DetermineDistanceFromKitty()
-    {
-        distanceFromKitty = Vector3.Distance(player.transform.position, transform.position);
-    }
-
-    void Update()
-    {
-        //DetermineDistanceFromKitty();
+        rb = player.GetComponent<Rigidbody>();
     }
 
     // Method to set the animator back to its original state after the 
@@ -33,23 +24,32 @@ public class TireController : MonoBehaviour
     {
         anim.Play("Normal");
     }
-    
-    
-    private void OnTriggerEnter(Collider c)
+
+    private void Update()
     {
+         velx = rb.velocity.x;
+         velz = rb.velocity.z;
+    }
+
+    private void OnCollisionEnter(Collision c)
+    {
+        
         // When kitty collides with the tire stack, animation plays, kitty gets thrown in the air
-        if (c.gameObject.CompareTag("Player"))
+        if (c.gameObject.CompareTag("Player") && anim.GetCurrentAnimatorStateInfo(0).length > 0)
         {
             anim.Play("Bounce");
 
-            // Add vertical velocity to kitty
-            // TODO: Eventually this might be changed if we change how verticalVelocity works. 
-            // TODO: Should it bounce kitty only upwards or reverse her overall velocity? Can a force be added that 
-            // is the opposite force that she is walking in?
-            c.GetComponent<ForceReceiver>().verticalVelocity = bounceForce;
+            // Add vertical velocity to kitty and keeps her remaining velocity
 
-            // TODO: Kitty needs to change her animation state to jumping
+            c.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(velx, bounceForce, velz); 
             
+            // Ends jump animation so falling can begin and kitty can jump
+            EventManager.TriggerEvent<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, 
+                string>(AnimationStateEventBehavior.AnimationEventType.TIME, AnimationStateEvent.JUMP_COMPLETE);
+
+            // Changes aniamation to falling
+            c.gameObject.GetComponent<Animator>().Play("Fall", 0, -1);
+
             // ensures the bounce finishes before the animator is reset by waiting length of the Bounce animation
             Invoke("ResetAnimator", anim.GetCurrentAnimatorStateInfo(0).length);
             
