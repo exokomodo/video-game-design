@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bec916bba7c4b3799e18d82a08931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 10
+  player: {fileID: 0}
 --- !u!136 &3601344755186673143
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -81,10 +81,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.86145496
-  m_Height: 1.8063233
+  m_Radius: 0.89275104
+  m_Height: 1.7855021
   m_Direction: 1
-  m_Center: {x: 0.009268761, y: 0.40316164, z: 0}
+  m_Center: {x: 0.009268798, y: 0.30308494, z: 0.1480363}
 --- !u!1001 &9056709367963629611
 PrefabInstance:
   m_ObjectHideFlags: 0

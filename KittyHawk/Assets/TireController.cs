@@ -10,7 +10,8 @@ public class TireController : MonoBehaviour
     private float velz;
     public GameObject player;
     private Rigidbody rb;
-    public float bounceForce = 10f;
+    private float bounceForce = 10f;
+    private Vector3 approachDirection;
     
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class TireController : MonoBehaviour
 
     private void Update()
     {
+        // captures velocity to use for bounce
          velx = rb.velocity.x;
          velz = rb.velocity.z;
     }
@@ -39,9 +41,13 @@ public class TireController : MonoBehaviour
         {
             anim.Play("Bounce");
 
-            // Add vertical velocity to kitty and keeps her remaining velocity
+            // Calculate the direction kitty hits the tire stack from
+            approachDirection = c.transform.position - this.transform.position;
+            approachDirection.y = 0;
+            approachDirection = approachDirection.normalized; // Normalize to get direction only
 
-            c.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(velx, bounceForce, velz); 
+            // Add vertical velocity to kitty and keeps her remaining velocity
+            c.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(approachDirection.x * 2f , bounceForce, approachDirection.z * -2f); 
             
             // Ends jump animation so falling can begin and kitty can jump
             EventManager.TriggerEvent<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, 
