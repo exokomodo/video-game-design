@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour {
   {
     rb.AddForce(motion, mode);
   }
-  private void SwitchToIdleState()
+  public void SwitchToIdleState()
   {
     _isJumping = false;
     _isFalling = false;
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerIdleState(stateMachine));
   }
 
-  private void SwitchToMoveState()
+  public void SwitchToMoveState()
   {
     _isJumping = false;
     _isFalling = false;
@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerMoveState(stateMachine));
   }
 
-  private void SwitchToJumpState()
+  public void SwitchToJumpState()
   {
     _jump = false;
     _isJumping = true;
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerJumpState(stateMachine));
   }
 
-  private void SwitchToFallState()
+  public void SwitchToFallState()
   {
     _isJumping = false;
     _isFalling = true;
@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
-  private bool CheckGrounded()
+  public bool CheckGrounded()
   {
     Vector3 pos = rb.transform.position;
     if (_isFalling)
