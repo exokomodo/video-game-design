@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerMoveBase
 {
-    private float elapsedTime;
+    private float elapsedTime = 0;
+    private bool jumpForceApplied = false;
+
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.StateID = 4;
-        elapsedTime = 0;
     }
 
     public override void Enter()
@@ -17,7 +18,23 @@ public class PlayerJumpState : PlayerMoveBase
         Debug.Log("PlayerJumpState Enter");
     }
 
-    public override void Execute(float deltaTime) {
+    public override void Execute(float deltaTime)
+    {
+        // Delay jump force to allow for pre-jump crouch animation
+        if (!jumpForceApplied && elapsedTime > 0.2)
+        {
+            float jumpForce = stateMachine.Controller.JumpForce;
+            stateMachine.ForceReceiver.Jump(jumpForce);
+            jumpForceApplied = true;
+        }
+
+        // Allow player to move in air a bit
+        if (jumpForceApplied)
+        {
+            Vector3 movement = CalculateRelativeMovement();
+            Move(movement, deltaTime);
+        }
+
         elapsedTime += deltaTime;
         if (elapsedTime > 2f)
         {

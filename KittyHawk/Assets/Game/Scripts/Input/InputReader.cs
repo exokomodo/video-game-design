@@ -7,7 +7,11 @@ using UnityEngine.InputSystem;
 public class InputReader : MonoBehaviour, Controls.IPlayerActions
 {
     public Vector2 MovementValue { get; private set; }
+    public event Action AttackRightEvent;
+    public event Action AttackFrontEvent;
+    public event Action AttackLeftEvent;
     public event Action JumpEvent;
+    public event Action MeowEvent;
     public event Action RunEvent;
     public event Action RunStopEvent;
     private Controls controls;
@@ -24,6 +28,24 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
         controls.Player.Disable();
     }
 
+    public void OnAttackRight(InputAction.CallbackContext context)
+    {
+        if (!context.performed) { return; }
+        AttackRightEvent?.Invoke();
+    }
+
+    public void OnAttackFront(InputAction.CallbackContext context)
+    {
+        if (!context.performed) { return; }
+        AttackFrontEvent?.Invoke();
+    }
+
+    public void OnAttackLeft(InputAction.CallbackContext context)
+    {
+        if (!context.performed) { return; }
+        AttackLeftEvent?.Invoke();
+    }
+
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!context.performed) { return; }
@@ -38,6 +60,12 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public void OnLook(InputAction.CallbackContext context)
     {
 
+    }
+
+    public void OnMeow(InputAction.CallbackContext context)
+    {
+        if (!context.performed) { return; }
+        MeowEvent?.Invoke();
     }
 
     public void OnRun(InputAction.CallbackContext context)
