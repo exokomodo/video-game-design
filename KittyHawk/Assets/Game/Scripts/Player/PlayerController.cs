@@ -311,6 +311,12 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  public void Meow()
+  {
+    Debug.Log("Play meow");
+    stateMachine.SwitchAction(new PlayerMeowAction(stateMachine));
+  }
+
   private void OnAttackRight()
   {
     Attack(true);
@@ -336,8 +342,7 @@ public class PlayerController : MonoBehaviour {
 
   private void OnMeow()
   {
-    Debug.Log("Play meow");
-    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "Meow");
+    Meow();
   }
 
   protected void OnRun()
