@@ -112,8 +112,11 @@ public class PlayerStateMachine : StateMachine
 
         currentAction = newAction;
         currentAction?.Enter();
-        Animator.SetInteger(ActionIDHash, currentAction.ActionID);
-        Animator.SetBool(ActionChangeHash, true);
+        if ( currentAction.ActionID != -1)
+        {
+            Animator.SetInteger(ActionIDHash, currentAction.ActionID);
+            Animator.SetBool(ActionChangeHash, true);
+        }
     }
 
     /*
