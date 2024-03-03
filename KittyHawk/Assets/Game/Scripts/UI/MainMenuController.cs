@@ -12,6 +12,18 @@ public class MainMenuController : MonoBehaviour
     string highlightSoundName = "MenuHighlight";
     [SerializeField]
     string confirmSoundName = "MenuConfirm";
+    [SerializeField]
+    Camera mainCamera;
+    [SerializeField]
+    GameObject creditsPanel;
+    [SerializeField]
+    GameObject optionsPanel;
+
+    private void Start()
+    {
+        creditsPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+    }
 
     public void StartGame()
     {
@@ -26,20 +38,55 @@ public class MainMenuController : MonoBehaviour
         Application.Quit();
     }
 
-    public void OpenOptionsMenu()
+    public void ToggleOptionsMenu()
     {
         PlayConfirmSound();
-        Debug.Log("Pretend there's an Options menu opening.");
+        
+        if (optionsPanel.activeSelf)
+        {
+            optionsPanel.SetActive(false);
+        }
+        else
+        {
+            optionsPanel.SetActive(true);
+        }
+    }
+
+    public void ToggleCreditsMenu()
+    {
+        PlayConfirmSound();
+        
+        if (creditsPanel.activeSelf)
+        {
+            creditsPanel.SetActive(false);
+        }
+        else
+        {
+            creditsPanel.SetActive(true);
+        }
+    }
+
+    public void SetSoundVolume(float value)
+    {
+        Debug.Log("Sound volume is now " + value);
+        AudioManager.instance.SoundVolume = value;
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        Debug.Log("Music volume is now " + value);
+        AudioManager.instance.MusicVolume = value;
     }
 
     public void PlayHighlightSound()
     {
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, highlightSoundName);
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(mainCamera.transform.position, highlightSoundName);
     }
 
     public void PlayConfirmSound()
     {
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(new Vector3(20f, 2f, -30f), confirmSoundName);
+        // EventManager.TriggerEvent<AudioEvent, Vector3, string>(new Vector3(20f, 2f, -30f), confirmSoundName);
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(mainCamera.transform.position, confirmSoundName);
     }
 
     private IEnumerator LoadFirstScene()
