@@ -11,7 +11,7 @@ public class ForceReceiver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("ForceReceiver FixedUpdate verticalVelocity: " + verticalVelocity);
+        // Debug.Log("ForceReceiver FixedUpdate verticalVelocity: " + verticalVelocity);
         if (verticalVelocity < 0f && controller.isGrounded)
         {
             verticalVelocity = Physics.gravity.y * Time.fixedDeltaTime;
