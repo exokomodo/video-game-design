@@ -13,6 +13,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField]
     string confirmSoundName = "MenuConfirm";
     [SerializeField]
+    string menuMusicName = "MenuMusic";
+    [SerializeField]
     Camera mainCamera;
     [SerializeField]
     GameObject creditsPanel;
@@ -23,6 +25,9 @@ public class MainMenuController : MonoBehaviour
     {
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+
+        // TODO: Add music event to Audio Manager and use that instead
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(mainCamera.transform.position, menuMusicName);
     }
 
     public void StartGame()
