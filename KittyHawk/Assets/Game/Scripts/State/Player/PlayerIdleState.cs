@@ -17,13 +17,17 @@ public class PlayerIdleState : PlayerBaseState
     public override void Enter()
     {
         Debug.Log("PlayerIdleState Enter");
-        timer = Mathf.Floor(Random.Range(10, 20));
+        resetTimer();
     }
 
     public override void Execute(float deltaTime)
     {
         stateMachine.Animator.SetFloat(VelocityXHash, 0, AnimatorDampTime, deltaTime);
         stateMachine.Animator.SetFloat(VelocityZHash, 0, AnimatorDampTime, deltaTime);
+        if (stateMachine.Controller.isAttacking) {
+            resetTimer();
+            return;
+        };
         timer -= deltaTime;
         if (timer <= 0)
         {
@@ -34,5 +38,10 @@ public class PlayerIdleState : PlayerBaseState
     public override void Exit()
     {
         Debug.Log("PlayerIdleState Exit");
+    }
+
+    private void resetTimer()
+    {
+        timer = Mathf.Floor(Random.Range(10, 20));
     }
 }

@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour {
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
-  public Vector3 velocity => stateMachine.Animator.velocity;
-
   private GameObject frontPivot;
   private GameObject backPivot;
   private bool _isGrounded = true;
@@ -22,13 +20,23 @@ public class PlayerController : MonoBehaviour {
   private bool _isFalling = false;
   private bool _isRunning = false;
   private bool _isLanding = false;
+  private bool _isAttacking = false;
   private float groundCheckTolerance = 0.1f;
+  private readonly int isAttackingHash = Animator.StringToHash("isAttacking");
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
   private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
   private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
-  protected const float AnimatorDampTime = 0.1f;
+  private Vector3 pendingMotion = Vector3.zero;
+  private enum AttackType
+  {
+    RIGHT,
+    LEFT,
+    MIDDLE
+  }
 
+  public Vector3 velocity => stateMachine.Animator.velocity;
+  public bool isAttacking => _isAttacking;
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
 
@@ -40,9 +48,14 @@ public class PlayerController : MonoBehaviour {
   [field: SerializeField] public float WalkSpeed = 1.0f;
   [field: SerializeField] public float RunSpeed = 2.0f;
 
+  [field: SerializeField] public float BaseJumpForce = 8.0f;
+
   [field: SerializeField] public float TurnSpeed = 1.0f;
 
-  public float speed => isRunning? RunSpeed : WalkSpeed;
+  public float Speed => isRunning? RunSpeed : WalkSpeed;
+  public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
+
+
 
   public void Awake()
   {
@@ -75,6 +88,10 @@ public class PlayerController : MonoBehaviour {
     input.JumpEvent += OnJump;
     input.RunEvent += OnRun;
     input.RunStopEvent += OnRunStop;
+    input.AttackRightEvent += OnAttackRight;
+    input.AttackFrontEvent += OnAttackFront;
+    input.AttackLeftEvent += OnAttackLeft;
+    input.MeowEvent += OnMeow;
   }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
@@ -82,6 +99,10 @@ public class PlayerController : MonoBehaviour {
     Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
     switch (eventName)
     {
+      case AnimationStateEvent.ATTACK_COMPLETE:
+        Attack(false);
+        break;
+
       case AnimationStateEvent.JUMP_COMPLETE:
         if (isGrounded)
         {
@@ -95,7 +116,7 @@ public class PlayerController : MonoBehaviour {
 
       case AnimationStateEvent.LAND_BEGIN:
         float dist = CheckGroundDistance();
-        if (dist > 2.5f)
+        if (dist > 3f)
         {
           SwitchToFallState();
         }
@@ -109,8 +130,12 @@ public class PlayerController : MonoBehaviour {
         SwitchToMoveState();
         break;
 
+      case AnimationStateEvent.MEOW:
+        OnMeow();
+        break;
+
       default:
-        Debug.LogError("Unhandled event: " + eventType + ", " + eventName);
+        Debug.LogWarning("Unhandled event: " + eventType + ", " + eventName);
         break;
     }
   }
@@ -152,24 +177,17 @@ public class PlayerController : MonoBehaviour {
       }
     }
     // if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
-    if (stateMachine.InputReader.MovementValue == Vector2.zero && isMoving)
+    if (input.MovementValue == Vector2.zero && isMoving)
     {
       SwitchToIdleState();
     }
     Quaternion newRootRotation = GetGroundAngle();
     newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, deltaTime);
     rb.MoveRotation(newRootRotation);
-
   }
 
   void OnAnimatorMove()
   {
-    if (_isJumping)
-    {
-      anim.ApplyBuiltinRootMotion(); // prefer root motion for jumping animations
-      return;
-    }
-
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -181,13 +199,15 @@ public class PlayerController : MonoBehaviour {
         //Simple trick to keep model from climbing other rigidbodies that aren't the ground
         newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
     }
+    newRootPosition = newRootPosition + pendingMotion;
+    pendingMotion = Vector3.zero;
     // newRootPosition = anim.rootPosition;
     Quaternion newRootRotation = anim.rootRotation;
     if (isMoving) {
       newRootRotation = GetGroundAngle();
     }
 
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
+    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
     newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
@@ -197,12 +217,7 @@ public class PlayerController : MonoBehaviour {
 
   public void Move(Vector3 motion)
   {
-    if (isGrounded)
-    {
-      Vector3 newRootPosition = anim.rootPosition + motion;
-      newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, speed);
-      rb.MovePosition(newRootPosition);
-    }
+    pendingMotion = motion;
   }
 
   public void AddForce(Vector3 motion, ForceMode mode = ForceMode.Impulse)
@@ -286,9 +301,48 @@ public class PlayerController : MonoBehaviour {
     return anim.rootRotation;
   }
 
+  private void Attack(bool b)
+  {
+    _isAttacking = b;
+    anim.SetBool(isAttackingHash, b);
+    if (stateMachine.isSitting || stateMachine.isLaying)
+    {
+      SwitchToIdleState();
+    }
+  }
+
+  public void Meow()
+  {
+    Debug.Log("Play meow");
+    stateMachine.SwitchAction(new PlayerMeowAction(stateMachine));
+  }
+
+  private void OnAttackRight()
+  {
+    Attack(true);
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_RIGHT));
+  }
+
+  private void OnAttackFront()
+  {
+    Attack(true);
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_FRONT));
+  }
+
+  private void OnAttackLeft()
+  {
+    Attack(true);
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_LEFT));
+  }
+
   private void OnJump()
   {
       if (!_isJumping && !_isFalling) _jump = true;
+  }
+
+  private void OnMeow()
+  {
+    Meow();
   }
 
   protected void OnRun()
@@ -305,7 +359,11 @@ public class PlayerController : MonoBehaviour {
 
   private void OnDestroy()
   {
+    input.AttackRightEvent -= OnAttackRight;
+    input.AttackFrontEvent -= OnAttackFront;
+    input.AttackLeftEvent -= OnAttackLeft;
     input.JumpEvent -= OnJump;
+    input.MeowEvent -= OnMeow;
     input.RunEvent -= OnRun;
     input.RunStopEvent -= OnRunStop;
   }

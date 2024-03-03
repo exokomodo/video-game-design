@@ -5,8 +5,14 @@ using UnityEngine;
 public abstract class StateMachine : MonoBehaviour
 {
     protected State currentState;
-    public State CurrentState => currentState;
     protected State previousState;
+    protected StateAction currentAction;
+    protected StateAction previousAction;
+    public StateAction CurrentAction => currentAction;
+    public State CurrentState => currentState;
+    protected int ActionChangeHash = Animator.StringToHash("ActionChange");
+    protected int ActionIDHash = Animator.StringToHash("ActionID");
+
     protected int StateIDHash = Animator.StringToHash("StateID");
     protected int PrevStateIDHash = Animator.StringToHash("PrevStateID");
 
@@ -16,6 +22,14 @@ public abstract class StateMachine : MonoBehaviour
         currentState?.Exit();
         currentState = newState;
         currentState?.Enter();
+    }
+
+    public virtual void SwitchAction(StateAction newAction)
+    {
+        previousAction = currentAction;
+        currentAction?.Exit();
+        currentAction = newAction;
+        currentAction?.Enter();
     }
 
     protected abstract void Update();

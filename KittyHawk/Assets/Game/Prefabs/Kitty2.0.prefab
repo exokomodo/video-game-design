@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006468607994081305}
-  m_LocalRotation: {x: 0.0000000146037324, y: 0.9024138, z: -0.43087044, w: 0.000000030586015}
+  m_LocalRotation: {x: -0.0000000050506, y: 0.9024138, z: -0.43087044, w: -0.000000010577962}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2866940072119156193}
-  m_LocalRotation: {x: 0.000000038644117, y: 0.9100819, z: -0.4144284, w: 0.000000084862215}
+  m_LocalRotation: {x: 0.000000004405123, y: 0.9100819, z: -0.4144284, w: 0.00000000967362}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -441,6 +441,37 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
+--- !u!1 &3872346146227260650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6581065449165791481}
+  m_Layer: 0
+  m_Name: follow_target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6581065449165791481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872346146227260650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7456371161816875247}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4299315680059761003
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +541,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4486649166671934767}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00000030659965, y: 4, z: 3}
+  m_LocalPosition: {x: -3.8138926e-17, y: 4, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -694,8 +725,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6886807148342054549}
-  m_LocalRotation: {x: 0.000000036180595, y: 0.89442724, z: -0.44721362, w: 0.00000007236118}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.0000000037116723, y: 0.8944272, z: -0.44721362, w: 0.000000007423342}
+  m_LocalPosition: {x: -0.000000011790782, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -936,7 +967,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
@@ -946,7 +977,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
@@ -961,7 +992,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
@@ -1101,6 +1132,7 @@ MonoBehaviour:
   RootMotion: 1
   WalkSpeed: 1
   RunSpeed: 2
+  BaseJumpForce: 8
   TurnSpeed: 1
 --- !u!114 &5880034425804953106
 MonoBehaviour:
@@ -1132,7 +1164,6 @@ MonoBehaviour:
   <InputReader>k__BackingField: {fileID: 2951795978765711219}
   <Animator>k__BackingField: {fileID: 3574299840218274453}
   <ForceReceiver>k__BackingField: {fileID: 5880034425804953106}
-  <JumpForce>k__BackingField: 5
   <RotationDamping>k__BackingField: 4
   motionStates: 040000000300000005000000
   idleStates: 000000000100000002000000
