@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
   private bool _isRunning = false;
   private bool _isLanding = false;
   private bool _isAttacking = false;
+  private bool _isActive = false;
   private float groundCheckTolerance = 0.1f;
   private readonly int isAttackingHash = Animator.StringToHash("isAttacking");
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
@@ -39,10 +40,14 @@ public class PlayerController : MonoBehaviour {
   public bool isAttacking => _isAttacking;
   public bool isGrounded => _isGrounded;
   public bool isRunning => _isRunning;
-
   public bool isLanding => _isLanding;
-
   public bool isMoving => stateMachine.isMoving;
+  public bool isActive {
+    get { return _isActive; }
+    private set {
+      _isActive = value;
+    }
+  }
   [field: SerializeField] public bool RootMotion = true;
 
   [field: SerializeField] public float WalkSpeed = 1.0f;
@@ -85,13 +90,7 @@ public class PlayerController : MonoBehaviour {
   {
     Application.targetFrameRate = 60;
     Time.timeScale = 1.0f;
-    input.JumpEvent += OnJump;
-    input.RunEvent += OnRun;
-    input.RunStopEvent += OnRunStop;
-    input.AttackRightEvent += OnAttackRight;
-    input.AttackFrontEvent += OnAttackFront;
-    input.AttackLeftEvent += OnAttackLeft;
-    input.MeowEvent += OnMeow;
+    ToggleActive(true);
   }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
@@ -188,6 +187,7 @@ public class PlayerController : MonoBehaviour {
 
   void OnAnimatorMove()
   {
+    if (!isActive) return;
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -206,13 +206,22 @@ public class PlayerController : MonoBehaviour {
     if (isMoving) {
       newRootRotation = GetGroundAngle();
     }
-
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
     newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
+  }
+
+  public void ToggleActive(bool b)
+  {
+    ToggleListeners(b);
+    isActive = b;
+    if (!b && stateMachine.CurrentStateID != (int)PlayerStateMachine.StateEnum.IDLE)
+    {
+      SwitchToIdleState();
+    }
   }
 
   public void Move(Vector3 motion)
@@ -313,7 +322,6 @@ public class PlayerController : MonoBehaviour {
 
   public void Meow()
   {
-    Debug.Log("Play meow");
     stateMachine.SwitchAction(new PlayerMeowAction(stateMachine));
   }
 
@@ -357,8 +365,18 @@ public class PlayerController : MonoBehaviour {
       anim.SetBool(isRunningHash, false);
   }
 
-  private void OnDestroy()
+  private void ToggleListeners(bool b)
   {
+    if (b) {
+      input.JumpEvent += OnJump;
+      input.RunEvent += OnRun;
+      input.RunStopEvent += OnRunStop;
+      input.AttackRightEvent += OnAttackRight;
+      input.AttackFrontEvent += OnAttackFront;
+      input.AttackLeftEvent += OnAttackLeft;
+      input.MeowEvent += OnMeow;
+      return;
+    }
     input.AttackRightEvent -= OnAttackRight;
     input.AttackFrontEvent -= OnAttackFront;
     input.AttackLeftEvent -= OnAttackLeft;
@@ -366,5 +384,10 @@ public class PlayerController : MonoBehaviour {
     input.MeowEvent -= OnMeow;
     input.RunEvent -= OnRun;
     input.RunStopEvent -= OnRunStop;
+  }
+
+  private void OnDestroy()
+  {
+    ToggleListeners(false);
   }
 }

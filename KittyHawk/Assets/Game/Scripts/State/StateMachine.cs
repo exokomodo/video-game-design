@@ -10,6 +10,14 @@ public abstract class StateMachine : MonoBehaviour
     protected StateAction previousAction;
     public StateAction CurrentAction => currentAction;
     public State CurrentState => currentState;
+    public int CurrentStateID
+    {
+        get { return currentState != null? currentState.StateID : -1;}
+    }
+    public int CurrentActionID
+    {
+        get { return currentAction != null? currentAction.ActionID : -1; }
+    }
     protected int ActionChangeHash = Animator.StringToHash("ActionChange");
     protected int ActionIDHash = Animator.StringToHash("ActionID");
 
