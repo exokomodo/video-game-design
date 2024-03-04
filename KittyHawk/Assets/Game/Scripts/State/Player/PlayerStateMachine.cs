@@ -83,7 +83,11 @@ public class PlayerStateMachine : StateMachine
     {
         if (Animator.GetBool(StateChangeHash))
             Animator.SetBool(StateChangeHash, false);
-        if (!motionStates.Contains(currentState.StateID) && InputReader.MovementValue != Vector2.zero) {
+
+        if (!motionStates.Contains(currentState.StateID) &&
+            InputReader.MovementValue != Vector2.zero &&
+            Controller.isActive
+        ) {
             SwitchState(new PlayerMoveState(this));
             return;
         }
