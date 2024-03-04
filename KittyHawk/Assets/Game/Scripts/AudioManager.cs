@@ -25,7 +25,8 @@ public class AudioManager : MonoBehaviour
     }
     [SerializeField]
     string pathPrefix = "Sound";
-    private float volume = 1f;
+    private float soundVolume = 1f;
+    private float musicVolume = 1f;
     private Dictionary<string, AudioClip> soundEffects;
     private UnityAction<Vector3, string> audioEventListener;
     private AudioClip tireStackBounceAudio;
@@ -34,22 +35,42 @@ public class AudioManager : MonoBehaviour
 
     #region Public Setters
 
-    public float Volume
+    public float SoundVolume
     {
-        get { return volume; }
+        get { return soundVolume; }
         set
         {
             if (value < 0)
             {
-                volume = 0f;
+                soundVolume = 0f;
             }
             else if (value > 1)
             {
-                volume = 1f;
+                soundVolume = 1f;
             }
             else
             {
-                volume = value;
+                soundVolume = value;
+            }
+        }
+    }
+
+    public float MusicVolume
+    {
+        get { return musicVolume;  }
+        set
+        {
+            if (value < 0)
+            {
+                musicVolume = 0f;
+            }
+            else if (value > 1)
+            {
+                musicVolume = 1f;
+            }
+            else
+            {
+                musicVolume = value;
             }
         }
     }
@@ -91,7 +112,7 @@ public class AudioManager : MonoBehaviour
         {
             clip = LoadAudioClip(clipName);
         }
-        AudioSource.PlayClipAtPoint(clip, position, volume);
+        AudioSource.PlayClipAtPoint(clip, position, soundVolume);
     }
 
     #endregion
