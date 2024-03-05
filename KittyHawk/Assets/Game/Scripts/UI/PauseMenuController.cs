@@ -1,0 +1,121 @@
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class PauseMenuController : MonoBehaviour
+{
+
+    [SerializeField]
+    string confirmSoundName = "MenuConfirm";
+    [SerializeField]
+    Canvas pauseCanvas;
+
+    bool isPaused;
+
+    private Button resumeButton;
+    private Button restartButton;
+    private Button quitButton;
+    private Slider soundSlider;
+    private Slider musicSlider;
+
+    void Start()
+    {
+        pauseCanvas.enabled = false;
+
+        isPaused = false;
+
+        SetInitialVolumes();
+        FindButtons();
+
+        InputReader.PauseEvent += TriggerPause;
+    }
+
+    void OnDestroy()
+    {
+        InputReader.PauseEvent -= TriggerPause;
+
+        soundSlider.onValueChanged.RemoveAllListeners();
+        musicSlider.onValueChanged.RemoveAllListeners();
+        resumeButton.onClick.RemoveAllListeners();
+        restartButton.onClick.RemoveAllListeners();
+        quitButton.onClick.RemoveAllListeners();
+    }
+
+    // This is kinda ugly but it works...avoids manual reference in Inspector
+    void SetInitialVolumes()
+    {
+        soundSlider = GameObject.Find("SoundSlider").GetComponent<Slider>();
+        musicSlider = GameObject.Find("MusicSlider").GetComponent<Slider>();
+
+        if (soundSlider != null)
+        {
+            soundSlider.value = AudioManager.instance.SoundVolume;
+            soundSlider.onValueChanged.AddListener(SetSoundVolume);
+        }
+
+        if (musicSlider != null)
+        {
+            musicSlider.value = AudioManager.instance.MusicVolume;
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        }
+
+    }
+
+    void FindButtons()
+    {
+        resumeButton = GameObject.Find("ResumeButton").GetComponent<Button>();
+        if (resumeButton != null) resumeButton.onClick.AddListener(TriggerPause);
+        restartButton = GameObject.Find("RestartButton").GetComponent<Button>();
+        if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
+        quitButton = GameObject.Find("QuitButton").GetComponent<Button>();
+        if (quitButton != null) quitButton.onClick.AddListener(ReturnToMenu);
+    }
+
+    public void TriggerPause()
+    {
+        if (isPaused)
+        {
+            pauseCanvas.enabled = false;
+            Time.timeScale = 1f;
+            isPaused = false;
+            // PlayConfirmSound();
+        }
+        else
+        {
+            // PlayConfirmSound();
+            pauseCanvas.enabled = true;
+            Time.timeScale = 0f;
+            isPaused = true;
+        }
+    }
+
+    public void PlayConfirmSound()
+    {
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(Camera.main.transform.position, confirmSoundName);
+    }
+
+    public void SetSoundVolume(float value)
+    {
+        Debug.Log("Sound volume is now " + value);
+        AudioManager.instance.SoundVolume = value;
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        Debug.Log("Music volume is now " + value);
+        AudioManager.instance.MusicVolume = value;
+    }
+
+    public void RestartLevel()
+    {
+        TriggerPause();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToMenu()
+    {
+        TriggerPause();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+}
