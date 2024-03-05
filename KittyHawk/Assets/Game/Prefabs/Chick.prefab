@@ -1216,6 +1216,7 @@ GameObject:
   - component: {fileID: 9033239701331323328}
   - component: {fileID: 9033239701331323343}
   - component: {fileID: 7152482227274524794}
+  - component: {fileID: 9089776656944078740}
   m_Layer: 0
   m_Name: Chick
   m_TagString: Untagged
@@ -1326,8 +1327,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kitty: {fileID: 0}
+  isNearKitty: 0
   newPosition: {x: 0, y: 0, z: 0}
-  marker: {fileID: 0}
+--- !u!135 &9089776656944078740
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186957481781795988}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8311019728340567455
 GameObject:
   m_ObjectHideFlags: 0

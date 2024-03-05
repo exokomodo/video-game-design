@@ -20,11 +20,11 @@ public class ChickenAI : MonoBehaviour
     private Collider cl;
 
     // Patrol state
-    private float wanderRadius; // Maximum allowable distance the chicken can walk when patrolling
-    private float chanceToWalk; // Random chance 
-    private float timeUntilNextWalk = 5f; // Time between walks
-    private float timeSinceLastWalk = 0f; // Time since the chicken last walked
-    private Vector3 randomDirection;
+    [SerializeField] private float wanderRadius; // Maximum allowable distance the chicken can walk when patrolling
+    [SerializeField] private float chanceToWalk; // Random chance 
+    [SerializeField] private float timeUntilNextWalk = 5f; // Time between walks
+    [SerializeField] private float timeSinceLastWalk = 0f; // Time since the chicken last walked
+    [SerializeField] private Vector3 randomDirection;
     private NavMeshHit hit;
 
     // Flee state
@@ -32,12 +32,12 @@ public class ChickenAI : MonoBehaviour
     private const float KITTY_FLEE_DISTANCE = 2.0f;
     private Transform kittyTransform;
     private Vector3 fleeDirection;
-    public bool isNearKitty;
+    [SerializeField] private bool isNearKitty;
 
     // All states
     private bool isAlive = true;
     private Vector3 currentPosition;
-    public Vector3 newPosition;
+    [SerializeField] private Vector3 newPosition;
 
 
 
@@ -67,6 +67,7 @@ public class ChickenAI : MonoBehaviour
 
     private void DetermineKittyProximity()
     {
+        UnityEngine.Debug.Log("KITTY NEARBY???");
         isNearKitty = Vector3.Distance(kittyTransform.position, currentPosition) < KITTY_FLEE_DISTANCE;
     }
 
@@ -97,14 +98,29 @@ public class ChickenAI : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isNearKitty = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isNearKitty = false;
+        }
+    }
+
     void FixedUpdate()
     {
         if (!isAlive) return;
-        DetermineKittyProximity();
 
         if (isNearKitty)
         {
-            aiState = AIState.fleeState;
+            EnterFleeState();
             //TODO: Small jump flee animation for feedback to player
         }
 
@@ -118,7 +134,6 @@ public class ChickenAI : MonoBehaviour
             case AIState.fleeState:
                 UpdateFleeState();
                 break;
-
         }
     }
     
@@ -128,9 +143,26 @@ public class ChickenAI : MonoBehaviour
         timeUntilNextWalk = Random.Range(3.0f, 10.0f);
     }
     
+    
+    private void ChangeLookDirection()
+    {
+        // Make the chicken look at the new position. Uses euler transformation because the model 
+        // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
+        Vector3 lookPosition = newPosition - currentPosition;
+        Quaternion rotation = Quaternion.LookRotation(lookPosition);
+        transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
+    }
+    
+    private void EnterPatrolState()
+    {
+        UnityEngine.Debug.Log("Chicken Returning to Patrol State");
+        aiState = AIState.patrolState;
+        agent.speed = 0.6f;
+        anim.SetBool("isWalking", false);
+    }
+
     private void UpdatePatrolState()
     {
-        UnityEngine.Debug.Log("PATROLLING");
         currentPosition = transform.position;
 
         // Update the time since last walk
@@ -139,7 +171,6 @@ public class ChickenAI : MonoBehaviour
         // Check if it's time to try walking again
         if (agent.pathPending == false && agent.remainingDistance < 0.2f)
         {
-
             // Sets value for animator to switch back to idle
             anim.SetBool("isWalking", false);
 
@@ -176,42 +207,29 @@ public class ChickenAI : MonoBehaviour
         }
     }
 
-    private void ChangeLookDirection()
+    private void EnterFleeState()
     {
-        // Make the chicken look at the new position. Uses euler transformation because the model 
-        // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
-        Vector3 lookPosition = newPosition - currentPosition;
-        Quaternion rotation = Quaternion.LookRotation(lookPosition);
-        transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
-    }
-    
-    private void UpdateFleeState()
-    {
+        agent.ResetPath();
+        aiState = AIState.fleeState;
         anim.SetBool("isWalking", true);
         rb.velocity = Vector3.zero;
         agent.speed = 1.5f;
-            
+    }
+
+    private void UpdateFleeState()
+    {
         // Get direction to run from kitty
         fleeDirection = currentPosition - kittyTransform.position;
-
         fleeDirection = fleeDirection.normalized * wanderRadius;
-
         newPosition = fleeDirection + currentPosition;
+        
         ChangeLookDirection();
-        // if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
-        // {
-        //     newPosition = hit.position;
-        // }
 
         if (agent.pathPending == false && agent.remainingDistance < 0.2f && !isNearKitty)
         {
-            aiState = AIState.patrolState;
-            anim.SetBool("isWalking", false);
-
+            EnterPatrolState();
         }
-
-
-
+        
         agent.SetDestination(newPosition);
     }
 }
