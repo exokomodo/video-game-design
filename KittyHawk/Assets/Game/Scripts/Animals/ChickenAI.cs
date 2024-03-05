@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Debug = System.Diagnostics.Debug;
 using NavMeshBuilder = UnityEditor.AI.NavMeshBuilder;
 using Random = UnityEngine.Random;
 
@@ -13,6 +16,7 @@ public class ChickenAI : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
     private AIState aiState;
+    private Rigidbody rb;
     
     // Patrol state
     private float wanderRadius; // Maximum allowable distance the chicken can walk when patrolling
@@ -24,13 +28,15 @@ public class ChickenAI : MonoBehaviour
     
     // Flee state
     public GameObject kitty;
+    private Transform kittyTransform;
+    public bool isNearKitty;
     
     // All states
+    private bool isAlive = true;
     private Vector3 currentPosition;
     public Vector3 newPosition;
     
-    // TODO: Delete this eventually
-    public GameObject marker;
+
     
     public enum AIState
     {
@@ -43,7 +49,9 @@ public class ChickenAI : MonoBehaviour
     {
         aiState = AIState.patrolState;
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        kittyTransform = kitty.GetComponent<Transform>();
         
         // I'll handle this. 
         agent.updateRotation = false;
@@ -52,14 +60,50 @@ public class ChickenAI : MonoBehaviour
         wanderRadius = 4f;
         agent.speed = 0.6f;
     }
-    
+
+    private void IsNearKitty()
+    {
+        
+        if (Vector3.Distance(kittyTransform.position, currentPosition)< 5.0f)
+        { 
+            UnityEngine.Debug.Log("hiKitty");
+            isNearKitty = true;
+        }
+        
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        UnityEngine.Debug.Log("COLLISION CHICKEN");
+         if (other.gameObject.CompareTag("ChickenCoop") && isAlive)
+         {
+             UnityEngine.Debug.Log("Goodbye Chicken");
+             isAlive = false;
+             agent.enabled = false;
+             rb.isKinematic = true;
+             rb.velocity = Vector3.zero;
+             
+             // TODO: Make it so all of the chickens don't spawn in the same place
+             transform.position = other.transform.position;
+             
+             anim.SetBool("isWalking", false);
+             anim.Play("Idle");
+             
+             this.GetComponent<CapsuleCollider>().isTrigger = true;
+
+         }
+    }
+
     void Update()
     {
+        if (!isAlive) return;
+        
         switch (aiState)
         {
             // Patrol state: Move around the navmesh randomly
             case AIState.patrolState:
                 currentPosition = transform.position;
+                IsNearKitty();
                 
                 // Update the time since last walk
                 timeSinceLastWalk += Time.deltaTime;
