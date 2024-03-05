@@ -98,6 +98,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""c797dbc8-821a-40a2-8356-77326dfeaf99"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -375,6 +384,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Meow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ef0d2a7-2169-4941-a44c-acfc5edbc1c8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7f150fa-1387-486d-8573-9f24af99baba"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -419,6 +450,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_AttackFront = m_Player.FindAction("AttackFront", throwIfNotFound: true);
         m_Player_AttackLeft = m_Player.FindAction("AttackLeft", throwIfNotFound: true);
         m_Player_Meow = m_Player.FindAction("Meow", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -488,6 +520,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_AttackFront;
     private readonly InputAction m_Player_AttackLeft;
     private readonly InputAction m_Player_Meow;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -500,6 +533,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @AttackFront => m_Wrapper.m_Player_AttackFront;
         public InputAction @AttackLeft => m_Wrapper.m_Player_AttackLeft;
         public InputAction @Meow => m_Wrapper.m_Player_Meow;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -533,6 +567,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Meow.started += instance.OnMeow;
             @Meow.performed += instance.OnMeow;
             @Meow.canceled += instance.OnMeow;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -561,6 +598,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Meow.started -= instance.OnMeow;
             @Meow.performed -= instance.OnMeow;
             @Meow.canceled -= instance.OnMeow;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -606,5 +646,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnAttackFront(InputAction.CallbackContext context);
         void OnAttackLeft(InputAction.CallbackContext context);
         void OnMeow(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

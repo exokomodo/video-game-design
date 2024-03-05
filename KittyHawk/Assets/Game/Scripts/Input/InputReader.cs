@@ -14,6 +14,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public event Action MeowEvent;
     public event Action RunEvent;
     public event Action RunStopEvent;
+    public static event Action PauseEvent;
     private Controls controls;
     private void Start()
     {
@@ -75,5 +76,10 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
             return;
         }
         RunEvent?.Invoke();
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        PauseEvent?.Invoke();
     }
 }
