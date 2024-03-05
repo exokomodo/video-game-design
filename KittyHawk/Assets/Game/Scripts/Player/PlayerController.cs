@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour {
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
 
-    EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+
   }
 
   private void Start()
@@ -93,6 +93,23 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(true);
   }
 
+  private void OnInteractionEvent(string eventName, Vector3 interactable)
+  {
+    switch (eventName)
+    {
+      case InteractionEvent.INTERACTION_AVAILABLE:
+        break;
+
+      case InteractionEvent.INTERACTION_TRIGGERED:
+        SwitchToInteractState(interactable);
+        break;
+
+      default:
+        Debug.LogWarning("Unhandled InteractionEvent: " + eventName);
+        break;
+    }
+  }
+
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
     Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
@@ -100,6 +117,11 @@ public class PlayerController : MonoBehaviour {
     {
       case AnimationStateEvent.ATTACK_COMPLETE:
         Attack(false);
+        break;
+
+      case AnimationStateEvent.INTERACTION_COMPLETE:
+        ToggleActive(true);
+        SwitchToIdleState();
         break;
 
       case AnimationStateEvent.JUMP_COMPLETE:
@@ -266,6 +288,20 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
+    public void SwitchToInteractState(Vector3 interactable)
+  {
+    _isJumping = false;
+    _isFalling = false;
+    _isLanding = false;
+    ToggleListeners(false);
+    isActive = false;
+
+    float dist = Vector3.Distance(transform.position, interactable);
+    bool MatchTarget = dist >= 0.5f;
+    Debug.Log("dist: " + dist);
+    stateMachine.SwitchState(new PlayerInteractState(stateMachine, MatchTarget));
+  }
+
   public bool CheckGrounded()
   {
     Vector3 pos = rb.transform.position;
@@ -375,6 +411,8 @@ public class PlayerController : MonoBehaviour {
       input.AttackFrontEvent += OnAttackFront;
       input.AttackLeftEvent += OnAttackLeft;
       input.MeowEvent += OnMeow;
+      EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+      EventManager.StartListening<InteractionEvent, string, Vector3>(OnInteractionEvent);
       return;
     }
     input.AttackRightEvent -= OnAttackRight;
@@ -389,5 +427,7 @@ public class PlayerController : MonoBehaviour {
   private void OnDestroy()
   {
     ToggleListeners(false);
+    EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+    EventManager.StopListening<InteractionEvent, string, Vector3>(OnInteractionEvent);
   }
 }
