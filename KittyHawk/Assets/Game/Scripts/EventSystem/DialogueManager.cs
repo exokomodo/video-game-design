@@ -75,7 +75,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogue == null || dialogue.DialogueText.Length < 1)
         {
             Debug.Log("No dialogue found.");
-            EventManager.TriggerEvent<DialogueCloseEvent>();
+            EventManager.TriggerEvent<DialogueCloseEvent, string>(null);
         }
 
         currentDialogue = dialogue;
@@ -99,7 +99,7 @@ public class DialogueManager : MonoBehaviour
             displayingDialogue = false;
             dialogueCount = 0;
             input.JumpEvent -= UpdateDialogue;
-            EventManager.TriggerEvent<DialogueCloseEvent>();
+            EventManager.TriggerEvent<DialogueCloseEvent, string>(currentDialogue.DialogueName);
         }
         else
         {

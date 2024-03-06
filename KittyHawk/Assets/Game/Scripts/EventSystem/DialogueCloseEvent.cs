@@ -1,3 +1,3 @@
 using UnityEngine.Events;
 
-public class DialogueCloseEvent : UnityEvent { }
+public class DialogueCloseEvent : UnityEvent<string> { }
