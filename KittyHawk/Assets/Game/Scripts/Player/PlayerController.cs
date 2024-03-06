@@ -111,7 +111,8 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case InteractionEvent.INTERACTION_TRIGGERED:
-        SwitchToInteractState(eventType, targetTransform, bounds);
+        if (eventType != InteractionType.NONE)
+          SwitchToInteractState(eventType, targetTransform, bounds);
         break;
 
       default:

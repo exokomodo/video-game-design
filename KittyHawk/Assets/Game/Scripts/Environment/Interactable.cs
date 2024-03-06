@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,18 +6,23 @@ public class Interactable : MonoBehaviour
     [HideInInspector]
     [field: SerializeField] public Vector3 Center = Vector3.zero;
     [HideInInspector]
-    [field: SerializeField] public float ColliderRadius = 2.0f;
+    [field: SerializeField] public float ColliderRadius = 1.0f;
     [HideInInspector]
     [field: SerializeField]public string InteractsWithTag = "Player";
     [HideInInspector]
     public int interactionEventIndex = 0;
     [HideInInspector]
-    public string[] interactionEvent = new string[] { InteractionEvent.INTERACTION_TRIGGERED, InteractionEvent.INTERACTION_ZONE_ENTERED };
-    public bool DisableOnTriggered = true;
+    public string[] interactionEvent = new string[] {
+        InteractionEvent.INTERACTION_TRIGGERED,
+        InteractionEvent.INTERACTION_ZONE_ENTERED,
+        InteractionEvent.INTERACTION_ZONE_EXITED
+    };
+    public bool DisableOnTriggered = false;
     [HideInInspector]
     public int interactionTypeIndex = 0;
     [HideInInspector]
     public string[] interactionType = new string[] {
+        InteractionType.NONE,
         InteractionType.INTERACTION_BUTTON_PRESS,
         InteractionType.INTERACTION_ITEM_PICKUP,
         InteractionType.INTERACTION_ITEM_DROP,
@@ -78,6 +82,8 @@ public class Interactable : MonoBehaviour
         Gizmos.DrawWireSphere(center, ColliderRadius);
     }
 }
+
+
 
 [CustomEditor(typeof(Interactable))]
 public class InteractableEditor : Editor

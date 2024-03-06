@@ -10,6 +10,7 @@ public class InteractionEvent: UnityEvent<string, string, Transform, Bounds>{
 }
 public class InteractionType
 {
+    public const string NONE = "None";
     public const string INTERACTION_BUTTON_PRESS = "InteractionButtonPress";
     public const string INTERACTION_ITEM_PICKUP = "InteractionItemPickup";
     public const string INTERACTION_ITEM_DROP = "InteractionItemDrop";
