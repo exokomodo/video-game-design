@@ -36,7 +36,7 @@ public class Interactable : MonoBehaviour
     public void TriggerInteraction(Collider c)
     {
         // Trigger an event to let listeners know an interaction event is now possible
-        EventManager.TriggerEvent<InteractionEvent, string, Vector3>(InteractionEventName, transform.position);
+        EventManager.TriggerEvent<InteractionEvent, string, Transform>(InteractionEventName, transform);
     }
 
     void OnDrawGizmos()

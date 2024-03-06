@@ -181,12 +181,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.020893656
+      value: -0.020893712
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.010446827
+      value: -0.010446856
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -196,7 +196,7 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.44709158
+      value: 0.44709155
       objectReference: {fileID: 0}
     - target: {fileID: 970564632490901745, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -578,10 +578,7 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.4307528
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c27731197a634fb781589a2039fde21, type: 3}
 --- !u!1 &289629976
 GameObject:
@@ -1619,7 +1616,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389469409}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.253, y: 0.309, z: 0}
+  m_LocalPosition: {x: 1.253, y: 0.309, z: -0.031}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1638,13 +1635,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b078a372b90184f2fb94f515c60218c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColliderRadius: 0.5
+  ColliderRadius: 0.75
   ColliderOffsetX: 0
   ColliderOffsetY: 0
   ColliderOffsetZ: 0
   InteractsWithTag: Player
   InteractionEventName: InteractionTriggered
-  DisableOnTriggered: 1
+  DisableOnTriggered: 0
 --- !u!1 &1490840547
 GameObject:
   m_ObjectHideFlags: 0

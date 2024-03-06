@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
   private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
   private Vector3 pendingMotion = Vector3.zero;
+  private Quaternion pendingRotation = Quaternion.identity;
   private enum AttackType
   {
     RIGHT,
@@ -82,8 +83,6 @@ public class PlayerController : MonoBehaviour {
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
-
-
   }
 
   private void Start()
@@ -93,7 +92,7 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(true);
   }
 
-  private void OnInteractionEvent(string eventName, Vector3 interactable)
+  private void OnInteractionEvent(string eventName, Transform targetTransform)
   {
     switch (eventName)
     {
@@ -101,7 +100,7 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case InteractionEvent.INTERACTION_TRIGGERED:
-        SwitchToInteractState(interactable);
+        SwitchToInteractState(targetTransform);
         break;
 
       default:
@@ -197,19 +196,15 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    // if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
     if (input.MovementValue == Vector2.zero && isMoving)
     {
       SwitchToIdleState();
     }
-    Quaternion newRootRotation = GetGroundAngle();
-    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, deltaTime);
-    rb.MoveRotation(newRootRotation);
   }
 
   void OnAnimatorMove()
   {
-    if (!isActive) return;
+    // if (!isActive) return;
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -223,18 +218,26 @@ public class PlayerController : MonoBehaviour {
     }
     newRootPosition = newRootPosition + pendingMotion;
     pendingMotion = Vector3.zero;
-    // newRootPosition = anim.rootPosition;
-    Quaternion newRootRotation = anim.rootRotation;
-    if (isMoving) {
-      newRootRotation = GetGroundAngle();
-    }
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
-    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     rb.MovePosition(newRootPosition);
+
+    Quaternion newRootRotation;
+    if (pendingRotation != Quaternion.identity)
+    {
+      newRootRotation = pendingRotation;
+      pendingRotation = Quaternion.identity;
+    }
+    else
+    {
+      newRootRotation = isMoving? GetGroundAngle() : anim.rootRotation;
+      newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
+    }
     rb.MoveRotation(newRootRotation);
   }
+
+
 
   public void ToggleActive(bool b)
   {
@@ -249,6 +252,11 @@ public class PlayerController : MonoBehaviour {
   public void Move(Vector3 motion)
   {
     pendingMotion = motion;
+  }
+
+  public void Rotate(Quaternion rotation)
+  {
+    pendingRotation = rotation;
   }
 
   public void AddForce(Vector3 motion, ForceMode mode = ForceMode.Impulse)
@@ -288,18 +296,14 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
-    public void SwitchToInteractState(Vector3 interactable)
+  public void SwitchToInteractState(Transform targetTransform)
   {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
     ToggleListeners(false);
     isActive = false;
-
-    float dist = Vector3.Distance(transform.position, interactable);
-    bool MatchTarget = dist >= 0.5f;
-    Debug.Log("dist: " + dist);
-    stateMachine.SwitchState(new PlayerInteractState(stateMachine, MatchTarget));
+    stateMachine.SwitchState(new PlayerInteractState(stateMachine, targetTransform));
   }
 
   public bool CheckGrounded()
@@ -412,7 +416,7 @@ public class PlayerController : MonoBehaviour {
       input.AttackLeftEvent += OnAttackLeft;
       input.MeowEvent += OnMeow;
       EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-      EventManager.StartListening<InteractionEvent, string, Vector3>(OnInteractionEvent);
+      EventManager.StartListening<InteractionEvent, string, Transform>(OnInteractionEvent);
       return;
     }
     input.AttackRightEvent -= OnAttackRight;
@@ -428,6 +432,6 @@ public class PlayerController : MonoBehaviour {
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<InteractionEvent, string, Vector3>(OnInteractionEvent);
+    EventManager.StopListening<InteractionEvent, string, Transform>(OnInteractionEvent);
   }
 }
