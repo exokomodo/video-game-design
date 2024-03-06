@@ -13,7 +13,7 @@ public class PlayerInteractState : PlayerBaseState
     protected readonly Vector3 interactionOffset = new Vector3(1, 0, 0);
 
     public PlayerInteractState(PlayerStateMachine stateMachine, Transform targetTransform, Bounds targetBounds) : base(stateMachine) {
-        this.StateID = 6;
+        StateID = (int)PlayerStateMachine.StateEnum.INTERACT;
         this.targetTransform = targetTransform;
         this.targetBounds = targetBounds;
     }

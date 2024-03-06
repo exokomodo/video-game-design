@@ -9,7 +9,7 @@ public class PlayerSitState : PlayerBaseState
     public int range = 0;
 
     public PlayerSitState(PlayerStateMachine stateMachine) : base(stateMachine) {
-        this.StateID = 1;
+        StateID = (int)PlayerStateMachine.StateEnum.SIT;
     }
 
     public override void Enter()

@@ -8,7 +8,7 @@ public class PlayerFallState : PlayerMoveBase
     private float elapsedTime;
 
     public PlayerFallState(PlayerStateMachine stateMachine) : base(stateMachine) {
-        StateID = 5;
+        StateID = (int)PlayerStateMachine.StateEnum.FALL;
         elapsedTime = 0;
     }
 

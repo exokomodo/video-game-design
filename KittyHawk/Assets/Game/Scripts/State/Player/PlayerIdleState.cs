@@ -11,7 +11,7 @@ public class PlayerIdleState : PlayerBaseState
     public int range = 0;
 
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine) {
-        this.StateID = 0;
+        StateID = (int)PlayerStateMachine.StateEnum.IDLE;
     }
 
     public override void Enter()

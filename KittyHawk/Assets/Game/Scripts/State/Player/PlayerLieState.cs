@@ -9,7 +9,7 @@ public class PlayerLieState : PlayerBaseState
     public int range = 0;
 
     public PlayerLieState(PlayerStateMachine stateMachine) : base(stateMachine) {
-        this.StateID = 2;
+        StateID = (int)PlayerStateMachine.StateEnum.LIE;
     }
 
     public override void Enter()

@@ -10,7 +10,7 @@ public class PlayerJumpState : PlayerMoveBase
 
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        this.StateID = 4;
+        StateID = (int)PlayerStateMachine.StateEnum.JUMP;
     }
 
     public override void Enter()

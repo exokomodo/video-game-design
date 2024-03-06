@@ -8,7 +8,7 @@ public class PlayerMoveState : PlayerMoveBase
 
     public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        this.StateID = 3;
+        StateID = (int)PlayerStateMachine.StateEnum.MOVE;
     }
 
     public override void Enter()
