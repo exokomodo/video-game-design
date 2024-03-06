@@ -6,15 +6,12 @@ using UnityEngine;
 public class PlayerAttackAction : PlayerBaseAction
 {
     private readonly string AttackPath = ActionLayer + ".Attacks.";
-    public static readonly int ATTACK_RIGHT = 11;
-    public static readonly int ATTACK_FRONT = 12;
-    public static readonly int ATTACK_LEFT = 13;
 
     public static readonly Dictionary<int, string> AttackType = new Dictionary<int, string>
     {
-        {ATTACK_RIGHT, "AttackRight"},
-        {ATTACK_FRONT, "AttackFront"},
-        {ATTACK_LEFT, "AttackLeft"}
+        {(int)PlayerStateMachine.ActionEnum.ATTACK_RIGHT, "AttackRight"},
+        {(int)PlayerStateMachine.ActionEnum.ATTACK_FRONT, "AttackFront"},
+        {(int)PlayerStateMachine.ActionEnum.ATTACK_LEFT, "AttackLeft"}
     };
 
 

@@ -23,6 +23,20 @@ public class PlayerStateMachine : StateMachine
         DIE
     }
 
+    public enum ActionEnum
+    {
+        ATTACK_RIGHT,
+        ATTACK_FRONT,
+        ATTACK_LEFT,
+        MEOW
+    }
+
+    public enum ActionType
+    {
+        NORMAL,
+        ADDITIVE
+    }
+
     public Transform MainCameraTransform { get; private set; }
 
     public bool isIdle => currentState?.StateID == (int) StateEnum.IDLE;
@@ -110,13 +124,20 @@ public class PlayerStateMachine : StateMachine
     public override void SwitchAction(StateAction newAction)
     {
         Debug.Log("SwitchAction: " + newAction);
+        if (newAction.ActionType == (int)PlayerStateMachine.ActionType.ADDITIVE)
+        {
+            additiveAction = newAction;
+            additiveAction.Enter();
+            return;
+        }
         previousAction = currentAction == null? newAction : currentAction;
         currentAction?.Exit();
-
         currentAction = newAction;
         currentAction?.Enter();
         Animator.SetInteger(ActionIDHash, currentAction.ActionID);
         Animator.SetBool(ActionChangeHash, true);
+
+
     }
 
     /*

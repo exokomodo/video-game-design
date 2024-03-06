@@ -8,6 +8,7 @@ public abstract class StateMachine : MonoBehaviour
     protected State previousState;
     protected StateAction currentAction;
     protected StateAction previousAction;
+    protected StateAction additiveAction;
     public StateAction CurrentAction => currentAction;
     public State CurrentState => currentState;
     public int CurrentStateID

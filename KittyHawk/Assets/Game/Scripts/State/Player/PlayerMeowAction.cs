@@ -9,7 +9,8 @@ public class PlayerMeowAction : PlayerBaseAction
 
     public PlayerMeowAction(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        this.ActionID = 21;
+        ActionID = (int)PlayerStateMachine.ActionEnum.MEOW;
+        ActionType = (int)PlayerStateMachine.ActionType.ADDITIVE;
     }
 
     public override void Enter()

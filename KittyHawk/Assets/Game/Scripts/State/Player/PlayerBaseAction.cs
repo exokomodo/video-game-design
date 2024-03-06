@@ -9,9 +9,9 @@ public abstract class PlayerBaseAction : StateAction
     protected static readonly string HeadLayer = "HeadLayer";
     protected readonly int ActionIDHash = Animator.StringToHash("ActionID");
     protected readonly int ActionLayerHash = Animator.StringToHash("ActionLayer");
-
     public PlayerBaseAction(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
+        this.ActionType = (int) PlayerStateMachine.ActionType.NORMAL;
     }
 }

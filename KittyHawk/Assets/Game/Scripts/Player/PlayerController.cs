@@ -374,19 +374,19 @@ public class PlayerController : MonoBehaviour {
   private void OnAttackRight()
   {
     Attack(true);
-    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_RIGHT));
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_RIGHT));
   }
 
   private void OnAttackFront()
   {
     Attack(true);
-    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_FRONT));
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_FRONT));
   }
 
   private void OnAttackLeft()
   {
     Attack(true);
-    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_LEFT));
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_LEFT));
   }
 
   private void OnJump()
