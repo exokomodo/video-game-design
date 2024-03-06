@@ -23,6 +23,14 @@ public class PlayerStateMachine : StateMachine
         DIE
     }
 
+    public enum InteractionEnum
+    {
+        BUTTON_PRESS,
+        ITEM_PICKUP,
+        ITEM_DROP,
+        ITEM_THROW
+    }
+
     public enum ActionEnum
     {
         ATTACK_RIGHT,
@@ -94,9 +102,6 @@ public class PlayerStateMachine : StateMachine
 
     protected override void Execute(float deltaTime)
     {
-        if (Animator.GetBool(StateChangeHash))
-            Animator.SetBool(StateChangeHash, false);
-
         if (!motionStates.Contains(currentState.StateID) &&
             InputReader.MovementValue != Vector2.zero &&
             Controller.isActive
@@ -114,11 +119,8 @@ public class PlayerStateMachine : StateMachine
 
         if (currentAction != null)
         {
-            if (Animator.GetBool(ActionChangeHash))
-                Animator.SetBool(ActionChangeHash, false);
             currentAction?.Execute(deltaTime);
         }
-
     }
 
     public override void SwitchAction(StateAction newAction)

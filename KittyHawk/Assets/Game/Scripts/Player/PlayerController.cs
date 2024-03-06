@@ -97,8 +97,9 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(true);
   }
 
-  private void OnInteractionEvent(string eventName, Transform targetTransform, Bounds bounds)
+  private void OnInteractionEvent(string eventName, string eventType, Transform targetTransform, Bounds bounds)
   {
+    Debug.Log("InteractionEvent received " + eventName + ", " + eventType);
     switch (eventName)
     {
       case InteractionEvent.INTERACTION_ZONE_ENTERED:
@@ -110,18 +111,18 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case InteractionEvent.INTERACTION_TRIGGERED:
-        SwitchToInteractState(targetTransform, bounds);
+        SwitchToInteractState(eventType, targetTransform, bounds);
         break;
 
       default:
-        Debug.LogWarning("Unhandled InteractionEvent: " + eventName);
+        Debug.LogWarning("Unhandled InteractionEvent: " + eventName + ", " + eventType);
         break;
     }
   }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
-    Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
+    Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
     switch (eventName)
     {
       case AnimationStateEvent.ATTACK_COMPLETE:
@@ -129,8 +130,8 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case AnimationStateEvent.INTERACTION_COMPLETE:
-        ToggleActive(true);
         SwitchToIdleState();
+        ToggleActive(true);
         break;
 
       case AnimationStateEvent.JUMP_COMPLETE:
@@ -314,14 +315,14 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
-  public void SwitchToInteractState(Transform targetTransform, Bounds bounds)
+  public void SwitchToInteractState(string eventType, Transform targetTransform, Bounds bounds)
   {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
     ToggleListeners(false);
     isActive = false;
-    stateMachine.SwitchState(new PlayerInteractState(stateMachine, targetTransform, bounds));
+    stateMachine.SwitchState(new PlayerInteractState(stateMachine, eventType, targetTransform, bounds));
   }
 
   public bool CheckGrounded()
@@ -432,7 +433,7 @@ public class PlayerController : MonoBehaviour {
       input.AttackLeftEvent += OnAttackLeft;
       input.MeowEvent += OnMeow;
       EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-      EventManager.StartListening<InteractionEvent, string, Transform, Bounds>(OnInteractionEvent);
+      EventManager.StartListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
       return;
     }
     input.AttackRightEvent -= OnAttackRight;
@@ -448,6 +449,6 @@ public class PlayerController : MonoBehaviour {
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<InteractionEvent, string, Transform, Bounds>(OnInteractionEvent);
+    EventManager.StopListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
   }
 }

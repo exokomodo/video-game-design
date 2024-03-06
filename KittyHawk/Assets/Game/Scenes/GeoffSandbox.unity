@@ -181,12 +181,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.020893656
+      value: -0.020893712
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.010446827
+      value: -0.010446856
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -196,7 +196,7 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.44709158
+      value: 0.44709155
       objectReference: {fileID: 0}
     - target: {fileID: 970564632490901745, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -1644,7 +1644,7 @@ MonoBehaviour:
   - InteractionZoneExited
   - InteractionTriggered
   DisableOnTriggered: 0
-  interactionTypeIndex: 0
+  interactionTypeIndex: 1
   interactionType:
   - InteractionButtonPress
   - InteractionItemPickup

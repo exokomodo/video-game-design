@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -43,27 +44,30 @@ public class Interactable : MonoBehaviour
     }
     protected void OnTriggerEnter(Collider c)
     {
-        if (((DisableOnTriggered && !triggered) || (!DisableOnTriggered)) && c.transform.root.CompareTag(InteractsWithTag))
+        string evt = interactionEvent[interactionEventIndex];
+        evt = evt == InteractionEvent.INTERACTION_ZONE_EXITED? InteractionEvent.INTERACTION_ZONE_ENTERED : evt;
+        if (c.transform.root.CompareTag(InteractsWithTag) &&
+            ((DisableOnTriggered && !triggered) || (!DisableOnTriggered)))
         {
             triggered = true;
-            TriggerInteraction(c);
+            TriggerEvent(evt);
         }
     }
 
     protected void OnTriggerExit(Collider c)
     {
-        if (((DisableOnTriggered && !triggered) || (!DisableOnTriggered)) && c.transform.root.CompareTag(InteractsWithTag))
+        if (c.transform.root.CompareTag(InteractsWithTag) &&
+            ((DisableOnTriggered && !triggered) || (!DisableOnTriggered)))
         {
             triggered = true;
-            TriggerInteraction(c);
+            TriggerEvent(InteractionEvent.INTERACTION_ZONE_EXITED);
         }
     }
 
-    public void TriggerInteraction(Collider c)
+    protected void TriggerEvent(string evt)
     {
-        // Trigger an event to let listeners know an interaction event is now possible
-        string evt = interactionEvent[interactionEventIndex];
-        EventManager.TriggerEvent<InteractionEvent, string, Transform, Bounds>(evt, transform, bounds);
+        string typ = interactionType[interactionTypeIndex];
+        EventManager.TriggerEvent<InteractionEvent, string, string, Transform, Bounds>(evt, typ, transform, bounds);
     }
 
     void OnDrawGizmos()
@@ -80,10 +84,12 @@ public class InteractableEditor : Editor
 {
     SerializedProperty center;
     SerializedProperty colliderRadius;
+    SerializedProperty disableOnTriggered;
     void OnEnable()
     {
         center = serializedObject.FindProperty("Center");
         colliderRadius = serializedObject.FindProperty("ColliderRadius");
+        disableOnTriggered = serializedObject.FindProperty("DisableOnTriggered");
     }
     public override void OnInspectorGUI()
     {
@@ -94,6 +100,7 @@ public class InteractableEditor : Editor
         GUILayoutOption[] options = { GUILayout.ExpandWidth(true) };
         EditorGUILayout.PropertyField(center, new GUIContent("Collider Center"), options);
         EditorGUILayout.PropertyField(colliderRadius, new GUIContent("Collider Radius"));
+        EditorGUILayout.PropertyField(disableOnTriggered, new GUIContent("Disable Once Triggered"));
 
         GUIContent eventLabel = new GUIContent("Interaction Event");
         script.interactionEventIndex = EditorGUILayout.Popup(eventLabel, script.interactionEventIndex, script.interactionEvent);

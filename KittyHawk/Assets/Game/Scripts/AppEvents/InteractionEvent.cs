@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InteractionEvent: UnityEvent<string, Transform, Bounds>{
+public class InteractionEvent: UnityEvent<string, string, Transform, Bounds>{
     public const string INTERACTION_ZONE_ENTERED = "InteractionZoneEntered";
     public const string INTERACTION_ZONE_EXITED = "InteractionZoneExited";
     public const string INTERACTION_TRIGGERED = "InteractionTriggered";
