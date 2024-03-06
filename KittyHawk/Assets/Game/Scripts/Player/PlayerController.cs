@@ -221,7 +221,6 @@ public class PlayerController : MonoBehaviour {
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
-    rb.MovePosition(newRootPosition);
 
     Quaternion newRootRotation;
     if (pendingRotation != Quaternion.identity)
@@ -234,6 +233,8 @@ public class PlayerController : MonoBehaviour {
       newRootRotation = isMoving? GetGroundAngle() : anim.rootRotation;
       newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     }
+
+    rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
   }
 
