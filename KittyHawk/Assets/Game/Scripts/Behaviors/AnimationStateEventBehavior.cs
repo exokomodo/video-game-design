@@ -36,7 +36,7 @@ public class AnimationStateEventBehavior : StateMachineBehaviour
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateExit(animator, stateInfo, layerIndex);
-        Trigger(AnimationEventType.EXIT, enterEventValue);
+        Trigger(AnimationEventType.EXIT, exitEventValue);
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

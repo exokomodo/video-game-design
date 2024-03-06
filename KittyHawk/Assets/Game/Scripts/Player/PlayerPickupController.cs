@@ -22,7 +22,7 @@ public class PlayerPickupController : MonoBehaviour
             case "Catnip":
                 inventory.Catnip = 1;
                 Destroy(other.gameObject);
-                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatnipMunch");
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
                 break;
             case "Life":
                 inventory.Lives = 1;

@@ -1,39 +1,76 @@
 // NOTE: Based on Assets/Scripts/AppEvents/AudioEventManager.cs in example project
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance
+    {
+        get
+        {
+            if (!audioManager)
+            {
+                audioManager = FindObjectOfType(typeof(AudioManager)) as AudioManager;
 
-    private float volume = 1f;
+                if (!audioManager)
+                {
+                    Debug.LogError("There needs to be one active AudioManager script on a GameObject in your scene.");
+                }
+            }
 
-    public AudioClip[] audioClips;
-
-    public AudioClip tireStackBounceAudio;
-    private UnityAction<Vector3> tireStackBounceListener;
-    private UnityAction<Vector3, string> audioEventListener;
-
+            return audioManager;
+        }
+    }
+    [SerializeField]
+    string pathPrefix = "Sound";
+    private float soundVolume = 1f;
+    private float musicVolume = 1f;
     private Dictionary<string, AudioClip> soundEffects;
+    private UnityAction<Vector3, string> audioEventListener;
+    private AudioClip tireStackBounceAudio;
+    private UnityAction<Vector3> tireStackBounceListener;
+    private static AudioManager audioManager;
 
     #region Public Setters
 
-    public float Volume
+    public float SoundVolume
     {
-        get { return volume; }
+        get { return soundVolume; }
         set
         {
             if (value < 0)
             {
-                volume = 0f;
+                soundVolume = 0f;
             }
             else if (value > 1)
             {
-                volume = 1f;
+                soundVolume = 1f;
             }
             else
             {
-                volume = value;
+                soundVolume = value;
+            }
+        }
+    }
+
+    public float MusicVolume
+    {
+        get { return musicVolume;  }
+        set
+        {
+            if (value < 0)
+            {
+                musicVolume = 0f;
+            }
+            else if (value > 1)
+            {
+                musicVolume = 1f;
+            }
+            else
+            {
+                musicVolume = value;
             }
         }
     }
@@ -43,15 +80,7 @@ public class AudioManager : MonoBehaviour
     #region Unity Hooks
     private void Awake()
     {
-        tireStackBounceListener = new UnityAction<Vector3>(tireStackBounceEventHandler);
-        audioEventListener = new UnityAction<Vector3, string>(audioEventHandler);
-
-        soundEffects = new Dictionary<string, AudioClip>();
-
-        foreach (AudioClip audioClip in audioClips)
-        {
-            soundEffects.Add(audioClip.name, audioClip);
-        }
+        Init();
     }
 
     private void OnEnable()
@@ -79,13 +108,29 @@ public class AudioManager : MonoBehaviour
 
     void audioEventHandler(Vector3 position, string clipName)
     {
-
-        if (soundEffects[clipName] != null)
+        if (!soundEffects.TryGetValue(clipName, out AudioClip clip))
         {
-            AudioSource.PlayClipAtPoint(soundEffects[clipName], position, volume);
+            clip = LoadAudioClip(clipName);
         }
-
+        AudioSource.PlayClipAtPoint(clip, position, soundVolume);
     }
 
+    #endregion
+
+    #region Private Methods
+    private void Init()
+    {
+        tireStackBounceListener = new UnityAction<Vector3>(tireStackBounceEventHandler);
+        audioEventListener = new UnityAction<Vector3, string>(audioEventHandler);
+        soundEffects = new Dictionary<string, AudioClip>();
+        tireStackBounceAudio = LoadAudioClip("tire-stack-bounce");
+    }
+
+    private AudioClip LoadAudioClip(string name)
+    {
+        var clip = Resources.Load<AudioClip>(Path.Join(pathPrefix, name));
+        soundEffects.Add(name, clip);
+        return clip;
+    }
     #endregion
 }
