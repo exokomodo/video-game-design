@@ -11,6 +11,8 @@ TagManager:
   - HorseWaypoints
   - HorseWaypoint
   - Gate
+  - ChickenCoop
+  - Chick
   layers:
   - Default
   - TransparentFX
