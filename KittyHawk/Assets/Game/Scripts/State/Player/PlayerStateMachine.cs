@@ -17,10 +17,9 @@ public class PlayerStateMachine : StateMachine
         MOVE,
         JUMP,
         FALL,
-        CLIMB,
+        INTERACT,
         CRAWL,
         SWIM,
-        ATTACK,
         DIE
     }
 
