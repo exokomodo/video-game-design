@@ -38,7 +38,7 @@ public class DialogueManager : MonoBehaviour
         FindTextDisplays();
 
         dialogueEventListener = new UnityAction<Vector3, string>(DisplayDialogue);
-        EventManager.StartListening<DialogueEvent, Vector3, string>(dialogueEventListener);
+        EventManager.StartListening<DialogueOpenEvent, Vector3, string>(dialogueEventListener);
     }
 
     void FindTextDisplays()
@@ -57,7 +57,7 @@ public class DialogueManager : MonoBehaviour
     void OnDestroy()
     {
         input.JumpEvent -= UpdateDialogue;
-        EventManager.StopListening<DialogueEvent, Vector3, string>(dialogueEventListener);
+        EventManager.StopListening<DialogueOpenEvent, Vector3, string>(dialogueEventListener);
     }
 
     #endregion
@@ -75,7 +75,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogue == null || dialogue.DialogueText.Length < 1)
         {
             Debug.Log("No dialogue found.");
-            EventManager.TriggerEvent<StopDialogueEvent>();
+            EventManager.TriggerEvent<DialogueCloseEvent>();
         }
 
         currentDialogue = dialogue;
@@ -99,7 +99,7 @@ public class DialogueManager : MonoBehaviour
             displayingDialogue = false;
             dialogueCount = 0;
             input.JumpEvent -= UpdateDialogue;
-            EventManager.TriggerEvent<StopDialogueEvent>();
+            EventManager.TriggerEvent<DialogueCloseEvent>();
         }
         else
         {

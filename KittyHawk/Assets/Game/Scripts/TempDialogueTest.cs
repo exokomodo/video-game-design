@@ -14,12 +14,12 @@ public class TempDialogueTest : MonoBehaviour
 
             if (!alreadyTalked)
             {
-                EventManager.TriggerEvent<DialogueEvent, Vector3, string>(transform.position, "TestDialogue");
+                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "TestDialogue");
                 alreadyTalked = true;
             }
             else
             {
-                EventManager.TriggerEvent<DialogueEvent, Vector3, string>(transform.position, "TestDialogue2");
+                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "TestDialogue2");
             }
                 
         }
