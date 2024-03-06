@@ -255,6 +255,13 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  public void ToggleRunning(bool b)
+  {
+    _isRunning = b;
+    anim.SetBool(isRunningHash, b);
+
+  }
+
   public void Move(Vector3 motion)
   {
     pendingMotion = motion;
@@ -401,14 +408,12 @@ public class PlayerController : MonoBehaviour {
 
   protected void OnRun()
   {
-      _isRunning = true;
-      anim.SetBool(isRunningHash, true);
+      ToggleRunning(true);
   }
 
   protected void OnRunStop()
   {
-      _isRunning = false;
-      anim.SetBool(isRunningHash, false);
+      ToggleRunning(false);
   }
 
   private void ToggleListeners(bool b)

@@ -10,7 +10,6 @@ public class PlayerInteractState : PlayerBaseState
     protected Transform targetTransform;
     protected Bounds targetBounds;
 
-    protected readonly Vector3 interactionOffset = new Vector3(1, 0, 0);
 
     public PlayerInteractState(PlayerStateMachine stateMachine, Transform targetTransform, Bounds targetBounds) : base(stateMachine) {
         StateID = (int)PlayerStateMachine.StateEnum.INTERACT;
@@ -21,6 +20,7 @@ public class PlayerInteractState : PlayerBaseState
     public override void Enter()
     {
         Debug.Log("PlayerInteractState Enter");
+        stateMachine.Controller.ToggleRunning(false);
     }
 
     public override void Execute(float deltaTime)
@@ -32,7 +32,6 @@ public class PlayerInteractState : PlayerBaseState
         float dist = Vector3.Distance(currentPosition, targetPosition);
         bool needsMatchTarget = dist >= targetBounds.size.x + 0.01f;
         stateMachine.Animator.SetBool(MatchTargetHash, needsMatchTarget);
-        stateMachine.Animator.SetBool(isRunningHash, false);
         if (needsMatchTarget)
         {
             // Debug.Log("dist: " + dist + ", angle: " + angle);
