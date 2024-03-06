@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(true);
   }
 
-  private void OnInteractionEvent(string eventName, Transform targetTransform)
+  private void OnInteractionEvent(string eventName, Transform targetTransform, Bounds bounds)
   {
     switch (eventName)
     {
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour {
         break;
 
       case InteractionEvent.INTERACTION_TRIGGERED:
-        SwitchToInteractState(targetTransform);
+        SwitchToInteractState(targetTransform, bounds);
         break;
 
       default:
@@ -302,14 +302,14 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
-  public void SwitchToInteractState(Transform targetTransform)
+  public void SwitchToInteractState(Transform targetTransform, Bounds bounds)
   {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
     ToggleListeners(false);
     isActive = false;
-    stateMachine.SwitchState(new PlayerInteractState(stateMachine, targetTransform));
+    stateMachine.SwitchState(new PlayerInteractState(stateMachine, targetTransform, bounds));
   }
 
   public bool CheckGrounded()
@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour {
       input.AttackLeftEvent += OnAttackLeft;
       input.MeowEvent += OnMeow;
       EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-      EventManager.StartListening<InteractionEvent, string, Transform>(OnInteractionEvent);
+      EventManager.StartListening<InteractionEvent, string, Transform, Bounds>(OnInteractionEvent);
       return;
     }
     input.AttackRightEvent -= OnAttackRight;
@@ -438,6 +438,6 @@ public class PlayerController : MonoBehaviour {
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<InteractionEvent, string, Transform>(OnInteractionEvent);
+    EventManager.StopListening<InteractionEvent, string, Transform, Bounds>(OnInteractionEvent);
   }
 }

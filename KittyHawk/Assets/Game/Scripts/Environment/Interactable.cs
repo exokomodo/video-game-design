@@ -13,10 +13,13 @@ public class Interactable : MonoBehaviour
     protected GameObject sphere;
     protected float max;
     protected bool triggered = false;
+    protected Bounds bounds;
 
     protected void Start()
     {
         GameObject go = gameObject;
+        var r = GetComponent<Renderer>();
+        bounds = r.bounds;
         Vector3 scale = go.transform.localScale;
         max = 1/(Mathf.Max(scale.x, scale.y, scale.z) + float.Epsilon);
         sc = gameObject.AddComponent<SphereCollider>();
@@ -36,7 +39,7 @@ public class Interactable : MonoBehaviour
     public void TriggerInteraction(Collider c)
     {
         // Trigger an event to let listeners know an interaction event is now possible
-        EventManager.TriggerEvent<InteractionEvent, string, Transform>(InteractionEventName, transform);
+        EventManager.TriggerEvent<InteractionEvent, string, Transform, Bounds>(InteractionEventName, transform, bounds);
     }
 
     void OnDrawGizmos()

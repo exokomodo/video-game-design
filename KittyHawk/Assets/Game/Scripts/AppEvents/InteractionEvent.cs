@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InteractionEvent: UnityEvent<string, Transform>{
+public class InteractionEvent: UnityEvent<string, Transform, Bounds>{
     public const string INTERACTION_AVAILABLE = "InteractionAvailable";
     public const string INTERACTION_TRIGGERED = "InteractionTriggered";
 }
