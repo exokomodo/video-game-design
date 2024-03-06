@@ -8,6 +8,8 @@ public class PlayerInteractState : PlayerBaseState
     protected readonly int MatchTargetHash = Animator.StringToHash("MatchTarget");
     protected Transform targetTransform;
 
+    protected readonly Vector3 interactionOffset = new Vector3(1, 0, 0);
+
     public PlayerInteractState(PlayerStateMachine stateMachine, Transform targetTransform) : base(stateMachine) {
         this.StateID = 6;
         this.targetTransform = targetTransform;
@@ -21,19 +23,20 @@ public class PlayerInteractState : PlayerBaseState
 
     public override void Execute(float deltaTime)
     {
-        Vector3 currentPosition = stateMachine.Animator.rootPosition;
+        // Vector3 currentPosition = stateMachine.Animator.rootPosition;
+        Vector3 pos = stateMachine.Controller.headPosition;
+        Vector3 currentPosition = new Vector3(pos.x, pos.y, pos.z);
         Quaternion currentRotation = stateMachine.Animator.rootRotation;
         float dist = Vector3.Distance(currentPosition, targetTransform.position);
         float angle = Quaternion.Angle(currentRotation, targetTransform.rotation);
-        bool needsMatchTarget = dist >= 1.0f || angle >= 10.0f;
+
+        bool needsMatchTarget = dist >= 0.5f || angle >= 10.0f;
         stateMachine.Animator.SetBool(MatchTargetHash, needsMatchTarget);
-        // Debug.Log("needsMatchTarget: " + needsMatchTarget);
         if (needsMatchTarget)
         {
-
             Vector3 deltaVector = targetTransform.position - currentPosition;
-            Move(deltaVector, deltaTime);
             Quaternion rot = Quaternion.LookRotation(new Vector3(deltaVector.x, 0, deltaVector.z));
+            Move(deltaVector, deltaTime);
             Rotate(rot, deltaTime);
         }
 

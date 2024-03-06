@@ -20,17 +20,15 @@ public abstract class PlayerBaseState : State
 
     protected void Rotate(Quaternion newRotation, float deltaTime)
     {
-        // Quaternion oldRotation = stateMachine.Controller.transform.rotation;
-        Quaternion oldRotation = stateMachine.Animator.rootRotation;
-        stateMachine.Controller.Rotate(Quaternion.LerpUnclamped(oldRotation, newRotation, deltaTime));
+        Quaternion sourceRotation = stateMachine.Animator.rootRotation;
+        stateMachine.Controller.Rotate(Quaternion.LerpUnclamped(sourceRotation, newRotation, deltaTime));
     }
 
-    protected void Rotate(Vector3 positionA, Vector3 positionB, float deltaTime)
+    protected void Rotate(Vector3 sourcePosition, Vector3 targetPosition, float deltaTime)
     {
-        Quaternion newRotation = Quaternion.FromToRotation(positionA, positionB);
+        Quaternion newRotation = Quaternion.FromToRotation(sourcePosition, targetPosition);
         newRotation.z = 0;
         stateMachine.Controller.Rotate(Quaternion.LerpUnclamped(stateMachine.Controller.transform.rotation, newRotation, deltaTime));
-        // stateMachine.Controller.Rotate(newRotation);
     }
 
     protected void Jump(float deltaTime)

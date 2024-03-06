@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
+  private SphereCollider headCol;
   private GameObject frontPivot;
   private GameObject backPivot;
   private bool _isGrounded = true;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour {
       _isActive = value;
     }
   }
+  public Vector3 headPosition => new Vector3(headCol.transform.position.x + headCol.radius, headCol.transform.position.y, headCol.transform.position.z);
   [field: SerializeField] public bool RootMotion = true;
 
   [field: SerializeField] public float WalkSpeed = 1.0f;
@@ -80,6 +82,9 @@ public class PlayerController : MonoBehaviour {
 
     stateMachine = GetComponent<PlayerStateMachine>();
     if (stateMachine == null) throw new Exception("PlayerStateMachine could not be found");
+
+    headCol = GetComponentInChildren<SphereCollider>();
+    if (headCol == null) throw new Exception("Collider could not be found");
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
