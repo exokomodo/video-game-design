@@ -101,7 +101,12 @@ public class PlayerController : MonoBehaviour {
   {
     switch (eventName)
     {
-      case InteractionEvent.INTERACTION_AVAILABLE:
+      case InteractionEvent.INTERACTION_ZONE_ENTERED:
+        // TODO: Notify player that an interaction is available
+        break;
+
+      case InteractionEvent.INTERACTION_ZONE_EXITED:
+        // TODO: Remove interaction availability
         break;
 
       case InteractionEvent.INTERACTION_TRIGGERED:
