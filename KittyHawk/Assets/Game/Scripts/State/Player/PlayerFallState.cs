@@ -1,7 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Kitty Fall State
+/// Corresponding animations are found in the "Base Layer" of the Animation Controller.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerFallState : PlayerMoveBase
 {
     private Vector3 momentum;

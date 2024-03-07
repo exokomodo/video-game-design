@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Kitty Interact state
+/// Kitty can perform a variety of interactions based on the
+/// configuration of various Interactables she encounters in her environment.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerInteractState : PlayerBaseState
 {
     protected readonly int MatchTargetHash = Animator.StringToHash("MatchTarget");
@@ -13,6 +19,7 @@ public class PlayerInteractState : PlayerBaseState
         { InteractionType.INTERACTION_ITEM_PICKUP, (int)PlayerStateMachine.InteractionEnum.ITEM_PICKUP },
         { InteractionType.INTERACTION_ITEM_DROP, (int)PlayerStateMachine.InteractionEnum.ITEM_DROP },
         { InteractionType.INTERACTION_ITEM_THROW, (int)PlayerStateMachine.InteractionEnum.ITEM_THROW },
+        { InteractionType.INTERACTION_DIG, (int)PlayerStateMachine.InteractionEnum.ITEM_THROW },
     };
     public int InteractionID {get; private set;}
 

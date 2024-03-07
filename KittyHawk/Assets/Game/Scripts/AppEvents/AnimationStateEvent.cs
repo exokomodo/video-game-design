@@ -1,5 +1,10 @@
 using UnityEngine.Events;
 
+/// <summary>
+/// AnimationStateEvents are generally triggered by AnimationStateEventBehaviors
+/// attached to Animation Controller states
+/// Author: Geoffrey Roth
+/// </summary>
 public class AnimationStateEvent: UnityEvent<AnimationStateEventBehavior.AnimationEventType, string> {
 
     public const string ATTACK_COMPLETE = "AttackComplete";

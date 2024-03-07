@@ -1,6 +1,11 @@
 using UnityEngine;
-using UnityEngine.Animations;
 
+/// <summary>
+/// Attach RandomStateBehavior to a state to generate a new value for the
+/// Animation Controller parameter RandomInt.
+/// Useful for randomizing which animation state plays based on a transition condition.
+/// Author: Geoffrey Roth
+/// </summary>
 public class RandomStateBehavior : StateMachineBehaviour
 {
     [Tooltip("Number of animations to randomize")]

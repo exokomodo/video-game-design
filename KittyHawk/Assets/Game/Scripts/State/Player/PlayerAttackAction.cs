@@ -1,8 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Attack Actions for Kitty
+/// Corresponding animations are found in the "ActionsLayer" of the Animation Controller.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerAttackAction : PlayerBaseAction
 {
     private readonly string AttackPath = ActionLayer + ".Attacks.";
@@ -13,7 +16,6 @@ public class PlayerAttackAction : PlayerBaseAction
         {(int)PlayerStateMachine.ActionEnum.ATTACK_FRONT, "AttackFront"},
         {(int)PlayerStateMachine.ActionEnum.ATTACK_LEFT, "AttackLeft"}
     };
-
 
     public PlayerAttackAction(PlayerStateMachine stateMachine, int attackType) : base(stateMachine)
     {

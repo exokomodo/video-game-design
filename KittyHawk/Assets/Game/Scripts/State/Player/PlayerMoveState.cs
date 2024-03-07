@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Animates Kitty's walking, trotting & running.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerMoveState : PlayerMoveBase
 {
     private readonly int MoveHash = Animator.StringToHash("Move");

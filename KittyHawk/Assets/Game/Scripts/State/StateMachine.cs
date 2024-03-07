@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A State Machine for managing player and npc states and actions
+/// Author: Geoffrey Roth
+/// </summary>
 public abstract class StateMachine : MonoBehaviour
 {
     protected State currentState;

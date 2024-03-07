@@ -1,7 +1,11 @@
 using UnityEngine;
 using System;
 
-
+/// <summary>
+/// AnimationStateEventBehaviors may be attached to Animation Controller states
+/// to send AnimationStateEvents
+/// Author: Geoffrey Roth
+/// </summary>
 public class AnimationStateEventBehavior : StateMachineBehaviour
 {
 

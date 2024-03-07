@@ -5,6 +5,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// A Player Controller that manages the Kitty Hawk Player model, finite state machine,
+/// animation controller, events, and input controls.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerController : MonoBehaviour {
   private Animator anim;
   private Rigidbody rb;

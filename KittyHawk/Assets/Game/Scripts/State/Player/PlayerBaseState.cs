@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A Player Base State supplying some basic movement and rotation utilities
+/// accessible to all player states.
+/// Author: Geoffrey Roth
+/// </summary>
 public abstract class PlayerBaseState : State
 {
     protected PlayerStateMachine stateMachine;

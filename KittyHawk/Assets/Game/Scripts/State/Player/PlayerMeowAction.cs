@@ -1,8 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Because kitties meow.
+/// Animates her head via custom avatar mask in the additive HeadActions layer.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerMeowAction : PlayerBaseAction
 {
     private readonly string AnimPath = HeadLayer + ".HeadActions.Meow";
@@ -10,7 +12,7 @@ public class PlayerMeowAction : PlayerBaseAction
     public PlayerMeowAction(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         ActionID = (int)PlayerStateMachine.ActionEnum.MEOW;
-        ActionType = (int)PlayerStateMachine.ActionType.ADDITIVE;
+        BlendingType = (int)PlayerStateMachine.BlendingType.ADDITIVE;
     }
 
     public override void Enter()

@@ -1,6 +1,11 @@
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// A component that can be added to a GameObject to make it interactive with other GameObjects with the selected tag.
+/// Specific InteractionTypes are provided to trigger animations in Kitty
+/// Author: Geoffrey Roth
+/// </summary>
 public class Interactable : MonoBehaviour
 {
     [HideInInspector]
@@ -8,7 +13,7 @@ public class Interactable : MonoBehaviour
     [HideInInspector]
     [field: SerializeField] public float ColliderRadius = 1.0f;
     [HideInInspector]
-    [field: SerializeField]public string InteractsWithTag = "Player";
+    [field: SerializeField] public string InteractsWithTag = "Player";
     [HideInInspector]
     public int interactionEventIndex = 0;
     [HideInInspector]
@@ -40,16 +45,17 @@ public class Interactable : MonoBehaviour
         var r = GetComponent<Renderer>();
         bounds = r.bounds;
         Vector3 scale = go.transform.localScale;
-        max = 1/(Mathf.Max(scale.x, scale.y, scale.z) + float.Epsilon);
+        max = 1 / (Mathf.Max(scale.x, scale.y, scale.z) + float.Epsilon);
         sc = gameObject.AddComponent<SphereCollider>();
         sc.radius = ColliderRadius * max;
         sc.center = transform.TransformPoint(Center);
         sc.isTrigger = true;
     }
+
     protected void OnTriggerEnter(Collider c)
     {
         string evt = interactionEvent[interactionEventIndex];
-        evt = evt == InteractionEvent.INTERACTION_ZONE_EXITED? InteractionEvent.INTERACTION_ZONE_ENTERED : evt;
+        evt = evt == InteractionEvent.INTERACTION_ZONE_EXITED ? InteractionEvent.INTERACTION_ZONE_ENTERED : evt;
         if (c.transform.root.CompareTag(InteractsWithTag) &&
             ((DisableOnTriggered && !triggered) || (!DisableOnTriggered)))
         {
@@ -83,8 +89,6 @@ public class Interactable : MonoBehaviour
     }
 }
 
-
-
 [CustomEditor(typeof(Interactable))]
 public class InteractableEditor : Editor
 {
@@ -97,6 +101,7 @@ public class InteractableEditor : Editor
         colliderRadius = serializedObject.FindProperty("ColliderRadius");
         disableOnTriggered = serializedObject.FindProperty("DisableOnTriggered");
     }
+
     public override void OnInspectorGUI()
     {
         serializedObject.Update();

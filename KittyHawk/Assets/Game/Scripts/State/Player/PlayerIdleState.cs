@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Kitty Idle state
+/// Kitty will alternate between standing, sitting and laying down
+/// when no controller input is received.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerIdleState : PlayerBaseState
 {
     protected readonly int VelocityXHash = Animator.StringToHash("VelocityX");

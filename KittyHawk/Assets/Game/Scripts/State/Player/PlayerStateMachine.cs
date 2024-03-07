@@ -1,6 +1,10 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// The state machine for Kitty. Managers her states and blended actions.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerStateMachine : StateMachine
 {
     [field: SerializeField] public PlayerController Controller { get; private set; }
@@ -26,8 +30,9 @@ public class PlayerStateMachine : StateMachine
     public enum InteractionEnum
     {
         BUTTON_PRESS,
-        ITEM_PICKUP,
+        DIG,
         ITEM_DROP,
+        ITEM_PICKUP,
         ITEM_THROW
     }
 
@@ -39,9 +44,9 @@ public class PlayerStateMachine : StateMachine
         MEOW
     }
 
-    public enum ActionType
+    public enum BlendingType
     {
-        NORMAL,
+        OVERRIDE,
         ADDITIVE
     }
 
@@ -126,7 +131,7 @@ public class PlayerStateMachine : StateMachine
     public override void SwitchAction(StateAction newAction)
     {
         Debug.Log("SwitchAction: " + newAction);
-        if (newAction.ActionType == (int)PlayerStateMachine.ActionType.ADDITIVE)
+        if (newAction.BlendingType == (int)PlayerStateMachine.BlendingType.ADDITIVE)
         {
             additiveAction = newAction;
             additiveAction.Enter();
@@ -141,31 +146,4 @@ public class PlayerStateMachine : StateMachine
 
 
     }
-
-    /*
-    private void AddAnimationEndEvent()
-    {
-        clips = Animator.runtimeAnimatorController.animationClips;
-        AnimationEvent evt = new AnimationEvent();
-        Debug.Log("clips: " + clips);
-        foreach(AnimationClip clip in clips)
-        {
-            Debug.Log("CLIP: " + clip.name + ", LENGTH: " + clip.length);
-            evt.time = clip.length - 0.05f;
-            evt.stringParameter = clip.name;
-            evt.functionName = "OnClipEnd";
-            clip.AddEvent(evt);
-        }
-    }
-
-    public void OnClipEnd(string clipName)
-    {
-        Debug.Log("OnClipEnd: " + clipName + " called at: " + Time.time);
-        // if (isJumping)
-        // {
-        //     SwitchState(new PlayerMoveState(this));
-        //     isJumping = false;
-        // }
-    }
-    */
 }
