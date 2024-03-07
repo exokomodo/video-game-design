@@ -219,10 +219,8 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    Debug.Log("MovementValue: " + input.MovementValue + ", isMoving: " + isMoving);
     if (input.MovementValue == Vector2.zero && isMoving)
     {
-      Debug.Log("SWITCH TO IDLE STATE");
       SwitchToIdleState();
     }
   }
