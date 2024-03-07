@@ -13,11 +13,11 @@ public class PlayerInventory : MonoBehaviour
     #region Private Fields
 
     [SerializeField]
-    private int startingLives = 3;
+    private int startingLives = 9;
     [SerializeField]
     private int startingCatnip = 0;
     [SerializeField]
-    private int maxLives = 3;
+    private int maxLives = 9;
     [SerializeField]
     private int maxCatnip = 100;
 
