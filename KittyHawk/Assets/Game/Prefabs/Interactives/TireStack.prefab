@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 9056709368288311132}
   - component: {fileID: 9056709368288311133}
   - component: {fileID: 9056709368288311134}
-  - component: {fileID: 9056709368288311105}
-  - component: {fileID: 9056709368288311104}
-  - component: {fileID: 9056709368288311135}
+  - component: {fileID: 3909099768147472579}
   m_Layer: 0
   m_Name: TireStack
   m_TagString: Untagged
@@ -72,49 +70,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bec916bba7c4b3799e18d82a08931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceFromKitty: 0
-  mainCamera: {fileID: 0}
   player: {fileID: 0}
-  bounceForce: 10
---- !u!65 &9056709368288311105
-BoxCollider:
+--- !u!136 &3909099768147472579
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9056709368288311131}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7420311, y: 0.5298415, z: 1.7166576}
-  m_Center: {x: 0.00381279, y: 0.26596555, z: 0.0019159317}
---- !u!65 &9056709368288311104
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9056709368288311131}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2941818, y: 0.49001002, z: 1.306591}
-  m_Center: {x: 0.0035514832, y: 0.7813308, z: 0.0996418}
---- !u!65 &9056709368288311135
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9056709368288311131}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0347633, y: 0.30086136, z: 1.0344925}
-  m_Center: {x: -0.24141502, y: 1.1723123, z: 0.15904427}
+  m_Radius: 0.8562986
+  m_Height: 2.04909
+  m_Direction: 1
+  m_Center: {x: -0.032979786, y: 0.4898076, z: -0.0126770735}
 --- !u!1001 &9056709367963629611
 PrefabInstance:
   m_ObjectHideFlags: 0
