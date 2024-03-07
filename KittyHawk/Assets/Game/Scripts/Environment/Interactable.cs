@@ -14,6 +14,10 @@ public class Interactable : MonoBehaviour
     [field: SerializeField] public float ColliderRadius = 1.0f;
     [HideInInspector]
     [field: SerializeField] public string InteractsWithTag = "Player";
+
+    [HideInInspector]
+    [field: SerializeField] public bool IgnoreBounds = true;
+
     [HideInInspector]
     public int interactionEventIndex = 0;
     [HideInInspector]
@@ -34,20 +38,17 @@ public class Interactable : MonoBehaviour
         InteractionType.INTERACTION_ITEM_PICKUP,
         InteractionType.INTERACTION_ITEM_THROW
     };
-    protected SphereCollider sc;
-    protected GameObject sphere;
+    // protected SphereCollider sc;
     protected float max;
     protected bool triggered = false;
-    protected Bounds bounds;
 
     protected void Start()
     {
         GameObject go = gameObject;
-        var r = GetComponent<Renderer>();
-        bounds = r.bounds;
         Vector3 scale = go.transform.localScale;
         max = 1 / (Mathf.Max(scale.x, scale.y, scale.z) + float.Epsilon);
-        sc = gameObject.AddComponent<SphereCollider>();
+
+        SphereCollider sc = gameObject.AddComponent<SphereCollider>();
         sc.radius = ColliderRadius * max;
         sc.center = transform.TransformPoint(Center);
         sc.isTrigger = true;
@@ -78,7 +79,8 @@ public class Interactable : MonoBehaviour
     protected void TriggerEvent(string evt)
     {
         string typ = interactionType[interactionTypeIndex];
-        EventManager.TriggerEvent<InteractionEvent, string, string, Transform, Bounds>(evt, typ, transform, bounds);
+        EventManager.TriggerEvent<InteractionEvent, string, string, InteractionTarget>
+            (evt, typ, new InteractionTarget(gameObject, IgnoreBounds));
     }
 
     void OnDrawGizmos()
@@ -90,17 +92,31 @@ public class Interactable : MonoBehaviour
     }
 }
 
+public class InteractionTarget
+{
+    public GameObject gameObject { get; private set; }
+    public Transform transform => gameObject.transform;
+    public Bounds bounds { get; private set; }
+    public InteractionTarget(GameObject gameObject, bool ignoreBounds = false) {
+        this.gameObject = gameObject;
+        float zeroBound = 0.05f;
+        bounds = ignoreBounds? new Bounds(gameObject.transform.position, new Vector3(zeroBound, zeroBound, zeroBound)) : gameObject.GetComponent<Renderer>().bounds;
+    }
+}
+
 [CustomEditor(typeof(Interactable))]
 public class InteractableEditor : Editor
 {
     SerializedProperty center;
     SerializedProperty colliderRadius;
     SerializedProperty disableOnTriggered;
+    SerializedProperty ignoreBounds;
     void OnEnable()
     {
         center = serializedObject.FindProperty("Center");
         colliderRadius = serializedObject.FindProperty("ColliderRadius");
         disableOnTriggered = serializedObject.FindProperty("DisableOnTriggered");
+        ignoreBounds = serializedObject.FindProperty("IgnoreBounds");
     }
 
     public override void OnInspectorGUI()
@@ -113,6 +129,7 @@ public class InteractableEditor : Editor
         EditorGUILayout.PropertyField(center, new GUIContent("Collider Center"), options);
         EditorGUILayout.PropertyField(colliderRadius, new GUIContent("Collider Radius"));
         EditorGUILayout.PropertyField(disableOnTriggered, new GUIContent("Disable Once Triggered"));
+        EditorGUILayout.PropertyField(ignoreBounds, new GUIContent("Ignore Bounds"));
 
         GUIContent eventLabel = new GUIContent("Interaction Event");
         script.interactionEventIndex = EditorGUILayout.Popup(eventLabel, script.interactionEventIndex, script.interactionEvent);

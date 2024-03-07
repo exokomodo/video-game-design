@@ -5,7 +5,7 @@ using UnityEngine.Events;
 /// InterationEvent generally triggered by Interactable
 /// Author: Geoffrey Roth
 /// </summary>
-public class InteractionEvent: UnityEvent<string, string, Transform, Bounds>{
+public class InteractionEvent: UnityEvent<string, string, InteractionTarget>{
     public const string INTERACTION_ZONE_ENTERED = "InteractionZoneEntered";
     public const string INTERACTION_ZONE_EXITED = "InteractionZoneExited";
     public const string INTERACTION_TRIGGERED = "InteractionTriggered";
