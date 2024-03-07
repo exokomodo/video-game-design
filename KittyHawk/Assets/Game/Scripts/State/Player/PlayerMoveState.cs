@@ -18,7 +18,6 @@ public class PlayerMoveState : PlayerMoveBase
     public override void Enter()
     {
         Debug.Log("PlayerMoveState Enter");
-        base.Enter();
         // stateMachine.Animator.Play(MoveHash); // Begin moving immediately
         stateMachine.Animator.CrossFadeInFixedTime(MoveHash, CrossFadeDuration);
     }

@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour {
       _isActive = value;
     }
   }
+  public bool isDialogOpen { get; private set; }
   public Vector3 headPosition => new Vector3(headCol.transform.position.x + headCol.radius, headCol.transform.position.y, headCol.transform.position.z);
   [field: SerializeField] public bool RootMotion = true;
 
@@ -95,7 +96,9 @@ public class PlayerController : MonoBehaviour {
     backPivot = GameObject.Find("back_pivot");
 
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StartListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
+    EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
+    EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
   }
 
   private void Start()
@@ -105,7 +108,7 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(true);
   }
 
-  private void OnInteractionEvent(string eventName, string eventType, Transform targetTransform, Bounds bounds)
+  private void OnInteractionEvent(string eventName, string eventType, InteractionTarget target)
   {
     Debug.Log("InteractionEvent received " + eventName + ", " + eventType);
     switch (eventName)
@@ -120,7 +123,7 @@ public class PlayerController : MonoBehaviour {
 
       case InteractionEvent.INTERACTION_TRIGGERED:
         if (eventType != InteractionType.NONE)
-          SwitchToInteractState(eventType, targetTransform, bounds);
+          SwitchToInteractState(eventType, target);
         break;
 
       default:
@@ -224,7 +227,8 @@ public class PlayerController : MonoBehaviour {
 
   void OnAnimatorMove()
   {
-    // if (!isActive) return;
+    if (isDialogOpen) return;
+
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -262,6 +266,7 @@ public class PlayerController : MonoBehaviour {
 
   public void ToggleActive(bool b)
   {
+    Debug.Log("ToggleActive: " + b);
     ToggleListeners(b);
     isActive = b;
     if (!b && stateMachine.CurrentStateID != (int)PlayerStateMachine.StateEnum.IDLE)
@@ -324,14 +329,14 @@ public class PlayerController : MonoBehaviour {
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
-  public void SwitchToInteractState(string eventType, Transform targetTransform, Bounds bounds)
+  public void SwitchToInteractState(string eventType, InteractionTarget target)
   {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
     ToggleListeners(false);
     isActive = false;
-    stateMachine.SwitchState(new PlayerInteractState(stateMachine, eventType, targetTransform, bounds));
+    stateMachine.SwitchState(new PlayerInteractState(stateMachine, eventType, target));
   }
 
   public bool CheckGrounded()
@@ -451,10 +456,28 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  private void OnDialogOpen(Vector3 position, string dialogueName)
+  {
+    ToggleDialogOpen(true);
+  }
+
+  private void OnDialogClose(string dialogueName)
+  {
+    ToggleDialogOpen(false);
+  }
+
+  private void ToggleDialogOpen(bool b)
+  {
+    ToggleActive(!b);
+    isDialogOpen = b;
+  }
+
   private void OnDestroy()
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
+    EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
+    EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
   }
 }
