@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The supplemental idle-ish state for Kitty. She may transition here randomly from the sit state.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerLieState : PlayerBaseState
 {
     private float timer;
@@ -9,7 +13,7 @@ public class PlayerLieState : PlayerBaseState
     public int range = 0;
 
     public PlayerLieState(PlayerStateMachine stateMachine) : base(stateMachine) {
-        this.StateID = 2;
+        StateID = (int)PlayerStateMachine.StateEnum.LIE;
     }
 
     public override void Enter()

@@ -1,7 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The abstract base class for all Kitty actions
+/// Corresponding animations are found in the "ActionsLayer" of the Animation Controller.
+/// Author: Geoffrey Roth
+/// </summary>
 public abstract class PlayerBaseAction : StateAction
 {
     protected PlayerStateMachine stateMachine;
@@ -9,9 +12,10 @@ public abstract class PlayerBaseAction : StateAction
     protected static readonly string HeadLayer = "HeadLayer";
     protected readonly int ActionIDHash = Animator.StringToHash("ActionID");
     protected readonly int ActionLayerHash = Animator.StringToHash("ActionLayer");
-
     public PlayerBaseAction(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
+        // Actions may blend via override (default) or additive
+        this.BlendingType = (int) PlayerStateMachine.BlendingType.OVERRIDE;
     }
 }

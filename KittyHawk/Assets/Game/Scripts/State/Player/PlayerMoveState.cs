@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Animates Kitty's walking, trotting & running.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerMoveState : PlayerMoveBase
 {
     private readonly int MoveHash = Animator.StringToHash("Move");
 
     public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        this.StateID = 3;
+        StateID = (int)PlayerStateMachine.StateEnum.MOVE;
     }
 
     public override void Enter()

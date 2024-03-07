@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A state that Kitty will transition to at random when
+/// the player has been idle for some time.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerSitState : PlayerBaseState
 {
     private float timer;
@@ -9,7 +14,7 @@ public class PlayerSitState : PlayerBaseState
     public int range = 0;
 
     public PlayerSitState(PlayerStateMachine stateMachine) : base(stateMachine) {
-        this.StateID = 1;
+        StateID = (int)PlayerStateMachine.StateEnum.SIT;
     }
 
     public override void Enter()

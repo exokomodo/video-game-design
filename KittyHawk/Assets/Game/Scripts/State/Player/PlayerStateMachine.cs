@@ -1,6 +1,10 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// The state machine for Kitty. Managers her states and blended actions.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerStateMachine : StateMachine
 {
     [field: SerializeField] public PlayerController Controller { get; private set; }
@@ -17,11 +21,33 @@ public class PlayerStateMachine : StateMachine
         MOVE,
         JUMP,
         FALL,
-        CLIMB,
+        INTERACT,
         CRAWL,
         SWIM,
-        ATTACK,
         DIE
+    }
+
+    public enum InteractionEnum
+    {
+        BUTTON_PRESS,
+        DIG,
+        ITEM_DROP,
+        ITEM_PICKUP,
+        ITEM_THROW
+    }
+
+    public enum ActionEnum
+    {
+        ATTACK_RIGHT,
+        ATTACK_FRONT,
+        ATTACK_LEFT,
+        MEOW
+    }
+
+    public enum BlendingType
+    {
+        OVERRIDE,
+        ADDITIVE
     }
 
     public Transform MainCameraTransform { get; private set; }
@@ -54,6 +80,7 @@ public class PlayerStateMachine : StateMachine
 
     public override void SwitchState(State newState)
     {
+        if (previousState?.StateID == newState.StateID) return;
         previousState = currentState == null? newState : currentState;
         int? previousSateID = previousState?.StateID;
         currentState?.Exit();
@@ -81,9 +108,6 @@ public class PlayerStateMachine : StateMachine
 
     protected override void Execute(float deltaTime)
     {
-        if (Animator.GetBool(StateChangeHash))
-            Animator.SetBool(StateChangeHash, false);
-
         if (!motionStates.Contains(currentState.StateID) &&
             InputReader.MovementValue != Vector2.zero &&
             Controller.isActive
@@ -101,49 +125,26 @@ public class PlayerStateMachine : StateMachine
 
         if (currentAction != null)
         {
-            if (Animator.GetBool(ActionChangeHash))
-                Animator.SetBool(ActionChangeHash, false);
             currentAction?.Execute(deltaTime);
         }
-
     }
 
     public override void SwitchAction(StateAction newAction)
     {
         Debug.Log("SwitchAction: " + newAction);
+        if (newAction.BlendingType == (int)PlayerStateMachine.BlendingType.ADDITIVE)
+        {
+            additiveAction = newAction;
+            additiveAction.Enter();
+            return;
+        }
         previousAction = currentAction == null? newAction : currentAction;
         currentAction?.Exit();
-
         currentAction = newAction;
         currentAction?.Enter();
         Animator.SetInteger(ActionIDHash, currentAction.ActionID);
         Animator.SetBool(ActionChangeHash, true);
-    }
 
-    /*
-    private void AddAnimationEndEvent()
-    {
-        clips = Animator.runtimeAnimatorController.animationClips;
-        AnimationEvent evt = new AnimationEvent();
-        Debug.Log("clips: " + clips);
-        foreach(AnimationClip clip in clips)
-        {
-            Debug.Log("CLIP: " + clip.name + ", LENGTH: " + clip.length);
-            evt.time = clip.length - 0.05f;
-            evt.stringParameter = clip.name;
-            evt.functionName = "OnClipEnd";
-            clip.AddEvent(evt);
-        }
-    }
 
-    public void OnClipEnd(string clipName)
-    {
-        Debug.Log("OnClipEnd: " + clipName + " called at: " + Time.time);
-        // if (isJumping)
-        // {
-        //     SwitchState(new PlayerMoveState(this));
-        //     isJumping = false;
-        // }
     }
-    */
 }

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Shared base class for Kitty movement states.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerMoveBase : PlayerBaseState
 {
     protected readonly int VelocityXHash = Animator.StringToHash("VelocityX");
