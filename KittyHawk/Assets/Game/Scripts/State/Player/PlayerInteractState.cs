@@ -23,10 +23,10 @@ public class PlayerInteractState : PlayerBaseState
     };
     public int InteractionID {get; private set;}
 
-    public PlayerInteractState(PlayerStateMachine stateMachine, string eventType, Transform targetTransform, Bounds targetBounds) : base(stateMachine) {
+    public PlayerInteractState(PlayerStateMachine stateMachine, string eventType, InteractionTarget target) : base(stateMachine) {
         StateID = (int)PlayerStateMachine.StateEnum.INTERACT;
-        this.targetTransform = targetTransform;
-        this.targetBounds = targetBounds;
+        this.targetTransform = target.transform;
+        this.targetBounds = target.bounds;
         InteractionID = InteractionTypeMap[eventType];
         // Debug.Log("InteractionID: " + InteractionID);
     }
@@ -45,7 +45,7 @@ public class PlayerInteractState : PlayerBaseState
         Vector3 targetPosition = targetTransform.position;
         targetPosition.y = 0;
         float dist = Vector3.Distance(currentPosition, targetPosition);
-        bool needsMatchTarget = dist >= targetBounds.size.x + 0.01f;
+        bool needsMatchTarget = dist >= targetBounds.size.x + 0.025f;
         stateMachine.Animator.SetBool(MatchTargetHash, needsMatchTarget);
         if (needsMatchTarget)
         {
@@ -60,6 +60,8 @@ public class PlayerInteractState : PlayerBaseState
     public override void Exit()
     {
         Debug.Log("PlayerInteractState Exit");
-        stateMachine.Animator.SetInteger(InteractionIDHash, -1);
+        int interactionID = stateMachine.Animator.GetInteger(InteractionIDHash);
+        if (interactionID == InteractionID)
+            stateMachine.Animator.SetInteger(InteractionIDHash, -1);
     }
 }
