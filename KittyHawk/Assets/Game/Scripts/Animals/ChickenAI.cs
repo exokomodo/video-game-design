@@ -39,18 +39,17 @@ public class ChickenAI : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
 
-
-
+    
     public enum AIState
     {
-        patrolState,
-        fleeState,
-        carriedState
+        PATROL,
+        FLEE,
+        CARRIED // Not used yet
     }
 
     void Start()
     {
-        aiState = AIState.patrolState;
+        aiState = AIState.PATROL;
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         cl = GetComponent<CapsuleCollider>();
@@ -98,7 +97,8 @@ public class ChickenAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    // These two functions help determine the flee state
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -118,7 +118,7 @@ public class ChickenAI : MonoBehaviour
     {
         if (!isAlive) return;
 
-        if (isNearKitty)
+        if (isNearKitty && aiState != AIState.FLEE)
         {
             EnterFleeState();
             //TODO: Small jump flee animation for feedback to player
@@ -127,16 +127,17 @@ public class ChickenAI : MonoBehaviour
         switch (aiState)
         {
             // Patrol state: Move around the navmesh randomly
-            case AIState.patrolState:
+            case AIState.PATROL:
                 UpdatePatrolState();
                 break;
 
-            case AIState.fleeState:
+            case AIState.FLEE:
                 UpdateFleeState();
                 break;
         }
     }
     
+    // Used for patrol state timer
     private void ResetPatrolTimer()
     {
         timeSinceLastWalk = 0f;
@@ -156,7 +157,8 @@ public class ChickenAI : MonoBehaviour
     private void EnterPatrolState()
     {
         UnityEngine.Debug.Log("Chicken Returning to Patrol State");
-        aiState = AIState.patrolState;
+        aiState = AIState.PATROL;
+        ResetPatrolTimer();
         agent.speed = 0.6f;
         anim.SetBool("isWalking", false);
     }
@@ -209,27 +211,31 @@ public class ChickenAI : MonoBehaviour
 
     private void EnterFleeState()
     {
+        UnityEngine.Debug.Log("Chicken Entering Flee State");
         agent.ResetPath();
-        aiState = AIState.fleeState;
+        aiState = AIState.FLEE;
         anim.SetBool("isWalking", true);
         rb.velocity = Vector3.zero;
-        agent.speed = 1.5f;
+        agent.speed = 2.5f;
     }
 
     private void UpdateFleeState()
     {
-        // Get direction to run from kitty
-        fleeDirection = currentPosition - kittyTransform.position;
-        fleeDirection = fleeDirection.normalized * wanderRadius;
-        newPosition = fleeDirection + currentPosition;
-        
-        ChangeLookDirection();
-
-        if (agent.pathPending == false && agent.remainingDistance < 0.2f && !isNearKitty)
+        if (agent.pathPending == false && agent.remainingDistance < 0.2f)
         {
-            EnterPatrolState();
+            // Finds the vector which points away from kitty, normalizes it,
+            // places it at the end of the wander radius and sets it as the new destination
+            fleeDirection = currentPosition - kittyTransform.position;
+            fleeDirection = fleeDirection.normalized;
+            newPosition = (fleeDirection * wanderRadius) + currentPosition;
+            
+            ChangeLookDirection();
+            
+            agent.SetDestination(newPosition);
+            
+            if (!isNearKitty) EnterPatrolState();
         }
         
-        agent.SetDestination(newPosition);
+        
     }
 }
