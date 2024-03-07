@@ -13,6 +13,7 @@ TagManager:
   - Gate
   - ChickenCoop
   - Chick
+  - Goose
   layers:
   - Default
   - TransparentFX
