@@ -93,6 +93,9 @@ public class PlayerController : MonoBehaviour {
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
+
+    EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+    EventManager.StartListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
   }
 
   private void Start()
@@ -430,6 +433,13 @@ public class PlayerController : MonoBehaviour {
 
   private void ToggleListeners(bool b)
   {
+    input.AttackRightEvent -= OnAttackRight;
+    input.AttackFrontEvent -= OnAttackFront;
+    input.AttackLeftEvent -= OnAttackLeft;
+    input.JumpEvent -= OnJump;
+    input.MeowEvent -= OnMeow;
+    input.RunEvent -= OnRun;
+    input.RunStopEvent -= OnRunStop;
     if (b) {
       input.JumpEvent += OnJump;
       input.RunEvent += OnRun;
@@ -438,17 +448,7 @@ public class PlayerController : MonoBehaviour {
       input.AttackFrontEvent += OnAttackFront;
       input.AttackLeftEvent += OnAttackLeft;
       input.MeowEvent += OnMeow;
-      EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-      EventManager.StartListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
-      return;
     }
-    input.AttackRightEvent -= OnAttackRight;
-    input.AttackFrontEvent -= OnAttackFront;
-    input.AttackLeftEvent -= OnAttackLeft;
-    input.JumpEvent -= OnJump;
-    input.MeowEvent -= OnMeow;
-    input.RunEvent -= OnRun;
-    input.RunStopEvent -= OnRunStop;
   }
 
   private void OnDestroy()

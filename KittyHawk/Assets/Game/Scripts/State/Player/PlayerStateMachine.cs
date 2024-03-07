@@ -80,6 +80,7 @@ public class PlayerStateMachine : StateMachine
 
     public override void SwitchState(State newState)
     {
+        if (previousState?.StateID == newState.StateID) return;
         previousState = currentState == null? newState : currentState;
         int? previousSateID = previousState?.StateID;
         currentState?.Exit();

@@ -27,7 +27,8 @@ public class PlayerInteractState : PlayerBaseState
         StateID = (int)PlayerStateMachine.StateEnum.INTERACT;
         this.targetTransform = targetTransform;
         this.targetBounds = targetBounds;
-        this.InteractionID = InteractionTypeMap[eventType];
+        InteractionID = InteractionTypeMap[eventType];
+        // Debug.Log("InteractionID: " + InteractionID);
     }
 
     public override void Enter()
