@@ -29,8 +29,9 @@ public class Interactable : MonoBehaviour
     public string[] interactionType = new string[] {
         InteractionType.NONE,
         InteractionType.INTERACTION_BUTTON_PRESS,
-        InteractionType.INTERACTION_ITEM_PICKUP,
+        InteractionType.INTERACTION_DIG,
         InteractionType.INTERACTION_ITEM_DROP,
+        InteractionType.INTERACTION_ITEM_PICKUP,
         InteractionType.INTERACTION_ITEM_THROW
     };
     protected SphereCollider sc;

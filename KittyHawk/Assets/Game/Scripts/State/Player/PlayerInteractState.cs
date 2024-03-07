@@ -16,10 +16,10 @@ public class PlayerInteractState : PlayerBaseState
     protected static readonly Dictionary<string, int> InteractionTypeMap = new Dictionary<string, int>
     {
         { InteractionType.INTERACTION_BUTTON_PRESS, (int)PlayerStateMachine.InteractionEnum.BUTTON_PRESS },
-        { InteractionType.INTERACTION_ITEM_PICKUP, (int)PlayerStateMachine.InteractionEnum.ITEM_PICKUP },
+        { InteractionType.INTERACTION_DIG, (int)PlayerStateMachine.InteractionEnum.DIG },
         { InteractionType.INTERACTION_ITEM_DROP, (int)PlayerStateMachine.InteractionEnum.ITEM_DROP },
-        { InteractionType.INTERACTION_ITEM_THROW, (int)PlayerStateMachine.InteractionEnum.ITEM_THROW },
-        { InteractionType.INTERACTION_DIG, (int)PlayerStateMachine.InteractionEnum.ITEM_THROW },
+        { InteractionType.INTERACTION_ITEM_PICKUP, (int)PlayerStateMachine.InteractionEnum.ITEM_PICKUP },
+        { InteractionType.INTERACTION_ITEM_THROW, (int)PlayerStateMachine.InteractionEnum.ITEM_THROW }
     };
     public int InteractionID {get; private set;}
 

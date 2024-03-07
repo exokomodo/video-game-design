@@ -1638,17 +1638,19 @@ MonoBehaviour:
   Center: {x: 0, y: 0, z: 0}
   ColliderRadius: 1
   InteractsWithTag: Player
-  interactionEventIndex: 1
+  interactionEventIndex: 0
   interactionEvent:
   - InteractionTriggered
   - InteractionZoneEntered
+  - InteractionZoneExited
   DisableOnTriggered: 0
-  interactionTypeIndex: 0
+  interactionTypeIndex: 2
   interactionType:
   - None
   - InteractionButtonPress
-  - InteractionItemPickup
+  - InteractionDig
   - InteractionItemDrop
+  - InteractionItemPickup
   - InteractionItemThrow
 --- !u!1 &1490840547
 GameObject:
