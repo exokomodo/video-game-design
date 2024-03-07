@@ -5,12 +5,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// A Player Controller that manages the Kitty Hawk Player model, finite state machine,
+/// animation controller, events, and input controls.
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerController : MonoBehaviour {
   private Animator anim;
   private Rigidbody rb;
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
+  private SphereCollider headCol;
   private GameObject frontPivot;
   private GameObject backPivot;
   private bool _isGrounded = true;
@@ -29,6 +35,7 @@ public class PlayerController : MonoBehaviour {
   private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
   private Vector3 pendingMotion = Vector3.zero;
+  private Quaternion pendingRotation = Quaternion.identity;
   private enum AttackType
   {
     RIGHT,
@@ -48,6 +55,7 @@ public class PlayerController : MonoBehaviour {
       _isActive = value;
     }
   }
+  public Vector3 headPosition => new Vector3(headCol.transform.position.x + headCol.radius, headCol.transform.position.y, headCol.transform.position.z);
   [field: SerializeField] public bool RootMotion = true;
 
   [field: SerializeField] public float WalkSpeed = 1.0f;
@@ -80,10 +88,14 @@ public class PlayerController : MonoBehaviour {
     stateMachine = GetComponent<PlayerStateMachine>();
     if (stateMachine == null) throw new Exception("PlayerStateMachine could not be found");
 
+    headCol = GetComponentInChildren<SphereCollider>();
+    if (headCol == null) throw new Exception("Collider could not be found");
+
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
 
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+    EventManager.StartListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
   }
 
   private void Start()
@@ -93,13 +105,42 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(true);
   }
 
+  private void OnInteractionEvent(string eventName, string eventType, Transform targetTransform, Bounds bounds)
+  {
+    Debug.Log("InteractionEvent received " + eventName + ", " + eventType);
+    switch (eventName)
+    {
+      case InteractionEvent.INTERACTION_ZONE_ENTERED:
+        // TODO: Notify player that an interaction is available
+        break;
+
+      case InteractionEvent.INTERACTION_ZONE_EXITED:
+        // TODO: Remove interaction availability
+        break;
+
+      case InteractionEvent.INTERACTION_TRIGGERED:
+        if (eventType != InteractionType.NONE)
+          SwitchToInteractState(eventType, targetTransform, bounds);
+        break;
+
+      default:
+        Debug.LogWarning("Unhandled InteractionEvent: " + eventName + ", " + eventType);
+        break;
+    }
+  }
+
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
-    Debug.Log("EVENT RECEIVED " + eventType + ", " + eventName);
+    Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
     switch (eventName)
     {
       case AnimationStateEvent.ATTACK_COMPLETE:
         Attack(false);
+        break;
+
+      case AnimationStateEvent.INTERACTION_COMPLETE:
+        SwitchToIdleState();
+        ToggleActive(true);
         break;
 
       case AnimationStateEvent.JUMP_COMPLETE:
@@ -175,19 +216,15 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    // if (!_isGrounded) Debug.Log("_isGrounded: " + _isGrounded);
     if (input.MovementValue == Vector2.zero && isMoving)
     {
       SwitchToIdleState();
     }
-    Quaternion newRootRotation = GetGroundAngle();
-    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, deltaTime);
-    rb.MoveRotation(newRootRotation);
   }
 
   void OnAnimatorMove()
   {
-    if (!isActive) return;
+    // if (!isActive) return;
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -201,18 +238,27 @@ public class PlayerController : MonoBehaviour {
     }
     newRootPosition = newRootPosition + pendingMotion;
     pendingMotion = Vector3.zero;
-    // newRootPosition = anim.rootPosition;
-    Quaternion newRootRotation = anim.rootRotation;
-    if (isMoving) {
-      newRootRotation = GetGroundAngle();
-    }
     newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
-    newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
+
+    Quaternion newRootRotation;
+    if (pendingRotation != Quaternion.identity)
+    {
+      newRootRotation = pendingRotation;
+      pendingRotation = Quaternion.identity;
+    }
+    else
+    {
+      newRootRotation = isMoving? GetGroundAngle() : anim.rootRotation;
+      newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
+    }
+
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
   }
+
+
 
   public void ToggleActive(bool b)
   {
@@ -224,9 +270,21 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  public void ToggleRunning(bool b)
+  {
+    _isRunning = b;
+    anim.SetBool(isRunningHash, b);
+
+  }
+
   public void Move(Vector3 motion)
   {
     pendingMotion = motion;
+  }
+
+  public void Rotate(Quaternion rotation)
+  {
+    pendingRotation = rotation;
   }
 
   public void AddForce(Vector3 motion, ForceMode mode = ForceMode.Impulse)
@@ -264,6 +322,16 @@ public class PlayerController : MonoBehaviour {
     _isFalling = true;
     _isLanding = false;
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
+  }
+
+  public void SwitchToInteractState(string eventType, Transform targetTransform, Bounds bounds)
+  {
+    _isJumping = false;
+    _isFalling = false;
+    _isLanding = false;
+    ToggleListeners(false);
+    isActive = false;
+    stateMachine.SwitchState(new PlayerInteractState(stateMachine, eventType, targetTransform, bounds));
   }
 
   public bool CheckGrounded()
@@ -328,19 +396,19 @@ public class PlayerController : MonoBehaviour {
   private void OnAttackRight()
   {
     Attack(true);
-    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_RIGHT));
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_RIGHT));
   }
 
   private void OnAttackFront()
   {
     Attack(true);
-    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_FRONT));
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_FRONT));
   }
 
   private void OnAttackLeft()
   {
     Attack(true);
-    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, PlayerAttackAction.ATTACK_LEFT));
+    stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_LEFT));
   }
 
   private void OnJump()
@@ -355,18 +423,23 @@ public class PlayerController : MonoBehaviour {
 
   protected void OnRun()
   {
-      _isRunning = true;
-      anim.SetBool(isRunningHash, true);
+      ToggleRunning(true);
   }
 
   protected void OnRunStop()
   {
-      _isRunning = false;
-      anim.SetBool(isRunningHash, false);
+      ToggleRunning(false);
   }
 
   private void ToggleListeners(bool b)
   {
+    input.AttackRightEvent -= OnAttackRight;
+    input.AttackFrontEvent -= OnAttackFront;
+    input.AttackLeftEvent -= OnAttackLeft;
+    input.JumpEvent -= OnJump;
+    input.MeowEvent -= OnMeow;
+    input.RunEvent -= OnRun;
+    input.RunStopEvent -= OnRunStop;
     if (b) {
       input.JumpEvent += OnJump;
       input.RunEvent += OnRun;
@@ -375,19 +448,13 @@ public class PlayerController : MonoBehaviour {
       input.AttackFrontEvent += OnAttackFront;
       input.AttackLeftEvent += OnAttackLeft;
       input.MeowEvent += OnMeow;
-      return;
     }
-    input.AttackRightEvent -= OnAttackRight;
-    input.AttackFrontEvent -= OnAttackFront;
-    input.AttackLeftEvent -= OnAttackLeft;
-    input.JumpEvent -= OnJump;
-    input.MeowEvent -= OnMeow;
-    input.RunEvent -= OnRun;
-    input.RunStopEvent -= OnRunStop;
   }
 
   private void OnDestroy()
   {
     ToggleListeners(false);
+    EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+    EventManager.StopListening<InteractionEvent, string, string, Transform, Bounds>(OnInteractionEvent);
   }
 }

@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Kitty Jump state
+/// Apply vertical velocity to Kitty via the ForceReceiver
+/// Author: Geoffrey Roth
+/// </summary>
 public class PlayerJumpState : PlayerMoveBase
 {
     private float elapsedTime = 0;
@@ -10,7 +15,7 @@ public class PlayerJumpState : PlayerMoveBase
 
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        this.StateID = 4;
+        StateID = (int)PlayerStateMachine.StateEnum.JUMP;
     }
 
     public override void Enter()
