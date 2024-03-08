@@ -45,7 +45,7 @@ public class PlayerInteractState : PlayerBaseState
         Vector3 targetPosition = targetTransform.position;
         targetPosition.y = 0;
         float dist = Vector3.Distance(currentPosition, targetPosition);
-        bool needsMatchTarget = dist >= targetBounds.size.x + 0.025f;
+        bool needsMatchTarget = dist >= Mathf.Max(targetBounds.size.x, targetBounds.size.z) + 0.025f;
         stateMachine.Animator.SetBool(MatchTargetHash, needsMatchTarget);
         if (needsMatchTarget)
         {
