@@ -14,6 +14,7 @@ public class InteractionType
 {
     public const string NONE = "None";
     public const string INTERACTION_BUTTON_PRESS = "InteractionButtonPress";
+    public const string INTERACTION_DIALOGUE = "InteractionDialogue";
     public const string INTERACTION_DIG = "InteractionDig";
     public const string INTERACTION_ITEM_DROP = "InteractionItemDrop";
     public const string INTERACTION_ITEM_PICKUP = "InteractionItemPickup";

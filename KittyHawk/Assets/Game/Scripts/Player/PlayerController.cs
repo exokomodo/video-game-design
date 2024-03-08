@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour {
 
     if (_isGrounded)
     {
-      if (_jump && !_isJumping) {
+      if (_jump && !_isJumping && !_isFalling) {
         SwitchToJumpState();
       }
     }
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    if (input.MovementValue == Vector2.zero && isMoving)
+    if (input.MovementValue == Vector2.zero && isMoving && !_isFalling)
     {
       SwitchToIdleState();
     }
@@ -232,12 +232,12 @@ public class PlayerController : MonoBehaviour {
     Vector3 newRootPosition;
     if (isGrounded)
     {
-      //use root motion as is if on the ground
-        newRootPosition = anim.rootPosition;
+      // use root motion when grounded
+      newRootPosition = anim.rootPosition;
     }
     else
     {
-        //Simple trick to keep model from climbing other rigidbodies that aren't the ground
+        // Simple trick to keep model from climbing other rigidbodies that aren't the ground
         newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
     }
     newRootPosition = newRootPosition + pendingMotion;
@@ -266,7 +266,6 @@ public class PlayerController : MonoBehaviour {
 
   public void ToggleActive(bool b)
   {
-    Debug.Log("ToggleActive: " + b);
     ToggleListeners(b);
     isActive = b;
     if (!b && stateMachine.CurrentStateID != (int)PlayerStateMachine.StateEnum.IDLE)
