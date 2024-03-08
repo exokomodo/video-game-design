@@ -219,8 +219,9 @@ public class GooseAI : MonoBehaviour
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
         aiState = AIState.FLEE;
-        anim.SetBool("isWalking", true);
         anim.SetBool("isAttacking", false);
+        anim.SetBool("isWalking", true);
+        
 
     }
 
@@ -248,13 +249,15 @@ public class GooseAI : MonoBehaviour
     private void EnterAttackState()
     {
         // Plays small jump-like animation to let the player know that the goose is going to attack
-        anim.SetBool("isAttacking", true);
         UnityEngine.Debug.Log("Goose Entering Attack State");
         agent.ResetPath();
-        aiState = AIState.ATTACK;
-        anim.SetBool("isWalking", true);
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
+        aiState = AIState.ATTACK;      
+        
+        anim.SetBool("isAttacking", true);
+        anim.SetBool("isWalking", true);
+        anim.Play("StartAttack");
         
         //TODO: audio event for mean quack
     }
