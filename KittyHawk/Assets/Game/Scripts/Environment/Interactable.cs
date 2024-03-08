@@ -33,6 +33,7 @@ public class Interactable : MonoBehaviour
     public string[] interactionType = new string[] {
         InteractionType.NONE,
         InteractionType.INTERACTION_BUTTON_PRESS,
+        InteractionType.INTERACTION_DIALOGUE,
         InteractionType.INTERACTION_DIG,
         InteractionType.INTERACTION_ITEM_DROP,
         InteractionType.INTERACTION_ITEM_PICKUP,
@@ -44,21 +45,25 @@ public class Interactable : MonoBehaviour
 
     protected void Start()
     {
-        GameObject go = gameObject;
-        Vector3 scale = go.transform.localScale;
-        max = 1 / (Mathf.Max(scale.x, scale.y, scale.z) + float.Epsilon);
-
         SphereCollider sc = gameObject.AddComponent<SphereCollider>();
-        sc.radius = ColliderRadius * max;
+        sc.radius = ScaledColliderRadius();
         sc.center = transform.TransformPoint(Center);
         sc.isTrigger = true;
+    }
+
+    protected float ScaledColliderRadius()
+    {
+        Vector3 scale = gameObject.transform.lossyScale;
+        float denom = Mathf.Max(scale.x, scale.y, scale.z, float.Epsilon);
+        max = 1 / denom;
+        return ColliderRadius * max;
     }
 
     protected void OnTriggerEnter(Collider c)
     {
         string evt = interactionEvent[interactionEventIndex];
         evt = evt == InteractionEvent.INTERACTION_ZONE_EXITED ? InteractionEvent.INTERACTION_ZONE_ENTERED : evt;
-        if (c.transform.root.CompareTag(InteractsWithTag) &&
+        if (c.CompareTag(InteractsWithTag) &&
             ((DisableOnTriggered && !triggered) || (!DisableOnTriggered)))
         {
             triggered = true;
@@ -68,7 +73,7 @@ public class Interactable : MonoBehaviour
 
     protected void OnTriggerExit(Collider c)
     {
-        if (c.transform.root.CompareTag(InteractsWithTag) &&
+        if (c.CompareTag(InteractsWithTag) &&
             ((DisableOnTriggered && !triggered) || (!DisableOnTriggered)))
         {
             triggered = true;
@@ -87,7 +92,7 @@ public class Interactable : MonoBehaviour
     {
         // Display green sphere showing the collider center and radius
         Gizmos.color = Color.green;
-        Vector3 center = this.transform.TransformPoint(Center);
+        Vector3 center = transform.TransformPoint(Center);
         Gizmos.DrawWireSphere(center, ColliderRadius);
     }
 }
