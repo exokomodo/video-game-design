@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 5674921121865867714}
   - component: {fileID: 9084039027777362659}
   - component: {fileID: 7511723239342487581}
+  - component: {fileID: 203430740640820163}
   m_Layer: 0
   m_Name: Horse
   m_TagString: Untagged
@@ -369,9 +370,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb1e1b732a2b4376b7b9dd121b99915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaypointRoot: {fileID: 0}
+  Carrot: {fileID: 2928393991689174780}
+  IsFollowingCarrot: 0
   Velocity: 1
-  VelocityScale: 5
   RotationSpeed: 2
+  WaypointTag: HorseWaypoint
 --- !u!54 &5674921121865867714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -497,6 +501,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &203430740640820163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095234297038162980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e141d9b1b726314a93526caa0c9f234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Velocity: 1
 --- !u!1 &2269372667653609039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,7 +1334,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7151879525212166776}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1326,7 +1343,7 @@ Transform:
   - {fileID: 4280301945532503011}
   m_Father: {fileID: 1610059756387210910}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &7679024158000930628
 Animator:
   serializedVersion: 5
@@ -1469,7 +1486,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7284994640110044738}
-  m_LocalRotation: {x: -0.50000006, y: 0.49999997, z: 0.50000006, w: 0.49999997}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1478,7 +1495,7 @@ Transform:
   - {fileID: 8492425185435464460}
   m_Father: {fileID: 6255758834282704604}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &7353715557215705642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,14 +1776,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9199422475274034721}
-  m_LocalRotation: {x: -0.50000006, y: 0.49999997, z: 0.50000006, w: 0.49999997}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6255758834282704604}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!137 &1498934869201893580
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
