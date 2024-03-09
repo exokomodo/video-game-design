@@ -1,6 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// CursorController manages the cursor state of the game
+/// Author: James Orson
+/// </summary>
 
 public class CursorController : MonoBehaviour
 {

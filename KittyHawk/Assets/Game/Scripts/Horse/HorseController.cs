@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// HorseController controls the horse on a waypoint-based path
+/// Author: James Orson
+/// </summary>
+
 public class HorseController : MonoBehaviour
 {
     #region Unity Components
