@@ -1,3 +1,4 @@
+using KittyHawk.Extensions;
 using UnityEngine;
 
 /// <summary>
@@ -45,13 +46,7 @@ public class HorseController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _gallopAudio = GetComponent<AudioSource>();
         _waypointIndex = 0;
-
-        foreach (Transform child in transform) {
-            if (child.CompareTag("Carrot")) {
-                _carrot = child.gameObject;
-                break;
-            }
-        }
+        _carrot = gameObject.GetChildByTag("Carrot");
     }
 
     private void FixedUpdate()
