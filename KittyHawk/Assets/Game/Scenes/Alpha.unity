@@ -3408,7 +3408,6 @@ GameObject:
   m_Component:
   - component: {fileID: 189075773}
   - component: {fileID: 189075772}
-  - component: {fileID: 189075771}
   - component: {fileID: 189075770}
   m_Layer: 0
   m_Name: Main Camera
@@ -3451,14 +3450,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!81 &189075771
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189075769}
-  m_Enabled: 1
 --- !u!20 &189075772
 Camera:
   m_ObjectHideFlags: 0
@@ -20316,7 +20307,7 @@ GameObject:
   - component: {fileID: 2009106286}
   m_Layer: 0
   m_Name: HorseWaypoints
-  m_TagString: HorseWaypoints
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21625,89 +21616,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horse
       objectReference: {fileID: 0}
-    - target: {fileID: 4280301945532503011, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280301945532503011, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280301945532503011, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280301945532503011, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4280301945532503011, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4959858879693004584, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4959858879693004584, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4959858879693004584, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4959858879693004584, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4959858879693004584, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6255758834282704604, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6255758834282704604, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6255758834282704604, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7256417504550004857, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: waypointRoot
-      value: 
-      objectReference: {fileID: 2009106285}
     - target: {fileID: 7826609396657575965, guid: 46831293874c34d9b8aa6ed1b0727dba,
         type: 3}
-      propertyPath: Velocity
-      value: 1
+      propertyPath: WaypointTag
+      value: HorseWaypoint
       objectReference: {fileID: 0}
     - target: {fileID: 7826609396657575965, guid: 46831293874c34d9b8aa6ed1b0727dba,
         type: 3}
-      propertyPath: waypointRoot
-      value: 
-      objectReference: {fileID: 2009106285}
-    - target: {fileID: 8003710762274252007, guid: 46831293874c34d9b8aa6ed1b0727dba,
-        type: 3}
-      propertyPath: waypointRoot
+      propertyPath: WaypointRoot
       value: 
       objectReference: {fileID: 2009106285}
     m_RemovedComponents: []

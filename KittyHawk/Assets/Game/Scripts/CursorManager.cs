@@ -27,11 +27,11 @@ public class CursorManager : MonoBehaviour
     {
         if (Cursor.lockState == CursorLockMode.Locked)
         {
-            this.unlockCursor();
+            unlockCursor();
         }
         else
         {
-            this.lockCursor();
+            lockCursor();
         }
     }
     
@@ -39,7 +39,7 @@ public class CursorManager : MonoBehaviour
     {
         if (InputMap.ShouldToggleCursor)
         {
-            this.toggleLock();
+            toggleLock();
         }
     }
     #endregion
