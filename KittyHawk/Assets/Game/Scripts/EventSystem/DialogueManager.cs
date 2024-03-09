@@ -4,6 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Class in charge of displaying and closing dialogue
+/// Author: Calvin Ferst
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
 

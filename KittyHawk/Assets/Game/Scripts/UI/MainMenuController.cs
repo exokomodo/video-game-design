@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Class controlling the game's main menu
+/// Author: Calvin Ferst
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
 

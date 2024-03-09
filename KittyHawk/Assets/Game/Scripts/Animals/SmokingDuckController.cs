@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Basic script to set up smoking duck
+/// Author: Calvin Ferst
+/// </summary>
 public class SmokingDuckController : MonoBehaviour
 {
 
