@@ -28,7 +28,7 @@ public class PlayerFallState : PlayerMoveBase
         // Add player's previous momentum so they don't fall straight down
         AddForce(momentum * deltaTime, ForceMode.Acceleration);
         elapsedTime += deltaTime;
-        if (elapsedTime > 2f)
+        if (elapsedTime > 3f)
         {
             // Sometimes KH gets stuck in the fall state
             // This will help her transition back to a moveable state
@@ -38,6 +38,7 @@ public class PlayerFallState : PlayerMoveBase
 
     public override void Exit()
     {
-        Debug.Log("PlayerFallState Exit");
+        Debug.Log("PLAYER_FALL_STATE Exit");
+        elapsedTime = 0;
     }
 }
