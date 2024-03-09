@@ -122,7 +122,6 @@ public class PlayerController : MonoBehaviour {
   {
     if (collision.transform.gameObject.tag == "Goose")
     {
-      Debug.Log("hitTimer: " + hitTimer);
       if (hitTimer > HitCooldown)
       {
         ResetHitTimer();
