@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Quick temporary script to test dialogue manager
+/// Author: Calvin Ferst
+/// </summary>
 public class TempDialogueTest : MonoBehaviour
 {
 

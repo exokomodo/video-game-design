@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Class controlling pause menu and game pause/time
+/// Author: Calvin Ferst
+/// </summary>
 public class PauseMenuController : MonoBehaviour
 {
 
