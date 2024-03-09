@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Script controlling player's ability to collect objects
+/// Author: Calvin Ferst
+/// </summary>
 public class PlayerPickupController : MonoBehaviour
 {
 
@@ -9,7 +13,7 @@ public class PlayerPickupController : MonoBehaviour
 
     void Start()
     {
-        inventory = GetComponent<PlayerInventory>();    
+        inventory = GetComponent<PlayerInventory>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,12 +24,12 @@ public class PlayerPickupController : MonoBehaviour
         switch(other.tag)
         {
             case "Catnip":
-                inventory.Catnip = 1;
+                inventory.Catnip++;
                 Destroy(other.gameObject);
                 EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
                 break;
             case "Life":
-                inventory.Lives = 1;
+                inventory.Lives++;
                 Destroy(other.gameObject);
                 break;
             default:

@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CursorController : MonoBehaviour
+/// <summary>
+/// CursorManager manages the cursor state of the game
+/// Author: James Orson
+/// </summary>
+
+public class CursorManager : MonoBehaviour
 {
     #region Unity lifecycle
     private void Start()
     {
-        this.lockCursor();
+        lockCursor();
     }
     
     public void lockCursor()
@@ -24,11 +27,11 @@ public class CursorController : MonoBehaviour
     {
         if (Cursor.lockState == CursorLockMode.Locked)
         {
-            this.unlockCursor();
+            unlockCursor();
         }
         else
         {
-            this.lockCursor();
+            lockCursor();
         }
     }
     
@@ -36,7 +39,7 @@ public class CursorController : MonoBehaviour
     {
         if (InputMap.ShouldToggleCursor)
         {
-            this.toggleLock();
+            toggleLock();
         }
     }
     #endregion

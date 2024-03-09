@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// General script that reacts to player's presence and plays audio
+/// Author: Calvin Ferst
+/// </summary>
 public class TriggerInteractiveController : MonoBehaviour
 {
 

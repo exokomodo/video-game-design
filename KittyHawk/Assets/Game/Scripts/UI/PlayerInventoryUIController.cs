@@ -1,6 +1,10 @@
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Class in charge of updating player inventory UI
+/// Author: Calvin Ferst
+/// </summary>
 public class PlayerInventoryUIController : MonoBehaviour
 {
 
