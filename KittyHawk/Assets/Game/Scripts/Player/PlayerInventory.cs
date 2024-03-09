@@ -13,11 +13,11 @@ public class PlayerInventory : MonoBehaviour
     #region Private Fields
 
     [SerializeField]
-    private int startingLives = 3;
+    private int startingLives = 9;
     [SerializeField]
     private int startingCatnip = 0;
     [SerializeField]
-    private int maxLives = 3;
+    private int maxLives = 9;
     [SerializeField]
     private int maxCatnip = 100;
 
@@ -33,12 +33,10 @@ public class PlayerInventory : MonoBehaviour
         get { return catnip; }
         set
         {
-            int newCatnip = catnip + value;
-
-            if (!(newCatnip < 0) && !(newCatnip > maxCatnip))
+            if (0 <= value && value <= maxCatnip)
             {
-                catnip = newCatnip;
-                OnCatnipChanged(Catnip);
+                catnip = value;
+                OnCatnipChanged(value);
             }
         }
     }
@@ -48,14 +46,11 @@ public class PlayerInventory : MonoBehaviour
         get { return lives; }
         set
         {
-            int newLives = lives + value;
-
-            if (!(newLives > maxLives))
+            if (0 <= value && value <= maxLives)
             {
-                lives = newLives;
-                OnLivesChanged(Lives);
+                lives = value;
+                OnLivesChanged(value);
             }
-
         }
     }
 
@@ -65,8 +60,8 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        lives = startingLives;
-        catnip = startingCatnip;
+        Lives = startingLives;
+        Catnip = startingCatnip;
     }
 
     #endregion

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
   private SphereCollider headCol;
   private GameObject frontPivot;
   private GameObject backPivot;
+  private PlayerInventory inventory;
   private bool _isGrounded = true;
   private bool _prevGrounded = true;
   private bool _isJumping = false;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour {
   private bool _isLanding = false;
   private bool _isAttacking = false;
   private bool _isActive = false;
+  private bool _isDead = false;
   private float groundCheckTolerance = 0.1f;
   private readonly int isAttackingHash = Animator.StringToHash("isAttacking");
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour {
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
   private Vector3 pendingMotion = Vector3.zero;
   private Quaternion pendingRotation = Quaternion.identity;
+  private float hitTimer;
   private enum AttackType
   {
     RIGHT,
@@ -57,18 +60,16 @@ public class PlayerController : MonoBehaviour {
   }
   public bool isDialogOpen { get; private set; }
   public Vector3 headPosition => new Vector3(headCol.transform.position.x + headCol.radius, headCol.transform.position.y, headCol.transform.position.z);
-  [field: SerializeField] public bool RootMotion = true;
-
-  [field: SerializeField] public float WalkSpeed = 1.0f;
-  [field: SerializeField] public float RunSpeed = 2.0f;
-
-  [field: SerializeField] public float BaseJumpForce = 8.0f;
-
-  [field: SerializeField] public float TurnSpeed = 1.0f;
-
   public float Speed => isRunning? RunSpeed : WalkSpeed;
   public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
 
+
+  public bool RootMotion = true;
+  public float WalkSpeed = 1.0f;
+  public float RunSpeed = 2.0f;
+  public float BaseJumpForce = 8.0f;
+  public float TurnSpeed = 1.0f;
+  public float HitCooldown = 2.0f;
 
 
   public void Awake()
@@ -92,6 +93,9 @@ public class PlayerController : MonoBehaviour {
     headCol = GetComponentInChildren<SphereCollider>();
     if (headCol == null) throw new Exception("Collider could not be found");
 
+    inventory = GetComponent<PlayerInventory>();
+    if (inventory == null) throw new Exception("PlayerInventory component could not be found");
+
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
 
@@ -106,6 +110,35 @@ public class PlayerController : MonoBehaviour {
     Application.targetFrameRate = 60;
     Time.timeScale = 1.0f;
     ToggleActive(true);
+    hitTimer = HitCooldown;
+  }
+
+  private void ResetHitTimer()
+  {
+    hitTimer = 0;
+  }
+
+  void OnCollisionEnter(Collision collision)
+  {
+    if (collision.transform.gameObject.tag == "Goose")
+    {
+      Debug.Log("hitTimer: " + hitTimer);
+      if (hitTimer > HitCooldown)
+      {
+        ResetHitTimer();
+        if (--inventory.Lives > 0)
+        {
+          stateMachine.SwitchAction(new PlayerHitAction(stateMachine));
+        }
+        else
+        {
+          _isDead = true;
+          stateMachine.SwitchState(new PlayerDieState(stateMachine));
+          ToggleActive(false);
+        }
+
+      }
+    }
   }
 
   private void OnInteractionEvent(string eventName, string eventType, InteractionTarget target)
@@ -195,6 +228,7 @@ public class PlayerController : MonoBehaviour {
 
   private void Execute(float deltaTime)
   {
+    hitTimer += deltaTime;
     _prevGrounded = _isGrounded;
     float distance = CheckGroundDistance();
     _isGrounded = CheckGrounded() || distance < 0.01f;
@@ -219,7 +253,7 @@ public class PlayerController : MonoBehaviour {
         anim.SetFloat(FallModifierHash, fallModifier);
       }
     }
-    if (input.MovementValue == Vector2.zero && isMoving && !_isFalling)
+    if (input.MovementValue == Vector2.zero && isMoving && !_isFalling && !_isDead)
     {
       SwitchToIdleState();
     }
@@ -262,13 +296,25 @@ public class PlayerController : MonoBehaviour {
     rb.MoveRotation(newRootRotation);
   }
 
+  public void Enable()
+  {
+    ToggleActive(true);
+    ToggleListeners(true);
+    SwitchToIdleState();
+  }
 
+  public void Disable()
+  {
+    ToggleActive(false);
+    ToggleRunning(false);
+    ToggleListeners(false);
+  }
 
   public void ToggleActive(bool b)
   {
     ToggleListeners(b);
     isActive = b;
-    if (!b && stateMachine.CurrentStateID != (int)PlayerStateMachine.StateEnum.IDLE)
+    if (!b && !_isDead && stateMachine.CurrentStateID != (int)PlayerStateMachine.StateEnum.IDLE)
     {
       SwitchToIdleState();
     }
@@ -470,7 +516,6 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(!b);
     isDialogOpen = b;
   }
-
   private void OnDestroy()
   {
     ToggleListeners(false);
