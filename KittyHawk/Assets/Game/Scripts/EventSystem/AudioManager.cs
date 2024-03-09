@@ -4,6 +4,12 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+/// <summary>
+/// AudioManager allows for triggering of audio events and audio on general events
+/// Author: James Orson
+/// </summary>
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance
