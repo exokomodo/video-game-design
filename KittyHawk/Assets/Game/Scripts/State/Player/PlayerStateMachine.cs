@@ -41,7 +41,8 @@ public class PlayerStateMachine : StateMachine
         ATTACK_RIGHT,
         ATTACK_FRONT,
         ATTACK_LEFT,
-        MEOW
+        MEOW,
+        HIT
     }
 
     public enum BlendingType
@@ -62,8 +63,9 @@ public class PlayerStateMachine : StateMachine
     public bool isFalling => currentState?.StateID == (int) StateEnum.FALL;
     public bool isCrawling => currentState?.StateID == (int) StateEnum.CRAWL;
 
-    // Incomplete... add crawl, fall, climb, etc
+    [HideInInspector]
     public int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE, (int)StateEnum.FALL};
+    [HideInInspector]
     public int[] idleStates = {(int) StateEnum.IDLE, (int) StateEnum.SIT, (int)StateEnum.LIE};
     private int StateChangeHash = Animator.StringToHash("StateChange");
 
@@ -143,7 +145,12 @@ public class PlayerStateMachine : StateMachine
         currentAction?.Enter();
         Animator.SetInteger(ActionIDHash, currentAction.ActionID);
         Animator.SetBool(ActionChangeHash, true);
+    }
 
-
+    public void ActionComplete()
+    {
+        Animator.SetInteger(ActionIDHash, -1);
+        currentAction?.Exit();
+        currentAction = null;
     }
 }

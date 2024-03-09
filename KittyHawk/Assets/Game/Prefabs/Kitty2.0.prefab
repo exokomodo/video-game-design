@@ -1113,9 +1113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5182486b23d373445ad691e85a3dac4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingLives: 3
+  startingLives: 9
   startingCatnip: 0
-  maxLives: 3
+  maxLives: 9
   maxCatnip: 100
 --- !u!114 &5534293841525425911
 MonoBehaviour:
@@ -1134,6 +1134,7 @@ MonoBehaviour:
   RunSpeed: 2
   BaseJumpForce: 8
   TurnSpeed: 1
+  HitCooldown: 2
 --- !u!114 &5880034425804953106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1147,7 +1148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5534293841525425911}
-  verticalVelocity: 0
 --- !u!114 &6178417419097369091
 MonoBehaviour:
   m_ObjectHideFlags: 0
