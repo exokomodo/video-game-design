@@ -1,13 +1,12 @@
-using KittyHawk.Extensions;
 using UnityEngine;
 
 /// <summary>
-/// WaypointAIController controls a game object on a waypoint-based path
+/// WaypointAI controls a game object on a waypoint-based path
 /// Author: James Orson
 /// </summary>
 
 [RequireComponent(typeof(GameObject))]
-public class WaypointAIController : MonoBehaviour
+public class WaypointAI : MonoBehaviour
 {
     #region Unity Components
     private int _waypointIndex = 0;
@@ -17,7 +16,6 @@ public class WaypointAIController : MonoBehaviour
     public bool IsFollowingCarrot = false;
     public float Velocity = 1f;
     public float RotationSpeed = 2f;
-    // Restrict the field to available tag values
     [KittyHawk.Attributes.TagSelector]
     public string WaypointTag = "";
 

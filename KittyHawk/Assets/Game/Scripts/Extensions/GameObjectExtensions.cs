@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// GameObjectExtensions provides a library of helpful methods for GameObject interactions
+/// Author: James Orson
+/// </summary>
+
 namespace KittyHawk.Extensions
 {
     public static class GameObjectExtensions

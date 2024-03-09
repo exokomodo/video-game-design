@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+
+/// <summary>
+/// TagSelectorPropertyDrawer provides the logic behind the TagSelectorAttribute
+/// Author: James Orson
+/// </summary>
  
 //Original by DYLAN ENGELMAN http://jupiterlighthousestudio.com/custom-inspectors-unity/
 //Altered by Brecht Lecluyse https://www.brechtos.com
