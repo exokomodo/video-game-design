@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// CursorController manages the cursor state of the game
+/// CursorManager manages the cursor state of the game
 /// Author: James Orson
 /// </summary>
 
-public class CursorController : MonoBehaviour
+public class CursorManager : MonoBehaviour
 {
     #region Unity lifecycle
     private void Start()
     {
-        this.lockCursor();
+        lockCursor();
     }
     
     public void lockCursor()
