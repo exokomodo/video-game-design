@@ -481,7 +481,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4299315680059761001}
-  - component: {fileID: 4559533678796212257}
   m_Layer: 0
   m_Name: Kitty2.0
   m_TagString: Untagged
@@ -506,14 +505,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &4559533678796212257
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4299315680059761003}
-  m_Enabled: 1
 --- !u!1 &4486649166671934767
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// HorseController handles horse audio and animation
@@ -13,11 +14,16 @@ public class HorseController : MonoBehaviour
     #endregion
     public float Velocity = 1f;
 
+    private UnityAction<float> volumeChangeListener;
+
     #region Unity hooks
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
         _gallopAudio = GetComponent<AudioSource>();
+
+        volumeChangeListener = new UnityAction<float>(VolumeChangeHandler);
+        EventManager.StartListening<VolumeChangeEvent, float>(volumeChangeListener);
     }
 
     private void UpdateAnimation()
@@ -37,11 +43,16 @@ public class HorseController : MonoBehaviour
         }
     }
 
+    private void VolumeChangeHandler(float volume)
+    {
+        _gallopAudio.volume = volume;
+    }
+
     private void Update()
     {
         UpdateAnimation();
         UpdateAudio();
-
     }
+    
     #endregion
 }
