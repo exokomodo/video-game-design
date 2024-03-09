@@ -2,6 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Helper class for animating splash screen
+/// Author: Calvin Ferst
+/// </summary>
 public class SplashScreenController : MonoBehaviour
 {
     [SerializeField]

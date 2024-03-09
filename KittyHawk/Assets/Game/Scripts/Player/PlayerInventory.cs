@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Script keeping track of player inventory 
+/// Author: Calvin Ferst
+/// </summary>
 public class PlayerInventory : MonoBehaviour
 {
     #region Events
