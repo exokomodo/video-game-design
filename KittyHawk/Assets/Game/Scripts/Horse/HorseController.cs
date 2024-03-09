@@ -10,25 +10,28 @@ public class HorseController : MonoBehaviour
     #region Unity Components
     private AudioSource _gallopAudio;
     private GameObject _waypointRoot;
+    private GameObject _carrot;
     private Animator _animator;
     private int _waypointIndex;
     #endregion
-    public float Velocity = 0f;
-    public const float VelocityScale = 5f;
+    public bool IsFollowingCarrot;
+    public float Velocity = 1f;
+    public float VelocityScale = 5f;
+    public float RotationSpeed = 2f;
 
     #region Private methods
     private void FaceWaypoint()
     {
         var direction = Vector3.Normalize(
             GetWaypointTransform().position - transform.position);
-        transform.forward = new Vector3(
-            direction.x,
-            0f,
-            direction.z);
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            Quaternion.LookRotation(direction),
+            Time.deltaTime * RotationSpeed);
     }
     private int GetNumberOfWaypoints() => _waypointRoot.transform.childCount;
     private void NextWaypoint() => _waypointIndex = (_waypointIndex + 1) % GetNumberOfWaypoints();
-    private Transform GetWaypointTransform() => _waypointRoot.transform.GetChild(_waypointIndex);
+    private Transform GetWaypointTransform() => IsFollowingCarrot ? _carrot.transform : _waypointRoot.transform.GetChild(_waypointIndex);
     #endregion
 
     #region Unity hooks
@@ -42,6 +45,13 @@ public class HorseController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _gallopAudio = GetComponent<AudioSource>();
         _waypointIndex = 0;
+
+        foreach (Transform child in transform) {
+            if (child.CompareTag("Carrot")) {
+                _carrot = child.gameObject;
+                break;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -55,7 +65,11 @@ public class HorseController : MonoBehaviour
 
     private void OnTriggerEnter(Collider c)
     {
-        Debug.Log("Touched waypoint");
+        if (IsFollowingCarrot)
+        {
+            // NOTE: Do not consider waypoints visited while following the carrot
+            return;
+        }
         if (c.CompareTag("HorseWaypoint"))
         {
             NextWaypoint();
