@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Script controlling player's ability to collect objects
+/// Author: Calvin Ferst
+/// </summary>
 public class PlayerPickupController : MonoBehaviour
 {
 

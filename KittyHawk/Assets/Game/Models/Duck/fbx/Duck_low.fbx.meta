@@ -1,109 +1,290 @@
 fileFormatVersion: 2
 guid: 006da1bb58d4bf04ca99642ffdfe04f2
-timeCreated: 1507394861
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: Arm_duck
-    100002: base1
-    100004: base2
-    100006: //RootNode
-    100008: duck_low
-    100010: feet.L
-    100012: feet.L_end
-    100014: feet.R
-    100016: feet.R_end
-    100018: head
-    100020: leg1.L
-    100022: leg1.R
-    100024: leg2.L
-    100026: leg2.R
-    100028: leg3.L
-    100030: leg3.L_end
-    100032: leg3.R
-    100034: leg3.R_end
-    100036: mouth1
-    100038: mouth1_end
-    100040: mouth2
-    100042: mouth2_end
-    100044: neck1
-    100046: neck2
-    100048: spine1
-    100050: spine2
-    100052: spine3
-    100054: tail
-    100056: tail_end
-    100058: wing1.L
-    100060: wing1.L_end
-    100062: wing1.R
-    100064: wing1.R_end
-    100066: wing2.L
-    100068: wing2.L_end
-    100070: wing2.R
-    100072: wing2.R_end
-    400000: Arm_duck
-    400002: base1
-    400004: base2
-    400006: //RootNode
-    400008: duck_low
-    400010: feet.L
-    400012: feet.L_end
-    400014: feet.R
-    400016: feet.R_end
-    400018: head
-    400020: leg1.L
-    400022: leg1.R
-    400024: leg2.L
-    400026: leg2.R
-    400028: leg3.L
-    400030: leg3.L_end
-    400032: leg3.R
-    400034: leg3.R_end
-    400036: mouth1
-    400038: mouth1_end
-    400040: mouth2
-    400042: mouth2_end
-    400044: neck1
-    400046: neck2
-    400048: spine1
-    400050: spine2
-    400052: spine3
-    400054: tail
-    400056: tail_end
-    400058: wing1.L
-    400060: wing1.L_end
-    400062: wing1.R
-    400064: wing1.R_end
-    400066: wing2.L
-    400068: wing2.L_end
-    400070: wing2.R
-    400072: wing2.R_end
-    4300000: duck_low
-    7400000: Arm_duck|attack
-    7400002: Arm_duck|dead
-    7400004: Arm_duck|eat
-    7400006: Arm_duck|hit
-    7400008: Arm_duck|idle_1
-    7400010: Arm_duck|idle_2
-    7400012: Arm_duck|run
-    7400014: Arm_duck|sleep
-    7400016: Arm_duck|sleep_end
-    7400018: Arm_duck|sleep_start
-    7400020: Arm_duck|swim
-    7400022: Arm_duck|walk
-    9500000: //RootNode
-    11100000: //RootNode
-    13700000: duck_low
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Arm_duck
+  - first:
+      1: 100002
+    second: base1
+  - first:
+      1: 100004
+    second: base2
+  - first:
+      1: 100006
+    second: //RootNode
+  - first:
+      1: 100008
+    second: duck_low
+  - first:
+      1: 100010
+    second: feet.L
+  - first:
+      1: 100012
+    second: feet.L_end
+  - first:
+      1: 100014
+    second: feet.R
+  - first:
+      1: 100016
+    second: feet.R_end
+  - first:
+      1: 100018
+    second: head
+  - first:
+      1: 100020
+    second: leg1.L
+  - first:
+      1: 100022
+    second: leg1.R
+  - first:
+      1: 100024
+    second: leg2.L
+  - first:
+      1: 100026
+    second: leg2.R
+  - first:
+      1: 100028
+    second: leg3.L
+  - first:
+      1: 100030
+    second: leg3.L_end
+  - first:
+      1: 100032
+    second: leg3.R
+  - first:
+      1: 100034
+    second: leg3.R_end
+  - first:
+      1: 100036
+    second: mouth1
+  - first:
+      1: 100038
+    second: mouth1_end
+  - first:
+      1: 100040
+    second: mouth2
+  - first:
+      1: 100042
+    second: mouth2_end
+  - first:
+      1: 100044
+    second: neck1
+  - first:
+      1: 100046
+    second: neck2
+  - first:
+      1: 100048
+    second: spine1
+  - first:
+      1: 100050
+    second: spine2
+  - first:
+      1: 100052
+    second: spine3
+  - first:
+      1: 100054
+    second: tail
+  - first:
+      1: 100056
+    second: tail_end
+  - first:
+      1: 100058
+    second: wing1.L
+  - first:
+      1: 100060
+    second: wing1.L_end
+  - first:
+      1: 100062
+    second: wing1.R
+  - first:
+      1: 100064
+    second: wing1.R_end
+  - first:
+      1: 100066
+    second: wing2.L
+  - first:
+      1: 100068
+    second: wing2.L_end
+  - first:
+      1: 100070
+    second: wing2.R
+  - first:
+      1: 100072
+    second: wing2.R_end
+  - first:
+      4: 400000
+    second: Arm_duck
+  - first:
+      4: 400002
+    second: base1
+  - first:
+      4: 400004
+    second: base2
+  - first:
+      4: 400006
+    second: //RootNode
+  - first:
+      4: 400008
+    second: duck_low
+  - first:
+      4: 400010
+    second: feet.L
+  - first:
+      4: 400012
+    second: feet.L_end
+  - first:
+      4: 400014
+    second: feet.R
+  - first:
+      4: 400016
+    second: feet.R_end
+  - first:
+      4: 400018
+    second: head
+  - first:
+      4: 400020
+    second: leg1.L
+  - first:
+      4: 400022
+    second: leg1.R
+  - first:
+      4: 400024
+    second: leg2.L
+  - first:
+      4: 400026
+    second: leg2.R
+  - first:
+      4: 400028
+    second: leg3.L
+  - first:
+      4: 400030
+    second: leg3.L_end
+  - first:
+      4: 400032
+    second: leg3.R
+  - first:
+      4: 400034
+    second: leg3.R_end
+  - first:
+      4: 400036
+    second: mouth1
+  - first:
+      4: 400038
+    second: mouth1_end
+  - first:
+      4: 400040
+    second: mouth2
+  - first:
+      4: 400042
+    second: mouth2_end
+  - first:
+      4: 400044
+    second: neck1
+  - first:
+      4: 400046
+    second: neck2
+  - first:
+      4: 400048
+    second: spine1
+  - first:
+      4: 400050
+    second: spine2
+  - first:
+      4: 400052
+    second: spine3
+  - first:
+      4: 400054
+    second: tail
+  - first:
+      4: 400056
+    second: tail_end
+  - first:
+      4: 400058
+    second: wing1.L
+  - first:
+      4: 400060
+    second: wing1.L_end
+  - first:
+      4: 400062
+    second: wing1.R
+  - first:
+      4: 400064
+    second: wing1.R_end
+  - first:
+      4: 400066
+    second: wing2.L
+  - first:
+      4: 400068
+    second: wing2.L_end
+  - first:
+      4: 400070
+    second: wing2.R
+  - first:
+      4: 400072
+    second: wing2.R_end
+  - first:
+      43: 4300000
+    second: duck_low
+  - first:
+      74: 7400000
+    second: Arm_duck|attack
+  - first:
+      74: 7400002
+    second: Arm_duck|dead
+  - first:
+      74: 7400004
+    second: Arm_duck|eat
+  - first:
+      74: 7400006
+    second: Arm_duck|hit
+  - first:
+      74: 7400008
+    second: Arm_duck|idle_1
+  - first:
+      74: 7400010
+    second: Arm_duck|idle_2
+  - first:
+      74: 7400012
+    second: Arm_duck|run
+  - first:
+      74: 7400014
+    second: Arm_duck|sleep
+  - first:
+      74: 7400016
+    second: Arm_duck|sleep_end
+  - first:
+      74: 7400018
+    second: Arm_duck|sleep_start
+  - first:
+      74: 7400020
+    second: Arm_duck|swim
+  - first:
+      74: 7400022
+    second: Arm_duck|walk
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: duck_low
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -111,12 +292,15 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -124,26 +308,47 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -153,14 +358,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    globalScale: 1
+    rootMotionBoneName: Arm_duck
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

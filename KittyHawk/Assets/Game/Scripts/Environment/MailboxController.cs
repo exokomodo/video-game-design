@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script for environment interactive, launching letter from mailbox
+/// Author: Calvin Ferst
+/// </summary>
 public class MailboxController : MonoBehaviour
 {
 
