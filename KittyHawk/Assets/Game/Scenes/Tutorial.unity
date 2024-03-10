@@ -719,7 +719,6 @@ GameObject:
   - component: {fileID: 46759659}
   - component: {fileID: 46759661}
   - component: {fileID: 46759664}
-  - component: {fileID: 46759663}
   - component: {fileID: 46759662}
   - component: {fileID: 46759666}
   - component: {fileID: 46759665}
@@ -784,20 +783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 161315947}
---- !u!114 &46759663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46759658}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d32e7b3c279434478bfde3912651416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  confirmSoundName: MenuConfirm
-  pauseCanvas: {fileID: 0}
 --- !u!114 &46759664
 MonoBehaviour:
   m_ObjectHideFlags: 0
