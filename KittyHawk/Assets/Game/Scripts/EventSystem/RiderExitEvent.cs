@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// RiderExitEvent represents an event for when a rider leaves a rideable object
+/// RiderExitEvent represents an event for when a rider leaves a saddled object
 /// Author: James Orson
 /// </summary>
 
-public class RiderExitEvent : UnityEvent<Rideable, GameObject> { }
+public class RiderExitEvent : UnityEvent<Saddle, GameObject> { }

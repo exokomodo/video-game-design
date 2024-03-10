@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 9084039027777362659}
   - component: {fileID: 7511723239342487581}
   - component: {fileID: 203430740640820163}
-  - component: {fileID: 551795280229778232}
+  - component: {fileID: 4169512664610290911}
   - component: {fileID: 7826609396657575965}
   m_Layer: 0
   m_Name: Horse
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: 1
---- !u!114 &551795280229778232
+--- !u!114 &4169512664610290911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
