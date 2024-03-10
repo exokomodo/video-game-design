@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour
 
     public IEnumerator ReloadLevel()
     {
+        yield return new WaitForSeconds(2f);
         anim.SetTrigger("FadeOut");
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
