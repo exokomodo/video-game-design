@@ -174,6 +174,7 @@ public class ChickenAI : MonoBehaviour
         UnityEngine.Debug.Log("Chicken Returning to Patrol State");
         aiState = AIState.PATROL;
         ResetPatrolTimer();
+        rb.velocity = Vector3.zero;
         agent.speed = 0.6f;
         anim.SetBool("isWalking", false);
     }
