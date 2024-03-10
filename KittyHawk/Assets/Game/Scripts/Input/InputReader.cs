@@ -26,7 +26,8 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
 
     private void OnDestroy()
     {
-        controls.Player.Disable();
+        if (controls != null)
+            controls.Player.Disable();
     }
 
     public void OnAttackRight(InputAction.CallbackContext context)

@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI dialogueText;
 
     private InputReader input;
+    private bool subscribed;
 
     private string pathPrefix = "Dialogue";
     private Dictionary<string, Dialogue> dialogues;
@@ -60,7 +61,8 @@ public class DialogueManager : MonoBehaviour
 
     void OnDestroy()
     {
-        input.JumpEvent -= UpdateDialogue;
+        if (subscribed)
+            input.JumpEvent -= UpdateDialogue;
         EventManager.StopListening<DialogueOpenEvent, Vector3, string>(dialogueEventListener);
     }
 
@@ -90,6 +92,7 @@ public class DialogueManager : MonoBehaviour
         canvas.enabled = true;
         displayingDialogue = true;
         input.JumpEvent += UpdateDialogue;
+        subscribed = true;
     }
 
     void UpdateDialogue()
@@ -103,6 +106,7 @@ public class DialogueManager : MonoBehaviour
             displayingDialogue = false;
             dialogueCount = 0;
             input.JumpEvent -= UpdateDialogue;
+            subscribed = false;
             EventManager.TriggerEvent<DialogueCloseEvent, string>(currentDialogue.DialogueName);
         }
         else

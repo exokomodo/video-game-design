@@ -21,6 +21,7 @@ public class PlayerDieState : PlayerMoveBase
         momentum.y = 0;
         string hitSound = $"CatHit{Random.Range(1, 4)}";
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(stateMachine.Controller.transform.position, hitSound);
+        EventManager.TriggerEvent<PlayerDeathEvent>();
     }
 
     public override void Execute(float deltaTime)
