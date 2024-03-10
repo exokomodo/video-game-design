@@ -19,6 +19,8 @@ public class PlayerDieState : PlayerMoveBase
         // Store player momentum at the time they enter the Die state
         momentum = stateMachine.Controller.velocity;
         momentum.y = 0;
+        string hitSound = $"CatHit{Random.Range(1, 4)}";
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(stateMachine.Controller.transform.position, hitSound);
     }
 
     public override void Execute(float deltaTime)

@@ -21,9 +21,11 @@ public class PlayerHitAction : PlayerBaseAction
     public override void Enter()
     {
         Debug.Log("PlayerHitAction Enter");
-        int randInt = Random.Range(1, 3);
+        int randInt = Random.Range(1, 4);
         stateMachine.Animator.Play(AnimPath + randInt);
         stateMachine.Controller.Disable();
+        string hitSound = $"CatHit{Random.Range(1, 4)}";
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(stateMachine.Controller.transform.position, hitSound);
     }
 
     public override void Execute(float deltaTime)
