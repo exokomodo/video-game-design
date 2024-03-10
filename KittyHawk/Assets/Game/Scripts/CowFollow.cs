@@ -1,10 +1,14 @@
 using UnityEngine;
 
-public class CowFollow : MonoBehaviour
-{
 
     // Author Ben Lee
     // Date: 2024
+    // Description: This script is used to trigger dialogue when the player enters the trigger zone of the cow. It also triggers a follow up dialogue if the player talks to the cow again.
+    
+public class CowFollow : MonoBehaviour
+{
+
+
 
     bool alreadyTalked = false;
     public Canvas canvas;
