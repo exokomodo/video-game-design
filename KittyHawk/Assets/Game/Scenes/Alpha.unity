@@ -1318,12 +1318,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000053602996
+      value: 0.00000005367761
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000000268015
+      value: 0.000000026838807
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2113,12 +2113,12 @@ PrefabInstance:
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000015658062
+      value: 0.000000015659218
       objectReference: {fileID: 0}
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000000071302866
+      value: 0.0000000071308133
       objectReference: {fileID: 0}
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2905,6 +2905,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.000001, y: 20, z: 0.1231766}
   m_Center: {x: -2.4999967, y: 0.6354953, z: 0.046500407}
+--- !u!1 &153777265 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 104560403194836952, guid: e765a33c3762a4410b2a27f384065778,
+    type: 3}
+  m_PrefabInstance: {fileID: 104560403215190322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &153777274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153777265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &158118195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8774,30 +8792,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20f6bd523ebdaf04fa332e6ce565fc03, type: 3}
---- !u!1 &799301199 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3073197500484702963, guid: a9aeaa7a5875842d886d71b46f95d668,
-    type: 3}
-  m_PrefabInstance: {fileID: 1464448397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &799301201 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7493803913903745237, guid: a9aeaa7a5875842d886d71b46f95d668,
     type: 3}
   m_PrefabInstance: {fileID: 1464448397}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &799301204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799301199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &802218465 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1679096892086428, guid: d1c03d059e1691742ba1b2311fbe2254,
@@ -15174,7 +15174,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 403324704}
     - target: {fileID: 7493803913903745234, guid: a9aeaa7a5875842d886d71b46f95d668,
         type: 3}
       propertyPath: animator
@@ -15183,12 +15183,17 @@ PrefabInstance:
     - target: {fileID: 7493803913903745236, guid: a9aeaa7a5875842d886d71b46f95d668,
         type: 3}
       propertyPath: m_Size.x
-      value: 6.45
+      value: 6.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493803913903745236, guid: a9aeaa7a5875842d886d71b46f95d668,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 6.38
       objectReference: {fileID: 0}
     - target: {fileID: 7493803913903745236, guid: a9aeaa7a5875842d886d71b46f95d668,
         type: 3}
       propertyPath: m_Size.z
-      value: 4.15
+      value: 5.33
       objectReference: {fileID: 0}
     - target: {fileID: 8367565231965460570, guid: a9aeaa7a5875842d886d71b46f95d668,
         type: 3}

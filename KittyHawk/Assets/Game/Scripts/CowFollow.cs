@@ -9,9 +9,10 @@ public class CowFollow : MonoBehaviour
     bool alreadyTalked = false;
     public Canvas canvas;
     public Animator animator;
+    public GameObject player;
 
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
+        if (other == player.GetComponent<Collider>() && !alreadyTalked) {
             Debug.Log("KITTY HAWK TRIGGERING DIALOGUE");
             animator.SetBool("jumping", true);
             if (!alreadyTalked) {
@@ -26,7 +27,7 @@ public class CowFollow : MonoBehaviour
 
 
     private void OnTriggerExit(Collider other) {
-        if (other.tag == "Player") {
+        if (other == player.GetComponent<Collider>()) {
             animator.SetBool("jumping", false);
         }
     }
