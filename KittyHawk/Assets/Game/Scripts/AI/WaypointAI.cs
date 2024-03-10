@@ -5,19 +5,21 @@ using UnityEngine;
 /// Author: James Orson
 /// </summary>
 
-[RequireComponent(typeof(GameObject))]
+[RequireComponent(typeof(GameObject), typeof(GameObject))]
 public class WaypointAI : MonoBehaviour
 {
     #region Unity Components
-    private int _waypointIndex = 0;
-    #endregion
     public GameObject WaypointRoot;
     public GameObject Carrot;
+    #endregion
+
     public bool IsFollowingCarrot = false;
     public float Velocity = 1f;
     public float RotationSpeed = 2f;
     [KittyHawk.Attributes.TagSelector]
     public string WaypointTag = "";
+
+    private int _waypointIndex = 0;
 
     #region Private methods
     private void FaceWaypoint()
