@@ -7,12 +7,14 @@
  *  Patrol state allows chicken to wander within a defined radius randomly.
  *  Flee state is triggered when kitty comes within a certain proximity
  *
+ * Update 03/10/24: Fixed chicken movement to properly flee from kitty
+ * 
  * Planned updates: This script anticipates future integration into a more general animal AI system
  * and an additional 'carried' state *
  *
  * Dependencies: NavMesh Component. Animator Component. Player components.
  *
- */ 
+ */
 
 using System;
 using System.Collections;
@@ -108,7 +110,6 @@ public class ChickenAI : MonoBehaviour
             Die();
             
             // TODO: Make it so all of the chickens don't spawn in the same place
-            // TODO Right now chicken spins when colliding with kitty
             transform.position = other.transform.position;
         }
     }
@@ -133,7 +134,7 @@ public class ChickenAI : MonoBehaviour
     void FixedUpdate()
     {
         if (!isAlive) return;
-
+        currentPosition = this.transform.position;
         if (isNearKitty && aiState != AIState.FLEE)
         {
             EnterFleeState();
@@ -175,6 +176,7 @@ public class ChickenAI : MonoBehaviour
         UnityEngine.Debug.Log("Chicken Returning to Patrol State");
         aiState = AIState.PATROL;
         ResetPatrolTimer();
+        rb.velocity = Vector3.zero;
         agent.speed = 0.6f;
         anim.SetBool("isWalking", false);
     }
