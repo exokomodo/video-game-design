@@ -54,15 +54,6 @@ public class LevelManager : MonoBehaviour
         EventManager.StopListening<ObjectiveChangeEvent, string, ObjectiveStatus>(OnObjectiveChange);
     }
 
-    // TODO: REMOVE THIS! ONLY FOR TESTING
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("ChickObjective", ObjectiveStatus.Completed);
-        }
-    }
-
     void OnObjectiveChange(string name, ObjectiveStatus status)
     {
         if (objectivesDic[name] != null)
