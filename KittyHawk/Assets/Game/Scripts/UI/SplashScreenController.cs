@@ -2,6 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Helper class for animating splash screen
+/// Author: Calvin Ferst
+/// </summary>
 public class SplashScreenController : MonoBehaviour
 {
     [SerializeField]
@@ -19,10 +23,13 @@ public class SplashScreenController : MonoBehaviour
     {
         yield return new WaitForSeconds(fadeTime);
         anim.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("MainMenu");
     }
 
+    /*
     public void OnFadeComplete()
     {
         SceneManager.LoadScene("MainMenu");
-    }
+    } */
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3399204348719184784}
   - component: {fileID: 1389021442922683795}
   m_Layer: 0
-  m_Name: RockingChair
+  m_Name: RockingChairIA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,6 +4,12 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+/// <summary>
+/// AudioManager allows for triggering of audio events and audio on general events
+/// Author: James Orson
+/// </summary>
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance
@@ -31,6 +37,8 @@ public class AudioManager : MonoBehaviour
     private UnityAction<Vector3, string> audioEventListener;
     private AudioClip tireStackBounceAudio;
     private UnityAction<Vector3> tireStackBounceListener;
+    private UnityAction<string> musicEventListener;
+    private AudioSource musicSource;
     private static AudioManager audioManager;
 
     #region Public Setters
@@ -51,6 +59,7 @@ public class AudioManager : MonoBehaviour
             else
             {
                 soundVolume = value;
+                EventManager.TriggerEvent<VolumeChangeEvent, float>(soundVolume);
             }
         }
     }
@@ -71,6 +80,7 @@ public class AudioManager : MonoBehaviour
             else
             {
                 musicVolume = value;
+                musicSource.volume = musicVolume;
             }
         }
     }
@@ -88,6 +98,7 @@ public class AudioManager : MonoBehaviour
 
         EventManager.StartListening<TireStackBounceEvent, Vector3>(tireStackBounceListener);
         EventManager.StartListening<AudioEvent, Vector3, string>(audioEventListener);
+        EventManager.StartListening<MusicEvent, string>(musicEventListener);
 
     }
 
@@ -95,6 +106,7 @@ public class AudioManager : MonoBehaviour
     {
         EventManager.StopListening<TireStackBounceEvent, Vector3>(tireStackBounceListener);
         EventManager.StopListening<AudioEvent, Vector3, string>(audioEventListener);
+        EventManager.StopListening<MusicEvent, string>(musicEventListener);
     }
     #endregion
 
@@ -103,7 +115,7 @@ public class AudioManager : MonoBehaviour
     void tireStackBounceEventHandler(Vector3 position)
     {
         Debug.Log(tireStackBounceAudio);
-        AudioSource.PlayClipAtPoint(tireStackBounceAudio, position, 1f);
+        AudioSource.PlayClipAtPoint(tireStackBounceAudio, position, soundVolume);
     }
 
     void audioEventHandler(Vector3 position, string clipName)
@@ -115,6 +127,20 @@ public class AudioManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(clip, position, soundVolume);
     }
 
+    // TODO: Actually implement music event handler
+    // Currently only playing music on awake in level
+
+    void musicEventHandler(string clipName)
+    {
+        if (!soundEffects.TryGetValue(clipName, out AudioClip clip))
+        {
+            clip = LoadAudioClip(clipName);
+        }
+        musicSource.Stop();
+        musicSource.clip = clip;
+        musicSource.Play();
+    }
+
     #endregion
 
     #region Private Methods
@@ -122,8 +148,10 @@ public class AudioManager : MonoBehaviour
     {
         tireStackBounceListener = new UnityAction<Vector3>(tireStackBounceEventHandler);
         audioEventListener = new UnityAction<Vector3, string>(audioEventHandler);
+        musicEventListener = new UnityAction<string>(musicEventHandler);
         soundEffects = new Dictionary<string, AudioClip>();
         tireStackBounceAudio = LoadAudioClip("tire-stack-bounce");
+        musicSource = GetComponent<AudioSource>();
     }
 
     private AudioClip LoadAudioClip(string name)

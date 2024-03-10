@@ -8,12 +8,12 @@ TagManager:
   - grabbable
   - ground
   - Catnip
-  - HorseWaypoints
   - HorseWaypoint
   - Gate
   - ChickenCoop
   - Chick
   - Goose
+  - Carrot
   layers:
   - Default
   - TransparentFX

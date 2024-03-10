@@ -1,6 +1,10 @@
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Class in charge of updating player inventory UI
+/// Author: Calvin Ferst
+/// </summary>
 public class PlayerInventoryUIController : MonoBehaviour
 {
 
@@ -9,7 +13,7 @@ public class PlayerInventoryUIController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI lifeTextObject;
 
-    void Start()
+    void Awake()
     {
         PlayerInventory.OnCatnipChanged += UpdateCatnip;
         PlayerInventory.OnLivesChanged += UpdateLives;

@@ -1,13 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
+/// <summary>
+/// Class controlling the game's main menu
+/// Author: Calvin Ferst
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
 
     [SerializeField]
-    string firstLevelName = "Alpha";
+    string firstLevelName = "Tutorial";
     [SerializeField]
     string highlightSoundName = "MenuHighlight";
     [SerializeField]
@@ -20,11 +24,18 @@ public class MainMenuController : MonoBehaviour
     GameObject creditsPanel;
     [SerializeField]
     GameObject optionsPanel;
+    [SerializeField]
+    Image fadeImage;
+
+    private Animator anim;
 
     private void Start()
     {
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+
+        anim = fadeImage.GetComponent<Animator>();
+        anim.SetTrigger("FadeIn");
 
         // TODO: Add music event to Audio Manager and use that instead
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(mainCamera.transform.position, menuMusicName);
@@ -96,6 +107,7 @@ public class MainMenuController : MonoBehaviour
 
     private IEnumerator LoadFirstScene()
     {
+        anim.SetTrigger("FadeOut");
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(firstLevelName);
     }
