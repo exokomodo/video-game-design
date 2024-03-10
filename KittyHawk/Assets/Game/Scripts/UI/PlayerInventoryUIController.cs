@@ -13,7 +13,7 @@ public class PlayerInventoryUIController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI lifeTextObject;
 
-    void Start()
+    void Awake()
     {
         PlayerInventory.OnCatnipChanged += UpdateCatnip;
         PlayerInventory.OnLivesChanged += UpdateLives;
