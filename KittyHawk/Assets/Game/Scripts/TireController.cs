@@ -1,3 +1,13 @@
+/*
+ * TireController.cs
+ * Authors: Paul Garza, Geoffrey Roth
+ * Date: 03/09/24
+ * Summary: This script serves as the control for bouncing tires in the game
+ * 
+ * Planned updates: This script can still be tweaked some to accommodate more natural and predictable movement
+ *
+ * Dependencies: Player components.
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
