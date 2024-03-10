@@ -1,3 +1,19 @@
+/*
+ * ChickenAI.cs
+ * Authors: Paul Garza
+ * Date: 03/09/24
+ * Summary: This script serves as the AI control for chicks and chickens within the game.
+ *  It utilizes a finite state machine to manage different states of behavior - primarily patrol and flee.
+ *  Patrol state allows chicken to wander within a defined radius randomly.
+ *  Flee state is triggered when kitty comes within a certain proximity
+ *
+ * Planned updates: This script anticipates future integration into a more general animal AI system
+ * and an additional 'carried' state *
+ *
+ * Dependencies: NavMesh Component. Animator Component. Player components.
+ *
+ */ 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
