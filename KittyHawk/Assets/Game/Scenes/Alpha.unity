@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1323,12 +1323,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.00000005367761
+      value: -0.000000006254262
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000026838807
+      value: -0.0000000031271328
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2118,12 +2118,12 @@ PrefabInstance:
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000015659218
+      value: 1.1607668e-15
       objectReference: {fileID: 0}
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000000071308133
+      value: 3.5122266e-16
       objectReference: {fileID: 0}
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -3389,7 +3389,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189075769}
-  m_LocalRotation: {x: 0.43087044, y: 0.00000003105455, z: -0.000000014827442, w: 0.9024138}
+  m_LocalRotation: {x: 0.43087044, y: 0.00000003105455, z: -0.000000014827441, w: 0.9024138}
   m_LocalPosition: {x: 34.27, y: 4.026, z: -39.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22200,6 +22200,22 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 843063435}
+    - target: {fileID: 104560403194836928, guid: e765a33c3762a4410b2a27f384065778,
+        type: 3}
+      propertyPath: nextLevel
+      value: Transition
+      objectReference: {fileID: 0}
+    - target: {fileID: 104560403194836928, guid: e765a33c3762a4410b2a27f384065778,
+        type: 3}
+      propertyPath: objectives.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 104560403194836928, guid: e765a33c3762a4410b2a27f384065778,
+        type: 3}
+      propertyPath: objectives.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 971679dc2e9f42c46acce1212816c269,
+        type: 2}
     - target: {fileID: 104560403194836930, guid: e765a33c3762a4410b2a27f384065778,
         type: 3}
       propertyPath: lifeTextObject
