@@ -329,11 +329,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1610059756387210910}
-  - component: {fileID: 7826609396657575965}
   - component: {fileID: 5674921121865867714}
   - component: {fileID: 9084039027777362659}
   - component: {fileID: 7511723239342487581}
   - component: {fileID: 203430740640820163}
+  - component: {fileID: 551795280229778232}
+  - component: {fileID: 7826609396657575965}
   m_Layer: 0
   m_Name: Horse
   m_TagString: Untagged
@@ -355,28 +356,9 @@ Transform:
   m_Children:
   - {fileID: 6255758834282704604}
   - {fileID: 6500822272650239881}
-  - {fileID: 6432254902227911860}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7826609396657575965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095234297038162980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb1e1b732a2b4376b7b9dd121b99915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WaypointRoot: {fileID: 0}
-  Carrot: {fileID: 2928393991689174780}
-  IsFollowingCarrot: 0
-  Velocity: 1
-  RotationSpeed: 2
-  WaypointTag: HorseWaypoint
 --- !u!54 &5674921121865867714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -515,6 +497,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: 1
+--- !u!114 &551795280229778232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095234297038162980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906350a3d7987194f906c05b6ff5030d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SaddleHeight: {x: 0, y: 2.65, z: 0}
+  RiderTag: Player
+--- !u!114 &7826609396657575965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095234297038162980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb1e1b732a2b4376b7b9dd121b99915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaypointRoot: {fileID: 0}
+  Carrot: {fileID: 2928393991689174780}
+  IsFollowingCarrot: 0
+  Velocity: 1
+  RotationSpeed: 2
+  WaypointTag: HorseWaypoint
 --- !u!1 &2269372667653609039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,83 +1895,3 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.48241055, y: -0.9518337, z: -0.048760593}
     m_Extent: {x: 2.0030303, y: 2.0959296, z: 1.0876954}
   m_DirtyAABB: 0
---- !u!1001 &8402269911901228070
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1610059756387210910}
-    m_Modifications:
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5103792923449007265, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: m_Name
-      value: Saddle
-      objectReference: {fileID: 0}
-    - target: {fileID: 7685258382419682021, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-        type: 3}
-      propertyPath: SaddleHeight.y
-      value: 2.6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: af95fd4b1ba03cb4286cfda6b4de6afd, type: 3}
---- !u!4 &6432254902227911860 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3303722614167177362, guid: af95fd4b1ba03cb4286cfda6b4de6afd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8402269911901228070}
-  m_PrefabAsset: {fileID: 0}
