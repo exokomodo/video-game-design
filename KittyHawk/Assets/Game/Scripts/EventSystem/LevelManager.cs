@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Sets up the level (audio & fade-in)
@@ -21,6 +23,25 @@ public class LevelManager : MonoBehaviour
         anim.SetTrigger("FadeIn");
 
         EventManager.TriggerEvent<MusicEvent, string>(musicName);
+
+        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
+    }
+
+    private void OnPlayerDie()
+    {
+        StartCoroutine(ReloadLevel());
+    }
+
+    public IEnumerator ReloadLevel()
+    {
+        anim.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
