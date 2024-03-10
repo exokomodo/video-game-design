@@ -12,7 +12,7 @@
  *
  * Dependencies: NavMesh Component. Animator Component. Player components.
  *
- */ 
+ */
 
 using System;
 using System.Collections;
@@ -108,7 +108,6 @@ public class ChickenAI : MonoBehaviour
             Die();
             
             // TODO: Make it so all of the chickens don't spawn in the same place
-            // TODO Right now chicken spins when colliding with kitty
             transform.position = other.transform.position;
         }
     }

@@ -6,6 +6,7 @@
  * communicate via the addChicken() and checkForWin() functions, and the coop group keeps track of the
  * win condition.
  *
+ * Update: 03/10/24 added event manager trigger for objective complete.
  * 
  * Planned updates: This script can still be tweaked some to self-define the chicksToWin variable, which is
  * currently necessary to set manually.
@@ -39,10 +40,11 @@ public class CoopGroupController : MonoBehaviour
 
     public void checkForWin()
     {
-        if (totalChickens == chicksToWin)
+        if (totalChickens >= chicksToWin)
         {
             winnerWinnerChickenDinner = true;
-            UnityEngine.Debug.Log("Chickens collected! You win!");
+            Debug.Log("Chicken Objective Completed");
+            //EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("ChickObjective", ObjectiveStatus.Completed);
         }
     }
 
