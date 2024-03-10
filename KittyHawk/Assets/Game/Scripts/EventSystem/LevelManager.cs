@@ -49,6 +49,16 @@ public class LevelManager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
+        EventManager.StopListening<ObjectiveChangeEvent, string, ObjectiveStatus>(OnObjectiveChange);
+    }
+
+    // TODO: REMOVE THIS! ONLY FOR TESTING
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("ChickObjective", ObjectiveStatus.Completed);
+        }
     }
 
     void OnObjectiveChange(string name, ObjectiveStatus status)
@@ -71,18 +81,18 @@ public class LevelManager : MonoBehaviour
 
         if (allObjectivesCompleted)
         {
-            StartCoroutine(LevelComplete());
+            LevelComplete();
         }
     }
 
-    IEnumerator LevelComplete()
+    void LevelComplete()
     {
         // TODO: load next level
         // In this case: load cutscene where duck says congratulations
         // and says to wait for full game
         // and then loads main menu
 
-        return null;
+        Debug.Log("YAY YOU BEAT THE LEVEL");
     }
 
     private void OnPlayerDie()
