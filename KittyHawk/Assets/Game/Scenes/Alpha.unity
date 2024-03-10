@@ -839,6 +839,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1821444198}
     m_Modifications:
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
@@ -4012,6 +4017,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1821444198}
     m_Modifications:
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
@@ -6157,7 +6167,7 @@ GameObject:
   - component: {fileID: 492424400}
   m_Layer: 0
   m_Name: Chicks
-  m_TagString: Untagged
+  m_TagString: Chick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7977,9 +7987,19 @@ PrefabInstance:
       propertyPath: kitty
       value: 
       objectReference: {fileID: 403324704}
+    - target: {fileID: 7152482227274524794, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: wanderRadius
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8186957481781795988, guid: ba813b46532de4de69e88e4b2135a9c9,
         type: 3}
       propertyPath: m_Name
+      value: Chick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186957481781795988, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: m_TagString
       value: Chick
       objectReference: {fileID: 0}
     - target: {fileID: 8851326819553822254, guid: ba813b46532de4de69e88e4b2135a9c9,
@@ -8037,6 +8057,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9033239701331323343, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba813b46532de4de69e88e4b2135a9c9, type: 3}
 --- !u!1001 &728096715
@@ -8046,6 +8071,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1821444198}
     m_Modifications:
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
@@ -14278,6 +14308,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chick (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8186957481781795988, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Chick
+      objectReference: {fileID: 0}
     - target: {fileID: 8851326819553822254, guid: ba813b46532de4de69e88e4b2135a9c9,
         type: 3}
       propertyPath: m_RootOrder
@@ -14332,6 +14367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9033239701331323343, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba813b46532de4de69e88e4b2135a9c9, type: 3}
@@ -19180,6 +19220,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chick (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8186957481781795988, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Chick
+      objectReference: {fileID: 0}
     - target: {fileID: 8851326819553822254, guid: ba813b46532de4de69e88e4b2135a9c9,
         type: 3}
       propertyPath: m_RootOrder
@@ -19234,6 +19279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9033239701331323343, guid: ba813b46532de4de69e88e4b2135a9c9,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba813b46532de4de69e88e4b2135a9c9, type: 3}
@@ -20193,6 +20243,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1821444198}
     m_Modifications:
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
