@@ -17,6 +17,8 @@ public class LevelManager : MonoBehaviour
     string musicName = "MainGameMusic";
     [SerializeField]
     Objective[] objectives;
+    [SerializeField]
+    string nextLevel;
 
     bool allObjectivesCompleted;
     Dictionary<string, Objective> objectivesDic;
@@ -87,17 +89,21 @@ public class LevelManager : MonoBehaviour
 
     void LevelComplete()
     {
-        // TODO: load next level
-        // In this case: load cutscene where duck says congratulations
-        // and says to wait for full game
-        // and then loads main menu
-
         Debug.Log("YAY YOU BEAT THE LEVEL");
+        StartCoroutine(LoadNextLevel());
     }
 
     private void OnPlayerDie()
     {
         StartCoroutine(ReloadLevel());
+    }
+
+    IEnumerator LoadNextLevel()
+    {
+        yield return new WaitForSeconds(2f);
+        anim.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Transition");
     }
 
     public IEnumerator ReloadLevel()
