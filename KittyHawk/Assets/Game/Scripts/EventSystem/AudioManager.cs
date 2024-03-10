@@ -59,6 +59,7 @@ public class AudioManager : MonoBehaviour
             else
             {
                 soundVolume = value;
+                EventManager.TriggerEvent<VolumeChangeEvent, float>(soundVolume);
             }
         }
     }
@@ -114,7 +115,7 @@ public class AudioManager : MonoBehaviour
     void tireStackBounceEventHandler(Vector3 position)
     {
         Debug.Log(tireStackBounceAudio);
-        AudioSource.PlayClipAtPoint(tireStackBounceAudio, position, 1f);
+        AudioSource.PlayClipAtPoint(tireStackBounceAudio, position, soundVolume);
     }
 
     void audioEventHandler(Vector3 position, string clipName)
