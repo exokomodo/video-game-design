@@ -126,7 +126,8 @@ public class GooseAI : MonoBehaviour
     void FixedUpdate()
     {
         if (!isAlive) return;
-
+        currentPosition = transform.position;
+        
         if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE)
         {
             EnterAttackState();
@@ -160,7 +161,6 @@ public class GooseAI : MonoBehaviour
     
     private void ChangeLookDirection()
     {
-        UnityEngine.Debug.Log("Changing look direction");
         // Make the Goose look at the new position. Uses euler transformation because the model 
         // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
         // TODO: Quaternion.Slerp?
@@ -183,8 +183,6 @@ public class GooseAI : MonoBehaviour
 
     private void UpdatePatrolState()
     {
-        currentPosition = transform.position;
-        
         // Update the time since last walk
         timeSinceLastWalk += Time.deltaTime;
 
@@ -232,9 +230,9 @@ public class GooseAI : MonoBehaviour
     {
         UnityEngine.Debug.Log("Goose Entering Flee State");
         agent.ResetPath();
+        aiState = AIState.FLEE;
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
-        aiState = AIState.FLEE;
         anim.SetBool("isAttacking", false);
         anim.SetBool("isWalking", true);
         
@@ -251,9 +249,10 @@ public class GooseAI : MonoBehaviour
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
             
-            ChangeLookDirection();
             
             agent.SetDestination(newPosition);
+            ChangeLookDirection();
+
             
             // When the flee destination is reached, will patrol if kitty isn't around
             if (!isNearKitty) EnterPatrolState();
