@@ -11,7 +11,7 @@ public class MainMenuController : MonoBehaviour
 {
 
     [SerializeField]
-    string firstLevelName = "Alpha";
+    string firstLevelName = "Tutorial";
     [SerializeField]
     string highlightSoundName = "MenuHighlight";
     [SerializeField]
