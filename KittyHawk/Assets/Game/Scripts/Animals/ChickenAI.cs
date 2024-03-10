@@ -7,6 +7,8 @@
  *  Patrol state allows chicken to wander within a defined radius randomly.
  *  Flee state is triggered when kitty comes within a certain proximity
  *
+ * Update 03/10/24: Fixed chicken movement to properly flee from kitty
+ * 
  * Planned updates: This script anticipates future integration into a more general animal AI system
  * and an additional 'carried' state *
  *
@@ -132,7 +134,7 @@ public class ChickenAI : MonoBehaviour
     void FixedUpdate()
     {
         if (!isAlive) return;
-
+        currentPosition = this.transform.position;
         if (isNearKitty && aiState != AIState.FLEE)
         {
             EnterFleeState();

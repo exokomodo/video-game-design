@@ -44,7 +44,7 @@ public class CoopGroupController : MonoBehaviour
         {
             winnerWinnerChickenDinner = true;
             Debug.Log("Chicken Objective Completed");
-            //EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("ChickObjective", ObjectiveStatus.Completed);
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("ChickObjective", ObjectiveStatus.Completed);
         }
     }
 
