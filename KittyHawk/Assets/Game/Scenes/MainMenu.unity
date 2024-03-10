@@ -6683,7 +6683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6158d5af98fd1414daee378e7101ed1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstLevelName: Alpha
+  firstLevelName: Tutorial
   highlightSoundName: MenuHighlight
   confirmSoundName: MenuConfirm
   menuMusicName: MenuMusic

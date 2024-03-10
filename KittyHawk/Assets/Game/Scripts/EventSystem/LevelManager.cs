@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     Canvas canvas;
+    [SerializeField]
+    string musicName = "MainGameMusic";
 
     Animator anim;
 
@@ -18,7 +20,7 @@ public class LevelManager : MonoBehaviour
         anim = canvas.GetComponentInChildren<Animator>();
         anim.SetTrigger("FadeIn");
 
-        EventManager.TriggerEvent<MusicEvent, string>("MainGameMusic");
+        EventManager.TriggerEvent<MusicEvent, string>(musicName);
     }
 
 }
