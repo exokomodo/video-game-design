@@ -12,7 +12,7 @@ public class SmokingDuckController : MonoBehaviour
 
     Animator anim;
 
-    void Start()
+    void Awake()
     {
         anim = GetComponent<Animator>();
         ToggleTalking(false);

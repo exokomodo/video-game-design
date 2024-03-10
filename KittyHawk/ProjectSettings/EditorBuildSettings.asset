@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/Alpha.unity
     guid: 07ecdd06175de4d64be5f2e410a7981f
+  - enabled: 1
+    path: Assets/Game/Scenes/Transition.unity
+    guid: b520cb6cb7e8db04fa0702ef5874a0d0
   m_configObjects: {}
