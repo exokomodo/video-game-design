@@ -329,11 +329,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1610059756387210910}
-  - component: {fileID: 7826609396657575965}
   - component: {fileID: 5674921121865867714}
   - component: {fileID: 9084039027777362659}
   - component: {fileID: 7511723239342487581}
   - component: {fileID: 203430740640820163}
+  - component: {fileID: 4169512664610290911}
+  - component: {fileID: 7826609396657575965}
   m_Layer: 0
   m_Name: Horse
   m_TagString: Untagged
@@ -358,24 +359,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7826609396657575965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095234297038162980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb1e1b732a2b4376b7b9dd121b99915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WaypointRoot: {fileID: 0}
-  Carrot: {fileID: 2928393991689174780}
-  IsFollowingCarrot: 0
-  Velocity: 1
-  RotationSpeed: 2
-  WaypointTag: HorseWaypoint
 --- !u!54 &5674921121865867714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -390,7 +373,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &9084039027777362659
 BoxCollider:
@@ -514,6 +497,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: 1
+--- !u!114 &4169512664610290911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095234297038162980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906350a3d7987194f906c05b6ff5030d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SaddleHeight: {x: 0, y: 2.65, z: 0}
+  RiderTag: Player
+--- !u!114 &7826609396657575965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095234297038162980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb1e1b732a2b4376b7b9dd121b99915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaypointRoot: {fileID: 0}
+  Carrot: {fileID: 2928393991689174780}
+  IsFollowingCarrot: 0
+  Velocity: 1
+  RotationSpeed: 2
+  WaypointTag: HorseWaypoint
 --- !u!1 &2269372667653609039
 GameObject:
   m_ObjectHideFlags: 0
