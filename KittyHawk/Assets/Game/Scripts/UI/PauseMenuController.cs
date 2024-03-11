@@ -22,6 +22,8 @@ public class PauseMenuController : MonoBehaviour
     private Slider soundSlider;
     private Slider musicSlider;
 
+    private InputReader input;
+
     void Start()
     {
         pauseCanvas.enabled = false;
@@ -31,12 +33,14 @@ public class PauseMenuController : MonoBehaviour
         SetInitialVolumes();
         FindButtons();
 
-        InputReader.PauseEvent += TriggerPause;
+        input = GetComponent<InputReader>();
+
+        input.PauseEvent += TriggerPause;
     }
 
     void OnDestroy()
     {
-        InputReader.PauseEvent -= TriggerPause;
+        input.PauseEvent -= TriggerPause;
 
         soundSlider.onValueChanged.RemoveAllListeners();
         musicSlider.onValueChanged.RemoveAllListeners();
