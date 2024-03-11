@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 /// <summary>
@@ -109,6 +111,7 @@ public class InteractionTarget
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Interactable))]
 public class InteractableEditor : Editor
 {
@@ -145,3 +148,4 @@ public class InteractableEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif

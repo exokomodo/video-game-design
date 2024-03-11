@@ -25,7 +25,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Debug = System.Diagnostics.Debug;
-using NavMeshBuilder = UnityEditor.AI.NavMeshBuilder;
+using NavMeshBuilder = UnityEngine.AI.NavMeshBuilder;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
