@@ -37,6 +37,7 @@ public class CoopController : MonoBehaviour
         {
             parentCoopGroupController.addChicken();
             parentCoopGroupController.checkForWin();
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "chickPeep");
         }
     }
 }
