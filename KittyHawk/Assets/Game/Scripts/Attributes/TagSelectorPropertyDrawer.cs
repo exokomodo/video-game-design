@@ -1,5 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Collections.Generic;
 
 /// <summary>
@@ -11,7 +13,8 @@ using System.Collections.Generic;
 //Altered by Brecht Lecluyse https://www.brechtos.com
 
 namespace KittyHawk.Attributes
-{ 
+{
+#if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(TagSelectorAttribute))]
     public class TagSelectorPropertyDrawer : PropertyDrawer
     {
@@ -81,4 +84,5 @@ namespace KittyHawk.Attributes
             }
         }
     }
+#endif
 }
