@@ -14,7 +14,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public event Action MeowEvent;
     public event Action RunEvent;
     public event Action RunStopEvent;
-    public static event Action PauseEvent;
+    public event Action PauseEvent;
     private Controls controls;
     private void Start()
     {
