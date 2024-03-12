@@ -173,3 +173,58 @@ Calvin
 	Created objective system
 		Objective.cs
 
+3rd Party Assets
+
+    Cat/Player Character
+    Name: Cat - Simple
+    Author: Red Deer
+    https://assetstore.unity.com/packages/3d/characters/animals/mammals/cat-simple-82328
+
+    General Farm Assets
+    Name: Polygon Farm Pack
+    Author: syntystudios
+    https://www.cgtrader.com/3d-models/exterior/industrial-exterior/polygon-farm-7dbbfd32-9335-495f-8c45-faf622ad8595
+
+    Smoking Accessories
+    Name: Smoking Props
+    Author: 32cm
+    https://www.cgtrader.com/3d-models/household/other/smoking-props-17ed43c3-8c42-4485-aa8e-48f1366e6d07
+
+    Letter/Envelope Model
+    Name: Simple Letter
+    Author: dashavainstein
+    https://www.cgtrader.com/free-3d-models/various/various-models/simple-letter
+
+    Duck's Hat
+    Name: Hat Customizable
+    Author: stefiniv-viky
+    https://www.cgtrader.com/free-3d-print-models/fashion/other/hat-customizable
+
+    Farm Animals
+    Name: 9t5 Low Poly Farm Animals
+    Author: 9t5
+    https://www.cgtrader.com/3d-models/animals/other/9t5-low-poly-farm-animals
+
+    Duck
+    Name: Duck lowpoly
+    Author: Rifat_Bilalov
+    https://assetstore.unity.com/packages/3d/characters/animals/birds/duck-lowpoly-102094
+
+    Cat Head for UI
+    Name: Drawing of Cat Heads
+    Author: yusufdemirci
+    https://elements.envato.com/drawing-of-cat-heads-CG8MXHP
+
+    Wooden Signs used for UI
+    Name: Brown Wood Signboard Cartoon
+    Auhtor: alit_design
+    https://elements.envato.com/brown-wood-signboard-cartoon-2XWVAC6
+
+    Sound effects licensed via Envato Elements:
+    https://elements.envato.com/duck-quack-7HS2REN
+    https://elements.envato.com/scarecrow-creature-footsteps-T7PRZ8Y
+    https://elements.envato.com/creaking-chair-5YDR4QS
+    https://elements.envato.com/metal-mail-box-open-lid-NKF57SY
+    https://elements.envato.com/chainsaw-pull-string-3-UK84Q9A
+    https://elements.envato.com/game-menu-revealed-Q3N64Y2
+    https://elements.envato.com/sunshine-game-menu-open-V9EJHXY
