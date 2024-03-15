@@ -12,17 +12,21 @@ public class PlayerIdleState : PlayerBaseState
 {
     protected readonly int VelocityXHash = Animator.StringToHash("VelocityX");
     protected readonly int VelocityZHash = Animator.StringToHash("VelocityZ");
+    protected readonly int isSwimmingHash = Animator.StringToHash("isSwimming");
     protected const float AnimatorDampTime = 0.1f;
+    private bool isSwimming;
     private float timer;
     public int range = 0;
 
-    public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine) {
+    public PlayerIdleState(PlayerStateMachine stateMachine, bool isSwimming = false) : base(stateMachine) {
         StateID = (int)PlayerStateMachine.StateEnum.IDLE;
+        this.isSwimming = isSwimming;
     }
 
     public override void Enter()
     {
         Debug.Log("PlayerIdleState Enter");
+        stateMachine.Animator.SetBool(isSwimmingHash, isSwimming);
         resetTimer();
     }
 
@@ -35,7 +39,7 @@ public class PlayerIdleState : PlayerBaseState
             return;
         };
         timer -= deltaTime;
-        if (timer <= 0)
+        if (timer <= 0 && !isSwimming)
         {
             stateMachine.SwitchState(new PlayerSitState(stateMachine));
         }

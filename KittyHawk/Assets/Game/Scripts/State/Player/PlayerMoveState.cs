@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerMoveState : PlayerMoveBase
 {
-    private readonly int MoveHash = Animator.StringToHash("Move");
+    private readonly int MoveHash = Animator.StringToHash("Move.Swim");
 
     public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {

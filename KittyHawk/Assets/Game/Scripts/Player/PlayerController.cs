@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour {
   private bool _isAttacking = false;
   private bool _isActive = false;
   private bool _isDead = false;
+  private bool _isSwimming = false;
+  private float waterLevel = 0f;
   private float groundCheckTolerance = 0.1f;
   private readonly int isAttackingHash = Animator.StringToHash("isAttacking");
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
@@ -120,23 +122,66 @@ public class PlayerController : MonoBehaviour {
 
   void OnCollisionEnter(Collision collision)
   {
-    if (collision.transform.gameObject.tag == "Goose")
+    string t = collision.transform.gameObject.tag;
+    Debug.Log($"OnCollisionEnter > tag: {t}");
+    switch (t)
     {
-      if (hitTimer > HitCooldown)
-      {
-        ResetHitTimer();
-        if (--inventory.Lives > 0)
-        {
-          stateMachine.SwitchAction(new PlayerHitAction(stateMachine));
-        }
-        else
-        {
-          _isDead = true;
-          stateMachine.SwitchState(new PlayerDieState(stateMachine));
-          ToggleActive(false);
-        }
+      case "Goose":
+        CatHit();
+        break;
 
+      case "Water":
+        SwitchToSwimState();
+        break;
+    }
+  }
+
+  void OnTriggerEnter(Collider collider)
+  {
+    Debug.Log("Switch to SWIM");
+    if (collider.gameObject.layer == LayerMask.NameToLayer("Water"))
+    {
+      waterLevel = this.transform.position.y;
+      SwitchToSwimState();
+    }
+  }
+
+  void OnTriggerExit(Collider collider)
+  {
+    Debug.Log("Switch AWAY FROM SWIM");
+    if (collider.gameObject.layer == LayerMask.NameToLayer("Water"))
+    {
+      SwitchToMoveState();
+    }
+  }
+
+  void OnCollisionExit(Collision collision)
+  {
+    string t = collision.transform.gameObject.tag;
+    switch (t)
+    {
+      case "Water":
+        SwitchToMoveState();
+        break;
+    }
+  }
+
+  private void CatHit()
+  {
+    if (hitTimer > HitCooldown)
+    {
+      ResetHitTimer();
+      if (--inventory.Lives > 0)
+      {
+        stateMachine.SwitchAction(new PlayerHitAction(stateMachine));
       }
+      else
+      {
+        _isDead = true;
+        stateMachine.SwitchState(new PlayerDieState(stateMachine));
+        ToggleActive(false);
+      }
+
     }
   }
 
@@ -242,7 +287,7 @@ public class PlayerController : MonoBehaviour {
     }
     else
     {
-      if (_prevGrounded && !_jump && !_isJumping && !_isFalling)
+      if (_prevGrounded && !_jump && !_isJumping && !_isFalling && !_isSwimming)
       {
         SwitchToFallState();
       }
@@ -279,6 +324,16 @@ public class PlayerController : MonoBehaviour {
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
 
+    // if (_isSwimming)
+    // {
+    //   newRootPosition = anim.rootPosition;
+    //   Debug.Log($"Waterlevel: {waterLevel}, {newRootPosition.y}");
+    //   // newRootPosition.y = 1f;//this.transform.position.y;
+    //   rb.transform.position = new Vector3(newRootPosition.x, this.transform.position.y, newRootPosition.z);
+
+    //   // newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
+    // }
+
     Quaternion newRootRotation;
     if (pendingRotation != Quaternion.identity)
     {
@@ -290,6 +345,7 @@ public class PlayerController : MonoBehaviour {
       newRootRotation = isMoving? GetGroundAngle() : anim.rootRotation;
       newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
     }
+    if (_isSwimming) newRootRotation = Quaternion.identity;
 
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);
@@ -340,44 +396,52 @@ public class PlayerController : MonoBehaviour {
   {
     rb.AddForce(motion, mode);
   }
-  public void SwitchToIdleState()
+
+  private void ResetFlags()
   {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
-    stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+  }
+
+  public void SwitchToIdleState()
+  {
+    ResetFlags();
+    stateMachine.SwitchState(new PlayerIdleState(stateMachine, _isSwimming));
   }
 
   public void SwitchToMoveState()
   {
-    _isJumping = false;
-    _isFalling = false;
-    _isLanding = false;
+    ResetFlags();
     stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+  }
+
+  public void SwitchToSwimState()
+  {
+    ResetFlags();
+    _isSwimming = true;
+    anim.SetBool("isSwimming", true);
+    stateMachine.SwitchState(new PlayerSwimState(stateMachine));
   }
 
   public void SwitchToJumpState()
   {
+    ResetFlags();
     _jump = false;
     _isJumping = true;
-    _isFalling = false;
-    _isLanding = false;
     stateMachine.SwitchState(new PlayerJumpState(stateMachine));
   }
 
   public void SwitchToFallState()
   {
-    _isJumping = false;
+    ResetFlags();
     _isFalling = true;
-    _isLanding = false;
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
   public void SwitchToInteractState(string eventType, InteractionTarget target)
   {
-    _isJumping = false;
-    _isFalling = false;
-    _isLanding = false;
+    ResetFlags();
     ToggleListeners(false);
     isActive = false;
     stateMachine.SwitchState(new PlayerInteractState(stateMachine, eventType, target));
