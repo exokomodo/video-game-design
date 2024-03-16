@@ -408,23 +408,38 @@ public class PlayerController : MonoBehaviour {
   {
     Vector3 frontOrigin = frontPivot.transform.position;
     Vector3 backOrigin = backPivot.transform.position;
+    Vector3 origin = anim.rootPosition;
+    Quaternion rot = anim.rootRotation;
+    Quaternion newRotation;
+
     RaycastHit frontHit;
     RaycastHit backHit;
+    RaycastHit hit;
     RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(frontOrigin, Vector3.down, out frontHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
     RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, Vector3.down, out backHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
 
     float deltaHeight = frontHit.distance - backHit.distance;
-    float clampThreshold = 0.1f;
+    float clampThreshold = 1.0f;
+    float angle = Vector3.Angle(hit.normal, Vector3.up);
     if (Math.Abs(deltaHeight) > 0.01f)
     {
-      deltaHeight = Mathf.Clamp(deltaHeight, -clampThreshold, clampThreshold);
-      Vector3 newVector = (frontOrigin - new Vector3(0, deltaHeight, 0)) - backOrigin;
-      RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, newVector, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
-      // Rotate player along up axis
-      Quaternion rot = Quaternion.LookRotation(newVector);
-      return Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
+      Vector3 newVector;
+      if (Math.Abs(angle) > 0.01f)
+      {
+        deltaHeight = Mathf.Clamp(deltaHeight, -clampThreshold, clampThreshold);
+        newVector = frontOrigin - new Vector3(0, deltaHeight, 0) - backOrigin;
+      }
+      else
+      {
+        newVector = frontOrigin - backOrigin;
+        newVector.y = 0;
+
+      }
+      newRotation = Quaternion.LookRotation(newVector);
+      return Quaternion.LerpUnclamped(rot, newRotation, Time.fixedDeltaTime * TurnSpeed);
     }
-    return anim.rootRotation;
+    return rot;
   }
 
   private void Attack(bool b)
