@@ -18,6 +18,7 @@ public class AttackEventBehavior : StateMachineBehaviour
         base.OnStateEnter(animator, stateInfo, layerIndex);
         beginSent = false;
         endSent = false;
+        Trigger(AttackEvent.ATTACK_STATE_ENTER, 0);
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -40,6 +41,12 @@ public class AttackEventBehavior : StateMachineBehaviour
                 Trigger(AttackEvent.ATTACK_END, attackEndTime);
             }
         }
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        base.OnStateExit(animator, stateInfo, layerIndex);
+        Trigger(AttackEvent.ATTACK_STATE_EXIT, stateInfo.length);
     }
 
     private void Trigger(string type, float value)

@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour {
     _walkAudio = GetComponent<AudioSource>();
 
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
     EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
     EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
@@ -173,7 +172,7 @@ public class PlayerController : MonoBehaviour {
     if (_isAttacking)
     {
       Debug.Log($"HIT Collider {c}");
-      EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_HIT, 0f, c);
+      EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
     }
   }
 
@@ -206,10 +205,10 @@ public class PlayerController : MonoBehaviour {
     switch (eventType)
     {
       case AttackEvent.ATTACK_BEGIN:
-        _isAttacking = true;
+        Attack(true);
         break;
       case AttackEvent.ATTACK_END:
-        _isAttacking = false;
+        Attack(false);
         break;
     }
   }
@@ -219,10 +218,6 @@ public class PlayerController : MonoBehaviour {
     Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
     switch (eventName)
     {
-      case AnimationStateEvent.ATTACK_COMPLETE:
-        Attack(false);
-        break;
-
       case AnimationStateEvent.INTERACTION_COMPLETE:
         SwitchToIdleState();
         ToggleActive(true);
@@ -493,7 +488,7 @@ public class PlayerController : MonoBehaviour {
     return rot;
   }
 
-  private void Attack(bool b)
+  public void Attack(bool b)
   {
     _isAttacking = b;
     anim.SetBool(isAttackingHash, b);
@@ -586,7 +581,6 @@ public class PlayerController : MonoBehaviour {
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<AttackEvent, string, float, Collider>(OnAttackEvent);
     EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
     EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);

@@ -80,7 +80,7 @@ public class GooseAI : MonoBehaviour
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
-        if (eventType == AttackEvent.ATTACK_HIT && c == cl)
+        if (eventType == AttackEvent.ATTACK_TARGET_HIT && c == cl)
         {
             Debug.Log("A goose has been hit by Kitty!");
             // TODO: Subtract health and potentially enter die state?

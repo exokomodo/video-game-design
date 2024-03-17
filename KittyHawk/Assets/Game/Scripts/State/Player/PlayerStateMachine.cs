@@ -124,21 +124,21 @@ public class PlayerStateMachine : StateMachine
             firstUpdate = false;
         }
 
-        if (currentAction != null)
-        {
-            currentAction?.Execute(deltaTime);
-        }
+        currentAction?.Execute(deltaTime);
+        additiveAction?.Execute(deltaTime);
     }
 
     public override void SwitchAction(StateAction newAction)
     {
         Debug.Log("SwitchAction: " + newAction);
-        if (newAction.BlendingType == (int)PlayerStateMachine.BlendingType.ADDITIVE)
+        if (newAction.BlendingType == (int)BlendingType.ADDITIVE)
         {
+            if (additiveAction != null) return;
             additiveAction = newAction;
             additiveAction.Enter();
             return;
         }
+        if (currentAction != null) return;
         previousAction = currentAction == null? newAction : currentAction;
         currentAction?.Exit();
         currentAction = newAction;
@@ -147,10 +147,16 @@ public class PlayerStateMachine : StateMachine
         Animator.SetBool(ActionChangeHash, true);
     }
 
-    public void ActionComplete()
+    public void ActionComplete(PlayerBaseAction action)
     {
+        Debug.Log($"ACTION COMPLETE {action.BlendingType}");
+        action.Exit();
+        if (action.BlendingType == (int)BlendingType.ADDITIVE)
+        {
+            additiveAction = null;
+            return;
+        }
         Animator.SetInteger(ActionIDHash, -1);
-        currentAction?.Exit();
         currentAction = null;
     }
 }

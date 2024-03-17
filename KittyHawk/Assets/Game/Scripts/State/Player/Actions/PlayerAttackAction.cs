@@ -10,6 +10,7 @@ public class PlayerAttackAction : PlayerBaseAction
 {
     private readonly string AttackPath = ActionLayer + ".Attacks.";
 
+
     public static readonly Dictionary<int, string> AttackType = new Dictionary<int, string>
     {
         {(int)PlayerStateMachine.ActionEnum.ATTACK_RIGHT, "AttackRight"},
@@ -17,16 +18,19 @@ public class PlayerAttackAction : PlayerBaseAction
         {(int)PlayerStateMachine.ActionEnum.ATTACK_LEFT, "AttackLeft"}
     };
 
+
     public PlayerAttackAction(PlayerStateMachine stateMachine, int attackType) : base(stateMachine)
     {
-        this.ActionID = attackType;
-        Debug.Log("ActionID: " + ActionID);
+        ActionID = attackType;
     }
 
     public override void Enter()
     {
         Debug.Log("PlayerAttackAction Enter");
+        EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
         stateMachine.Animator.Play(AttackPath + AttackType[ActionID]);
+        string sound = $"CatAttack{Random.Range(1, 4)}";
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(stateMachine.Controller.transform.position, sound);
     }
 
     public override void Execute(float deltaTime)
@@ -37,5 +41,24 @@ public class PlayerAttackAction : PlayerBaseAction
     public override void Exit()
     {
         Debug.Log("PlayerAttackAction Exit");
+        EventManager.StopListening<AttackEvent, string, float, Collider>(OnAttackEvent);
+    }
+
+    private void OnAttackEvent(string eventType, float attackTime, Collider c)
+    {
+        switch (eventType)
+        {
+            case AttackEvent.ATTACK_BEGIN:
+                stateMachine.Controller.Attack(true);
+                break;
+
+            case AttackEvent.ATTACK_END:
+                stateMachine.Controller.Attack(false);
+                break;
+
+            case AttackEvent.ATTACK_STATE_EXIT:
+                stateMachine.ActionComplete(this);
+                break;
+        }
     }
 }
