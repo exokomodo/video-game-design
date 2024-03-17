@@ -18,6 +18,7 @@ public class PlayerMeowAction : PlayerBaseAction
     public override void Enter()
     {
         Debug.Log("PlayerMeowAction Enter");
+        EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
         stateMachine.Animator.Play(AnimPath);
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(stateMachine.Controller.transform.position, "Meow");
     }
@@ -30,5 +31,14 @@ public class PlayerMeowAction : PlayerBaseAction
     public override void Exit()
     {
         Debug.Log("PlayerMeowAction Exit");
+        EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
+    }
+
+    private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
+    {
+        if (eventName == AnimationStateEvent.MEOW_COMPLETE)
+        {
+            stateMachine.ActionComplete(this);
+        }
     }
 }
