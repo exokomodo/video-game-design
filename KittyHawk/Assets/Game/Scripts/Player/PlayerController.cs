@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour {
     LEFT,
     MIDDLE
   }
+  private AudioSource _walkAudio;
 
   public Vector3 velocity => stateMachine.Animator.velocity;
   public bool isAttacking => _isAttacking;
@@ -62,6 +63,8 @@ public class PlayerController : MonoBehaviour {
   public Vector3 headPosition => new Vector3(headCol.transform.position.x + headCol.radius, headCol.transform.position.y, headCol.transform.position.z);
   public float Speed => isRunning? RunSpeed : WalkSpeed;
   public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
+  public AudioClip WalkClip;
+  public AudioClip RunClip;
 
 
   public bool RootMotion = true;
@@ -99,6 +102,8 @@ public class PlayerController : MonoBehaviour {
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
 
+    _walkAudio = GetComponent<AudioSource>();
+
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
     EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
@@ -111,6 +116,26 @@ public class PlayerController : MonoBehaviour {
     Time.timeScale = 1.0f;
     ToggleActive(true);
     hitTimer = HitCooldown;
+
+    EventManager.StartListening<VolumeChangeEvent, float>(VolumeChangeHandler);
+  }
+
+  private void UpdateAudio()
+  {
+    _walkAudio.clip = isRunning? RunClip : WalkClip;
+    if (isMoving && !_walkAudio.isPlaying)
+    {
+        _walkAudio.Play();
+    }
+    else if (!isMoving && _walkAudio.isPlaying)
+    {
+        _walkAudio.Stop();
+    }
+  }
+
+  private void VolumeChangeHandler(float volume)
+  {
+      _walkAudio.volume = volume;
   }
 
   private void ResetHitTimer()
@@ -256,6 +281,7 @@ public class PlayerController : MonoBehaviour {
     {
       SwitchToIdleState();
     }
+    UpdateAudio();
   }
 
   void OnAnimatorMove()
@@ -537,5 +563,6 @@ public class PlayerController : MonoBehaviour {
     EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
+    EventManager.StopListening<VolumeChangeEvent, float>(VolumeChangeHandler);
   }
 }
