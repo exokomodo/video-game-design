@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
   private SphereCollider headCol;
+  private BoxCollider attackCol;
   private GameObject frontPivot;
   private GameObject backPivot;
   private PlayerInventory inventory;
@@ -99,15 +100,19 @@ public class PlayerController : MonoBehaviour {
     inventory = GetComponent<PlayerInventory>();
     if (inventory == null) throw new Exception("PlayerInventory component could not be found");
 
+    attackCol = GetComponent<BoxCollider>();
+
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
 
     _walkAudio = GetComponent<AudioSource>();
 
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
     EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
+    EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StartListening<VolumeChangeEvent, float>(VolumeChangeHandler);
   }
 
   private void Start()
@@ -116,8 +121,6 @@ public class PlayerController : MonoBehaviour {
     Time.timeScale = 1.0f;
     ToggleActive(true);
     hitTimer = HitCooldown;
-
-    EventManager.StartListening<VolumeChangeEvent, float>(VolumeChangeHandler);
   }
 
   private void UpdateAudio()
@@ -165,6 +168,15 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  void OnTriggerEnter(Collider c)
+  {
+    if (_isAttacking)
+    {
+      Debug.Log($"HIT Collider {c}");
+      EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_HIT, 0f, c);
+    }
+  }
+
   private void OnInteractionEvent(string eventName, string eventType, InteractionTarget target)
   {
     Debug.Log("InteractionEvent received " + eventName + ", " + eventType);
@@ -185,6 +197,19 @@ public class PlayerController : MonoBehaviour {
 
       default:
         Debug.LogWarning("Unhandled InteractionEvent: " + eventName + ", " + eventType);
+        break;
+    }
+  }
+
+  private void OnAttackEvent(string eventType, float attackTime, Collider c)
+  {
+    switch (eventType)
+    {
+      case AttackEvent.ATTACK_BEGIN:
+        _isAttacking = true;
+        break;
+      case AttackEvent.ATTACK_END:
+        _isAttacking = false;
         break;
     }
   }
@@ -556,13 +581,15 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(!b);
     isDialogOpen = b;
   }
+
   private void OnDestroy()
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StopListening<AttackEvent, string, float, Collider>(OnAttackEvent);
     EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
+    EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StopListening<VolumeChangeEvent, float>(VolumeChangeHandler);
   }
 }
