@@ -12,21 +12,13 @@
  *
  * Dependencies: NavMesh Component. Animator Component.
  *
- */ 
+ */
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
-using Debug = System.Diagnostics.Debug;
-using NavMeshBuilder = UnityEngine.AI.NavMeshBuilder;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent))]
 
 public class GooseAI : MonoBehaviour
 {
@@ -38,7 +30,7 @@ public class GooseAI : MonoBehaviour
 
     // Patrol state
     [SerializeField] private float wanderRadius; // Maximum allowable distance the Goose can walk when patrolling
-    [SerializeField] private float chanceToWalk; // Random chance 
+    [SerializeField] private float chanceToWalk; // Random chance
     [SerializeField] private float timeUntilNextWalk = 5f; // Time between walks
     [SerializeField] private float timeSinceLastWalk = 0f; // Time since the Goose last walked
     [SerializeField] private Vector3 randomDirection;
@@ -54,7 +46,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] private bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
-    
+
     public enum AIState
     {
         PATROL,
@@ -62,26 +54,41 @@ public class GooseAI : MonoBehaviour
         ATTACK
     }
 
+    void Awake()
+    {
+        cl = GetComponent<CapsuleCollider>();
+        EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        cl = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
         kittyTransform = kitty.GetComponent<Transform>();
-        
-        // I'll handle this. 
+
+        // I'll handle this.
         agent.updateRotation = false;
 
         // Initializing variables needed by states
         wanderRadius = 4f;
-        
+
         // Starts the navigation process
         EnterPatrolState();
 
     }
 
-    // Turns off everything for the Goose to save resources and to stop it from 
+    private void OnAttackEvent(string eventType, float attackTime, Collider c)
+    {
+        if (eventType == AttackEvent.ATTACK_HIT && c == cl)
+        {
+            Debug.Log("A goose has been hit by Kitty!");
+            // TODO: Subtract health and potentially enter die state?
+            EnterFleeState();
+        }
+    }
+
+    // Turns off everything for the Goose to save resources and to stop it from
     private void Die()
     {
         // Turns everything off and reduces Goose velocity
@@ -95,7 +102,7 @@ public class GooseAI : MonoBehaviour
 
         cl.isTrigger = true;
     }
-    
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player") && isAlive)
@@ -127,7 +134,7 @@ public class GooseAI : MonoBehaviour
     {
         if (!isAlive) return;
         currentPosition = transform.position;
-        
+
         if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE)
         {
             EnterAttackState();
@@ -137,41 +144,41 @@ public class GooseAI : MonoBehaviour
         {
             // Patrol state: Move around the navmesh randomly
             case AIState.PATROL:
-                UnityEngine.Debug.Log("Inside UpdatePatrolState");
+                // Debug.Log("Inside UpdatePatrolState");
                 UpdatePatrolState();
                 break;
 
             case AIState.FLEE:
                 UpdateFleeState();
                 break;
-            
+
             case AIState.ATTACK:
                 UpdateAttackState();
                 break;
         }
     }
-    
+
     // Used for patrol state timer
     private void ResetPatrolTimer()
     {
         timeSinceLastWalk = 0f;
         timeUntilNextWalk = Random.Range(3.0f, 10.0f);
     }
-    
-    
+
+
     private void ChangeLookDirection()
     {
-        // Make the Goose look at the new position. Uses euler transformation because the model 
+        // Make the Goose look at the new position. Uses euler transformation because the model
         // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
         // TODO: Quaternion.Slerp?
         Vector3 lookPosition = newPosition - currentPosition;
         Quaternion rotation = Quaternion.LookRotation(lookPosition);
         transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
     }
-    
+
     private void EnterPatrolState()
     {
-        UnityEngine.Debug.Log("Goose Entering Patrol State");
+        Debug.Log("Goose Entering Patrol State");
         agent.ResetPath();
         aiState = AIState.PATROL;
         rb.velocity = Vector3.zero;
@@ -189,7 +196,7 @@ public class GooseAI : MonoBehaviour
         // Check if it's time to try walking again
         if (agent.pathPending == false && agent.remainingDistance < 0.5f)
         {
-            UnityEngine.Debug.Log("Should be walking!");
+            // Debug.Log("Should be walking!");
             // Sets value for animator to switch back to idle
             anim.SetBool("isWalking", false);
 
@@ -215,9 +222,9 @@ public class GooseAI : MonoBehaviour
 
                 // We don't want the Goose walking around where it can't get to
                 newPosition.y = transform.position.y;
-                
+
                 ChangeLookDirection();
-                
+
                 // Sets the destination for the AI Goose
                 agent.SetDestination(newPosition);
 
@@ -228,14 +235,14 @@ public class GooseAI : MonoBehaviour
 
     private void EnterFleeState()
     {
-        UnityEngine.Debug.Log("Goose Entering Flee State");
+        Debug.Log("Goose Entering Flee State");
         agent.ResetPath();
         aiState = AIState.FLEE;
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
         anim.SetBool("isAttacking", false);
         anim.SetBool("isWalking", true);
-        
+
 
     }
 
@@ -248,12 +255,12 @@ public class GooseAI : MonoBehaviour
             fleeDirection = currentPosition - kittyTransform.position;
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
-            
-            
+
+
             agent.SetDestination(newPosition);
             ChangeLookDirection();
 
-            
+
             // When the flee destination is reached, will patrol if kitty isn't around
             if (!isNearKitty) EnterPatrolState();
         }
@@ -264,16 +271,16 @@ public class GooseAI : MonoBehaviour
     private void EnterAttackState()
     {
         // Plays small jump-like animation to let the player know that the goose is going to attack
-        UnityEngine.Debug.Log("Goose Entering Attack State");
+        Debug.Log("Goose Entering Attack State");
         agent.ResetPath();
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
-        aiState = AIState.ATTACK;      
-        
+        aiState = AIState.ATTACK;
+
         anim.SetBool("isAttacking", true);
         anim.SetBool("isWalking", true);
         anim.Play("StartAttack");
-        
+
         //TODO: audio event for mean quack
     }
 
@@ -283,9 +290,9 @@ public class GooseAI : MonoBehaviour
             newPosition = kittyTransform.position;
             ChangeLookDirection();
             agent.SetDestination(newPosition);
-        
+
             // On collision has call for EnterFleeState()
-            
+
             if (!isNearKitty) EnterPatrolState();
     }
 }
