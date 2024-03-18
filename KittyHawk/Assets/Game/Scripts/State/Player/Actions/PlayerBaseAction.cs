@@ -16,6 +16,6 @@ public abstract class PlayerBaseAction : StateAction
     {
         this.stateMachine = stateMachine;
         // Actions may blend via override (default) or additive
-        this.BlendingType = (int) PlayerStateMachine.BlendingType.OVERRIDE;
+        BlendingType = (int)PlayerStateMachine.BlendingType.OVERRIDE;
     }
 }

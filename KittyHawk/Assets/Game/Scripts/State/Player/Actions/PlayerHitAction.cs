@@ -15,7 +15,7 @@ public class PlayerHitAction : PlayerBaseAction
     public PlayerHitAction(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         ActionID = (int)PlayerStateMachine.ActionEnum.HIT;
-        Debug.Log("ActionID: " + ActionID);
+        // Debug.Log("ActionID: " + ActionID);
     }
 
     public override void Enter()
@@ -33,7 +33,7 @@ public class PlayerHitAction : PlayerBaseAction
         stunnedTimer += deltaTime;
         if (stunnedTimer >= stunnedDuration)
         {
-            stateMachine.ActionComplete();
+            stateMachine.ActionComplete(this);
         }
     }
 

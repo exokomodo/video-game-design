@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
   private SphereCollider headCol;
+  private BoxCollider attackCol;
   private GameObject frontPivot;
   private GameObject backPivot;
   private PlayerInventory inventory;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour {
     LEFT,
     MIDDLE
   }
+  private AudioSource _walkAudio;
 
   public Vector3 velocity => stateMachine.Animator.velocity;
   public bool isAttacking => _isAttacking;
@@ -62,6 +64,8 @@ public class PlayerController : MonoBehaviour {
   public Vector3 headPosition => new Vector3(headCol.transform.position.x + headCol.radius, headCol.transform.position.y, headCol.transform.position.z);
   public float Speed => isRunning? RunSpeed : WalkSpeed;
   public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
+  public AudioClip WalkClip;
+  public AudioClip RunClip;
 
 
   public bool RootMotion = true;
@@ -96,13 +100,18 @@ public class PlayerController : MonoBehaviour {
     inventory = GetComponent<PlayerInventory>();
     if (inventory == null) throw new Exception("PlayerInventory component could not be found");
 
+    attackCol = GetComponent<BoxCollider>();
+
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
 
+    _walkAudio = GetComponent<AudioSource>();
+
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
+    EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StartListening<VolumeChangeEvent, float>(VolumeChangeHandler);
   }
 
   private void Start()
@@ -111,6 +120,24 @@ public class PlayerController : MonoBehaviour {
     Time.timeScale = 1.0f;
     ToggleActive(true);
     hitTimer = HitCooldown;
+  }
+
+  private void UpdateAudio()
+  {
+    _walkAudio.clip = isRunning? RunClip : WalkClip;
+    if (isMoving && !_walkAudio.isPlaying)
+    {
+        _walkAudio.Play();
+    }
+    else if (!isMoving && _walkAudio.isPlaying)
+    {
+        _walkAudio.Stop();
+    }
+  }
+
+  private void VolumeChangeHandler(float volume)
+  {
+      _walkAudio.volume = volume;
   }
 
   private void ResetHitTimer()
@@ -140,6 +167,15 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  void OnTriggerEnter(Collider c)
+  {
+    if (_isAttacking)
+    {
+      Debug.Log($"HIT Collider {c}");
+      EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
+    }
+  }
+
   private void OnInteractionEvent(string eventName, string eventType, InteractionTarget target)
   {
     Debug.Log("InteractionEvent received " + eventName + ", " + eventType);
@@ -164,15 +200,24 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
+  private void OnAttackEvent(string eventType, float attackTime, Collider c)
+  {
+    switch (eventType)
+    {
+      case AttackEvent.ATTACK_BEGIN:
+        Attack(true);
+        break;
+      case AttackEvent.ATTACK_END:
+        Attack(false);
+        break;
+    }
+  }
+
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
     Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
     switch (eventName)
     {
-      case AnimationStateEvent.ATTACK_COMPLETE:
-        Attack(false);
-        break;
-
       case AnimationStateEvent.INTERACTION_COMPLETE:
         SwitchToIdleState();
         ToggleActive(true);
@@ -256,6 +301,7 @@ public class PlayerController : MonoBehaviour {
     {
       SwitchToIdleState();
     }
+    UpdateAudio();
   }
 
   void OnAnimatorMove()
@@ -408,26 +454,41 @@ public class PlayerController : MonoBehaviour {
   {
     Vector3 frontOrigin = frontPivot.transform.position;
     Vector3 backOrigin = backPivot.transform.position;
+    Vector3 origin = anim.rootPosition;
+    Quaternion rot = anim.rootRotation;
+    Quaternion newRotation;
+
     RaycastHit frontHit;
     RaycastHit backHit;
+    RaycastHit hit;
     RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(frontOrigin, Vector3.down, out frontHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
     RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, Vector3.down, out backHit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+    RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, out hit, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
 
     float deltaHeight = frontHit.distance - backHit.distance;
-    float clampThreshold = 0.1f;
+    float clampThreshold = 1.0f;
+    float angle = Vector3.Angle(hit.normal, Vector3.up);
     if (Math.Abs(deltaHeight) > 0.01f)
     {
-      deltaHeight = Mathf.Clamp(deltaHeight, -clampThreshold, clampThreshold);
-      Vector3 newVector = (frontOrigin - new Vector3(0, deltaHeight, 0)) - backOrigin;
-      RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(backOrigin, newVector, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
-      // Rotate player along up axis
-      Quaternion rot = Quaternion.LookRotation(newVector);
-      return Quaternion.LerpUnclamped(anim.rootRotation, rot, TurnSpeed);
+      Vector3 newVector;
+      if (Math.Abs(angle) > 0.01f)
+      {
+        deltaHeight = Mathf.Clamp(deltaHeight, -clampThreshold, clampThreshold);
+        newVector = frontOrigin - new Vector3(0, deltaHeight, 0) - backOrigin;
+      }
+      else
+      {
+        newVector = frontOrigin - backOrigin;
+        newVector.y = 0;
+
+      }
+      newRotation = Quaternion.LookRotation(newVector);
+      return Quaternion.LerpUnclamped(rot, newRotation, Time.fixedDeltaTime * TurnSpeed);
     }
-    return anim.rootRotation;
+    return rot;
   }
 
-  private void Attack(bool b)
+  public void Attack(bool b)
   {
     _isAttacking = b;
     anim.SetBool(isAttackingHash, b);
@@ -515,12 +576,14 @@ public class PlayerController : MonoBehaviour {
     ToggleActive(!b);
     isDialogOpen = b;
   }
+
   private void OnDestroy()
   {
     ToggleListeners(false);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
-    EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
+    EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
+    EventManager.StopListening<VolumeChangeEvent, float>(VolumeChangeHandler);
   }
 }
