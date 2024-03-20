@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public sealed class PatrolState : FSMState<Bunny> {
+public sealed class PatrolState : BunnyBaseState {
     private const float THRESHOLD = 1.0f;
     static readonly PatrolState instance = new PatrolState();
     public static PatrolState Instance {
@@ -13,7 +13,7 @@ public sealed class PatrolState : FSMState<Bunny> {
     private PatrolState() { }
 
     public override void Enter(Bunny m) {
-        m.SetDestination();
+        m.SetAgentDestination();
         m.anim.SetInteger("StateID", (int)Bunny.BunnyAnimState.MOVE);
         m.anim.SetTrigger("StateChanged");
     }

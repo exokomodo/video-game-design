@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public sealed class PursueState :  FSMState<Bunny> {
+public sealed class PursueState :  BunnyBaseState {
 
   private float timeToTarget;
   private GameObject target;
@@ -56,7 +56,7 @@ public sealed class PursueState :  FSMState<Bunny> {
     if (!blocked)
     {
       marker.transform.position = targetPos;
-      m.SetDestination(marker.transform.position);
+      m.SetAgentDestination(marker.transform.position);
     }
   }
 

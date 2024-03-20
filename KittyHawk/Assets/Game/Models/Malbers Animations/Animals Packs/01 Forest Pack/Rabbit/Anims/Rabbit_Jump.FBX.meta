@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: cd95925101748ee47b2021f49fd526d5
 ModelImporter:
-  serializedVersion: 19301
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       1: 100000
@@ -395,6 +395,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -416,7 +417,7 @@ ModelImporter:
       name: Rab_Jump_InPlace
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
+      firstFrame: 11
       lastFrame: 53
       wrapMode: 0
       orientationOffsetY: 0
@@ -424,7 +425,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 1
       loopBlendOrientation: 1
       loopBlendPositionY: 0
@@ -445,7 +446,7 @@ ModelImporter:
       name: Rab_Jump_Forward
       takeName: Take 001
       internalID: 0
-      firstFrame: 56
+      firstFrame: 66
       lastFrame: 106
       wrapMode: 0
       orientationOffsetY: 0
@@ -453,7 +454,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 1
       loopBlendOrientation: 1
       loopBlendPositionY: 0
@@ -474,7 +475,7 @@ ModelImporter:
       name: Rab_Jump_Run
       takeName: Take 001
       internalID: 0
-      firstFrame: 110
+      firstFrame: 116
       lastFrame: 156
       wrapMode: 0
       orientationOffsetY: 0
@@ -685,21 +686,27 @@ ModelImporter:
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: 1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -734,6 +741,8 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
