@@ -21,12 +21,14 @@ public sealed class BunnyJumpState : BunnyBaseState {
         Debug.Log("Enter BunnyJumpState");
         base.Enter(b);
         elapsedTime = 0;
-        momentum = agentUpdate? bunny.agent.velocity : bunny.velocity;
+        float velx = b.anim.GetFloat(VelocityXHash);
+        float velz = b.anim.GetFloat(VelocityZHash);
+        momentum = new Vector3(velx, 6f, velz);
         agentUpdate = b.UpdateAgent;
         b.UpdateAgent = false;
         isJumping = false;
-        AnimatorStateInfo info = b.anim.GetCurrentAnimatorStateInfo(-1);
-        b.anim.Play(info.fullPathHash, -1, 10);
+        // AnimatorStateInfo info = b.anim.GetCurrentAnimatorStateInfo(-1);
+        // b.anim.Play(info.fullPathHash, -1, 12);
         EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
     }
 
@@ -37,10 +39,7 @@ public sealed class BunnyJumpState : BunnyBaseState {
             Debug.Log($"MOMENTUM: {momentum}");
             SwitchAnimState(b, (int)Bunny.BunnyAnimState.JUMP);
             isJumping = true;
-
-            b.Move(momentum + new Vector3(0, 6f, 0));
-            // b.Jump(50f);
-
+            b.Move(momentum);
         }
         else
         {
@@ -53,20 +52,23 @@ public sealed class BunnyJumpState : BunnyBaseState {
 
     public override void Exit(Bunny b) {
         Debug.Log("Leaving BunnyJumpState");
-        b.UpdateAgent = agentUpdate;
+        b.Move(Vector3.zero);
+        b.agent.enabled = false;
+        // b.UpdateAgent = agentUpdate;
+        b.UpdateAgent = false;
         EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
     }
 
 
 
     private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
-  {
-    Debug.Log("Bunny AnimationEvent received " + eventType + ", " + eventName);
-    switch (eventName)
     {
-      case AnimationStateEvent.BUNNY_JUMP_COMPLETE:
-        bunny.ChangeState(BunnyFollowState.Instance);
-        break;
+        // Debug.Log("Bunny AnimationEvent received " + eventType + ", " + eventName);
+        switch (eventName)
+        {
+        case AnimationStateEvent.BUNNY_JUMP_COMPLETE:
+            bunny.ChangeState(BunnyFollowState.Instance);
+            break;
+        }
     }
-  }
 }

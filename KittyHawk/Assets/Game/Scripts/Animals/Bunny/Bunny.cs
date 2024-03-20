@@ -2,7 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-// FSM adapted from https://blog.playmedusa.com/a-finite-state-machine-in-c-for-unity3d/
+
+/// <summary>
+/// A Bunny Controller that manages the Bunny model, finite state machine,
+/// animation controller, events. Offers follow mode, waypoint patrolling.
+/// Author: Geoffrey Roth
+/// </summary>
 public class Bunny : MonoBehaviour
 {
   private Rigidbody rb;
@@ -12,12 +17,15 @@ public class Bunny : MonoBehaviour
   private float verticalVelocity = 0f;
   private float groundCheckTolerance = 0.1f;
   private Vector3 pendingMotion;
+  protected int MagnitudeHash = Animator.StringToHash("Magnitude");
+  protected int VelocityXHash = Animator.StringToHash("VelocityX");
+  protected int VelocityZHash = Animator.StringToHash("VelocityZ");
 
   public NavMeshAgent agent;
   public Animator anim;
   public GameObject[] waypoints;
   public bool followMode = false;
-  public GameObject followTarget;
+  public GameObject followTarget { get; private set; }
   public enum BunnyAnimState
   {
     IDLE,
@@ -51,6 +59,14 @@ public class Bunny : MonoBehaviour
 
     col = GetComponent<CapsuleCollider>();
     if (col == null) throw new Exception("Collider could not be found");
+
+    followTarget = null;
+    try {
+      followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
+    } catch (Exception e) {
+      Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
+      followMode = false;
+    }
 
     FSM = new FiniteStateMachine<Bunny>();
     FSM.Configure(this, GetState());
@@ -89,14 +105,21 @@ public class Bunny : MonoBehaviour
     }
   }
 
-  private FSMState<Bunny> GetState()
+  private BunnyBaseState GetState()
   {
-    return followMode? BunnyFollowState.Instance : PatrolState.Instance;
+    if (followMode && followTarget != null)
+    {
+      return BunnyFollowState.Instance;
+    }
+    if (waypoints.Length > 0)
+    {
+      return BunnyPatrolState.Instance;
+    }
+    return BunnyIdleState.Instance;
   }
 
   private void FixedUpdate()
     {
-        // Debug.Log("ForceReceiver FixedUpdate verticalVelocity: " + verticalVelocity);
       if (verticalVelocity < 0f && CheckGrounded())
       {
           verticalVelocity = Physics.gravity.y * Time.fixedDeltaTime;
@@ -105,19 +128,19 @@ public class Bunny : MonoBehaviour
       {
           verticalVelocity += Physics.gravity.y * Time.fixedDeltaTime;
       }
-      // rb.AddForce(jumpVector, ForceMode.Acceleration);
       FSM.Update();
     }
 
   void OnAnimatorMove()
   {
-    // Vector3 newRootPosition = anim.rootPosition + new Vector3(0, anim.rootPosition.y + verticalVelocity, 0);
-    // Vector3 jumpVector = new Vector3(0, verticalVelocity, 0);
-    Vector3 newRootPosition = (rb.velocity + pendingMotion) * Time.fixedDeltaTime;
-    newRootPosition.y = verticalVelocity;
-    pendingMotion = Vector3.zero;
-    rb.velocity = newRootPosition;
+    float velx = anim.GetFloat(VelocityXHash);
+    float velz = anim.GetFloat(VelocityZHash);
 
+    Vector3 newRootVelocity = new Vector3(velx * agent.speed, verticalVelocity, velz * agent.speed) + pendingMotion;
+    pendingMotion = Vector3.zero;
+    rb.velocity = newRootVelocity;
+    // Quaternion newRootRotation = Quaternion.LookRotation(new Vector3(rb.rotation.x, 0, rb.rotation.z), new Vector3(rb.rotation.x, 1, rb.rotation.z));
+    // rb.MoveRotation(newRootRotation);
   }
 
   public bool CheckGrounded()
@@ -127,16 +150,10 @@ public class Bunny : MonoBehaviour
     return RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, groundCheckTolerance, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
   }
 
-
   public void Move(Vector3 motion)
   {
-    pendingMotion = motion;
     verticalVelocity = motion.y;
-  }
-
-  public void Jump(float jumpForce)
-  {
-    pendingMotion = new Vector3(0, jumpForce, 0);
-    verticalVelocity = jumpForce;
+    pendingMotion = motion;
+    pendingMotion.y = 0;
   }
 }

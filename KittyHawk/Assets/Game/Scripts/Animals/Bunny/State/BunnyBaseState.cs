@@ -7,6 +7,10 @@ public abstract class BunnyBaseState : FSMState<Bunny> {
     protected Bunny bunny;
     protected GameObject target;
 
+    protected int MagnitudeHash = Animator.StringToHash("Magnitude");
+    protected int VelocityXHash = Animator.StringToHash("VelocityX");
+    protected int VelocityZHash = Animator.StringToHash("VelocityZ");
+
     public override void Enter(Bunny b)
     {
         bunny = b;
@@ -17,7 +21,7 @@ public abstract class BunnyBaseState : FSMState<Bunny> {
     {
         int curAnimStateID = b.anim.GetInteger(StateIDHash);
         if (curAnimStateID == StateID) return;
-        Debug.Log($"curAnimStateID: {curAnimStateID}, StateID: {StateID}");
+        // Debug.Log($"curAnimStateID: {curAnimStateID}, StateID: {StateID}");
         b.anim.SetInteger(StateIDHash, StateID);
         b.anim.SetTrigger(StateChangeDHash);
     }
