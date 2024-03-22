@@ -18,7 +18,7 @@ public class RandomStateBehavior : StateMachineBehaviour
     {
         SetRandomInt();
         animator.SetInteger(RandomHash, randInt);
-        Debug.Log("RandomStateBehavior: RandomInt: " + randInt);
+        // Debug.Log("RandomStateBehavior: RandomInt: " + randInt);
     }
 
     private int SetRandomInt()
