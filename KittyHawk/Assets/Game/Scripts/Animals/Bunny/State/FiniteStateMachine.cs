@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// Adapted from https://blog.playmedusa.com/a-finite-state-machine-in-c-for-unity3d/
+/// <summary>
+/// FSM using state singletons
+/// Adapted from https://blog.playmedusa.com/a-finite-state-machine-in-c-for-unity3d
+/// Author: Geoffrey Roth
+/// </summary>
 public class FiniteStateMachine<T>  {
   private T Owner;
   private FSMState<T> CurrentState;

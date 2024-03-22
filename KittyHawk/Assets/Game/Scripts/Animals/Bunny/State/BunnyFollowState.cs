@@ -2,6 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Follow state for the Bunny FSM using singletons
+/// Bunny will follow the first GameObject with the FollowTarget component attached
+/// Author: Geoffrey Roth
+/// </summary>
 public sealed class BunnyFollowState : BunnyBaseState {
 
   private float timeToTarget;
@@ -33,34 +38,32 @@ public sealed class BunnyFollowState : BunnyBaseState {
   {
     if (b.agent.pathPending) return;
 
-    float horizDist = TargetHorizontalDistance(b);
-    float vertDist = TargetVerticalDistance(b);
+    // float horizDist = TargetHorizontalDistance(b);
+    // float vertDist = TargetSignedVerticalDistance(b);
 
-    if (horizDist <= 2 * THRESHOLD)
+    // if (horizDist <= 2 * THRESHOLD && vertDist <= 0.05f)
+    if (b.agent.remainingDistance <= THRESHOLD)
     {
-        if (vertDist <= -0.1f)
-        {
-          Debug.Log($"vertDist: {vertDist}");
-          b.ChangeState(BunnyJumpState.Instance);
-        }
-        else
-        {
-          // b.agent.velocity = Vector3.zero;
-          // SwitchAnimState(b, (int)Bunny.BunnyAnimState.IDLE);
-          // b.anim.speed = 1.4f;
-          // b.anim.SetFloat(VelocityXHash, 0);
-          // b.anim.SetFloat(VelocityZHash, 0);
-          b.ChangeState(BunnyIdleState.Instance);
-        }
+        b.ChangeState(BunnyIdleState.Instance);
         return;
     }
 
-    b.UpdateAgent = true;
-    SwitchAnimState(b, (int)Bunny.BunnyAnimState.MOVE);
+    int animState = (int)Bunny.BunnyAnimState.MOVE;
+    if (b.agent.isOnOffMeshLink)
+    {
+      animState = (int)Bunny.BunnyAnimState.JUMP;
+      b.anim.speed = 0.5f;
+      SwitchAnimState(b, animState);
+      return;
+    }
+    // b.UpdateAgent = true;
+    // int animState = b.agent.isOnOffMeshLink? (int)Bunny.BunnyAnimState.JUMP : (int)Bunny.BunnyAnimState.MOVE;
+    SwitchAnimState(b, animState);
     UpdateDestination(b);
 
+    // float dur = b.LinkMoveDuration;
 
-    Debug.Log($"Update position, horizDist: {horizDist}, vertDist: {vertDist}");
+    Debug.Log($"Agent Velocity: {b.agent.velocity}");
     b.anim.SetFloat(VelocityXHash, b.agent.velocity.x / b.agent.speed);
     b.anim.SetFloat(VelocityZHash, b.agent.velocity.z / b.agent.speed);
     b.anim.SetFloat(MagnitudeHash, b.agent.velocity.magnitude);
@@ -92,6 +95,11 @@ public sealed class BunnyFollowState : BunnyBaseState {
   }
 
   private float TargetVerticalDistance(Bunny b)
+  {
+    return Math.Abs(TargetSignedVerticalDistance(b));
+  }
+
+  private float TargetSignedVerticalDistance(Bunny b)
   {
     return b.transform.position.y - target.transform.position.y;
   }

@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Pursue state for the Bunny FSM using singletons
+/// Author: Geoffrey Roth
+/// </summary>
 public sealed class BunnyPursueState :  BunnyBaseState {
 
   private float timeToTarget;

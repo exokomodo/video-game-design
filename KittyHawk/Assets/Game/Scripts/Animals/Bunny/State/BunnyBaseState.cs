@@ -1,7 +1,9 @@
-
-using System;
 using UnityEngine;
 
+/// <summary>
+/// A base state for the Bunny FSM using singletons
+/// Author: Geoffrey Roth
+/// </summary>
 public abstract class BunnyBaseState : FSMState<Bunny> {
 
     protected Bunny bunny;
@@ -21,7 +23,6 @@ public abstract class BunnyBaseState : FSMState<Bunny> {
     {
         int curAnimStateID = b.anim.GetInteger(StateIDHash);
         if (curAnimStateID == StateID) return;
-        // Debug.Log($"curAnimStateID: {curAnimStateID}, StateID: {StateID}");
         b.anim.SetInteger(StateIDHash, StateID);
         b.anim.SetTrigger(StateChangeDHash);
     }

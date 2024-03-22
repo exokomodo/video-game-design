@@ -1,6 +1,10 @@
-using System;
 using UnityEngine;
 
+/// <summary>
+/// Jump state for the Bunny FSM using singletons
+/// This has been replaced with the AgentLinkMover
+/// Author: Geoffrey Roth
+/// </summary>
 public sealed class BunnyJumpState : BunnyBaseState {
     private bool isJumping;
     private float elapsedTime = 0;

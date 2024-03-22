@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Patrol state that Bunny can enter when there are waypoints and followMode is false
+/// Author: Geoffrey Roth
+/// </summary>
 public sealed class BunnyPatrolState : BunnyBaseState {
     private const float THRESHOLD = 1.0f;
     static readonly BunnyPatrolState instance = new BunnyPatrolState();

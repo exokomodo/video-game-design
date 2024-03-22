@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// FSM using state singletons
+/// Adapted from https://blog.playmedusa.com/a-finite-state-machine-in-c-for-unity3d
+/// Author: Geoffrey Roth
+/// </summary>
 abstract public class FSMState<T>
 {
   protected int StateChangeDHash = Animator.StringToHash("StateChange");

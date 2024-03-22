@@ -20,6 +20,7 @@ public class Bunny : MonoBehaviour
   protected int MagnitudeHash = Animator.StringToHash("Magnitude");
   protected int VelocityXHash = Animator.StringToHash("VelocityX");
   protected int VelocityZHash = Animator.StringToHash("VelocityZ");
+  private AgentLinkMover mover;
 
   public NavMeshAgent agent;
   public Animator anim;
@@ -49,6 +50,13 @@ public class Bunny : MonoBehaviour
     }
   }
 
+  public float LinkMoveDuration
+  {
+    get {
+      return mover.m_LinkMoveDuration;
+    }
+  }
+
   public Vector3 velocity => rb.velocity;
   public bool isGrounded => CheckGrounded();
 
@@ -67,6 +75,8 @@ public class Bunny : MonoBehaviour
       Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
       followMode = false;
     }
+    mover = GetComponent<AgentLinkMover>();
+    if (mover == null) throw new Exception("AgentLinkMover not found");
 
     FSM = new FiniteStateMachine<Bunny>();
     FSM.Configure(this, GetState());
