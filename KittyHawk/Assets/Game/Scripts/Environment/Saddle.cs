@@ -66,8 +66,6 @@ public class Saddle : MonoBehaviour
         {
             _oldFollow = _cinemachineFreeLook.Follow;
             _oldLookAt = _cinemachineFreeLook.LookAt;
-            Debug.Log("Old follow:" + _oldFollow);
-            Debug.Log("Old look at:" + _oldLookAt);
             _cinemachineFreeLook.Follow = CarrotForward.transform;
             _cinemachineFreeLook.LookAt = CarrotForward.transform;
             AdjustRigHeights(SaddleOffset.y);
