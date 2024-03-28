@@ -19,6 +19,7 @@ public class Saddle : MonoBehaviour
     #region Protected properties
     protected InputReader _input;
     protected GameObject _rider = null;
+    protected PlayerStateMachine _playerStateMachine = null;
     protected WaypointAI _waypointAI;
     #endregion
 
@@ -34,7 +35,9 @@ public class Saddle : MonoBehaviour
             EventManager.TriggerEvent<RiderEnterEvent, Saddle, GameObject>(
                 this,
                 _rider);
+            _playerStateMachine = _rider.GetComponent<PlayerStateMachine>();
             _waypointAI.SetCarrot(CarrotForward);
+            _playerStateMachine.enabled = false;
             _input.JumpEvent += Dismount;
         }
     }
@@ -49,6 +52,11 @@ public class Saddle : MonoBehaviour
         _waypointAI.SetCarrot(CarrotRight);
     }
 
+    private void TurnStraight()
+    {
+        _waypointAI.SetCarrot(CarrotForward);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -60,17 +68,31 @@ public class Saddle : MonoBehaviour
         if (_rider != null)
         {
             _rider.transform.position = transform.position + SaddleHeight;
+            Debug.Log("Movement value:" + _input.MovementValue);
+            if (_input.MovementValue.x < -0.2f)
+            {
+                TurnLeft();
+            }
+            else if (_input.MovementValue.x > 0.2f)
+            {
+                TurnRight();
+            }
+            else
+            {
+                TurnStraight();
+            }
         }
     }
 
     private void Dismount()
     {
+        _input.JumpEvent -= Dismount;
         EventManager.TriggerEvent<RiderExitEvent, Saddle, GameObject>(
             this,
             _rider);
-        _rider = null;
+        _playerStateMachine.enabled = true;
         _waypointAI.SetCarrot(null);
-        _input.JumpEvent -= Dismount;
+        _rider = null;
     }
 
     private void Start()
