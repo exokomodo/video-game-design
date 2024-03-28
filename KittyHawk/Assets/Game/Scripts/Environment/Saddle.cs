@@ -19,7 +19,7 @@ public class Saddle : MonoBehaviour
     #region Protected properties
     protected InputReader _input;
     protected GameObject _rider = null;
-    protected PlayerStateMachine _playerStateMachine = null;
+    protected PlayerController _playerController = null;
     protected WaypointAI _waypointAI;
     #endregion
 
@@ -35,9 +35,9 @@ public class Saddle : MonoBehaviour
             EventManager.TriggerEvent<RiderEnterEvent, Saddle, GameObject>(
                 this,
                 _rider);
-            _playerStateMachine = _rider.GetComponent<PlayerStateMachine>();
+            _playerController = _rider.GetComponent<PlayerController>();
             _waypointAI.SetCarrot(CarrotForward);
-            _playerStateMachine.enabled = false;
+            _playerController.ToggleActive(false);
             _input.JumpEvent += Dismount;
         }
     }
@@ -90,7 +90,7 @@ public class Saddle : MonoBehaviour
         EventManager.TriggerEvent<RiderExitEvent, Saddle, GameObject>(
             this,
             _rider);
-        _playerStateMachine.enabled = true;
+        _playerController.ToggleActive(true);
         _waypointAI.SetCarrot(null);
         _rider = null;
     }
