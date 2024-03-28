@@ -18,6 +18,7 @@ public class WaypointAI : MonoBehaviour
     public string WaypointTag = "";
 
     private int _waypointIndex = 0;
+    private Rigidbody _rigidbody = null;
 
     #region Public methods
     public void SetCarrot(GameObject carrot) => Carrot = carrot;
@@ -44,18 +45,24 @@ public class WaypointAI : MonoBehaviour
         _waypointIndex = 0;
 
         Debug.Assert(WaypointRoot != null, "WaypointRoot is null");
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        transform.position += (
+        var newPosition = transform.position + (
             Time.fixedDeltaTime *
             5f * Velocity *
             transform.forward);
-        transform.position = new Vector3(
-            transform.position.x,
-            0,
-            transform.position.z);
+        newPosition.y = 0;
+        if (_rigidbody != null)
+        {
+            _rigidbody.MovePosition(newPosition);
+        }
+        else
+        {
+            transform.position += newPosition;
+        }
     }
 
     private void OnTriggerEnter(Collider c)
