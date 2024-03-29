@@ -61,7 +61,6 @@ public class Saddle : MonoBehaviour
         _playerController = _rider.GetComponent<PlayerController>();
         _waypointAI.SetCarrot(CarrotForward);
         _playerController.ToggleActive(false);
-        _input.JumpEvent += Dismount;
         if (_cinemachineFreeLook != null)
         {
             _oldFollow = _cinemachineFreeLook.Follow;
@@ -135,6 +134,7 @@ public class Saddle : MonoBehaviour
         if (_rider != null)
         {
             _rider.transform.position = transform.position + SaddleOffset;
+            _rider.transform.rotation = transform.rotation;
             Debug.Log("Movement value:" + _input.MovementValue);
             if (_input.MovementValue.x < -0.2f)
             {
