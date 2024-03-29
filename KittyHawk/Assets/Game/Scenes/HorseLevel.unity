@@ -1219,12 +1219,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001646809
+      value: 0.000000016468093
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000004986136
+      value: -0.0000000049861373
       objectReference: {fileID: 0}
     - target: {fileID: 900702413036734693, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -1956,6 +1956,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 44.499573
       objectReference: {fileID: 0}
+    - target: {fileID: 5945736688011388799, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_CollideAgainst.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6010789642674523264, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2034,12 +2039,12 @@ PrefabInstance:
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000018602234
+      value: 0.00000001860223
       objectReference: {fileID: 0}
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000049021804
+      value: -0.0000000049021796
       objectReference: {fileID: 0}
     - target: {fileID: 6415903712768336220, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -20899,7 +20904,7 @@ PrefabInstance:
     - target: {fileID: 4488023640802120588, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4488023641599610350, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
         type: 3}
@@ -21139,6 +21144,11 @@ PrefabInstance:
       propertyPath: CinemachineVirtualCamera
       value: 
       objectReference: {fileID: 1960410970}
+    - target: {fileID: 5674921121865867714, guid: 46831293874c34d9b8aa6ed1b0727dba,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6500822272650239881, guid: 46831293874c34d9b8aa6ed1b0727dba,
         type: 3}
       propertyPath: m_LocalRotation.w
