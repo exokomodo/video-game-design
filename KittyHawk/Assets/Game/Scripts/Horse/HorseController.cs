@@ -48,7 +48,7 @@ public class HorseController : MonoBehaviour
         _gallopAudio.volume = volume;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         UpdateAnimation();
         UpdateAudio();

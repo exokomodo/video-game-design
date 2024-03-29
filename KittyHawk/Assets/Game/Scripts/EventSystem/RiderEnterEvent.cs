@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// RiderEnterEvent represents an event for when a rider collides with a v object
+/// RiderEnterEvent represents an event for when a rider collides with an object
 /// Author: James Orson
 /// </summary>
 

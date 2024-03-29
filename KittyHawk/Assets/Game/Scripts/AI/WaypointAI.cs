@@ -12,14 +12,17 @@ public class WaypointAI : MonoBehaviour
     public GameObject WaypointRoot;
     public GameObject Carrot;
     #endregion
-
-    public bool IsFollowingCarrot = false;
     public float Velocity = 1f;
     public float RotationSpeed = 2f;
     [KittyHawk.Attributes.TagSelector]
     public string WaypointTag = "";
 
     private int _waypointIndex = 0;
+    private Rigidbody _rigidbody = null;
+
+    #region Public methods
+    public void SetCarrot(GameObject carrot) => Carrot = carrot;
+    #endregion
 
     #region Private methods
     private void FaceWaypoint()
@@ -33,7 +36,7 @@ public class WaypointAI : MonoBehaviour
     }
     private int GetNumberOfWaypoints() => WaypointRoot.transform.childCount;
     private void NextWaypoint() => _waypointIndex = (_waypointIndex + 1) % GetNumberOfWaypoints();
-    private Transform GetWaypointTransform() => IsFollowingCarrot ? Carrot.transform : WaypointRoot.transform.GetChild(_waypointIndex);
+    private Transform GetWaypointTransform() => Carrot != null ? Carrot.transform : WaypointRoot.transform.GetChild(_waypointIndex);
     #endregion
 
     #region Unity hooks
@@ -42,26 +45,30 @@ public class WaypointAI : MonoBehaviour
         _waypointIndex = 0;
 
         Debug.Assert(WaypointRoot != null, "WaypointRoot is null");
-        Debug.Assert(Carrot != null, "Carrot is null");
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        transform.position += (
+        var newPosition = transform.position + (
             Time.fixedDeltaTime *
             5f * Velocity *
             transform.forward);
-        transform.position = new Vector3(
-            transform.position.x,
-            0,
-            transform.position.z);
+        newPosition.y = 0;
+        if (_rigidbody != null)
+        {
+            _rigidbody.MovePosition(newPosition);
+        }
+        else
+        {
+            transform.position += newPosition;
+        }
     }
 
     private void OnTriggerEnter(Collider c)
     {
-        if (IsFollowingCarrot)
+        if (Carrot != null)
         {
-            // NOTE: Do not consider waypoints visited while following the carrot
             return;
         }
         if (c.CompareTag(WaypointTag))
