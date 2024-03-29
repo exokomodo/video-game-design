@@ -908,6 +908,7 @@ MonoBehaviour:
   canvas: {fileID: 843063435}
   musicName: MainGameMusic
   objectives: []
+  nextLevel: 
 --- !u!114 &46759667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2948,7 +2949,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2958,7 +2959,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2973,7 +2974,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -5653,7 +5654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf3d485a1546422e9fc4263e4bb7f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDistanceToActivate: 5
 --- !u!95 &230232474
 Animator:
   serializedVersion: 5
@@ -22296,6 +22296,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmokingDuck
       objectReference: {fileID: 0}
+    - target: {fileID: 4118499440324928628, guid: a49555f39a439224d83a3a3f49453c60,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d48e325f3aa9747cb81cfca0f1a0c88f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a49555f39a439224d83a3a3f49453c60, type: 3}
 --- !u!1001 &1805767179

@@ -81,6 +81,7 @@ public class AudioManager : MonoBehaviour
             {
                 musicVolume = value;
                 musicSource.volume = musicVolume;
+                EventManager.TriggerEvent<MusicVolumeChangeEvent, float>(musicVolume);
             }
         }
     }
@@ -152,6 +153,13 @@ public class AudioManager : MonoBehaviour
         soundEffects = new Dictionary<string, AudioClip>();
         tireStackBounceAudio = LoadAudioClip("tire-stack-bounce");
         musicSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        // This can't go in Init since it's called by Awake
+        SoundVolume = DataManager.Instance.SoundVolume;
+        MusicVolume = DataManager.Instance.MusicVolume;
     }
 
     private AudioClip LoadAudioClip(string name)
