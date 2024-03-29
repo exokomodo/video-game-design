@@ -17,6 +17,14 @@ public class HorseController : MonoBehaviour
     private UnityAction<float> volumeChangeListener;
 
     #region Unity hooks
+    private void OnTriggerEnter(Collider c)
+    {
+        if (c.CompareTag("Goose"))
+        {
+            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
+        }
+    }
+
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
