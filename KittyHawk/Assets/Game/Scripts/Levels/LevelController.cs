@@ -24,9 +24,13 @@ public class LevelController : MonoBehaviour {
     [SerializeField]
     GameObject GoosePrefab;
 
+    protected Vector3 startRoomPos;
+    protected Vector3 endRoomPos;
+
 
     private void Start() {
         // Place characters in dungeon
+        FindStartAndEnd();
         PlaceCharacters();
         PlaceEnemies();
         PlaceGoal();
@@ -36,33 +40,50 @@ public class LevelController : MonoBehaviour {
 
     }
 
+    protected void FindStartAndEnd() {
+        float low = Generator.size.x + Generator.size.y;
+        float high = 0;
+        Room start = null;
+        Room end = null;
+        for (int i=0; i<Generator.Rooms.Count; i++) {
+            Room r = Generator.Rooms[i];
+            Vector2 center = r.center;
+            float totalXY = center.x + center.y;
+            if (totalXY > high) {
+                high = totalXY;
+                end = r;
+            }
+            if (totalXY < low) {
+                low = totalXY;
+                start = r;
+            }
+        }
+        startRoomPos = GetRoomCenter(start);
+        endRoomPos = GetRoomCenter(end);
+    }
+
     private void PlaceCharacters() {
-        Vector3 pos = GetRoomCenter(Generator.Rooms[0]);
-        Player.transform.position = pos;
-        Bunny.transform.position = pos;
-        BunnyBabies.transform.position = pos;
+        Player.transform.position = startRoomPos;
+        Bunny.transform.position = startRoomPos;
+        // BunnyBabies.transform.position = startRoomPos;
     }
 
     private void PlaceEnemies() {
         int roomCount = Generator.Rooms.Count;
-        for (int i=1; i<roomCount-1; i++) {
+        for (int i=0; i<roomCount; i++) {
             Vector3 pos = GetRoomCenter(Generator.Rooms[i]);
+            if (pos == startRoomPos || pos == endRoomPos) continue;
             pos.y = 0.5f;
             GameObject goose = Instantiate(GoosePrefab, pos, Quaternion.identity);
         }
     }
 
     private void PlaceGoal() {
-        Vector3 pos = GetRoomCenter(Generator.Rooms[Generator.Rooms.Count-1]);
-        // BunnyBabies.transform.position = pos;
+        BunnyBabies.transform.position = endRoomPos;
     }
 
     private Vector3 GetRoomCenter(Room room)
     {
-        RectInt roomBounds = room.bounds;
-        Vector2Int roomPos = roomBounds.position;
-        Vector2Int roomSize = roomBounds.size;
-        Vector2 roomCenter = roomPos + roomSize / 2;
-        return new Vector3(roomCenter.x, 0.1f, roomCenter.y);
+        return new Vector3(room.center.x, 0.1f, room.center.y);
     }
 }

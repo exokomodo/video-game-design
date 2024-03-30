@@ -63,7 +63,7 @@ public sealed class BunnyFollowState : BunnyBaseState {
 
     // float dur = b.LinkMoveDuration;
 
-    Debug.Log($"Agent Velocity: {b.agent.velocity}");
+    // Debug.Log($"Agent Velocity: {b.agent.velocity}");
     b.anim.SetFloat(VelocityXHash, b.agent.velocity.x / b.agent.speed);
     b.anim.SetFloat(VelocityZHash, b.agent.velocity.z / b.agent.speed);
     b.anim.SetFloat(MagnitudeHash, b.agent.velocity.magnitude);

@@ -20,7 +20,7 @@ public class Generator2D : MonoBehaviour {
     }
 
     [SerializeField]
-    Vector2Int size = new Vector2Int(30, 30);
+    public Vector2Int size = new Vector2Int(30, 30);
     [SerializeField]
     int roomCount = 20;
     [SerializeField]

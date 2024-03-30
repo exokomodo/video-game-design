@@ -17,12 +17,10 @@ public class Follower : MonoBehaviour {
 
     void FixedUpdate() {
         Vector3 pos = followTarget.transform.position;
-        pos.y = 999f;
+        pos.y = 1000f;
         gameObject.transform.position = pos;
 
-        Quaternion rot = followTarget.transform.rotation;
         Vector3 rotEuler = followTarget.transform.eulerAngles;
-        Debug.Log($"rotEuler: {rotEuler}");
         gameObject.transform.eulerAngles = new Vector3(90, rotEuler.y, -rotEuler.z);
     }
 }

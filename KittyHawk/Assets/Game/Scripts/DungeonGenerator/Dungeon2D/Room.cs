@@ -109,4 +109,23 @@ public class Room: Object {
         roomParent.transform.parent = parent;
         roomParent.transform.position = new Vector3(location.x, 0, location.y);
     }
+
+    public Vector2Int position {
+        get {
+            return bounds.position;
+        }
+    }
+
+    public Vector2 center {
+        get {
+            Vector2Int roomPos = bounds.position;
+            Vector2Int roomSize = bounds.size;
+            Vector2 roomCenter = roomPos + (Vector2)roomSize/2;
+            return new Vector2(roomCenter.x, roomCenter.y);
+        }
+    }
+
+    public override string ToString() {
+        return $"Room: position: {position}, center: {center}";
+    }
 }
