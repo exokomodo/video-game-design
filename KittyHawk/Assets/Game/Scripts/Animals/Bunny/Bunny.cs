@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,9 +25,10 @@ public class Bunny : MonoBehaviour
 
   public NavMeshAgent agent;
   public Animator anim;
-  public GameObject[] waypoints;
+  // public GameObject[] waypoints;
+  public List<GameObject> Waypoints;
   public bool followMode = false;
-  public GameObject followTarget { get; protected set; }
+  public GameObject followTarget;
   // [SerializeField]
   // public GameObject followTarget;
   public enum BunnyAnimState
@@ -59,6 +61,15 @@ public class Bunny : MonoBehaviour
     }
   }
 
+  public Vector3 position {
+    get {
+      return agent.transform.position;
+    }
+    set {
+      agent.Warp(value);
+    }
+  }
+
   public Vector3 velocity => rb.velocity;
   public bool isGrounded => CheckGrounded();
 
@@ -70,13 +81,15 @@ public class Bunny : MonoBehaviour
     col = GetComponent<CapsuleCollider>();
     if (col == null) throw new Exception("Collider could not be found");
 
-    followTarget = null;
-    try {
-      followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
-    } catch (Exception e) {
-      Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
-      followMode = false;
-    }
+    // followTarget = null;
+    // try {
+    //   followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
+    // } catch (Exception e) {
+    //   Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
+    //   followMode = false;
+    // }
+    if (followTarget == null) followMode = false;
+
     mover = GetComponent<AgentLinkMover>();
     if (mover == null) throw new Exception("AgentLinkMover not found");
 
@@ -91,8 +104,8 @@ public class Bunny : MonoBehaviour
 
   public void SetNextWaypoint()
   {
-      ++currWaypoint;
-      if (currWaypoint >= waypoints.Length) currWaypoint = 0;
+      if (Waypoints.Count < 2) ChangeState(BunnyIdleState.Instance);
+      if (++currWaypoint >= Waypoints.Count) currWaypoint = 0;
       ChangeState(GetState());
   }
 
@@ -107,7 +120,7 @@ public class Bunny : MonoBehaviour
     get {
       try
       {
-        return waypoints[currWaypoint];
+        return Waypoints[currWaypoint];
       }
       catch (Exception e)
       {
@@ -123,7 +136,7 @@ public class Bunny : MonoBehaviour
     {
       return BunnyFollowState.Instance;
     }
-    if (waypoints.Length > 0)
+    if (Waypoints.Count > 0)
     {
       return BunnyPatrolState.Instance;
     }
@@ -167,5 +180,16 @@ public class Bunny : MonoBehaviour
     verticalVelocity = motion.y;
     pendingMotion = motion;
     pendingMotion.y = 0;
+  }
+
+  public void Patrol() {
+    followMode = false;
+    ChangeState(GetState());
+  }
+
+  public void Follow(GameObject target) {
+    followMode = true;
+    followTarget = target;
+    ChangeState(GetState());
   }
 }
