@@ -37,8 +37,7 @@ public class MainMenuController : MonoBehaviour
         anim = fadeImage.GetComponent<Animator>();
         anim.SetTrigger("FadeIn");
 
-        // TODO: Add music event to Audio Manager and use that instead
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(mainCamera.transform.position, menuMusicName);
+        EventManager.TriggerEvent<MusicEvent, string>(menuMusicName);
     }
 
     public void StartGame()
