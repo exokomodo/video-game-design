@@ -1,13 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// A Player Controller that manages the Kitty Hawk Player model, finite state machine,
 /// animation controller, events, and input controls.
 /// Author: Geoffrey Roth
 /// </summary>
-///
 
-
-public class LevelController : MonoBehaviour {
+public class BunnyLevelController : MonoBehaviour {
 
     [SerializeField]
     Generator2D Generator;
@@ -16,7 +15,7 @@ public class LevelController : MonoBehaviour {
     Rigidbody Player;
 
     [SerializeField]
-    GameObject Bunny;
+    Bunny bunnyController;
 
     [SerializeField]
     GameObject BunnyBabies;
@@ -24,6 +23,8 @@ public class LevelController : MonoBehaviour {
     [SerializeField]
     GameObject GoosePrefab;
 
+    protected Room startRoom;
+    protected Room endRoom;
     protected Vector3 startRoomPos;
     protected Vector3 endRoomPos;
 
@@ -43,28 +44,31 @@ public class LevelController : MonoBehaviour {
     protected void FindStartAndEnd() {
         float low = Generator.size.x + Generator.size.y;
         float high = 0;
-        Room start = null;
-        Room end = null;
+        startRoom = null;
+        endRoom = null;
         for (int i=0; i<Generator.Rooms.Count; i++) {
             Room r = Generator.Rooms[i];
             Vector2 center = r.center;
             float totalXY = center.x + center.y;
             if (totalXY > high) {
                 high = totalXY;
-                end = r;
+                endRoom = r;
             }
             if (totalXY < low) {
                 low = totalXY;
-                start = r;
+                startRoom = r;
             }
         }
-        startRoomPos = GetRoomCenter(start);
-        endRoomPos = GetRoomCenter(end);
+        startRoomPos = GetRoomCenter(startRoom);
+        endRoomPos = GetRoomCenter(endRoom);
     }
 
     private void PlaceCharacters() {
         Player.transform.position = startRoomPos;
-        Bunny.transform.position = startRoomPos;
+        // Bunny.transform.position = startRoomPos;
+        List<GameObject> waypoints = startRoom.GenerateWaypoints();
+        bunnyController.position = startRoomPos;
+        bunnyController.Waypoints = waypoints;
         // BunnyBabies.transform.position = startRoomPos;
     }
 

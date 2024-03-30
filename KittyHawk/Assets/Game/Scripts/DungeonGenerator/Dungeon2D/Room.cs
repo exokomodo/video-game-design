@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ using UnityEngine;
 /// Construct a single hallway and its collection of grid cells
 /// Author: Geoffrey Roth
 /// </summary>
-public class Room: Object {
+public class Room: UnityEngine.Object {
     public RectInt bounds;
 
     public static Grid2D<GameObject> Segments;
@@ -19,6 +20,25 @@ public class Room: Object {
 
     protected static string RoomName = "Room";
     protected static string BufferName = "Buffer";
+
+    public Vector3 position {
+        get {
+            return new Vector3(bounds.position.x, 0, bounds.position.y);
+        }
+    }
+
+    public Vector2Int size {
+        get { return bounds.size; }
+    }
+
+    public Vector2 center {
+        get {
+            Vector2Int roomPos = bounds.position;
+            Vector2Int roomSize = bounds.size;
+            Vector2 roomCenter = roomPos + (Vector2)roomSize/2;
+            return new Vector2(roomCenter.x, roomCenter.y);
+        }
+    }
 
     public Room(
         Vector2Int location,
@@ -110,19 +130,29 @@ public class Room: Object {
         roomParent.transform.position = new Vector3(location.x, 0, location.y);
     }
 
-    public Vector2Int position {
-        get {
-            return bounds.position;
+    public List<GameObject> GenerateWaypoints() {
+        List<GameObject> waypoints = new List<GameObject>();
+        GameObject wp = CreateWaypoint(new Vector3(center.x, 0, center.y));
+        waypoints.Add(wp);
+        for (int x=0; x<2; x++) {
+            for (int y=0; y<2; y++) {
+                int newY = Math.Abs(x - y);
+                Vector3 offset = new Vector3(x == 0? 1 : -1, 0, newY == 0? 1 : -1);
+                wp = CreateWaypoint(position + new Vector3(size.x * x, 0, size.y * newY) + offset);
+                waypoints.Add(wp);
+            }
         }
+        return waypoints;
     }
 
-    public Vector2 center {
-        get {
-            Vector2Int roomPos = bounds.position;
-            Vector2Int roomSize = bounds.size;
-            Vector2 roomCenter = roomPos + (Vector2)roomSize/2;
-            return new Vector2(roomCenter.x, roomCenter.y);
-        }
+    protected GameObject CreateWaypoint(Vector3 pos) {
+        // GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        // go.GetComponent<Collider>().enabled = false;
+        GameObject go = new GameObject($"Waypoint: {pos}");
+        go.transform.localScale = new Vector3(1f, 1, 1f);
+        go.transform.position = pos;
+        Debug.Log(go.name);
+        return go;
     }
 
     public override string ToString() {

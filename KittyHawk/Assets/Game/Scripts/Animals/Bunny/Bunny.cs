@@ -156,17 +156,15 @@ public class Bunny : MonoBehaviour
       FSM.Update();
     }
 
-  protected void OnAnimatorMove()
-  {
-    float velx = anim.GetFloat(VelocityXHash);
-    float velz = anim.GetFloat(VelocityZHash);
+  // protected void OnAnimatorMove()
+  // {
+  //   float velx = anim.GetFloat(VelocityXHash);
+  //   float velz = anim.GetFloat(VelocityZHash);
 
-    Vector3 newRootVelocity = new Vector3(velx * agent.speed, verticalVelocity, velz * agent.speed) + pendingMotion;
-    pendingMotion = Vector3.zero;
-    rb.velocity = newRootVelocity;
-    // Quaternion newRootRotation = Quaternion.LookRotation(new Vector3(rb.rotation.x, 0, rb.rotation.z), new Vector3(rb.rotation.x, 1, rb.rotation.z));
-    // rb.MoveRotation(newRootRotation);
-  }
+  //   Vector3 newRootVelocity = new Vector3(velx * agent.speed, verticalVelocity, velz * agent.speed) + pendingMotion;
+  //   pendingMotion = Vector3.zero;
+  //   rb.velocity = newRootVelocity;
+  // }
 
   public bool CheckGrounded()
   {
