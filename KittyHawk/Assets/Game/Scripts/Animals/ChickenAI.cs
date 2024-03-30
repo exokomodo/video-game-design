@@ -50,6 +50,8 @@ public class ChickenAI : MonoBehaviour
     private const float KITTY_FLEE_DISTANCE = 2.0f;
     private Transform kittyTransform;
     private Vector3 fleeDirection;
+
+    private Vector3 spawnPosition;
     [SerializeField] private bool isNearKitty;
 
     // All states
@@ -57,7 +59,9 @@ public class ChickenAI : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
 
-    
+    private GameObject gate;
+
+
     public enum AIState
     {
         PATROL,
@@ -68,12 +72,14 @@ public class ChickenAI : MonoBehaviour
     void Start()
     {
         aiState = AIState.PATROL;
+        spawnPosition = this.transform.position;
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         cl = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
         kittyTransform = kitty.GetComponent<Transform>();
 
+        gate = GameObject.FindWithTag("Gate");
         // I'll handle this. 
         agent.updateRotation = false;
 
@@ -102,15 +108,20 @@ public class ChickenAI : MonoBehaviour
 
         cl.isTrigger = true;
     }
-    
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("ChickenCoop") && isAlive)
         {
             Die();
-            
+
             // TODO: Make it so all of the chickens don't spawn in the same place
             transform.position = other.transform.position;
+        }
+
+        else if (other.gameObject.CompareTag("Gate") && gate.GetComponent<GateController>().gateOpen == false)
+        {
+            SetChickenDestination(spawnPosition);
         }
     }
 
@@ -153,24 +164,33 @@ public class ChickenAI : MonoBehaviour
                 break;
         }
     }
-    
+
     // Used for patrol state timer
     private void ResetPatrolTimer()
     {
         timeSinceLastWalk = 0f;
         timeUntilNextWalk = Random.Range(3.0f, 10.0f);
     }
-    
-    
-    private void ChangeLookDirection()
+
+    //TODO: Update this
+    private void SetChickenDestination(Vector3 targetPos)
+    {
+        newPosition.y = transform.position.y;
+        ChangeLookDirection(targetPos);
+        agent.SetDestination(targetPos);
+        ResetPatrolTimer();
+    }
+
+    //TODO: Update this to take a parameter 
+    private void ChangeLookDirection(Vector3 targetPos)
     {
         // Make the chicken look at the new position. Uses euler transformation because the model 
         // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
-        Vector3 lookPosition = newPosition - currentPosition;
+        Vector3 lookPosition = targetPos - currentPosition;
         Quaternion rotation = Quaternion.LookRotation(lookPosition);
         transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
     }
-    
+
     private void EnterPatrolState()
     {
         UnityEngine.Debug.Log("Chicken Returning to Patrol State");
@@ -183,8 +203,6 @@ public class ChickenAI : MonoBehaviour
 
     private void UpdatePatrolState()
     {
-        currentPosition = transform.position;
-
         // Update the time since last walk
         timeSinceLastWalk += Time.deltaTime;
 
@@ -214,15 +232,8 @@ public class ChickenAI : MonoBehaviour
                     newPosition = randomDirection;
                 }
 
-                // We don't want the chicken walking around where it can't get to
-                newPosition.y = transform.position.y;
+                SetChickenDestination(newPosition);
 
-                ChangeLookDirection();
-                
-                // Sets the destination for the AI chicken
-                agent.SetDestination(newPosition);
-
-                ResetPatrolTimer();
             }
         }
     }
@@ -246,14 +257,12 @@ public class ChickenAI : MonoBehaviour
             fleeDirection = currentPosition - kittyTransform.position;
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
-            
-            ChangeLookDirection();
-            
-            agent.SetDestination(newPosition);
-            
+
+            SetChickenDestination(newPosition);
+
             if (!isNearKitty) EnterPatrolState();
         }
-        
-        
+
+
     }
 }
