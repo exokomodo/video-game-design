@@ -14,6 +14,7 @@ TagManager:
   - Chick
   - Goose
   - Carrot
+  - Wall
   layers:
   - Default
   - TransparentFX

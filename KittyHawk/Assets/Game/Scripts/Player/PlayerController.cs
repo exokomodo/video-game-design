@@ -12,7 +12,7 @@ using UnityEngine.AI;
 /// </summary>
 public class PlayerController : MonoBehaviour {
   private Animator anim;
-  private Rigidbody rb;
+  public Rigidbody rb;
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;

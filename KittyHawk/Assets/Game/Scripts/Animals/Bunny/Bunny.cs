@@ -10,23 +10,25 @@ using UnityEngine.AI;
 /// </summary>
 public class Bunny : MonoBehaviour
 {
-  private Rigidbody rb;
-  private CapsuleCollider col;
-  private int currWaypoint = 0;
-  private FiniteStateMachine<Bunny> FSM;
-  private float verticalVelocity = 0f;
-  private float groundCheckTolerance = 0.1f;
-  private Vector3 pendingMotion;
+  protected Rigidbody rb;
+  protected CapsuleCollider col;
+  protected int currWaypoint = 0;
+  protected FiniteStateMachine<Bunny> FSM;
+  protected float verticalVelocity = 0f;
+  protected float groundCheckTolerance = 0.1f;
+  protected Vector3 pendingMotion;
   protected int MagnitudeHash = Animator.StringToHash("Magnitude");
   protected int VelocityXHash = Animator.StringToHash("VelocityX");
   protected int VelocityZHash = Animator.StringToHash("VelocityZ");
-  private AgentLinkMover mover;
+  protected AgentLinkMover mover;
 
   public NavMeshAgent agent;
   public Animator anim;
   public GameObject[] waypoints;
   public bool followMode = false;
-  public GameObject followTarget { get; private set; }
+  public GameObject followTarget { get; protected set; }
+  // [SerializeField]
+  // public GameObject followTarget;
   public enum BunnyAnimState
   {
     IDLE,
@@ -115,7 +117,7 @@ public class Bunny : MonoBehaviour
     }
   }
 
-  private BunnyBaseState GetState()
+  protected BunnyBaseState GetState()
   {
     if (followMode && followTarget != null)
     {
@@ -128,7 +130,7 @@ public class Bunny : MonoBehaviour
     return BunnyIdleState.Instance;
   }
 
-  private void FixedUpdate()
+  protected void FixedUpdate()
     {
       if (verticalVelocity < 0f && CheckGrounded())
       {
@@ -141,7 +143,7 @@ public class Bunny : MonoBehaviour
       FSM.Update();
     }
 
-  void OnAnimatorMove()
+  protected void OnAnimatorMove()
   {
     float velx = anim.GetFloat(VelocityXHash);
     float velz = anim.GetFloat(VelocityZHash);
@@ -157,7 +159,7 @@ public class Bunny : MonoBehaviour
   {
     Vector3 pos = rb.transform.position;
     Vector3 origin = new Vector3(pos.x, pos.y + 0.01f, pos.z);
-    return RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, groundCheckTolerance, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+    return RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, groundCheckTolerance, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
   }
 
   public void Move(Vector3 motion)
