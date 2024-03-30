@@ -88,7 +88,6 @@ public class GooseAI : MonoBehaviour
         }
         else if (eventType == AttackEvent.ATTACK_WITH_HORSE && c == cl)
         {
-            Debug.Log("A goose has been hit by a horse!");
             Die();
         }
     }
@@ -98,7 +97,7 @@ public class GooseAI : MonoBehaviour
     {
         // Turns everything off and reduces Goose velocity
         isAlive = false;
-        //AIAgent.enabled = false;
+        agent.ResetPath();
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
 
