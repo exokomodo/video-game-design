@@ -115,7 +115,7 @@ public class GooseAI : MonoBehaviour
         anim.Play("Idle");
 
         cl.isTrigger = true;
-        Destroy(gameObject, 30f);
+        Destroy(gameObject, 5f);
     }
 
     private void OnCollisionEnter(Collision other)
