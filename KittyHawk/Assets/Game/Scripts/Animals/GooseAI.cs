@@ -87,11 +87,6 @@ public class GooseAI : MonoBehaviour
             // TODO: Subtract health and potentially enter die state?
             EnterFleeState();
         }
-        else if (eventType == AttackEvent.ATTACK_WITH_HORSE && c == cl)
-        {
-            Debug.Log("A goose has been hit by horse!");
-            Die();
-        }
     }
 
     // Turns off everything for the Goose to save resources and to stop it from
@@ -107,6 +102,7 @@ public class GooseAI : MonoBehaviour
         anim.Play("Idle");
 
         cl.isTrigger = true;
+        Destroy(gameObject, 5f);
     }
 
     private void OnCollisionEnter(Collision other)
