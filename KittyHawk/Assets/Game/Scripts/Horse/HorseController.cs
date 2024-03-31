@@ -22,7 +22,6 @@ public class HorseController : MonoBehaviour
         if (c.CompareTag("Goose"))
         {
             EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
-            c.gameObject.GetComponent<GooseAI>().Die();
         }
     }
 
