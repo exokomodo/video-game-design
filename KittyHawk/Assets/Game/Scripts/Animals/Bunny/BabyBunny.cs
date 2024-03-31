@@ -8,17 +8,20 @@ using UnityEngine;
 /// </summary>
 public class BabyBunny : Bunny {
 
-    protected void Start() {
+    protected bool collected = false;
 
+    protected void Start() {
         EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Player")) {
+        if (other.CompareTag("Player") && !collected) {
             Debug.Log("OnTriggerEnter");
             EventManager.TriggerEvent<LevelEvent<BabyBunny>, string, BabyBunny>(LevelEvent<BabyBunny>.BUNNY_COLLECTED, this);
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success1");
             Follow(other.gameObject);
             GetComponent<BoxCollider>().enabled = false;
+            collected = true;
         }
     }
 
