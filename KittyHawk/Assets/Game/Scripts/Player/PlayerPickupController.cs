@@ -24,9 +24,24 @@ public class PlayerPickupController : MonoBehaviour
         switch(other.tag)
         {
             case "Catnip":
-                inventory.Catnip++;
-                Destroy(other.gameObject);
-                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
+                if (inventory.Lives > 8 && inventory.Catnip > 8)
+                {
+                    // do nothing - max lives reached
+                }
+                else if (inventory.Lives < 9 & inventory.Catnip > 8)
+                {
+                    inventory.Lives++;
+                    inventory.Catnip = 0;
+                    Destroy(other.gameObject);
+                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
+                }
+                else // pick up catnip
+                {
+                    inventory.Catnip++;
+                    Destroy(other.gameObject);
+                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
+                }
+                
                 break;
             case "Life":
                 inventory.Lives++;
