@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -18,7 +19,7 @@ public class BunnyLevelController : MonoBehaviour {
     Bunny bunnyController;
 
     [SerializeField]
-    GameObject BunnyBabies;
+    List<BabyBunny> babyBunnies;
 
     [SerializeField]
     GameObject GoosePrefab;
@@ -33,8 +34,9 @@ public class BunnyLevelController : MonoBehaviour {
         // Place characters in dungeon
         FindStartAndEnd();
         PlaceCharacters();
+        PlaceBunnies();
         PlaceEnemies();
-        PlaceGoal();
+        // PlaceGoal();
     }
 
     private void FixedUpdate() {
@@ -66,10 +68,25 @@ public class BunnyLevelController : MonoBehaviour {
     private void PlaceCharacters() {
         Player.transform.position = startRoomPos;
         // Bunny.transform.position = startRoomPos;
-        List<GameObject> waypoints = startRoom.GenerateWaypoints();
-        bunnyController.position = startRoomPos;
-        bunnyController.Waypoints = waypoints;
+        // List<GameObject> waypoints = startRoom.GenerateWaypoints();
+        bunnyController.position = endRoomPos;
+        // bunnyController.Waypoints = waypoints;
         // BunnyBabies.transform.position = startRoomPos;
+    }
+
+    private void PlaceBunnies() {
+        int limit = Math.Min(Generator.Rooms.Count, babyBunnies.Count);
+        Debug.Log($"PlaceBunnies > limit: {limit}");
+        for (int i=0; i<limit; i++) {
+            Room room = Generator.Rooms[i];
+            Debug.Log($"PlaceBunnies > room: {room}");
+            if (room.position == startRoom.position || room.position == endRoom.position) continue;
+            BabyBunny baby = babyBunnies[i];
+            Debug.Log($"PlaceBunnies > i: {i}");
+            baby.position = new Vector3(room.center.x, 0, room.center.y);
+            baby.Waypoints = room.GenerateWaypoints();
+            Debug.Log($"PlaceBunnies > position: {baby.position}");
+        }
     }
 
     private void PlaceEnemies() {
@@ -83,7 +100,7 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void PlaceGoal() {
-        BunnyBabies.transform.position = endRoomPos;
+        // BunnyBabies.transform.position = endRoomPos;
     }
 
     private Vector3 GetRoomCenter(Room room)

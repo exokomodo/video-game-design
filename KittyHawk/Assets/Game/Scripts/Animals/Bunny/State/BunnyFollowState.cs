@@ -30,7 +30,7 @@ public sealed class BunnyFollowState : BunnyBaseState {
     base.Enter(b);
     b.UpdateAgent = true;
     SwitchAnimState(b, (int)Bunny.BunnyAnimState.MOVE);
-    velo = target.GetComponent("VelocityReporter") as VelocityReporter;
+    velo = target.GetComponent<VelocityReporter>();
     UpdateDestination(b);
   }
 

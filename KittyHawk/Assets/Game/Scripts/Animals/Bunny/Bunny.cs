@@ -186,8 +186,9 @@ public class Bunny : MonoBehaviour
   }
 
   public void Follow(GameObject target) {
-    followMode = true;
+    Debug.Log("Change to FOLLOW MOVE");
     followTarget = target;
+    followMode = true;
     ChangeState(GetState());
   }
 }

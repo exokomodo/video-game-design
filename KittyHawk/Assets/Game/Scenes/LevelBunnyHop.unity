@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_Name
-      value: Rabbit PA Baby 3 (3)
+      value: Rabbit PA Baby 6
       objectReference: {fileID: 0}
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_IsActive
@@ -233,10 +233,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -306,9 +306,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 41752144}
   anim: {fileID: 41752143}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
 --- !u!136 &41752147
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -339,6 +340,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!65 &41752150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41752142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!1 &87019444
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,10 +473,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -532,15 +546,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 161711861}
   anim: {fileID: 161711860}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
---- !u!1 &371532036 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1844224153189735129, guid: d141844d6fab540789a312e0d66dcd4d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1293333826}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
+--- !u!65 &161711868
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161711856}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!1001 &703973834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -655,9 +677,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 703973839}
   anim: {fileID: 703973836}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
 --- !u!114 &703973838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,10 +738,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -757,6 +780,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!65 &703973843
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703973835}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!1 &807394589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4000861520432773251, guid: 165a0cc8a89f1412f9e938f94be55451,
@@ -905,13 +941,13 @@ PrefabInstance:
     - target: {fileID: 4999104863408347191, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
       propertyPath: Waypoints.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4999104863408347191, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
       propertyPath: Waypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 371532036}
+      objectReference: {fileID: 0}
     - target: {fileID: 4999104863408347193, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -988,7 +1024,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_Name
-      value: Rabbit PA Baby 3 (2)
+      value: Rabbit PA Baby 5
       objectReference: {fileID: 0}
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_IsActive
@@ -1089,10 +1125,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -1162,9 +1198,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1397606688}
   anim: {fileID: 1397606687}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
 --- !u!136 &1397606691
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1195,6 +1232,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!65 &1397606694
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397606686}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!114 &1477476497 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4999104863408347191, guid: d141844d6fab540789a312e0d66dcd4d,
@@ -1355,7 +1405,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_Name
-      value: Rabbit PA Baby 3 (4)
+      value: Rabbit PA Baby 7
       objectReference: {fileID: 0}
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_IsActive
@@ -1456,10 +1506,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -1529,9 +1579,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1582005298}
   anim: {fileID: 1582005297}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
 --- !u!136 &1582005301
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1562,6 +1613,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &1582005304
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582005296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!1 &1595498087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1720,103 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1602868447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1602868451}
+  - component: {fileID: 1602868450}
+  - component: {fileID: 1602868449}
+  - component: {fileID: 1602868448}
+  m_Layer: 0
+  m_Name: Waypoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1602868448
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602868447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1602868449
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602868447}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1602868450
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602868447}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1602868451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602868447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1659045433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,7 +1864,14 @@ MonoBehaviour:
   Generator: {fileID: 967045388}
   Player: {fileID: 1982906761}
   bunnyController: {fileID: 1477476497}
-  BunnyBabies: {fileID: 807394589}
+  babyBunnies:
+  - {fileID: 161711864}
+  - {fileID: 703973837}
+  - {fileID: 1969615737}
+  - {fileID: 1892303691}
+  - {fileID: 1397606690}
+  - {fileID: 41752146}
+  - {fileID: 1582005300}
   GoosePrefab: {fileID: 1759681921}
 --- !u!1 &1687610720
 GameObject:
@@ -1782,7 +1950,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687610720}
-  m_LocalRotation: {x: 0.27232718, y: -0.000000028675942, z: 0.000000008115984, w: 0.9622047}
+  m_LocalRotation: {x: 0.27232718, y: -0.000000028675938, z: 0.000000008115983, w: 0.9622047}
   m_LocalPosition: {x: 2.94, y: 2.2, z: -0.28999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1933,7 +2101,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_Name
-      value: Rabbit PA Baby 3 (1)
+      value: Rabbit PA Baby 4
       objectReference: {fileID: 0}
     - target: {fileID: 1721392763167632, guid: 88e1ece750084a54fbccf75e93367db1, type: 3}
       propertyPath: m_IsActive
@@ -2034,10 +2202,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -2107,9 +2275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1892303689}
   anim: {fileID: 1892303688}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
 --- !u!136 &1892303692
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2140,6 +2309,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!65 &1892303695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892303687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!1001 &1969615732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2250,10 +2432,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 240
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -2323,9 +2505,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1969615735}
   anim: {fileID: 1969615734}
-  Waypoints: []
-  followMode: 1
-  followTarget: {fileID: 0}
+  Waypoints:
+  - {fileID: 1602868447}
+  followMode: 0
+  followTarget: {fileID: 1982906735}
 --- !u!136 &1969615738
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2356,6 +2539,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!65 &1969615741
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969615733}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.67, z: 2}
+  m_Center: {x: 0, y: 0.36, z: 0.25}
 --- !u!1 &1982906735 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7796164972014180949, guid: 7c27731197a634fb781589a2039fde21,
@@ -2415,12 +2611,17 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016428379
+      value: 0.000000016468091
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000049741127
+      value: -0.000000004986137
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_XAxis.m_Wrap
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2550,7 +2751,7 @@ PrefabInstance:
     - target: {fileID: 5945736688011388799, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_Strategy
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5945736688011388799, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2585,12 +2786,12 @@ PrefabInstance:
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000023530166
+      value: 0.00000002353017
       objectReference: {fileID: 0}
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000062008207
+      value: -0.000000006200821
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2803,7 +3004,7 @@ PrefabInstance:
     - target: {fileID: 4000861520432773251, guid: 165a0cc8a89f1412f9e938f94be55451,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4005121555659003067, guid: 165a0cc8a89f1412f9e938f94be55451,
         type: 3}

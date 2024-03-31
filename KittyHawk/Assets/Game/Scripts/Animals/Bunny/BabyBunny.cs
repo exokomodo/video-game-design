@@ -9,4 +9,12 @@ using UnityEngine.AI;
 /// </summary>
 public class BabyBunny : Bunny {
 
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Player")) {
+            Debug.Log("OnTriggerEnter");
+            Follow(other.gameObject);
+            GetComponent<BoxCollider>().enabled = false;
+        }
+    }
 }
