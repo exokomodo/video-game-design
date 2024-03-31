@@ -64,8 +64,8 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        Lives = startingLives;
-        Catnip = startingCatnip;
+        Lives = DataManager.Instance.Lives;
+        Catnip = DataManager.Instance.Catnip;
     }
 
     #endregion

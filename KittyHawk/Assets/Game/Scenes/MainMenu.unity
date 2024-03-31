@@ -666,6 +666,7 @@ GameObject:
   - component: {fileID: 46759660}
   - component: {fileID: 46759659}
   - component: {fileID: 46759661}
+  - component: {fileID: 46759662}
   m_Layer: 0
   m_Name: ManagementTeam
   m_TagString: Untagged
@@ -713,6 +714,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0387fbd840c4f2fab7c1f0b851c555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &46759662
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46759658}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &56607362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4671271844842164, guid: 0931ee8cbbf53854a8ee49bdd9194045,
@@ -1488,7 +1585,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70666814
+      value: 0.84108067
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -1498,7 +1595,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.70754516
+      value: 0.5409098
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -1513,7 +1610,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90.071
+      value: 65.491
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2090,7 +2187,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 179.99997
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5446627960768976125, guid: 7c27731197a634fb781589a2039fde21, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7c27731197a634fb781589a2039fde21, type: 3}
 --- !u!4 &118801389 stripped
 Transform:
@@ -3313,7 +3411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf3d485a1546422e9fc4263e4bb7f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDistanceToActivate: 5
 --- !u!95 &230232474
 Animator:
   serializedVersion: 5
@@ -6852,7 +6949,7 @@ MonoBehaviour:
 
     https://assetstore.unity.com/packages/3d/characters/animals/mammals/cat-simple-82328
 
-    
+
 
     General
     Farm Assets
@@ -6863,7 +6960,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/3d-models/exterior/industrial-exterior/polygon-farm-7dbbfd32-9335-495f-8c45-faf622ad8595
 
-    
+
 
     Smoking
     Accessories
@@ -6874,7 +6971,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/3d-models/household/other/smoking-props-17ed43c3-8c42-4485-aa8e-48f1366e6d07
 
-    
+
 
     Letter/Envelope
     Model
@@ -6885,7 +6982,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/free-3d-models/various/various-models/simple-letter
 
-    
+
 
     Duck''s
     Hat
@@ -6896,7 +6993,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/free-3d-print-models/fashion/other/hat-customizable
 
-    
+
 
     Farm
     Animals
@@ -10157,7 +10254,7 @@ MonoBehaviour:
 
     https://assetstore.unity.com/packages/3d/characters/animals/birds/duck-lowpoly-102094
 
-    
+
 
     Cat
     Head for UI
@@ -10168,7 +10265,7 @@ MonoBehaviour:
 
     https://elements.envato.com/drawing-of-cat-heads-CG8MXHP
 
-    
+
 
     Wooden
     Signs used for UI
@@ -10179,7 +10276,7 @@ MonoBehaviour:
 
     https://elements.envato.com/brown-wood-signboard-cartoon-2XWVAC6
 
-    
+
 
     Sound
     effects licensed via Envato Elements:
@@ -13987,6 +14084,55 @@ Transform:
   m_Father: {fileID: 1257577423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &1770435472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1770435474}
+  - component: {fileID: 1770435473}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1770435473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770435472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7984dcf12b1813e45bb7045dac642854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentDay: 0
+  Lives: 0
+  Catnip: 0
+  SoundVolume: 0
+  MusicVolume: 0
+--- !u!4 &1770435474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770435472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 33
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1778380554
 PrefabInstance:
   m_ObjectHideFlags: 0
