@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006468607994081305}
-  m_LocalRotation: {x: 0.27232718, y: -0.000000011877958, z: 0.0000000033617487, w: 0.96220475}
+  m_LocalRotation: {x: 0.27232718, y: 1.323489e-23, z: -6.6174445e-24, w: 0.9622047}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2866940072119156193}
-  m_LocalRotation: {x: 0.25482658, y: -0.00000002277214, z: 0.000000006001061, w: 0.9669868}
+  m_LocalRotation: {x: 0.25482658, y: -0.000000023339522, z: 0.000000006150581, w: 0.9669868}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -616,7 +616,7 @@ MonoBehaviour:
     m_InvertInput: 0
     m_MinValue: -180
     m_MaxValue: 180
-    m_Wrap: 0
+    m_Wrap: 1
     m_Recentering:
       m_enabled: 0
       m_WaitTime: 1
@@ -640,7 +640,7 @@ MonoBehaviour:
     m_Radius: 2
   - m_Height: 2
     m_Radius: 3
-  - m_Height: 0.5
+  - m_Height: 1
     m_Radius: 2
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
@@ -1511,6 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2375762fd14f49249c66c0fcfe9fef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   WalkClip: {fileID: 8300000, guid: 96b0f979903af4910932fb59c320146d, type: 3}
   RunClip: {fileID: 8300000, guid: 933bec463cd6940ee9d5195322652030, type: 3}
   RootMotion: 1
