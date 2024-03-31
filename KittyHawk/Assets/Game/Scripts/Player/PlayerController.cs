@@ -171,6 +171,8 @@ public class PlayerController : MonoBehaviour {
   {
     if (c.CompareTag("Door")) {
       Debug.Log("OnTriggerEnter Doorway");
+      EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.END_ROOM_ENTERED, c);
+      return;
     }
     if (_isAttacking)
     {

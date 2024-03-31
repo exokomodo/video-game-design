@@ -38,6 +38,8 @@ public class BunnyLevelController : MonoBehaviour {
         PlaceBunnies();
         PlaceEnemies();
         PlaceGoal();
+
+        Generator.CreateDoorways();
     }
 
     private void OnLevelEvent(string eventType, BabyBunny bb) {

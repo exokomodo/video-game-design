@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Script keeping track of player inventory 
+/// Script keeping track of player inventory
 /// Author: Calvin Ferst
 /// </summary>
 public class PlayerInventory : MonoBehaviour
@@ -11,6 +11,7 @@ public class PlayerInventory : MonoBehaviour
 
     public static event Action<int> OnLivesChanged = delegate { };
     public static event Action<int> OnCatnipChanged = delegate { };
+    public static event Action<int> OnBunniesChanged = delegate { };
 
     #endregion
 
@@ -27,6 +28,7 @@ public class PlayerInventory : MonoBehaviour
 
     private int lives;
     private int catnip;
+    private int bunnies;
 
     #endregion
 
@@ -58,6 +60,19 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    public int Bunnies
+    {
+        get { return bunnies; }
+        set
+        {
+            if (0 <= value)
+            {
+                bunnies = value;
+                OnBunniesChanged(value);
+            }
+        }
+    }
+
     #endregion
 
     #region Methods
@@ -66,6 +81,7 @@ public class PlayerInventory : MonoBehaviour
     {
         Lives = DataManager.Instance.Lives;
         Catnip = DataManager.Instance.Catnip;
+        Bunnies = DataManager.Instance.Bunnies;
     }
 
     #endregion

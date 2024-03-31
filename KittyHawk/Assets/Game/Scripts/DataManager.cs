@@ -10,6 +10,8 @@ public class DataManager : MonoBehaviour
     public int Lives;
     public int Catnip;
 
+    public int Bunnies;
+
     public float SoundVolume;
     public float MusicVolume;
 

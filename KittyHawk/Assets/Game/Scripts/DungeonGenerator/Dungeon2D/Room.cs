@@ -108,6 +108,11 @@ public class Room: UnityEngine.Object {
 
     public void RemoveSegment(Vector2Int point) {
         GameObject segment = Segments[point];
+        Debug.Log("isEnd: " + isEnd);
+        if (!isEnd) {
+            segment?.SetActive(false);
+            return;
+        }
         BoxCollider c = segment.GetComponent<BoxCollider>();
         NavMeshObstacle ob = segment.GetComponent<NavMeshObstacle>();
         MeshRenderer r = segment.GetComponent<MeshRenderer>();

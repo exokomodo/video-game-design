@@ -15,6 +15,8 @@ public class Hallway: Object {
     float height;
     Transform rootTransform;
     protected float wallWidth = 0.3f;
+    protected Grid2D<Generator2D.CellType> grid;
+    protected List<Vector2Int> path;
 
     public static Grid2D<HallwayCell> HallwayCells;
 
@@ -30,6 +32,8 @@ public class Hallway: Object {
         GameObject ceilingPrefab,
         GameObject floorPrefab
     ) {
+        this.grid = grid;
+        this.path = path;
         this.startRoom = startRoom;
         this.endRoom = endRoom;
         this.width = width;
@@ -46,23 +50,7 @@ public class Hallway: Object {
             }
         }
 
-        for (int i=0; i<path.Count; i++) {
-            Vector2Int pos = path[i];
-            if (grid[pos] == Generator2D.CellType.Hallway) {
-                Vector2Int endPoint = i == 0? path[i] : path[i-1];
-                startRoom.RemoveSegment(endPoint);
-                break;
-            }
-        }
 
-        for (int i=path.Count-1; i>0; i--) {
-            Vector2Int pos = path[i];
-            if (grid[pos] == Generator2D.CellType.Hallway) {
-                Vector2Int endPoint = i == path.Count-1? path[i] : path[i+1];
-                endRoom.RemoveSegment(endPoint);
-                break;
-            }
-        }
     }
 
     /*
@@ -88,6 +76,26 @@ public class Hallway: Object {
         if (grid.InBounds(pos))
             return grid[pos] != Generator2D.CellType.None;
         return false;
+    }
+
+    public void CreateDoorways() {
+        for (int i=0; i<path.Count; i++) {
+            Vector2Int pos = path[i];
+            if (grid[pos] == Generator2D.CellType.Hallway) {
+                Vector2Int endPoint = i == 0? path[i] : path[i-1];
+                startRoom.RemoveSegment(endPoint);
+                break;
+            }
+        }
+
+        for (int i=path.Count-1; i>0; i--) {
+            Vector2Int pos = path[i];
+            if (grid[pos] == Generator2D.CellType.Hallway) {
+                Vector2Int endPoint = i == path.Count-1? path[i] : path[i+1];
+                endRoom.RemoveSegment(endPoint);
+                break;
+            }
+        }
     }
 
     public static void RemoveWalls(Grid2D<Generator2D.CellType> grid) {

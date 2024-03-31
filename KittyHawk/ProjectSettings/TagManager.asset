@@ -16,6 +16,7 @@ TagManager:
   - Carrot
   - Wall
   - Door
+  - Bunny
   layers:
   - Default
   - TransparentFX

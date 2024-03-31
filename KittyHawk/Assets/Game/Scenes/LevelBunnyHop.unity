@@ -899,6 +899,7 @@ MonoBehaviour:
   CurrentDay: 0
   Lives: 9
   Catnip: 0
+  Bunnies: 0
   SoundVolume: 5
   MusicVolume: 5
 --- !u!1001 &1293333826
@@ -908,6 +909,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4915497341926025845, guid: d141844d6fab540789a312e0d66dcd4d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bunny
+      objectReference: {fileID: 0}
     - target: {fileID: 4917832751221355515, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -961,7 +967,7 @@ PrefabInstance:
     - target: {fileID: 6474687216775924122, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
       propertyPath: m_TagString
-      value: Finish
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7283992953964862262, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
@@ -2621,12 +2627,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016468091
+      value: -0.00000001646809
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000004986137
+      value: 0.000000004986136
       objectReference: {fileID: 0}
     - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}

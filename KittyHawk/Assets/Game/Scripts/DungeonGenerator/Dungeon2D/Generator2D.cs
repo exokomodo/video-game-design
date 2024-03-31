@@ -79,8 +79,15 @@ public class Generator2D : MonoBehaviour {
         Triangulate();
         CreateHallways();
         PathfindHallways();
-
         Hallway.RemoveWalls(grid);
+
+    }
+
+    public void CreateDoorways() {
+        for (int i=0; i<Hallways.Count; i++) {
+            Hallway h = Hallways[i];
+            h.CreateDoorways();
+        }
     }
 
     void PlaceRooms() {
