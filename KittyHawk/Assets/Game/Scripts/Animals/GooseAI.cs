@@ -80,6 +80,7 @@ public class GooseAI : MonoBehaviour
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
+        Debug.Log($"Goose has been attacked with a {eventType}!");
         if (eventType == AttackEvent.ATTACK_TARGET_HIT && c == cl)
         {
             Debug.Log("A goose has been hit by Kitty!");
@@ -94,7 +95,7 @@ public class GooseAI : MonoBehaviour
     }
 
     // Turns off everything for the Goose to save resources and to stop it from
-    private void Die()
+    public void Die()
     {
         // Turns everything off and reduces Goose velocity
         isAlive = false;

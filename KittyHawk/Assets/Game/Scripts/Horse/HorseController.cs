@@ -22,8 +22,7 @@ public class HorseController : MonoBehaviour
         if (c.CompareTag("Goose"))
         {
             Debug.Log("Horse hit goose");
-            // EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
-            Destroy(c.gameObject);
+            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
         }
     }
 
