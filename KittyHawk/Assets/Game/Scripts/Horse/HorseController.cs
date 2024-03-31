@@ -13,8 +13,17 @@ public class HorseController : MonoBehaviour
     private Animator _animator;
     #endregion
     public float Velocity = 1f;
+    private float _preDeathVelocity;
+    private bool _isDying = false;
 
     private UnityAction<float> volumeChangeListener;
+
+    private void WhoaNelly()
+    {
+        _preDeathVelocity = Velocity;
+        _isDying = true;
+        EventManager.TriggerEvent<KillKittyEvent>();
+    }
 
     #region Unity hooks
     private void OnTriggerEnter(Collider c)
@@ -22,6 +31,10 @@ public class HorseController : MonoBehaviour
         if (c.CompareTag("Goose"))
         {
             EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
+        }
+        else if (c.CompareTag("Pond"))
+        {
+            WhoaNelly();
         }
     }
 
@@ -58,6 +71,10 @@ public class HorseController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isDying)
+        {
+            Velocity = Mathf.Lerp(_preDeathVelocity, 0f, Time.deltaTime);
+        }
         UpdateAnimation();
         UpdateAudio();
     }
