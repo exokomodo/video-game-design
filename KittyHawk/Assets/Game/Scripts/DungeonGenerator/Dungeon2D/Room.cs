@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// Construct a single hallway and its collection of grid cells
@@ -20,6 +21,9 @@ public class Room: UnityEngine.Object {
 
     protected static string RoomName = "Room";
     protected static string BufferName = "Buffer";
+
+    public bool isStart = false;
+    public bool isEnd = false;
 
     public Vector3 position {
         get {
@@ -102,10 +106,15 @@ public class Room: UnityEngine.Object {
         floor.transform.localScale = new Vector3(bounds.size.x, 0.001f, bounds.size.y);
     }
 
-    public void RemoveSegment(Vector2Int point)
-    {
+    public void RemoveSegment(Vector2Int point) {
         GameObject segment = Segments[point];
-        segment?.SetActive(false);
+        BoxCollider c = segment.GetComponent<BoxCollider>();
+        NavMeshObstacle ob = segment.GetComponent<NavMeshObstacle>();
+        MeshRenderer r = segment.GetComponent<MeshRenderer>();
+        r.enabled = false;
+        ob.enabled = false;
+        c.isTrigger = true;
+        segment.tag = "Door";
     }
 
     private void DrawWallCells(GameObject wallPrefab, Vector2 origin, int width=0, int depth=0) {

@@ -958,6 +958,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bunny
       objectReference: {fileID: 0}
+    - target: {fileID: 6474687216775924122, guid: d141844d6fab540789a312e0d66dcd4d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Finish
+      objectReference: {fileID: 0}
     - target: {fileID: 7283992953964862262, guid: d141844d6fab540789a312e0d66dcd4d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1759,7 +1764,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602868447}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1951,7 +1956,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687610720}
   m_LocalRotation: {x: 0.27232718, y: -0.000000028675938, z: 0.000000008115983, w: 0.9622047}
-  m_LocalPosition: {x: 2.94, y: 2.2, z: -0.28999996}
+  m_LocalPosition: {x: 2.94, y: 2, z: -0.28999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2078,6 +2083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Goose
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773201539212831452, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6773201539212831452, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
@@ -2686,7 +2696,7 @@ PrefabInstance:
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4299315680059761001, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}

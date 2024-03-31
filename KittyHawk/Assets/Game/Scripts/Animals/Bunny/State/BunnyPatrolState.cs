@@ -30,6 +30,6 @@ public sealed class BunnyPatrolState : BunnyBaseState {
     }
 
     public override void Exit(Bunny m) {
-        Debug.Log("Leaving BunnyPatrolState");
+        // Debug.Log("Leaving BunnyPatrolState");
     }
 }

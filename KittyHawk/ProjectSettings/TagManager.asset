@@ -15,6 +15,7 @@ TagManager:
   - Goose
   - Carrot
   - Wall
+  - Door
   layers:
   - Default
   - TransparentFX
