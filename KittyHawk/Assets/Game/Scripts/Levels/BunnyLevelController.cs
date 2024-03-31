@@ -24,11 +24,20 @@ public class BunnyLevelController : MonoBehaviour {
     [SerializeField]
     GameObject GoosePrefab;
 
+    [SerializeField]
+    bool Testing = false;
+
     protected Room startRoom;
     protected Room endRoom;
     protected Vector3 startRoomPos;
     protected Vector3 endRoomPos;
 
+    private void Awake() {
+        if (Testing) {
+            Generator.minRoomCount = 4;
+            Generator.roomCount = 4;
+        }
+    }
 
     private void Start() {
         // Place characters in dungeon

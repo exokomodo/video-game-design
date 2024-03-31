@@ -108,6 +108,8 @@ public class Room: UnityEngine.Object {
 
     public void RemoveSegment(Vector2Int point) {
         GameObject segment = Segments[point];
+        segment?.SetActive(false);
+        /*
         Debug.Log("isEnd: " + isEnd);
         if (!isEnd) {
             segment?.SetActive(false);
@@ -120,6 +122,7 @@ public class Room: UnityEngine.Object {
         ob.enabled = false;
         c.isTrigger = true;
         segment.tag = "Door";
+        */
     }
 
     private void DrawWallCells(GameObject wallPrefab, Vector2 origin, int width=0, int depth=0) {
@@ -165,7 +168,7 @@ public class Room: UnityEngine.Object {
         GameObject go = new GameObject($"Waypoint: {pos}");
         go.transform.localScale = new Vector3(1f, 1, 1f);
         go.transform.position = pos;
-        Debug.Log(go.name);
+        // Debug.Log(go.name);
         return go;
     }
 

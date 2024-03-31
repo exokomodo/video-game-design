@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 using Graphs;
+using System;
 
 /// <summary>
 /// Dungeon Generator adapted from
@@ -22,7 +23,10 @@ public class Generator2D : MonoBehaviour {
     [SerializeField]
     public Vector2Int size = new Vector2Int(30, 30);
     [SerializeField]
-    int roomCount = 20;
+    public int minRoomCount = 6;
+
+    [SerializeField]
+    public int roomCount = 20;
     [SerializeField]
     Vector2Int roomMinSize = new Vector2Int(5, 5);
     [SerializeField]
@@ -46,6 +50,10 @@ public class Generator2D : MonoBehaviour {
     float redundantHallwaysPct = 0.125f;
 
     private int hallWidth = 1;
+    [HideInInspector]
+    public int retries = 0;
+    [SerializeField]
+    public int maxRetries = 1000;
 
     Random random;
     Grid2D<CellType> grid;
@@ -58,10 +66,20 @@ public class Generator2D : MonoBehaviour {
     private const string rootName = "Generator2DRoot";
 
     private void Awake() {
+
+    }
+
+    protected void Start() {
+        retries = 0;
         Generate();
     }
 
     public void Generate() {
+        // Debug.Log($"retries: {retries}");
+        if (++retries >= maxRetries) {
+            Debug.LogWarning("Could not generate a dungeon with the given parameters in the available number of retries. Please adjust generation settings and try again.");
+            return;
+        }
         random = new Random();
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
         Rooms = new List<Room>();
@@ -76,11 +94,29 @@ public class Generator2D : MonoBehaviour {
         root = new GameObject(rootName);
 
         PlaceRooms();
-        Triangulate();
-        CreateHallways();
-        PathfindHallways();
+        if (Rooms.Count < minRoomCount) {
+            // Debug.Log($"Rooms: {Rooms.Count}, {roomCount}");
+            Generate();
+            return;
+        }
+        try {
+            Triangulate();
+            CreateHallways();
+            PathfindHallways();
+        } catch (Exception e) {
+            Debug.LogWarning(e);
+            Generate();
+            return;
+        }
+
+        // Debug.Log($"Rooms: {Rooms.Count}, Hallways: {Hallways.Count}");
+        if (Hallways.Count < Rooms.Count-1) {
+            Generate();
+            return;
+        }
         Hallway.RemoveWalls(grid);
 
+        Debug.Log($"Final RoomCount: {Rooms.Count}");
     }
 
     public void CreateDoorways() {
@@ -90,8 +126,9 @@ public class Generator2D : MonoBehaviour {
         }
     }
 
-    void PlaceRooms() {
-        for (int i = 0; i < roomCount; i++) {
+    protected void PlaceRooms() {
+        for (int i = 0; i < 1000; i++) {
+            // Debug.Log("PlaceRooms:" + i);
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
                 random.Next(0, size.y)
@@ -135,6 +172,7 @@ public class Generator2D : MonoBehaviour {
                 foreach (var pos in newRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
                 }
+                if (Rooms.Count >= roomCount) return;
             }
         }
     }
@@ -244,6 +282,7 @@ public class RoomGraphGeneratorEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Generate"))
         {
+            script.retries = 0;
             script.Generate();
         }
     }
