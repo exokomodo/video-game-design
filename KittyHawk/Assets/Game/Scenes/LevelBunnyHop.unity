@@ -1256,18 +1256,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.67, z: 2}
   m_Center: {x: 0, y: 0.36, z: 0.25}
+--- !u!1 &1477476493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4915497341926025845, guid: d141844d6fab540789a312e0d66dcd4d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1293333826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1477476497 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4999104863408347191, guid: d141844d6fab540789a312e0d66dcd4d,
     type: 3}
   m_PrefabInstance: {fileID: 1293333826}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1477476493}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a25ed8e01358741f096b873cd8e62764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &1477476502
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477476493}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1581325396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2627,12 +2646,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001646809
+      value: 0.000000016468091
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000004986136
+      value: -0.000000004986137
       objectReference: {fileID: 0}
     - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2807,7 +2826,7 @@ PrefabInstance:
     - target: {fileID: 6216663684827824130, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000006200821
+      value: -0.000000006200822
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}

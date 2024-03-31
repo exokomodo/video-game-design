@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 
   void OnTriggerEnter(Collider c)
   {
-    if (c.CompareTag("Door")) {
+    if (c.CompareTag("Bunny")) {
       Debug.Log("OnTriggerEnter Doorway");
       EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.END_ROOM_ENTERED, c);
       return;
