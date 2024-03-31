@@ -88,6 +88,7 @@ public class GooseAI : MonoBehaviour
         }
         else if (eventType == AttackEvent.ATTACK_WITH_HORSE && c == cl)
         {
+            Debug.Log("A goose has been hit by horse!");
             Die();
         }
     }
