@@ -80,7 +80,8 @@ public class GooseAI : MonoBehaviour
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
-        if (c.gameObject != gameObject) return;
+        // if (c.gameObject != gameObject) return; // was causing undefined object error
+        if (c != cl) return;
         switch (eventType)
         {
             case AttackEvent.ATTACK_TARGET_HIT:

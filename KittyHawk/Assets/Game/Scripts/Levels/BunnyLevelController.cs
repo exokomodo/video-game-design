@@ -77,10 +77,24 @@ public class BunnyLevelController : MonoBehaviour {
                 }
             }
             if (hasFollowers) {
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(Player.transform.position, "success1");
                 inventory.Bunnies += followerCount;
-                EventManager.TriggerEvent<AudioEvent, Vector3, string>(go.transform.position, "success1");
+                if (inventory.Bunnies == inventory.BunniesTotal) {
+                    LevelComplete();
+                }
+
             }
         }
+    }
+
+    private void LevelComplete() {
+        Debug.Log("YOU WIN!!");
+        Invoke("TriggerLevelCompleteSound", 1.25f);
+
+    }
+
+    private void TriggerLevelCompleteSound() {
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(Player.transform.position, "success-fanfare-trumpets");
     }
 
     private List<BabyBunny> GetFollowers() {
