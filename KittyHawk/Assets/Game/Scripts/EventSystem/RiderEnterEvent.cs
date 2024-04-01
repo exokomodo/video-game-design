@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// RiderEnterEvent represents an event for when a rider collides with an object
+/// RiderEnterEvent notifies a saddle to be ridden
 /// Author: James Orson
 /// </summary>
 
-public class RiderEnterEvent : UnityEvent<Saddle, GameObject> { }
+public class RiderEnterEvent : UnityEvent { }

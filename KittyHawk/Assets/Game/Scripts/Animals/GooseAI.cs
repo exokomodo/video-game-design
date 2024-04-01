@@ -80,20 +80,34 @@ public class GooseAI : MonoBehaviour
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
-        if (eventType == AttackEvent.ATTACK_TARGET_HIT && c == cl)
+        if (c.gameObject != gameObject) return;
+        switch (eventType)
         {
-            Debug.Log("A goose has been hit by Kitty!");
-            // TODO: Subtract health and potentially enter die state?
-            EnterFleeState();
+            case AttackEvent.ATTACK_TARGET_HIT:
+            {
+                Debug.Log("A goose has been hit by Kitty!");
+                // TODO: Subtract health and potentially enter die state?
+                EnterFleeState();
+                break;
+            }
+            case AttackEvent.ATTACK_WITH_HORSE:
+            {
+                Die();
+                break;
+            }
+            default:
+            {
+                break;
+            }
         }
     }
 
     // Turns off everything for the Goose to save resources and to stop it from
-    private void Die()
+    public void Die()
     {
         // Turns everything off and reduces Goose velocity
         isAlive = false;
-        //AIAgent.enabled = false;
+        agent.ResetPath();
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
 
@@ -101,6 +115,7 @@ public class GooseAI : MonoBehaviour
         anim.Play("Idle");
 
         cl.isTrigger = true;
+        Destroy(gameObject, 5f);
     }
 
     private void OnCollisionEnter(Collision other)

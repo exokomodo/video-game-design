@@ -31,6 +31,8 @@ public class Saddle : MonoBehaviour
     protected float _oldFov = 0f;
     #endregion
 
+    public bool IsMounted => _rider != null;
+
     #region Protected methods
     protected void TurnLeft()
     {
@@ -55,9 +57,6 @@ public class Saddle : MonoBehaviour
         }
         _rider = GameObject.FindGameObjectsWithTag("Player")
             .FirstOrDefault(x => x.GetComponent<PlayerController>());
-        EventManager.TriggerEvent<RiderEnterEvent, Saddle, GameObject>(
-            this,
-            _rider);
         _playerController = _rider.GetComponent<PlayerController>();
         _waypointAI.SetCarrot(CarrotForward);
         _playerController.ToggleActive(false);
@@ -76,9 +75,6 @@ public class Saddle : MonoBehaviour
     protected void Dismount()
     {
         _input.JumpEvent -= Dismount;
-        EventManager.TriggerEvent<RiderExitEvent, Saddle, GameObject>(
-            this,
-            _rider);
         _playerController.ToggleActive(true);
         _waypointAI.SetCarrot(null);
         if (_cinemachineFreeLook != null)
@@ -119,7 +115,7 @@ public class Saddle : MonoBehaviour
     {
         if (c.CompareTag(RiderTag) && _rider == null)
         {
-            Mount();
+            EventManager.TriggerEvent<RiderEnterEvent>();
         }
     }
 
@@ -153,6 +149,9 @@ public class Saddle : MonoBehaviour
 
     private void Start()
     {
+        EventManager.StartListening<RiderEnterEvent>(Mount);
+        EventManager.StartListening<RiderExitEvent>(Dismount);
+
         _input = GetComponent<InputReader>();
         _waypointAI = GetComponent<WaypointAI>();
         Debug.Assert(GetComponent<Rigidbody>() != null, "Saddle must have a rigidbody");
