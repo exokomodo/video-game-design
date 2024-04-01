@@ -72,7 +72,7 @@ public class HorseController : MonoBehaviour
     {
         if (_isSlowing)
         {
-            Velocity = Mathf.Lerp(Velocity, 0f, Time.deltaTime);
+            Velocity = Mathf.Clamp(Velocity - Time.fixedDeltaTime, 0f, 1f);
             if (Velocity <= 0.1f && saddle.IsMounted)
             {
                 EventManager.TriggerEvent<KillKittyEvent>();
