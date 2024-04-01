@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -29,7 +30,7 @@ public class HorseObjectiveController : MonoBehaviour
     private void Start()
     {
         EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
-        gooseSceneCount = GameObject.FindGameObjectsWithTag("Goose").Length;
+        gooseSceneCount = GameObject.FindGameObjectsWithTag("Goose").Where(x => x.activeInHierarchy).Count();
         EventManager.StartListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
                 "HorseObjective",
