@@ -31,6 +31,8 @@ public class Saddle : MonoBehaviour
     protected float _oldFov = 0f;
     #endregion
 
+    public bool IsMounted => _rider != null;
+
     #region Protected methods
     protected void TurnLeft()
     {

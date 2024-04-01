@@ -9,6 +9,7 @@ using UnityEngine.Events;
 public class HorseController : MonoBehaviour
 {
     #region Unity Components
+    public Saddle saddle;
     private AudioSource _gallopAudio;
     private Animator _animator;
     #endregion
@@ -20,7 +21,6 @@ public class HorseController : MonoBehaviour
     private void WhoaNelly()
     {
         _isSlowing = true;
-        EventManager.TriggerEvent<KillKittyEvent>();
     }
 
     #region Unity hooks
@@ -40,6 +40,7 @@ public class HorseController : MonoBehaviour
     {
         _animator = GetComponentInChildren<Animator>();
         _gallopAudio = GetComponent<AudioSource>();
+        saddle = GetComponent<Saddle>();
 
         volumeChangeListener = new UnityAction<float>(VolumeChangeHandler);
         EventManager.StartListening<VolumeChangeEvent, float>(volumeChangeListener);
@@ -72,6 +73,10 @@ public class HorseController : MonoBehaviour
         if (_isSlowing)
         {
             Velocity = Mathf.Lerp(Velocity, 0f, Time.deltaTime);
+            if (Velocity <= 0.1f && saddle.IsMounted)
+            {
+                EventManager.TriggerEvent<KillKittyEvent>();
+            }
         }
         UpdateAnimation();
         UpdateAudio();
