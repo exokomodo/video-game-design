@@ -76,6 +76,7 @@ public class HorseController : MonoBehaviour
             if (Velocity <= 0.1f && saddle.IsMounted)
             {
                 EventManager.TriggerEvent<KillKittyEvent>();
+                _isSlowing = false;
             }
         }
         UpdateAnimation();
