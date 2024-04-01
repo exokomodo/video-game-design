@@ -15,5 +15,4 @@ public static class InputMap
     public static bool IsSprinting => Input.GetKey(InputMap.Sprint) || Input.GetKey(InputMap.SprintAlt);
     public static bool ShouldQuitApplication => Input.GetKeyUp(InputMap.HardQuit);
     public static bool ShouldToggleControlsUI => Input.GetKeyUp(InputMap.ToggleControlsUI);
-    public static bool ShouldToggleCursor => Input.GetKeyUp(InputMap.ToggleCursor);
 }

@@ -83,6 +83,7 @@ public class PauseMenuController : MonoBehaviour
     {
         if (isPaused)
         {
+            EventManager.TriggerEvent<CursorLockEvent, bool>(true);
             pauseCanvas.enabled = false;
             Time.timeScale = 1f;
             isPaused = false;
@@ -90,6 +91,7 @@ public class PauseMenuController : MonoBehaviour
         }
         else
         {
+            EventManager.TriggerEvent<CursorLockEvent, bool>(false);
             // PlayConfirmSound();
             pauseCanvas.enabled = true;
             Time.timeScale = 0f;
