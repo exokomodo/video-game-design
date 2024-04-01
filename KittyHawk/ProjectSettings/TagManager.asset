@@ -14,9 +14,7 @@ TagManager:
   - Chick
   - Goose
   - Carrot
-  - Wall
-  - Door
-  - Bunny
+  - Pond
   layers:
   - Default
   - TransparentFX

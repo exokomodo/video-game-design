@@ -14,4 +14,5 @@ public class AttackEvent: UnityEvent<string, float, Collider>
 
     public const string ATTACK_STATE_ENTER = "AttackStateEnter";
     public const string ATTACK_STATE_EXIT = "AttackStateExit";
+    public const string ATTACK_WITH_HORSE = "AttackWithHorse";
 }

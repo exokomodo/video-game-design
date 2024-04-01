@@ -112,6 +112,14 @@ public class PlayerController : MonoBehaviour {
     EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
     EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StartListening<VolumeChangeEvent, float>(VolumeChangeHandler);
+    EventManager.StartListening<KillKittyEvent>(Die);
+  }
+
+  private void Die()
+  {
+    _isDead = true;
+    stateMachine.SwitchState(new PlayerDieState(stateMachine));
+    ToggleActive(false);
   }
 
   private void Start()
@@ -158,11 +166,8 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-          _isDead = true;
-          stateMachine.SwitchState(new PlayerDieState(stateMachine));
-          ToggleActive(false);
+          EventManager.TriggerEvent<KillKittyEvent>();
         }
-
       }
     }
   }
