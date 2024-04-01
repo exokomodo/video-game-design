@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 104560403194836956}
   - component: {fileID: 104560403194836928}
   - component: {fileID: 104560403194836931}
+  - component: {fileID: 596780716205489720}
   m_Layer: 0
   m_Name: ManagementTeam
   m_TagString: Untagged
@@ -77,6 +78,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catnipTextObject: {fileID: 0}
   lifeTextObject: {fileID: 0}
+  bunniesTextObject: {fileID: 0}
+  bunniesTotalTextObject: {fileID: 0}
 --- !u!114 &104560403194836957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  musicName: MainGameMusic
+  objectives: []
+  nextLevel: 
 --- !u!82 &104560403194836931
 AudioSource:
   m_ObjectHideFlags: 0
@@ -213,3 +219,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &596780716205489720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104560403194836952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
