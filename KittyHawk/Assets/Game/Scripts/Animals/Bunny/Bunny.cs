@@ -37,14 +37,16 @@ public class Bunny : MonoBehaviour
   {
     IDLE,
     MOVE,
-    JUMP
+    JUMP,
+    CELEBRATE
   }
 
   public enum BunnyState
   {
     PATROL,
     PURSUE,
-    FOLLOW
+    FOLLOW,
+    CELEBRATE
   }
 
   public bool UpdateAgent {
@@ -114,7 +116,7 @@ public class Bunny : MonoBehaviour
     FSM.ChangeState(e);
   }
 
-  public void SetNextWaypoint()
+  public virtual void SetNextWaypoint()
   {
       if (Waypoints.Count < 2) ChangeState(BunnyIdleState.Instance);
       if (++currWaypoint >= Waypoints.Count) currWaypoint = 0;
@@ -144,6 +146,7 @@ public class Bunny : MonoBehaviour
 
   protected BunnyBaseState GetState()
   {
+    // return BunnyCelebrateState.Instance;
     if (followMode && followTarget != null)
     {
       return BunnyFollowState.Instance;

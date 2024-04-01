@@ -144,9 +144,13 @@ public class BunnyLevelController : MonoBehaviour {
         // Debug.Log($"PlaceBunnies > limit: {limit}");
         for (int i=0; i<limit; i++) {
             Room room = Generator.Rooms[i];
-            // Debug.Log($"PlaceBunnies > room: {room}");
-            if (room.position == startRoom.position || room.position == endRoom.position) continue;
             BabyBunny baby = babyBunnies[i];
+            // Debug.Log($"PlaceBunnies > room: {room}");
+            if (room.position == startRoom.position || room.position == endRoom.position) {
+                baby.Disable();
+                continue;
+            };
+
             // Debug.Log($"PlaceBunnies > i: {i}");
             baby.position = new Vector3(room.center.x, 0, room.center.y);
             baby.Waypoints = room.GenerateWaypoints();

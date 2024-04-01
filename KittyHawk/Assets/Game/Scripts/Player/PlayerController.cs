@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour {
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
-    Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
+    // Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
     switch (eventName)
     {
       case AnimationStateEvent.INTERACTION_COMPLETE:
