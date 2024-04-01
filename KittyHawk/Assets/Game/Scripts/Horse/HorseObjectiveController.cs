@@ -29,12 +29,13 @@ public class HorseObjectiveController : MonoBehaviour
     #region Unity lifecycle
     private void Start()
     {
-        EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
         gooseSceneCount = GameObject.FindGameObjectsWithTag("Goose").Where(x => x.activeInHierarchy).Count();
+        EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
         EventManager.StartListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
                 "HorseObjective",
                 ObjectiveStatus.InProgress);
+        Debug.Log("Count of geese: " + gooseSceneCount);
     }
 
     private void OnHorseEnterPondEvent()
@@ -47,6 +48,7 @@ public class HorseObjectiveController : MonoBehaviour
     private void OnHorseTrampleGooseEvent()
     {
         gooseSceneCount--;
+        Debug.Log("New count of geese: " + gooseSceneCount);
         if (gooseSceneCount == 0)
         {
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
