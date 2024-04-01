@@ -13,15 +13,13 @@ public class HorseController : MonoBehaviour
     private Animator _animator;
     #endregion
     public float Velocity = 1f;
-    private float _preDeathVelocity;
-    private bool _isDying = false;
+    private bool _isSlowing = false;
 
     private UnityAction<float> volumeChangeListener;
 
     private void WhoaNelly()
     {
-        _preDeathVelocity = Velocity;
-        _isDying = true;
+        _isSlowing = true;
         EventManager.TriggerEvent<KillKittyEvent>();
     }
 
@@ -71,9 +69,9 @@ public class HorseController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isDying)
+        if (_isSlowing)
         {
-            Velocity = Mathf.Lerp(_preDeathVelocity, 0f, Time.deltaTime);
+            Velocity = Mathf.Lerp(Velocity, 0f, Time.deltaTime);
         }
         UpdateAnimation();
         UpdateAudio();

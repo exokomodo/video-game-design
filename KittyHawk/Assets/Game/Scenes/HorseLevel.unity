@@ -7202,6 +7202,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1655316051987150, guid: 548bedb53320de946a3d6ca14d0295ee, type: 3}
+      propertyPath: m_TagString
+      value: Pond
+      objectReference: {fileID: 0}
     - target: {fileID: 4203737012360812, guid: 548bedb53320de946a3d6ca14d0295ee, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.2
@@ -7249,6 +7253,16 @@ PrefabInstance:
     - target: {fileID: 4407853678248076, guid: 548bedb53320de946a3d6ca14d0295ee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64285696533294252, guid: 548bedb53320de946a3d6ca14d0295ee,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64285696533294252, guid: 548bedb53320de946a3d6ca14d0295ee,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 548bedb53320de946a3d6ca14d0295ee, type: 3}
