@@ -172,16 +172,6 @@ public class ChickenAI : MonoBehaviour
         timeUntilNextWalk = Random.Range(3.0f, 10.0f);
     }
 
-    //TODO: Update this
-    private void SetChickenDestination(Vector3 targetPos)
-    {
-        newPosition.y = transform.position.y;
-        ChangeLookDirection(targetPos);
-        agent.SetDestination(targetPos);
-        ResetPatrolTimer();
-    }
-
-    //TODO: Update this to take a parameter 
     private void ChangeLookDirection(Vector3 targetPos)
     {
         // Make the chicken look at the new position. Uses euler transformation because the model 
@@ -189,6 +179,14 @@ public class ChickenAI : MonoBehaviour
         Vector3 lookPosition = targetPos - currentPosition;
         Quaternion rotation = Quaternion.LookRotation(lookPosition);
         transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
+    }
+
+    private void SetChickenDestination(Vector3 targetPos)
+    {
+        newPosition.y = transform.position.y;
+        ChangeLookDirection(targetPos);
+        agent.SetDestination(targetPos);
+        ResetPatrolTimer();
     }
 
     private void EnterPatrolState()
