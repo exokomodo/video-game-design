@@ -21,26 +21,44 @@ using UnityEngine;
 
 public class CoopGroupController : MonoBehaviour
 {
-    [SerializeField] private int totalChickens = 0;
-    public int chicksToWin;
+    [SerializeField] private int totalCapturedChickens = 0;
+    [SerializeField] private int chicksToWin;
     public bool winnerWinnerChickenDinner;
-    
+
+    public bool kittyNearCoops;
+
     // Start is called before the first frame update
     void Start()
     {
-        // TODO: Automatically set chicks to win or just decide how many it will be
-        totalChickens = 0;
+        GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Chick");
+        chicksToWin = objectsWithTag.Length;
         winnerWinnerChickenDinner = false;
     }
-    
+
     public void addChicken()
     {
-        totalChickens++;
+        totalCapturedChickens++;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            kittyNearCoops = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            kittyNearCoops = false;
+        }
     }
 
     public void checkForWin()
     {
-        if (totalChickens >= chicksToWin)
+        if (totalCapturedChickens >= chicksToWin)
         {
             winnerWinnerChickenDinner = true;
             Debug.Log("Chicken Objective Completed");

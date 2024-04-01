@@ -37,6 +37,9 @@ public class ChickenAI : MonoBehaviour
     private Rigidbody rb;
     private Collider cl;
 
+    private GameObject coopGroup;
+    CoopGroupController coopGroupController;
+
     // Patrol state
     [SerializeField] private float wanderRadius; // Maximum allowable distance the chicken can walk when patrolling
     [SerializeField] private float chanceToWalk; // Random chance 
@@ -66,11 +69,12 @@ public class ChickenAI : MonoBehaviour
     {
         PATROL,
         FLEE,
-        CARRIED // Not used yet
+        INCOOP // Not used yet
     }
 
     void Start()
     {
+
         aiState = AIState.PATROL;
         spawnPosition = this.transform.position;
         agent = GetComponent<NavMeshAgent>();
@@ -78,20 +82,14 @@ public class ChickenAI : MonoBehaviour
         cl = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
         kittyTransform = kitty.GetComponent<Transform>();
-
         gate = GameObject.FindWithTag("Gate");
-        // I'll handle this. 
+        coopGroup = GameObject.FindWithTag("CoopGroup");
+        coopGroupController = coopGroup.GetComponent<CoopGroupController>();
         agent.updateRotation = false;
 
         // Initializing variables needed by states
         wanderRadius = 4f;
         agent.speed = 0.6f;
-    }
-
-    private void DetermineKittyProximity()
-    {
-        UnityEngine.Debug.Log("KITTY NEARBY???");
-        isNearKitty = Vector3.Distance(kittyTransform.position, currentPosition) < KITTY_FLEE_DISTANCE;
     }
 
     // Turns off everything for the chicken to save resources and to stop it from 
@@ -113,13 +111,21 @@ public class ChickenAI : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ChickenCoop") && isAlive)
         {
-            Die();
-
-            // TODO: Make it so all of the chickens don't spawn in the same place
-            transform.position = other.transform.position;
+            UnityEngine.Debug.Log("Chicken has collided with the coop!");
+            if (coopGroupController.kittyNearCoops == true)
+            {
+                UnityEngine.Debug.Log("Chicken has been caught by Kitty!");
+                Die();
+                GameObject coop = other.gameObject;
+                EnterInCoopState(coop);
+            }
+            else {
+                SetChickenDestination(spawnPosition);
+                UnityEngine.Debug.Log("Chicken has NOT entered the coop!");
+            }
         }
 
-        else if (other.gameObject.CompareTag("Gate") && gate.GetComponent<GateController>().gateOpen == false)
+        if (other.gameObject.CompareTag("Gate") && gate.GetComponent<GateController>().gateOpen == false)
         {
             SetChickenDestination(spawnPosition);
         }
@@ -132,6 +138,7 @@ public class ChickenAI : MonoBehaviour
         {
             isNearKitty = true;
         }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -165,13 +172,7 @@ public class ChickenAI : MonoBehaviour
         }
     }
 
-    // Used for patrol state timer
-    private void ResetPatrolTimer()
-    {
-        timeSinceLastWalk = 0f;
-        timeUntilNextWalk = Random.Range(3.0f, 10.0f);
-    }
-
+    #region movement functions
     private void ChangeLookDirection(Vector3 targetPos)
     {
         // Make the chicken look at the new position. Uses euler transformation because the model 
@@ -188,7 +189,9 @@ public class ChickenAI : MonoBehaviour
         agent.SetDestination(targetPos);
         ResetPatrolTimer();
     }
+    #endregion
 
+    #region Patrol State
     private void EnterPatrolState()
     {
         UnityEngine.Debug.Log("Chicken Returning to Patrol State");
@@ -236,6 +239,15 @@ public class ChickenAI : MonoBehaviour
         }
     }
 
+    // Used for patrol state timer
+    private void ResetPatrolTimer()
+    {
+        timeSinceLastWalk = 0f;
+        timeUntilNextWalk = Random.Range(3.0f, 10.0f);
+    }
+
+    #endregion
+    #region Flee State
     private void EnterFleeState()
     {
         UnityEngine.Debug.Log("Chicken Entering Flee State");
@@ -260,7 +272,23 @@ public class ChickenAI : MonoBehaviour
 
             if (!isNearKitty) EnterPatrolState();
         }
+    }
+    #endregion
+    #region InCoop State
+    private void EnterInCoopState(GameObject coop)
+    {
+        UnityEngine.Debug.Log("Chicken Entering InCoop State");
+        aiState = AIState.INCOOP;
+        rb.velocity = Vector3.zero;
+        agent.speed = 0f;
+        anim.SetBool("isWalking", false);
 
+        transform.position = coop.transform.position;
+    }
+
+    private void UpdateInCoopState()
+    {
 
     }
+    #endregion
 }
