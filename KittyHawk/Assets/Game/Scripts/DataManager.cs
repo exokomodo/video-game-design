@@ -10,6 +10,9 @@ public class DataManager : MonoBehaviour
     public int Lives;
     public int Catnip;
 
+    public int Bunnies;
+    public int BunniesTotal;
+
     public float SoundVolume;
     public float MusicVolume;
 
@@ -30,6 +33,8 @@ public class DataManager : MonoBehaviour
 
         Lives = 9;
         Catnip = 0;
+        Bunnies = 0;
+        BunniesTotal = 0;
 
         SoundVolume = 1f;
         MusicVolume = 1f;
@@ -39,6 +44,8 @@ public class DataManager : MonoBehaviour
     {
         PlayerInventory.OnLivesChanged += UpdateLives;
         PlayerInventory.OnCatnipChanged += UpdateCatnip;
+        PlayerInventory.OnBunniesChanged += UpdateBunnies;
+        PlayerInventory.OnBunniesTotalChanged += UpdateBunniesTotal;
 
         EventManager.StartListening<VolumeChangeEvent, float>(UpdateSoundVolume);
         EventManager.StartListening<MusicVolumeChangeEvent, float>(UpdateMusicVolume);
@@ -48,6 +55,8 @@ public class DataManager : MonoBehaviour
     {
         PlayerInventory.OnLivesChanged -= UpdateLives;
         PlayerInventory.OnCatnipChanged -= UpdateCatnip;
+        PlayerInventory.OnBunniesChanged -= UpdateBunnies;
+        PlayerInventory.OnBunniesTotalChanged -= UpdateBunniesTotal;
 
         EventManager.StopListening<VolumeChangeEvent, float>(UpdateSoundVolume);
         EventManager.StopListening<MusicVolumeChangeEvent, float>(UpdateMusicVolume);
@@ -61,6 +70,16 @@ public class DataManager : MonoBehaviour
     private void UpdateCatnip(int catnip)
     {
         Catnip = catnip;
+    }
+
+    private void UpdateBunnies(int bunnies)
+    {
+        Bunnies = bunnies;
+    }
+
+    private void UpdateBunniesTotal(int bunniesTotal)
+    {
+        BunniesTotal = bunniesTotal;
     }
 
     private void UpdateSoundVolume(float volume)

@@ -12,7 +12,7 @@ using UnityEngine.AI;
 /// </summary>
 public class PlayerController : MonoBehaviour {
   private Animator anim;
-  private Rigidbody rb;
+  public Rigidbody rb;
   private InputReader input;
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
@@ -174,6 +174,14 @@ public class PlayerController : MonoBehaviour {
 
   void OnTriggerEnter(Collider c)
   {
+    if (c.CompareTag("Finish")) {
+      // Debug.Log("Kitty has entered finish room");
+      EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.END_ROOM_ENTERED, c);
+    }
+    if (c.CompareTag("Bunny")) {
+      EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
+      return;
+    }
     if (_isAttacking)
     {
       Debug.Log($"HIT Collider {c}");
@@ -220,7 +228,7 @@ public class PlayerController : MonoBehaviour {
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
-    Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
+    // Debug.Log("AnimationEvent received " + eventType + ", " + eventName);
     switch (eventName)
     {
       case AnimationStateEvent.INTERACTION_COMPLETE:
