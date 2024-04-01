@@ -82,24 +82,11 @@ public class GooseAI : MonoBehaviour
     {
         // if (c.gameObject != gameObject) return; // was causing undefined object error
         if (c != cl) return;
-        switch (eventType)
+        if (eventType ==  AttackEvent.ATTACK_TARGET_HIT)
         {
-            case AttackEvent.ATTACK_TARGET_HIT:
-            {
-                Debug.Log("A goose has been hit by Kitty!");
-                // TODO: Subtract health and potentially enter die state?
-                EnterFleeState();
-                break;
-            }
-            case AttackEvent.ATTACK_WITH_HORSE:
-            {
-                Die();
-                break;
-            }
-            default:
-            {
-                break;
-            }
+            Debug.Log("A goose has been hit by Kitty!");
+            // TODO: Subtract health and potentially enter die state?
+            EnterFleeState();
         }
     }
 
@@ -116,7 +103,7 @@ public class GooseAI : MonoBehaviour
         anim.Play("Idle");
 
         cl.isTrigger = true;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision other)

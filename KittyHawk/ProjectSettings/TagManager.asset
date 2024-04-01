@@ -16,6 +16,8 @@ TagManager:
   - Carrot
   - Pond
   - Bunny
+  - Horse
+  - Patrol
   layers:
   - Default
   - TransparentFX

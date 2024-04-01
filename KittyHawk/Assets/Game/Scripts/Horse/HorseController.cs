@@ -26,13 +26,15 @@ public class HorseController : MonoBehaviour
     #region Unity hooks
     private void OnTriggerEnter(Collider c)
     {
-        if (c.CompareTag("Goose"))
-        {
-            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
-        }
-        else if (c.CompareTag("Pond"))
+        Debug.Log($"Horse hit a collider of type({c.GetType()}) on game object with name({c.gameObject.name}) and tag({c.gameObject.tag})");
+        if (c.CompareTag("Pond"))
         {
             WhoaNelly();
+        }
+        else if (c.CompareTag("Goose"))
+        {
+            Debug.Log($"Hit goose with a collider of type: {c.GetType()}");
+            c.gameObject.GetComponent<GooseAI>().Die();
         }
     }
 
