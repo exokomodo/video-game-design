@@ -58,6 +58,7 @@ public class GooseAI : MonoBehaviour
     {
         cl = GetComponent<CapsuleCollider>();
         EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
+        EventManager.StartListening<HorseTrampleGooseEvent, GameObject>(OnHorseTrampleGooseEvent);
     }
 
     void Start()
@@ -90,8 +91,16 @@ public class GooseAI : MonoBehaviour
         }
     }
 
+    private void OnHorseTrampleGooseEvent(GameObject goose)
+    {
+        if (gameObject == goose)
+        {
+            Die();
+        }
+    }
+
     // Turns off everything for the Goose to save resources and to stop it from
-    public void Die()
+    private void Die()
     {
         // Turns everything off and reduces Goose velocity
         isAlive = false;

@@ -29,12 +29,12 @@ public class HorseController : MonoBehaviour
         Debug.Log($"Horse hit a collider of type({c.GetType()}) on game object with name({c.gameObject.name}) and tag({c.gameObject.tag})");
         if (c.CompareTag("Pond"))
         {
-            WhoaNelly();
+            EventManager.TriggerEvent<HorseEnterPondEvent>();
         }
         else if (c.CompareTag("Goose"))
         {
             Debug.Log($"Hit goose with a collider of type: {c.GetType()}");
-            c.gameObject.GetComponent<GooseAI>().Die();
+            EventManager.TriggerEvent<HorseTrampleGooseEvent, GameObject>(c.gameObject);
         }
     }
 
@@ -46,6 +46,7 @@ public class HorseController : MonoBehaviour
 
         volumeChangeListener = new UnityAction<float>(VolumeChangeHandler);
         EventManager.StartListening<VolumeChangeEvent, float>(volumeChangeListener);
+        EventManager.StartListening<HorseEnterPondEvent>(WhoaNelly);
     }
 
     private void UpdateAnimation()
