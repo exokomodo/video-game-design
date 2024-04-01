@@ -27,37 +27,43 @@ public class CursorManager : MonoBehaviour
     #region Unity lifecycle
     private void Start()
     {
+        EventManager.StartListening<CursorLockEvent, bool>(OnCursorLockEvent);
+        EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogueOpenEvent);
+        EventManager.StartListening<DialogueCloseEvent, string>(OnDialogueCloseEvent);
+        // NOTE: Immediately lock cursor by default
         lockCursor();
     }
+
+    private void OnCursorLockEvent(bool shouldLock)
+    {
+        if (shouldLock)
+        {
+            lockCursor();
+        }
+        else
+        {
+            unlockCursor();
+        }
+    }
+
+    private void OnDialogueOpenEvent(Vector3 position, string dialogue)
+    {
+        EventManager.TriggerEvent<CursorLockEvent, bool>(false);
+    }
+
+    private void OnDialogueCloseEvent(string dialogue)
+    {
+        EventManager.TriggerEvent<CursorLockEvent, bool>(true);
+    }
     
-    public void lockCursor()
+    private void lockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void unlockCursor()
+    private void unlockCursor()
     {
         Cursor.lockState = CursorLockMode.None;
-    }
-
-    public void toggleLock()
-    {
-        if (Cursor.lockState == CursorLockMode.Locked)
-        {
-            unlockCursor();
-        }
-        else
-        {
-            lockCursor();
-        }
-    }
-    
-    private void Update()
-    {
-        if (InputMap.ShouldToggleCursor)
-        {
-            toggleLock();
-        }
     }
     #endregion
 }

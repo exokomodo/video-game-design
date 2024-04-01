@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 104560403194836928}
   - component: {fileID: 104560403194836931}
   - component: {fileID: 4118361324376571744}
+  - component: {fileID: 5506372810608105008}
+  - component: {fileID: 4598759823533495873}
   m_Layer: 0
   m_Name: ManagementTeam
   m_TagString: Untagged
@@ -78,8 +80,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catnipTextObject: {fileID: 0}
   lifeTextObject: {fileID: 0}
-  bunniesTextObject: {fileID: 0}
-  bunniesTotalTextObject: {fileID: 0}
 --- !u!114 &104560403194836957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,5 +229,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b9dbca1a51376c679b5eed94aeb1f29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5506372810608105008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104560403194836952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7984dcf12b1813e45bb7045dac642854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentDay: 0
+  Lives: 0
+  Catnip: 0
+  Bunnies: 0
+  BunniesTotal: 0
+  SoundVolume: 0
+  MusicVolume: 0
+--- !u!114 &4598759823533495873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104560403194836952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
