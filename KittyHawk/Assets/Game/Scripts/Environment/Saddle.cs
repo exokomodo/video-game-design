@@ -156,7 +156,7 @@ public class Saddle : MonoBehaviour
         _waypointAI = GetComponent<WaypointAI>();
         Debug.Assert(GetComponent<Rigidbody>() != null, "Saddle must have a rigidbody");
         Debug.Assert(GetComponents<Collider>().Length > 0, "Saddle must at least one collider");
-        Debug.Assert(_waypointAI != null, "Saddle must have a WaypointAI component");
+        // Debug.Assert(_waypointAI != null, "Saddle must have a WaypointAI component"); // Removed due to crashing
         if (CinemachineVirtualCamera != null)
         {
             _cinemachineFreeLook = CinemachineVirtualCamera.GetComponent<Cinemachine.CinemachineFreeLook>();

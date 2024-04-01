@@ -49,7 +49,7 @@ public class Hallway: Object {
                 }
             }
         }
-        CreateDoorways();
+        // CreateDoorways();
     }
 
     /*

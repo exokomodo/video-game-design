@@ -23,6 +23,7 @@ public class Bunny : MonoBehaviour
   protected int VelocityXHash = Animator.StringToHash("VelocityX");
   protected int VelocityZHash = Animator.StringToHash("VelocityZ");
   protected AgentLinkMover mover;
+  protected bool lookAt;
 
   public NavMeshAgent agent;
   public Animator anim;
@@ -82,6 +83,8 @@ public class Bunny : MonoBehaviour
     col = GetComponent<CapsuleCollider>();
     if (col == null) throw new Exception("Collider could not be found");
 
+    EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+
     // followTarget = null;
     // try {
     //   followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
@@ -96,6 +99,14 @@ public class Bunny : MonoBehaviour
 
     FSM = new FiniteStateMachine<Bunny>();
     FSM.Configure(this, GetState());
+  }
+
+  protected void OnLevelEvent(string eventType, Collider c) {
+    switch (eventType) {
+      case LevelEvent<Collider>.END_ROOM_ENTERED:
+        lookAt = true;
+        break;
+    }
   }
 
   public void ChangeState(FSMState<Bunny> e)
@@ -144,18 +155,19 @@ public class Bunny : MonoBehaviour
     return BunnyIdleState.Instance;
   }
 
-  protected void FixedUpdate()
+  protected virtual void FixedUpdate()
+  {
+    if (verticalVelocity < 0f && CheckGrounded())
     {
-      if (verticalVelocity < 0f && CheckGrounded())
-      {
-          verticalVelocity = Physics.gravity.y * Time.fixedDeltaTime;
-      }
-      else
-      {
-          verticalVelocity += Physics.gravity.y * Time.fixedDeltaTime;
-      }
-      FSM.Update();
+        verticalVelocity = Physics.gravity.y * Time.fixedDeltaTime;
     }
+    else
+    {
+        verticalVelocity += Physics.gravity.y * Time.fixedDeltaTime;
+    }
+    if (lookAt) LookAtTarget();
+    FSM.Update();
+  }
 
   // protected void OnAnimatorMove()
   // {
@@ -186,10 +198,22 @@ public class Bunny : MonoBehaviour
     ChangeState(GetState());
   }
 
+  public void LookAtTarget() {
+    Vector3 direction = Vector3.Normalize(followTarget.transform.position - transform.position);
+    transform.rotation = Quaternion.Slerp(
+      transform.rotation,
+      Quaternion.LookRotation(direction),
+      Time.fixedDeltaTime * 2f
+    );
+  }
+
   public void Follow(GameObject target) {
-    Debug.Log("Change to FOLLOW MOVE");
+    // Debug.Log("Change to FOLLOW MOVE");
     followTarget = target;
     followMode = true;
     ChangeState(GetState());
   }
+  protected void OnDestroy() {
+        EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+    }
 }

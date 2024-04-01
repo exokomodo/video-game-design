@@ -54,6 +54,7 @@ public class BunnyLevelController : MonoBehaviour {
         PlaceBunnies();
         PlaceEnemies();
         PlaceGoal();
+        Generator.CreateDoorways();
 
         inventory = PlayerController.GetComponent<PlayerInventory>();
         inventory.Bunnies = 0;
@@ -61,7 +62,7 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void OnLevelEvent(string eventType, Collider c) {
-        if (eventType == LevelEvent<Collider>.END_ROOM_ENTERED) {
+        if (eventType == LevelEvent<Collider>.BUNNY_COLLIDER_ENTERED) {
             bool hasFollowers = false;
             int followerCount = 0;
             GameObject go = GameObject.FindWithTag("Bunny");

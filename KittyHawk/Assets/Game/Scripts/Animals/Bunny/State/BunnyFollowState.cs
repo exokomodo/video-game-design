@@ -26,7 +26,7 @@ public sealed class BunnyFollowState : BunnyBaseState {
 
   public override void Enter(Bunny b)
   {
-    Debug.Log("Enter BunnyFollowState");
+    // Debug.Log("Enter BunnyFollowState");
     base.Enter(b);
     b.UpdateAgent = true;
     SwitchAnimState(b, (int)Bunny.BunnyAnimState.MOVE);
@@ -85,8 +85,8 @@ public sealed class BunnyFollowState : BunnyBaseState {
     }
   }
 
-  public override void Exit(Bunny m) {
-    Debug.Log("Exit BunnyFollowState");
+  public override void Exit(Bunny b) {
+    // Debug.Log("Exit BunnyFollowState");
   }
 
   private float TargetDistance(Bunny b)
