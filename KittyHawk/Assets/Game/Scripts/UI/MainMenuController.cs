@@ -44,6 +44,7 @@ public class MainMenuController : MonoBehaviour
     public void StartGame()
     {
         PlayConfirmSound();
+        EventManager.TriggerEvent<CursorLockEvent, bool>(true);
         //SceneManager.LoadScene(firstLevelName);
         StartCoroutine(LoadFirstScene());
     }
