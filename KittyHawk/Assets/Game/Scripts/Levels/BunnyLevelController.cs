@@ -14,6 +14,8 @@ public class BunnyLevelController : MonoBehaviour {
 
     [SerializeField]
     Rigidbody Player;
+    [SerializeField]
+    PlayerController PlayerController;
 
     [SerializeField]
     Bunny bunnyController;
@@ -32,6 +34,9 @@ public class BunnyLevelController : MonoBehaviour {
     protected Vector3 startRoomPos;
     protected Vector3 endRoomPos;
 
+    PlayerInventory inventory;
+
+
     private void Awake() {
         if (Testing) {
             Generator.minRoomCount = 4;
@@ -41,18 +46,50 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void Start() {
         // Place characters in dungeon
-        EventManager.StartListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
+        // EventManager.StartListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
+        EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+
         FindStartAndEnd();
         PlacePlayer();
         PlaceBunnies();
         PlaceEnemies();
         PlaceGoal();
 
-        Generator.CreateDoorways();
+        inventory = PlayerController.GetComponent<PlayerInventory>();
+        inventory.Bunnies = 0;
+        inventory.BunniesTotal = Generator.Rooms.Count - 2;
     }
 
-    private void OnLevelEvent(string eventType, BabyBunny bb) {
+    private void OnLevelEvent(string eventType, Collider c) {
+        if (eventType == LevelEvent<Collider>.END_ROOM_ENTERED) {
+            bool hasFollowers = false;
+            int followerCount = 0;
+            GameObject go = GameObject.FindWithTag("Bunny");
+            List<GameObject> waypoints = new List<GameObject>{go};
+            for (int i=0; i<babyBunnies.Count; i++) {
+                BabyBunny b = babyBunnies[i];
+                if (b.followMode) {
+                    hasFollowers = true;
+                    b.currWaypoint = 0;
+                    b.Waypoints = waypoints;
+                    b.Patrol();
+                    followerCount++;
+                }
+            }
+            if (hasFollowers) {
+                inventory.Bunnies += followerCount;
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(go.transform.position, "success1");
+            }
+        }
+    }
 
+    private List<BabyBunny> GetFollowers() {
+        List<BabyBunny> followers = new List<BabyBunny>();
+        for (int i=0; i<babyBunnies.Count; i++) {
+            BabyBunny b = babyBunnies[i];
+            if (b.followMode) followers.Add(b);
+        }
+        return followers;
     }
 
     private void FixedUpdate() {
@@ -123,6 +160,6 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        EventManager.StopListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
+        EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
     }
 }

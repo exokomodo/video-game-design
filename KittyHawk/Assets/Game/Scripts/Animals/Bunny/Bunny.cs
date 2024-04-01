@@ -13,7 +13,8 @@ public class Bunny : MonoBehaviour
 {
   protected Rigidbody rb;
   protected CapsuleCollider col;
-  protected int currWaypoint = 0;
+  [HideInInspector]
+  public int currWaypoint = 0;
   protected FiniteStateMachine<Bunny> FSM;
   protected float verticalVelocity = 0f;
   protected float groundCheckTolerance = 0.1f;

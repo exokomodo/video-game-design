@@ -49,8 +49,7 @@ public class Hallway: Object {
                 }
             }
         }
-
-
+        CreateDoorways();
     }
 
     /*

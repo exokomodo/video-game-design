@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour {
     if (c.CompareTag("Bunny")) {
       Debug.Log("OnTriggerEnter Doorway");
       EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.END_ROOM_ENTERED, c);
-      EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success-fanfare-trumpets");
+      // EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success-fanfare-trumpets");
       return;
     }
     if (_isAttacking)

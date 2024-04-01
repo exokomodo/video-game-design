@@ -119,12 +119,12 @@ public class Generator2D : MonoBehaviour {
         Debug.Log($"Final RoomCount: {Rooms.Count}");
     }
 
-    public void CreateDoorways() {
-        for (int i=0; i<Hallways.Count; i++) {
-            Hallway h = Hallways[i];
-            h.CreateDoorways();
-        }
-    }
+    // public void CreateDoorways() {
+    //     for (int i=0; i<Hallways.Count; i++) {
+    //         Hallway h = Hallways[i];
+    //         h.CreateDoorways();
+    //     }
+    // }
 
     protected void PlaceRooms() {
         for (int i = 0; i < 1000; i++) {
