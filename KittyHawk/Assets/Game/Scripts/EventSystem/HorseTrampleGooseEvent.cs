@@ -6,4 +6,4 @@ using UnityEngine.Events;
 /// Author: James Orson
 /// </summary>
 
-public class HorseTrampleGooseEvent : UnityEvent<GameObject> {}
+public class HorseTrampleGooseEvent : UnityEvent {}

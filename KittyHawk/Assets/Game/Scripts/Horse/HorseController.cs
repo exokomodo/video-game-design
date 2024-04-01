@@ -34,7 +34,8 @@ public class HorseController : MonoBehaviour
         else if (c.CompareTag("Goose"))
         {
             Debug.Log($"Hit goose with a collider of type: {c.GetType()}");
-            EventManager.TriggerEvent<HorseTrampleGooseEvent, GameObject>(c.gameObject);
+            EventManager.TriggerEvent<HorseTrampleGooseEvent>();
+            c.gameObject.GetComponent<GooseAI>().Die();
         }
     }
 

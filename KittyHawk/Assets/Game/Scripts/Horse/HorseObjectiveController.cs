@@ -28,7 +28,7 @@ public class HorseObjectiveController : MonoBehaviour
     #region Unity lifecycle
     private void Start()
     {
-        EventManager.StartListening<HorseTrampleGooseEvent, GameObject>(OnHorseTrampleGooseEvent);
+        EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
         gooseSceneCount = GameObject.FindGameObjectsWithTag("Goose").Length;
         EventManager.StartListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
@@ -43,7 +43,7 @@ public class HorseObjectiveController : MonoBehaviour
                 ObjectiveStatus.Failed);
     }
 
-    private void OnHorseTrampleGooseEvent(GameObject goose)
+    private void OnHorseTrampleGooseEvent()
     {
         gooseSceneCount--;
         if (gooseSceneCount == 0)
