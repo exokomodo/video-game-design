@@ -7,6 +7,23 @@ using UnityEngine;
 
 public class CursorManager : MonoBehaviour
 {
+    private static CursorManager _instance;
+    public static CursorManager Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                _instance = FindObjectOfType(typeof(CursorManager)) as CursorManager;
+                if (!_instance)
+                {
+                    Debug.LogError($"There needs to be one active {nameof(CursorManager)} script on a GameObject in your scene.");
+                }
+            }
+            return _instance;
+        }
+    }
+
     #region Unity lifecycle
     private void Start()
     {
