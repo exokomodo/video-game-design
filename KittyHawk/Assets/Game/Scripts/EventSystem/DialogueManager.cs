@@ -72,6 +72,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayDialogue(Vector3 position, string dialogueName)
     {
+
         if (!dialogues.TryGetValue(dialogueName, out Dialogue dialogue))
         {
             dialogue = LoadDialogue(dialogueName);
