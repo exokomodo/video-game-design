@@ -181,10 +181,20 @@ public class PlayerController : MonoBehaviour {
       EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
       return;
     }
+    Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
     if (_isAttacking)
     {
-      Debug.Log($"HIT Collider {c}");
+      Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
       EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
+    }
+  }
+
+
+  private void OnCollisionEnter(Collision c)
+  {
+    if (_isAttacking) {
+        Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
+        EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
     }
   }
 
@@ -212,18 +222,18 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  private void OnAttackEvent(string eventType, float attackTime, Collider c)
-  {
-    switch (eventType)
-    {
-      case AttackEvent.ATTACK_BEGIN:
-        Attack(true);
-        break;
-      case AttackEvent.ATTACK_END:
-        Attack(false);
-        break;
-    }
-  }
+  // private void OnAttackEvent(string eventType, float attackTime, Collider c)
+  // {
+  //   switch (eventType)
+  //   {
+  //     case AttackEvent.ATTACK_BEGIN:
+  //       Attack(true);
+  //       break;
+  //     case AttackEvent.ATTACK_END:
+  //       Attack(false);
+  //       break;
+  //   }
+  // }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
@@ -517,19 +527,19 @@ public class PlayerController : MonoBehaviour {
 
   private void OnAttackRight()
   {
-    Attack(true);
+    // Attack(true);
     stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_RIGHT));
   }
 
   private void OnAttackFront()
   {
-    Attack(true);
+    // Attack(true);
     stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_FRONT));
   }
 
   private void OnAttackLeft()
   {
-    Attack(true);
+    // Attack(true);
     stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_LEFT));
   }
 

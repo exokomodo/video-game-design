@@ -79,12 +79,13 @@ public class GooseAI : MonoBehaviour
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
-        // if (c.gameObject != gameObject) return; // was causing undefined object error
+        Debug.Log("OnAttackEvent > " + eventType);
         if (c != cl) return;
         if (eventType ==  AttackEvent.ATTACK_TARGET_HIT)
         {
-            Debug.Log("A goose has been hit by Kitty!");
+            Debug.Log("ATTACK_TARGET_HIT > A goose has been hit by Kitty!");
             // TODO: Subtract health and potentially enter die state?
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "GooseHit1");
             EnterFleeState();
         }
     }
@@ -282,7 +283,7 @@ public class GooseAI : MonoBehaviour
         anim.SetBool("isAttacking", true);
         anim.SetBool("isWalking", true);
         anim.Play("StartAttack");
-
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHit{Random.Range(1,2)}");
         //TODO: audio event for mean quack
     }
 
