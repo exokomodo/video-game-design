@@ -18,6 +18,12 @@ public class HorseController : MonoBehaviour
 
     private UnityAction<float> volumeChangeListener;
 
+    private void Trample(GameObject goose)
+    {
+        EventManager.TriggerEvent<HorseTrampleGooseEvent>();
+        goose.GetComponent<GooseAI>().Die();
+    }
+
     private void WhoaNelly()
     {
         _isSlowing = true;
@@ -34,8 +40,15 @@ public class HorseController : MonoBehaviour
         else if (c.CompareTag("Goose"))
         {
             Debug.Log($"Hit goose with a collider of type: {c.GetType()}");
-            EventManager.TriggerEvent<HorseTrampleGooseEvent>();
-            c.gameObject.GetComponent<GooseAI>().Die();
+            Trample(c.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision c)
+    {
+        if (c.gameObject.CompareTag("Goose"))
+        {
+            Trample(c.gameObject);
         }
     }
 

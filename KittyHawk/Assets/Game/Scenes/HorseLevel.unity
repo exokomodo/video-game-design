@@ -20452,6 +20452,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horse
       objectReference: {fileID: 0}
+    - target: {fileID: 2095234297038162980, guid: 46831293874c34d9b8aa6ed1b0727dba,
+        type: 3}
+      propertyPath: m_TagString
+      value: Horse
+      objectReference: {fileID: 0}
     - target: {fileID: 4169512664610290911, guid: 46831293874c34d9b8aa6ed1b0727dba,
         type: 3}
       propertyPath: CarrotLeft
