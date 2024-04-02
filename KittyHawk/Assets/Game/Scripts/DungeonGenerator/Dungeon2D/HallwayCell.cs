@@ -71,19 +71,19 @@ public class HallwayCell: Object {
 
         topWall = Instantiate(hallPrefab, new Vector3(pos.x, y, pos.y + cellWidth), Quaternion.identity, t);
         topWall.transform.localScale = new Vector3(1, height, wallWidth);
-        // topWall.tag = "Wall";
+        topWall.tag = "Wall";
 
         rightWall = Instantiate(hallPrefab, new Vector3(pos.x + cellWidth, y, pos.y), Quaternion.identity, t);
         rightWall.transform.localScale = new Vector3(wallWidth, height, cellWidth);
-        // rightWall.tag = "Wall";
+        rightWall.tag = "Wall";
 
         botWall = Instantiate(hallPrefab, new Vector3(pos.x, y, pos.y - wallWidth), Quaternion.identity, t);
         botWall.transform.localScale = new Vector3(1, height, wallWidth);
-        // botWall.tag = "Wall";
+        botWall.tag = "Wall";
 
         leftWall = Instantiate(hallPrefab, new Vector3(pos.x - wallWidth, y, pos.y), Quaternion.identity, t);
         leftWall.transform.localScale = new Vector3(wallWidth, height, cellWidth);
-        // leftWall.tag = "Wall";
+        leftWall.tag = "Wall";
 
         // DrawCeiling();
         DrawFloor();

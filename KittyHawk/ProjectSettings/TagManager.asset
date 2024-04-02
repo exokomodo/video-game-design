@@ -18,6 +18,7 @@ TagManager:
   - Bunny
   - Horse
   - Patrol
+  - Wall
   layers:
   - Default
   - TransparentFX
