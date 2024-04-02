@@ -31,7 +31,6 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
-        EventManager.TriggerEvent<CursorLockEvent, bool>(false);
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
 
@@ -39,11 +38,13 @@ public class MainMenuController : MonoBehaviour
         anim.SetTrigger("FadeIn");
 
         EventManager.TriggerEvent<MusicEvent, string>(menuMusicName);
+        EventManager.TriggerEvent<CursorLockEvent, bool>(false);
     }
 
     public void StartGame()
     {
         PlayConfirmSound();
+        EventManager.TriggerEvent<CursorLockEvent, bool>(true);
         //SceneManager.LoadScene(firstLevelName);
         StartCoroutine(LoadFirstScene());
     }

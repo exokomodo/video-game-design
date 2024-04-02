@@ -18,6 +18,12 @@ public class HorseController : MonoBehaviour
 
     private UnityAction<float> volumeChangeListener;
 
+    private void Trample(GameObject goose)
+    {
+        EventManager.TriggerEvent<HorseTrampleGooseEvent>();
+        goose.GetComponent<GooseAI>().Die();
+    }
+
     private void WhoaNelly()
     {
         _isSlowing = true;
@@ -26,13 +32,23 @@ public class HorseController : MonoBehaviour
     #region Unity hooks
     private void OnTriggerEnter(Collider c)
     {
-        if (c.CompareTag("Goose"))
+        Debug.Log($"Horse hit a collider of type({c.GetType()}) on game object with name({c.gameObject.name}) and tag({c.gameObject.tag})");
+        if (c.CompareTag("Pond"))
         {
-            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_WITH_HORSE, 0f, c);
+            EventManager.TriggerEvent<HorseEnterPondEvent>();
         }
-        else if (c.CompareTag("Pond"))
+        else if (c.CompareTag("Goose"))
         {
-            WhoaNelly();
+            Debug.Log($"Hit goose with a collider of type: {c.GetType()}");
+            Trample(c.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision c)
+    {
+        if (c.gameObject.CompareTag("Goose"))
+        {
+            Trample(c.gameObject);
         }
     }
 
@@ -44,6 +60,7 @@ public class HorseController : MonoBehaviour
 
         volumeChangeListener = new UnityAction<float>(VolumeChangeHandler);
         EventManager.StartListening<VolumeChangeEvent, float>(volumeChangeListener);
+        EventManager.StartListening<HorseEnterPondEvent>(WhoaNelly);
     }
 
     private void UpdateAnimation()

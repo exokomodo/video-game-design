@@ -30,8 +30,6 @@ public class CursorManager : MonoBehaviour
         EventManager.StartListening<CursorLockEvent, bool>(OnCursorLockEvent);
         EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogueOpenEvent);
         EventManager.StartListening<DialogueCloseEvent, string>(OnDialogueCloseEvent);
-        // NOTE: Immediately lock cursor by default
-        lockCursor();
     }
 
     private void OnCursorLockEvent(bool shouldLock)

@@ -1,6 +1,6 @@
 /*
  * GooseAI.cs
- * Authors: Paul Garza
+ * Authors: Paul Garza, James Orson (edits on goose death)
  * Date: 03/09/24
  * Summary: This script serves as the AI control for geese  within the game.
  *  It utilizes a finite state machine to manage different states of behavior - primarily patrol, attack, and flee.
@@ -75,31 +75,17 @@ public class GooseAI : MonoBehaviour
 
         // Starts the navigation process
         EnterPatrolState();
-
     }
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
         // if (c.gameObject != gameObject) return; // was causing undefined object error
         if (c != cl) return;
-        switch (eventType)
+        if (eventType ==  AttackEvent.ATTACK_TARGET_HIT)
         {
-            case AttackEvent.ATTACK_TARGET_HIT:
-            {
-                Debug.Log("A goose has been hit by Kitty!");
-                // TODO: Subtract health and potentially enter die state?
-                EnterFleeState();
-                break;
-            }
-            case AttackEvent.ATTACK_WITH_HORSE:
-            {
-                Die();
-                break;
-            }
-            default:
-            {
-                break;
-            }
+            Debug.Log("A goose has been hit by Kitty!");
+            // TODO: Subtract health and potentially enter die state?
+            EnterFleeState();
         }
     }
 
@@ -116,7 +102,7 @@ public class GooseAI : MonoBehaviour
         anim.Play("Idle");
 
         cl.isTrigger = true;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
