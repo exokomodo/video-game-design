@@ -133,7 +133,7 @@ public class Room: UnityEngine.Object {
             Vector3 segmentPos = horiz? new Vector3(origin.x + i, 0, origin.y) : new Vector3(origin.x, 0, origin.y + i);
             GameObject segment = Instantiate(wallPrefab, segmentPos, Quaternion.identity, parent);
             segment.transform.localScale = horiz? new Vector3(1, height, wallWidth) : new Vector3(wallWidth, height, 1);
-            // segment.tag = "Wall";
+            segment.tag = "Wall";
             Vector2Int segmentXY = new Vector2Int((int)segmentPos.x, (int)segmentPos.z);
             Segments[segmentXY] = segment;
         }
