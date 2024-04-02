@@ -9,8 +9,8 @@ public class StatTracker : MonoBehaviour
 {
     public static StatTracker Instance;
 
-    public int HorseSwimSessions { get; private set; } = 0;
     public int GeeseTrampled { get; private set; } = 0;
+    public int HorseSwimSessions { get; private set; } = 0;
 
     #region Event Handlers
     private void OnHorseEnterPondEvent()
