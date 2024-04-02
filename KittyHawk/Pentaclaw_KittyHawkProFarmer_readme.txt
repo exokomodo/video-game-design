@@ -117,6 +117,8 @@ James 
 	Created AudioManager
 		AudioEvent.cs
 		AudioManager.cs
+	Created StatTracker
+		StatTracker.cs
 	QOL in Unity Editor improvements
 		GameObjectExtension.cs
 		TagSelectAttributes.cs

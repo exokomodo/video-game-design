@@ -1,6 +1,6 @@
 /*
  * GooseAI.cs
- * Authors: Paul Garza
+ * Authors: Paul Garza, James Orson (edits on goose death)
  * Date: 03/09/24
  * Summary: This script serves as the AI control for geese  within the game.
  *  It utilizes a finite state machine to manage different states of behavior - primarily patrol, attack, and flee.
