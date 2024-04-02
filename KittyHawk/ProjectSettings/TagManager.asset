@@ -14,8 +14,11 @@ TagManager:
   - Chick
   - Goose
   - Carrot
-  - HorseWaypoints
-  - Trash
+  - Pond
+  - Bunny
+  - Horse
+  - Patrol
+  - Wall
   layers:
   - Default
   - TransparentFX
