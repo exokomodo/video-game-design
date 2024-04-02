@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour {
 
     _walkAudio = GetComponent<AudioSource>();
 
+    EventManager.StartListening<AttackEvent, string, float, Collider>(OnKittyHit);
     EventManager.StartListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
     EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
@@ -153,21 +154,19 @@ public class PlayerController : MonoBehaviour {
     hitTimer = 0;
   }
 
-  void OnCollisionEnter(Collision collision)
+  private void OnKittyHit(string eventType, float pos, Collider c)
   {
-    if (collision.transform.gameObject.tag == "Goose")
+    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown)
     {
-      if (hitTimer > HitCooldown)
+      Debug.Log("OnKittyHit!!!");
+      ResetHitTimer();
+      if (--inventory.Lives > 0)
       {
-        ResetHitTimer();
-        if (--inventory.Lives > 0)
-        {
-          stateMachine.SwitchAction(new PlayerHitAction(stateMachine));
-        }
-        else
-        {
-          EventManager.TriggerEvent<KillKittyEvent>();
-        }
+        stateMachine.SwitchAction(new PlayerHitAction(stateMachine));
+      }
+      else
+      {
+        EventManager.TriggerEvent<KillKittyEvent>();
       }
     }
   }
@@ -182,10 +181,25 @@ public class PlayerController : MonoBehaviour {
       EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
       return;
     }
+    Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
     if (_isAttacking)
     {
-      Debug.Log($"HIT Collider {c}");
+      Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
       EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
+    }
+  }
+
+
+  private void OnCollisionEnter(Collision c)
+  {
+    if (c.collider.CompareTag("Wall") && _isJumping)
+    {
+      SwitchToFallState();
+      return;
+    }
+    if (_isAttacking) {
+        Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
+        EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
     }
   }
 
@@ -213,18 +227,18 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  private void OnAttackEvent(string eventType, float attackTime, Collider c)
-  {
-    switch (eventType)
-    {
-      case AttackEvent.ATTACK_BEGIN:
-        Attack(true);
-        break;
-      case AttackEvent.ATTACK_END:
-        Attack(false);
-        break;
-    }
-  }
+  // private void OnAttackEvent(string eventType, float attackTime, Collider c)
+  // {
+  //   switch (eventType)
+  //   {
+  //     case AttackEvent.ATTACK_BEGIN:
+  //       Attack(true);
+  //       break;
+  //     case AttackEvent.ATTACK_END:
+  //       Attack(false);
+  //       break;
+  //   }
+  // }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
@@ -268,7 +282,7 @@ public class PlayerController : MonoBehaviour {
         break;
 
       default:
-        Debug.LogWarning("Unhandled event: " + eventType + ", " + eventName);
+        // Debug.LogWarning("Unhandled event: " + eventType + ", " + eventName);
         break;
     }
   }
@@ -518,19 +532,19 @@ public class PlayerController : MonoBehaviour {
 
   private void OnAttackRight()
   {
-    Attack(true);
+    // Attack(true);
     stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_RIGHT));
   }
 
   private void OnAttackFront()
   {
-    Attack(true);
+    // Attack(true);
     stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_FRONT));
   }
 
   private void OnAttackLeft()
   {
-    Attack(true);
+    // Attack(true);
     stateMachine.SwitchAction(new PlayerAttackAction(stateMachine, (int)PlayerStateMachine.ActionEnum.ATTACK_LEFT));
   }
 
@@ -593,6 +607,7 @@ public class PlayerController : MonoBehaviour {
   private void OnDestroy()
   {
     ToggleListeners(false);
+    EventManager.StopListening<AttackEvent, string, float, Collider>(OnKittyHit);
     EventManager.StopListening<AnimationStateEvent, AnimationStateEventBehavior.AnimationEventType, string>(OnAnimationEvent);
     EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
     EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
