@@ -11,7 +11,7 @@ public sealed class BunnyFollowState : BunnyBaseState {
 
   private float timeToTarget;
   private VelocityReporter velo;
-  private const float THRESHOLD = 1.25f;
+  private const float THRESHOLD = 1.0f;
 
   static readonly BunnyFollowState instance = new BunnyFollowState();
   public static BunnyFollowState Instance
@@ -26,11 +26,11 @@ public sealed class BunnyFollowState : BunnyBaseState {
 
   public override void Enter(Bunny b)
   {
-    Debug.Log("Enter BunnyFollowState");
+    // Debug.Log("Enter BunnyFollowState");
     base.Enter(b);
     b.UpdateAgent = true;
     SwitchAnimState(b, (int)Bunny.BunnyAnimState.MOVE);
-    velo = target.GetComponent("VelocityReporter") as VelocityReporter;
+    velo = target.GetComponent<VelocityReporter>();
     UpdateDestination(b);
   }
 
@@ -63,7 +63,7 @@ public sealed class BunnyFollowState : BunnyBaseState {
 
     // float dur = b.LinkMoveDuration;
 
-    Debug.Log($"Agent Velocity: {b.agent.velocity}");
+    // Debug.Log($"Agent Velocity: {b.agent.velocity}");
     b.anim.SetFloat(VelocityXHash, b.agent.velocity.x / b.agent.speed);
     b.anim.SetFloat(VelocityZHash, b.agent.velocity.z / b.agent.speed);
     b.anim.SetFloat(MagnitudeHash, b.agent.velocity.magnitude);
@@ -85,8 +85,8 @@ public sealed class BunnyFollowState : BunnyBaseState {
     }
   }
 
-  public override void Exit(Bunny m) {
-    Debug.Log("Exit BunnyFollowState");
+  public override void Exit(Bunny b) {
+    // Debug.Log("Exit BunnyFollowState");
   }
 
   private float TargetDistance(Bunny b)

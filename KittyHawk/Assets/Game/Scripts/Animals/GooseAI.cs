@@ -1,6 +1,6 @@
 /*
  * GooseAI.cs
- * Authors: Paul Garza
+ * Authors: Paul Garza, James Orson (edits on goose death)
  * Date: 03/09/24
  * Summary: This script serves as the AI control for geese  within the game.
  *  It utilizes a finite state machine to manage different states of behavior - primarily patrol, attack, and flee.
@@ -47,6 +47,9 @@ public class GooseAI : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
 
+    private float HonkTimer;
+    private float HonkTime;
+
     public enum AIState
     {
         PATROL,
@@ -75,25 +78,28 @@ public class GooseAI : MonoBehaviour
 
         // Starts the navigation process
         EnterPatrolState();
-
+        ResetHonkTimer();
     }
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
-        if (eventType == AttackEvent.ATTACK_TARGET_HIT && c == cl)
+        Debug.Log("OnAttackEvent > " + eventType);
+        if (c != cl) return;
+        if (eventType ==  AttackEvent.ATTACK_TARGET_HIT)
         {
-            Debug.Log("A goose has been hit by Kitty!");
+            Debug.Log("ATTACK_TARGET_HIT > A goose has been hit by Kitty!");
             // TODO: Subtract health and potentially enter die state?
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "GooseHit1");
             EnterFleeState();
         }
     }
 
     // Turns off everything for the Goose to save resources and to stop it from
-    private void Die()
+    public void Die()
     {
         // Turns everything off and reduces Goose velocity
         isAlive = false;
-        //AIAgent.enabled = false;
+        agent.ResetPath();
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
 
@@ -101,14 +107,15 @@ public class GooseAI : MonoBehaviour
         anim.Play("Idle");
 
         cl.isTrigger = true;
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player") && isAlive)
+        if (other.gameObject.CompareTag("Player") && isAlive && aiState == AIState.ATTACK)
         {
-            //TODO: Kitty has to take damage
             // Run away from kitty after attacking. Coward.
+            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_KITTY_HIT, 0f, other.collider);
             EnterFleeState();
         }
     }
@@ -155,6 +162,12 @@ public class GooseAI : MonoBehaviour
             case AIState.ATTACK:
                 UpdateAttackState();
                 break;
+        }
+        HonkTimer += Time.fixedDeltaTime;
+        if (HonkTimer >= HonkTime)
+        {
+            Honk();
+            ResetHonkTimer();
         }
     }
 
@@ -242,8 +255,6 @@ public class GooseAI : MonoBehaviour
         agent.speed = 2.5f;
         anim.SetBool("isAttacking", false);
         anim.SetBool("isWalking", true);
-
-
     }
 
     private void UpdateFleeState()
@@ -280,8 +291,7 @@ public class GooseAI : MonoBehaviour
         anim.SetBool("isAttacking", true);
         anim.SetBool("isWalking", true);
         anim.Play("StartAttack");
-
-        //TODO: audio event for mean quack
+        Honk();
     }
 
     private void UpdateAttackState()
@@ -294,5 +304,16 @@ public class GooseAI : MonoBehaviour
             // On collision has call for EnterFleeState()
 
             if (!isNearKitty) EnterPatrolState();
+    }
+
+    private void ResetHonkTimer()
+    {
+        HonkTimer = 0;
+        HonkTime = Random.Range(15, 45);
+    }
+
+    public void Honk()
+    {
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1,3)}");
     }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
+  m_Name: BunnyStartDialogue
+  m_EditorClassIdentifier: 
+  DialogueName: BunnyComplete
+  SpeakerName: Beatrix Bunny
+  DialogueText:
+  - Listen up Kitty - Beatrix Bunny needs your help!
+  - Those geese are up to no good again. They've teamed up to snatch her little ones
+    while she was out at the club.
+  - Your mission, should you choose to accept it, is to find each bunny and lead
+    it back to its momma.
+  - But the geese aren't just going to hand the bunnies to you. You can scare them
+    off with a well-timed swipe of the paw or a bite attack.
+  - Rumor has it the geese are holding their captives in that spooky old barn - the
+    one that has a different layout every time you go in it!
+  - Beatrix and The Farm are counting on you. We know you won't let us down Kitty
+    Hawk. Now go!

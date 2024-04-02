@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
@@ -6,4 +5,4 @@ using UnityEngine.Events;
 /// Author: James Orson
 /// </summary>
 
-public class RiderExitEvent : UnityEvent<Saddle, GameObject> { }
+public class RiderExitEvent : UnityEvent { }

@@ -29,7 +29,7 @@ public class PlayerAttackAction : PlayerBaseAction
         Debug.Log("PlayerAttackAction Enter");
         EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
         stateMachine.Animator.Play(AttackPath + AttackType[ActionID]);
-        string sound = $"CatAttack{Random.Range(1, 4)}";
+        string sound = $"CatAttack{Random.Range(1, 3)}";
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(stateMachine.Controller.transform.position, sound);
     }
 
@@ -40,12 +40,13 @@ public class PlayerAttackAction : PlayerBaseAction
 
     public override void Exit()
     {
-        Debug.Log("PlayerAttackAction Exit");
+        // Debug.Log("PlayerAttackAction Exit");
         EventManager.StopListening<AttackEvent, string, float, Collider>(OnAttackEvent);
     }
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
     {
+        Debug.Log($"PlayerAttackAction OnAttackEvent: {eventType}");
         switch (eventType)
         {
             case AttackEvent.ATTACK_BEGIN:

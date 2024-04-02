@@ -20,7 +20,7 @@ public sealed class BunnyIdleState : BunnyBaseState
 
     public override void Enter(Bunny b)
     {
-        Debug.Log("Enter BunnyIdleState");
+        // Debug.Log("Enter BunnyIdleState");
         base.Enter(b);
         SwitchAnimState(b, (int)Bunny.BunnyAnimState.IDLE);
         b.anim.speed = 1.4f;
@@ -41,6 +41,6 @@ public sealed class BunnyIdleState : BunnyBaseState
     }
 
     public override void Exit(Bunny b) {
-        Debug.Log("Exit BunnyIdleState");
+        // Debug.Log("Exit BunnyIdleState");
     }
 }
