@@ -666,6 +666,16 @@ PrefabInstance:
       propertyPath: catnipTextObject
       value: 
       objectReference: {fileID: 7752049419901139393}
+    - target: {fileID: 104560403194836930, guid: e765a33c3762a4410b2a27f384065778,
+        type: 3}
+      propertyPath: bunniesTextObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 104560403194836930, guid: e765a33c3762a4410b2a27f384065778,
+        type: 3}
+      propertyPath: bunniesTotalTextObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 104560403194836952, guid: e765a33c3762a4410b2a27f384065778,
         type: 3}
       propertyPath: m_Name
@@ -744,21 +754,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4556464802706651702}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4488023641599610350 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 104560403194836952, guid: e765a33c3762a4410b2a27f384065778,
-    type: 3}
-  m_PrefabInstance: {fileID: 4556464802706651702}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4488023641765349246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4488023641599610350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60042f3e041b44429bcfaedeab450312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

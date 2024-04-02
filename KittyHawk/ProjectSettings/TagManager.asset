@@ -14,7 +14,14 @@ TagManager:
   - Chick
   - Goose
   - Carrot
+<<<<<<< HEAD
   - CoopGroup
+=======
+  - Pond
+  - Bunny
+  - Horse
+  - Patrol
+>>>>>>> main
   layers:
   - Default
   - TransparentFX

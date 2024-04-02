@@ -5,7 +5,7 @@ using UnityEngine;
 /// Author: Geoffrey Roth
 /// </summary>
 public sealed class BunnyPatrolState : BunnyBaseState {
-    private const float THRESHOLD = 1.0f;
+    private const float THRESHOLD = 0.5f;
     static readonly BunnyPatrolState instance = new BunnyPatrolState();
     public static BunnyPatrolState Instance {
         get {
@@ -30,6 +30,6 @@ public sealed class BunnyPatrolState : BunnyBaseState {
     }
 
     public override void Exit(Bunny m) {
-        Debug.Log("Leaving BunnyPatrolState");
+        // Debug.Log("Leaving BunnyPatrolState");
     }
 }

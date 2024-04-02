@@ -28,7 +28,7 @@ public class FiniteStateMachine<T>  {
   }
 
   public void ChangeState(FSMState<T> NewState) {
-    Debug.Log("ChangeState" + NewState);
+    // Debug.Log("ChangeState" + NewState);
     PreviousState = CurrentState;
     if (CurrentState != null)
     {

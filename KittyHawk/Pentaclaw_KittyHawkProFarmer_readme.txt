@@ -107,13 +107,18 @@ Individual Contributions:
 
 
 James 
-	Created the horse
+	Created the horse level
 		HorseController.cs
-	Created a generalized waypoint-based pathing AI (WIP)
+		HorseLevelController.cs
+	Created a generalized saddle object for any object to be rideable
+		Saddle.cs
+	Created a generalized waypoint-based pathing AI
 		WaypointAI.cs
 	Created AudioManager
 		AudioEvent.cs
 		AudioManager.cs
+	Created StatTracker
+		StatTracker.cs
 	QOL in Unity Editor improvements
 		GameObjectExtension.cs
 		TagSelectAttributes.cs

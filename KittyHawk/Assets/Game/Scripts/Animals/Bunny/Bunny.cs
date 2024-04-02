@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
 
 /// <summary>
 /// A Bunny Controller that manages the Bunny model, finite state machine,
@@ -10,35 +10,42 @@ using UnityEngine.AI;
 /// </summary>
 public class Bunny : MonoBehaviour
 {
-  private Rigidbody rb;
-  private CapsuleCollider col;
-  private int currWaypoint = 0;
-  private FiniteStateMachine<Bunny> FSM;
-  private float verticalVelocity = 0f;
-  private float groundCheckTolerance = 0.1f;
-  private Vector3 pendingMotion;
+  protected Rigidbody rb;
+  protected CapsuleCollider col;
+  [HideInInspector]
+  public int currWaypoint = 0;
+  protected FiniteStateMachine<Bunny> FSM;
+  protected float verticalVelocity = 0f;
+  protected float groundCheckTolerance = 0.1f;
+  protected Vector3 pendingMotion;
   protected int MagnitudeHash = Animator.StringToHash("Magnitude");
   protected int VelocityXHash = Animator.StringToHash("VelocityX");
   protected int VelocityZHash = Animator.StringToHash("VelocityZ");
-  private AgentLinkMover mover;
+  protected AgentLinkMover mover;
+  protected bool lookAt;
 
   public NavMeshAgent agent;
   public Animator anim;
-  public GameObject[] waypoints;
+  // public GameObject[] waypoints;
+  public List<GameObject> Waypoints;
   public bool followMode = false;
-  public GameObject followTarget { get; private set; }
+  public GameObject followTarget;
+  // [SerializeField]
+  // public GameObject followTarget;
   public enum BunnyAnimState
   {
     IDLE,
     MOVE,
-    JUMP
+    JUMP,
+    CELEBRATE
   }
 
   public enum BunnyState
   {
     PATROL,
     PURSUE,
-    FOLLOW
+    FOLLOW,
+    CELEBRATE
   }
 
   public bool UpdateAgent {
@@ -57,6 +64,15 @@ public class Bunny : MonoBehaviour
     }
   }
 
+  public Vector3 position {
+    get {
+      return agent.transform.position;
+    }
+    set {
+      agent.Warp(value);
+    }
+  }
+
   public Vector3 velocity => rb.velocity;
   public bool isGrounded => CheckGrounded();
 
@@ -68,13 +84,17 @@ public class Bunny : MonoBehaviour
     col = GetComponent<CapsuleCollider>();
     if (col == null) throw new Exception("Collider could not be found");
 
-    followTarget = null;
-    try {
-      followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
-    } catch (Exception e) {
-      Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
-      followMode = false;
-    }
+    EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+
+    // followTarget = null;
+    // try {
+    //   followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
+    // } catch (Exception e) {
+    //   Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
+    //   followMode = false;
+    // }
+    if (followTarget == null) followMode = false;
+
     mover = GetComponent<AgentLinkMover>();
     if (mover == null) throw new Exception("AgentLinkMover not found");
 
@@ -82,15 +102,23 @@ public class Bunny : MonoBehaviour
     FSM.Configure(this, GetState());
   }
 
+  protected void OnLevelEvent(string eventType, Collider c) {
+    switch (eventType) {
+      case LevelEvent<Collider>.END_ROOM_ENTERED:
+        lookAt = true;
+        break;
+    }
+  }
+
   public void ChangeState(FSMState<Bunny> e)
   {
     FSM.ChangeState(e);
   }
 
-  public void SetNextWaypoint()
+  public virtual void SetNextWaypoint()
   {
-      ++currWaypoint;
-      if (currWaypoint >= waypoints.Length) currWaypoint = 0;
+      if (Waypoints.Count < 2) ChangeState(BunnyIdleState.Instance);
+      if (++currWaypoint >= Waypoints.Count) currWaypoint = 0;
       ChangeState(GetState());
   }
 
@@ -105,7 +133,7 @@ public class Bunny : MonoBehaviour
     get {
       try
       {
-        return waypoints[currWaypoint];
+        return Waypoints[currWaypoint];
       }
       catch (Exception e)
       {
@@ -115,49 +143,49 @@ public class Bunny : MonoBehaviour
     }
   }
 
-  private BunnyBaseState GetState()
+  protected BunnyBaseState GetState()
   {
+    // return BunnyCelebrateState.Instance;
     if (followMode && followTarget != null)
     {
       return BunnyFollowState.Instance;
     }
-    if (waypoints.Length > 0)
+    if (Waypoints.Count > 0)
     {
       return BunnyPatrolState.Instance;
     }
     return BunnyIdleState.Instance;
   }
 
-  private void FixedUpdate()
-    {
-      if (verticalVelocity < 0f && CheckGrounded())
-      {
-          verticalVelocity = Physics.gravity.y * Time.fixedDeltaTime;
-      }
-      else
-      {
-          verticalVelocity += Physics.gravity.y * Time.fixedDeltaTime;
-      }
-      FSM.Update();
-    }
-
-  void OnAnimatorMove()
+  protected virtual void FixedUpdate()
   {
-    float velx = anim.GetFloat(VelocityXHash);
-    float velz = anim.GetFloat(VelocityZHash);
-
-    Vector3 newRootVelocity = new Vector3(velx * agent.speed, verticalVelocity, velz * agent.speed) + pendingMotion;
-    pendingMotion = Vector3.zero;
-    rb.velocity = newRootVelocity;
-    // Quaternion newRootRotation = Quaternion.LookRotation(new Vector3(rb.rotation.x, 0, rb.rotation.z), new Vector3(rb.rotation.x, 1, rb.rotation.z));
-    // rb.MoveRotation(newRootRotation);
+    if (verticalVelocity < 0f && CheckGrounded())
+    {
+        verticalVelocity = Physics.gravity.y * Time.fixedDeltaTime;
+    }
+    else
+    {
+        verticalVelocity += Physics.gravity.y * Time.fixedDeltaTime;
+    }
+    if (lookAt) LookAtTarget();
+    FSM.Update();
   }
+
+  // protected void OnAnimatorMove()
+  // {
+  //   float velx = anim.GetFloat(VelocityXHash);
+  //   float velz = anim.GetFloat(VelocityZHash);
+
+  //   Vector3 newRootVelocity = new Vector3(velx * agent.speed, verticalVelocity, velz * agent.speed) + pendingMotion;
+  //   pendingMotion = Vector3.zero;
+  //   rb.velocity = newRootVelocity;
+  // }
 
   public bool CheckGrounded()
   {
     Vector3 pos = rb.transform.position;
     Vector3 origin = new Vector3(pos.x, pos.y + 0.01f, pos.z);
-    return RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, groundCheckTolerance, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+    return RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, Vector3.down, groundCheckTolerance, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
   }
 
   public void Move(Vector3 motion)
@@ -166,4 +194,28 @@ public class Bunny : MonoBehaviour
     pendingMotion = motion;
     pendingMotion.y = 0;
   }
+
+  public void Patrol() {
+    followMode = false;
+    ChangeState(GetState());
+  }
+
+  public void LookAtTarget() {
+    Vector3 direction = Vector3.Normalize(followTarget.transform.position - transform.position);
+    transform.rotation = Quaternion.Slerp(
+      transform.rotation,
+      Quaternion.LookRotation(direction),
+      Time.fixedDeltaTime * 2f
+    );
+  }
+
+  public void Follow(GameObject target) {
+    // Debug.Log("Change to FOLLOW MOVE");
+    followTarget = target;
+    followMode = true;
+    ChangeState(GetState());
+  }
+  protected void OnDestroy() {
+        EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+    }
 }
