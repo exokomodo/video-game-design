@@ -112,7 +112,7 @@ James 
 		HorseLevelController.cs
 	Created a generalized saddle object for any object to be rideable
 		Saddle.cs
-	Created a generalized waypoint-based pathing AI (WIP)
+	Created a generalized waypoint-based pathing AI
 		WaypointAI.cs
 	Created AudioManager
 		AudioEvent.cs
