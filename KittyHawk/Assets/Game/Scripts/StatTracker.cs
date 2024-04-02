@@ -1,3 +1,8 @@
+/// <summary>
+/// StatTracker provides a centralized location for event listeners to be tracked for statistics displays and player progress
+/// Author: James Orson
+/// </summary>
+
 using UnityEngine;
 
 public class StatTracker : MonoBehaviour
