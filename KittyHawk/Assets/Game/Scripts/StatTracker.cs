@@ -9,7 +9,13 @@ public class StatTracker : MonoBehaviour
 {
     public static StatTracker Instance;
 
+    public int GeeseTrampled { get; private set; } = 0;
+
     #region Event Handlers
+    private void OnHorseTrampleGooseEvent()
+    {
+        ++GeeseTrampled;
+    }
     #endregion
 
     #region Unity Hooks
@@ -27,10 +33,12 @@ public class StatTracker : MonoBehaviour
 
     private void Start()
     {
+        EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
     }
 
     private void OnDestroy()
     {
+        EventManager.StopListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
     }
     #endregion
 }
