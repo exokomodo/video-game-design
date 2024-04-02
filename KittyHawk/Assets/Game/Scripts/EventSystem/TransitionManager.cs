@@ -59,11 +59,11 @@ public class TransitionManager : MonoBehaviour
                 break;
             case (Day.WEDNESDAY):
                 DataManager.Instance.CurrentDay = Day.THURSDAY;
-                // SceneManager.LoadScene(); TO-DO: FILL IN THURSDAY SCENE
+                SceneManager.LoadScene("LevelBunnyHop");
                 break;
             case (Day.THURSDAY):
                 DataManager.Instance.CurrentDay = Day.FRIDAY;
-                // SceneManager.LoadScene(); TO-DO: FILL IN FRIDAY SCENE
+                SceneManager.LoadScene("HorseLevel");
                 break;
             case (Day.FRIDAY):
                 DataManager.Instance.CurrentDay = Day.MONDAY;
