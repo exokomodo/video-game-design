@@ -17,13 +17,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CoopGroupController : MonoBehaviour
 {
     [SerializeField] private int totalCapturedChickens = 0;
     [SerializeField] private int chicksToWin;
+
+    [SerializeField] PlayerController playerController;
+
+    private PlayerInventory inventory;
+
     public bool winnerWinnerChickenDinner;
+
+    public Text chickenCounter;
 
     public bool kittyNearCoops;
 
@@ -33,11 +42,14 @@ public class CoopGroupController : MonoBehaviour
         GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Chick");
         chicksToWin = objectsWithTag.Length;
         winnerWinnerChickenDinner = false;
+        inventory = playerController.GetComponent<PlayerInventory>();
+        inventory.Chickens = 0;
     }
 
     public void addChicken()
     {
         totalCapturedChickens++;
+        inventory.Chickens = totalCapturedChickens;
     }
 
     private void OnTriggerEnter(Collider other)
