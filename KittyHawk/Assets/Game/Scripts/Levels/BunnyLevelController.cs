@@ -91,11 +91,17 @@ public class BunnyLevelController : MonoBehaviour {
     private void LevelComplete() {
         Debug.Log("YOU WIN!!");
         Invoke("TriggerLevelCompleteSound", 1.25f);
+        Invoke("TriggerBunnyObjective", 4f);
 
     }
 
     private void TriggerLevelCompleteSound() {
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(Player.transform.position, "success-fanfare-trumpets");
+    }
+
+    private void TriggerBunnyObjective() {
+        Debug.Log("BunnyObjective ObjectiveStatus.Completed");
+        // EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("BunnyObjective", ObjectiveStatus.Completed);
     }
 
     private List<BabyBunny> GetFollowers() {
