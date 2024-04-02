@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 7826609396657575965}
   m_Layer: 0
   m_Name: Horse
-  m_TagString: Untagged
+  m_TagString: Horse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,8 +387,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 4, z: 2.7}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 2, y: 4, z: 4}
+  m_Center: {x: 0, y: 2, z: 0.5}
 --- !u!136 &5793794533255528619
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -511,6 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e141d9b1b726314a93526caa0c9f234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saddle: {fileID: 0}
   Velocity: 1
 --- !u!114 &4169512664610290911
 MonoBehaviour:

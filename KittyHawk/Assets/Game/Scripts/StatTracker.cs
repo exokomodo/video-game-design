@@ -9,7 +9,19 @@ public class StatTracker : MonoBehaviour
 {
     public static StatTracker Instance;
 
+    public int GeeseTrampled { get; private set; } = 0;
+    public int HorseSwimSessions { get; private set; } = 0;
+
     #region Event Handlers
+    private void OnHorseEnterPondEvent()
+    {
+        ++HorseSwimSessions;
+    }
+
+    private void OnHorseTrampleGooseEvent()
+    {
+        ++GeeseTrampled;
+    }
     #endregion
 
     #region Unity Hooks
@@ -27,10 +39,14 @@ public class StatTracker : MonoBehaviour
 
     private void Start()
     {
+        EventManager.StartListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
+        EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
     }
 
     private void OnDestroy()
     {
+        EventManager.StopListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
+        EventManager.StopListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
     }
     #endregion
 }
