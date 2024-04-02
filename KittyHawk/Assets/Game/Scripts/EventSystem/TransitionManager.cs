@@ -78,28 +78,29 @@ public class TransitionManager : MonoBehaviour
 
         switch (DataManager.Instance.CurrentDay)
         {
-            case (Day.MONDAY):
+            case Day.MONDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "AlphaComplete";
                 break;
-            case (Day.TUESDAY):
+            case Day.TUESDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "";
                 break;
-            case (Day.WEDNESDAY):
+            case Day.WEDNESDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "";
                 break;
-            case (Day.THURSDAY):
+            case Day.THURSDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "";
                 break;
-            case (Day.FRIDAY):
+            case Day.FRIDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
-                dialogueName = "";
+                dialogueName = "HorseComplete";
                 break;
         }
-
+        // NOTE: Moves to next day
+        DataManager.Instance.CurrentDay += 1;
         EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, dialogueName);
     }
 }
