@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TransitionManager : MonoBehaviour
 {
-    
+
     [SerializeField]
     Image fadeImage;
     [SerializeField]
@@ -91,11 +91,9 @@ public class TransitionManager : MonoBehaviour
                 dialogueName = "";
                 break;
             case Day.THURSDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
-                dialogueName = "";
+                dialogueName = "BunnyCompleteDialogue";
                 break;
             case Day.FRIDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "HorseComplete";
                 break;
         }

@@ -39,6 +39,10 @@ public class DataManager : MonoBehaviour
 
         EventManager.StartListening<VolumeChangeEvent, float>(UpdateSoundVolume);
         EventManager.StartListening<MusicVolumeChangeEvent, float>(UpdateMusicVolume);
+
+        Lives = 9;
+        SoundVolume = 1f;
+        MusicVolume = 1f;
     }
 
     private void OnDestroy()
