@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
-/// A Player Controller that manages the Kitty Hawk Player model, finite state machine,
-/// animation controller, events, and input controls.
+/// Bunny Level Controller
 /// Author: Geoffrey Roth
 /// </summary>
-
 public class BunnyLevelController : MonoBehaviour {
 
     [SerializeField]
@@ -36,6 +35,8 @@ public class BunnyLevelController : MonoBehaviour {
 
     PlayerInventory inventory;
 
+    string ObjectiveName = "BunnyObjective";
+
 
     private void Awake() {
         if (Testing) {
@@ -46,8 +47,8 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void Start() {
         // Place characters in dungeon
-        // EventManager.StartListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
         EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
 
         FindStartAndEnd();
         PlacePlayer();
@@ -91,11 +92,17 @@ public class BunnyLevelController : MonoBehaviour {
     private void LevelComplete() {
         Debug.Log("YOU WIN!!");
         Invoke("TriggerLevelCompleteSound", 1.25f);
+        Invoke("TriggerBunnyObjective", 4f);
 
     }
 
     private void TriggerLevelCompleteSound() {
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(Player.transform.position, "success-fanfare-trumpets");
+    }
+
+    private void TriggerBunnyObjective() {
+        Debug.Log("BunnyObjective ObjectiveStatus.Completed");
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(ObjectiveName, ObjectiveStatus.Completed);
     }
 
     private List<BabyBunny> GetFollowers() {
@@ -105,10 +112,6 @@ public class BunnyLevelController : MonoBehaviour {
             if (b.followMode) followers.Add(b);
         }
         return followers;
-    }
-
-    private void FixedUpdate() {
-
     }
 
     protected void FindStartAndEnd() {
@@ -141,20 +144,16 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void PlaceBunnies() {
         int limit = Math.Min(Generator.Rooms.Count, babyBunnies.Count);
-        // Debug.Log($"PlaceBunnies > limit: {limit}");
         for (int i=0; i<limit; i++) {
             Room room = Generator.Rooms[i];
             BabyBunny baby = babyBunnies[i];
-            // Debug.Log($"PlaceBunnies > room: {room}");
             if (room.position == startRoom.position || room.position == endRoom.position) {
                 baby.Disable();
                 continue;
             };
 
-            // Debug.Log($"PlaceBunnies > i: {i}");
             baby.position = new Vector3(room.center.x, 0, room.center.y);
             baby.Waypoints = room.GenerateWaypoints();
-            // Debug.Log($"PlaceBunnies > position: {baby.position}");
         }
     }
 
@@ -178,7 +177,14 @@ public class BunnyLevelController : MonoBehaviour {
         return new Vector3(room.center.x, 0.1f, room.center.y);
     }
 
+    private void OnPlayerDie() {
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
+                ObjectiveName,
+                ObjectiveStatus.Failed);
+    }
+
     private void OnDestroy() {
         EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
     }
 }

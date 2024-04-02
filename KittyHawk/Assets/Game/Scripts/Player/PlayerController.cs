@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour {
         break;
 
       default:
-        Debug.LogWarning("Unhandled InteractionEvent: " + eventName + ", " + eventType);
+        // Debug.LogWarning("Unhandled InteractionEvent: " + eventName + ", " + eventType);
         break;
     }
   }

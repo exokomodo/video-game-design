@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 /// <summary>
 /// A Bunny Controller that manages the Bunny model, finite state machine,
 /// animation controller, events. Offers follow mode, waypoint patrolling.

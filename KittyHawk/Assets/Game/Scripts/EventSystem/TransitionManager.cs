@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TransitionManager : MonoBehaviour
 {
-    
+
     [SerializeField]
     Image fadeImage;
     [SerializeField]
@@ -59,11 +59,11 @@ public class TransitionManager : MonoBehaviour
                 break;
             case (Day.WEDNESDAY):
                 DataManager.Instance.CurrentDay = Day.THURSDAY;
-                // SceneManager.LoadScene(); TO-DO: FILL IN THURSDAY SCENE
+                SceneManager.LoadScene("LevelBunnyHop");
                 break;
             case (Day.THURSDAY):
                 DataManager.Instance.CurrentDay = Day.FRIDAY;
-                // SceneManager.LoadScene(); TO-DO: FILL IN FRIDAY SCENE
+                SceneManager.LoadScene("HorseLevel");
                 break;
             case (Day.FRIDAY):
                 DataManager.Instance.CurrentDay = Day.MONDAY;
@@ -91,11 +91,9 @@ public class TransitionManager : MonoBehaviour
                 dialogueName = "";
                 break;
             case Day.THURSDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
-                dialogueName = "";
+                dialogueName = "BunnyCompleteDialogue";
                 break;
             case Day.FRIDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "HorseComplete";
                 break;
         }

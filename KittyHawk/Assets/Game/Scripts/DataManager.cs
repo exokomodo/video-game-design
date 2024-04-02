@@ -7,7 +7,7 @@ public class DataManager : MonoBehaviour
 
     public Day CurrentDay = Day.MONDAY;
 
-    public int Lives = 9;
+    public int Lives = 0;
     public int Catnip = 0;
 
     public int Bunnies = 0;
@@ -39,6 +39,10 @@ public class DataManager : MonoBehaviour
 
         EventManager.StartListening<VolumeChangeEvent, float>(UpdateSoundVolume);
         EventManager.StartListening<MusicVolumeChangeEvent, float>(UpdateMusicVolume);
+
+        Lives = 9;
+        SoundVolume = 1f;
+        MusicVolume = 1f;
     }
 
     private void OnDestroy()
