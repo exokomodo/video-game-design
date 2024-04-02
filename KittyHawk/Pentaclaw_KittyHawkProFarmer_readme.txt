@@ -107,8 +107,11 @@ Individual Contributions:
 
 
 James 
-	Created the horse
+	Created the horse level
 		HorseController.cs
+		HorseLevelController.cs
+	Created a generalized saddle object for any object to be rideable
+		Saddle.cs
 	Created a generalized waypoint-based pathing AI (WIP)
 		WaypointAI.cs
 	Created AudioManager

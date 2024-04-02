@@ -2,24 +2,24 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// HorseObjectiveController tracks the objective for the horse level
+/// HorseLevelController tracks the objective for the horse level
 /// Author: James Orson
 /// </summary>
 
-public class HorseObjectiveController : MonoBehaviour
+public class HorseLevelController : MonoBehaviour
 {
     private static int gooseSceneCount;
-    private static HorseObjectiveController _instance;
-    public static HorseObjectiveController Instance
+    private static HorseLevelController _instance;
+    public static HorseLevelController Instance
     {
         get
         {
             if (!_instance)
             {
-                _instance = FindObjectOfType(typeof(HorseObjectiveController)) as HorseObjectiveController;
+                _instance = FindObjectOfType(typeof(HorseLevelController)) as HorseLevelController;
                 if (!_instance)
                 {
-                    Debug.LogError($"There needs to be one active {nameof(HorseObjectiveController)} script on a GameObject in the horse scene.");
+                    Debug.LogError($"There needs to be one active {nameof(HorseLevelController)} script on a GameObject in the horse scene.");
                 }
             }
             return _instance;
