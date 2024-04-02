@@ -107,10 +107,10 @@ public class GooseAI : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player") && isAlive)
+        if (other.gameObject.CompareTag("Player") && isAlive && aiState == AIState.ATTACK)
         {
-            //TODO: Kitty has to take damage
             // Run away from kitty after attacking. Coward.
+            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_KITTY_HIT, 0f, other.collider);
             EnterFleeState();
         }
     }

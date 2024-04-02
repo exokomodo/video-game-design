@@ -11,7 +11,7 @@ public sealed class BunnyFollowState : BunnyBaseState {
 
   private float timeToTarget;
   private VelocityReporter velo;
-  private const float THRESHOLD = 1.25f;
+  private const float THRESHOLD = 1.0f;
 
   static readonly BunnyFollowState instance = new BunnyFollowState();
   public static BunnyFollowState Instance
