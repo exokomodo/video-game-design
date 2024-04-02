@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// A Baby Bunny Controller.
 /// Author: Geoffrey Roth

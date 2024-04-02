@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Bunny Level Controller
 /// Author: Geoffrey Roth
@@ -34,6 +35,8 @@ public class BunnyLevelController : MonoBehaviour {
 
     PlayerInventory inventory;
 
+    string ObjectiveName = "BunnyObjective";
+
 
     private void Awake() {
         if (Testing) {
@@ -45,6 +48,7 @@ public class BunnyLevelController : MonoBehaviour {
     private void Start() {
         // Place characters in dungeon
         EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
 
         FindStartAndEnd();
         PlacePlayer();
@@ -98,8 +102,7 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void TriggerBunnyObjective() {
         Debug.Log("BunnyObjective ObjectiveStatus.Completed");
-        // Uncomment when ready to integrate
-        // EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("BunnyObjective", ObjectiveStatus.Completed);
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(ObjectiveName, ObjectiveStatus.Completed);
     }
 
     private List<BabyBunny> GetFollowers() {
@@ -174,7 +177,14 @@ public class BunnyLevelController : MonoBehaviour {
         return new Vector3(room.center.x, 0.1f, room.center.y);
     }
 
+    private void OnPlayerDie() {
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
+                ObjectiveName,
+                ObjectiveStatus.Failed);
+    }
+
     private void OnDestroy() {
         EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
     }
 }
