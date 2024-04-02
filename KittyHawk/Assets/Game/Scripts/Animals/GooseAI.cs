@@ -47,6 +47,9 @@ public class GooseAI : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
 
+    private float HonkTimer;
+    private float HonkTime;
+
     public enum AIState
     {
         PATROL,
@@ -75,6 +78,7 @@ public class GooseAI : MonoBehaviour
 
         // Starts the navigation process
         EnterPatrolState();
+        ResetHonkTimer();
     }
 
     private void OnAttackEvent(string eventType, float attackTime, Collider c)
@@ -158,6 +162,12 @@ public class GooseAI : MonoBehaviour
             case AIState.ATTACK:
                 UpdateAttackState();
                 break;
+        }
+        HonkTimer += Time.fixedDeltaTime;
+        if (HonkTimer >= HonkTime)
+        {
+            Honk();
+            ResetHonkTimer();
         }
     }
 
@@ -245,8 +255,6 @@ public class GooseAI : MonoBehaviour
         agent.speed = 2.5f;
         anim.SetBool("isAttacking", false);
         anim.SetBool("isWalking", true);
-
-
     }
 
     private void UpdateFleeState()
@@ -283,8 +291,7 @@ public class GooseAI : MonoBehaviour
         anim.SetBool("isAttacking", true);
         anim.SetBool("isWalking", true);
         anim.Play("StartAttack");
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHit{Random.Range(1,2)}");
-        //TODO: audio event for mean quack
+        Honk();
     }
 
     private void UpdateAttackState()
@@ -297,5 +304,16 @@ public class GooseAI : MonoBehaviour
             // On collision has call for EnterFleeState()
 
             if (!isNearKitty) EnterPatrolState();
+    }
+
+    private void ResetHonkTimer()
+    {
+        HonkTimer = 0;
+        HonkTime = Random.Range(15, 45);
+    }
+
+    public void Honk()
+    {
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1,3)}");
     }
 }
