@@ -7,14 +7,14 @@ public class DataManager : MonoBehaviour
 
     public Day CurrentDay = Day.MONDAY;
 
-    public int Lives = 9;
-    public int Catnip = 0;
+    public int Lives;
+    public int Catnip;
 
-    public int Bunnies = 0;
-    public int BunniesTotal = 0;
+    public int Bunnies;
+    public int BunniesTotal;
 
-    public float SoundVolume = 1f;
-    public float MusicVolume = 1f;
+    public float SoundVolume;
+    public float MusicVolume;
 
     public static DataManager Instance;
 
@@ -28,6 +28,16 @@ public class DataManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        CurrentDay = Day.MONDAY;
+
+        Lives = 9;
+        Catnip = 0;
+        Bunnies = 0;
+        BunniesTotal = 0;
+
+        SoundVolume = 1f;
+        MusicVolume = 1f;
     }
 
     void Start()
@@ -39,10 +49,6 @@ public class DataManager : MonoBehaviour
 
         EventManager.StartListening<VolumeChangeEvent, float>(UpdateSoundVolume);
         EventManager.StartListening<MusicVolumeChangeEvent, float>(UpdateMusicVolume);
-
-        Lives = 9;
-        SoundVolume = 1f;
-        MusicVolume = 1f;
     }
 
     private void OnDestroy()
