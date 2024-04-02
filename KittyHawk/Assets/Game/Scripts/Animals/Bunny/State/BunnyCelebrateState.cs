@@ -6,23 +6,18 @@ using UnityEngine;
 /// Author: Geoffrey Roth
 /// </summary>
 public sealed class BunnyCelebrateState : BunnyBaseState {
-    private bool isJumping;
-    private float elapsedTime = 0;
     static readonly BunnyCelebrateState instance = new BunnyCelebrateState();
     public static BunnyCelebrateState Instance {
         get {
             return instance;
         }
     }
-    private bool agentUpdate;
-
-    private Vector3 momentum;
     static BunnyCelebrateState() {}
     private BunnyCelebrateState() {}
 
     public override void Enter(Bunny b)
     {
-        Debug.Log("Enter BunnyCelebrateState");
+        // Debug.Log("Enter BunnyCelebrateState");
         base.Enter(b);
         b.anim.speed = 1.4f;
         SwitchAnimState(b, (int)Bunny.BunnyAnimState.CELEBRATE);
