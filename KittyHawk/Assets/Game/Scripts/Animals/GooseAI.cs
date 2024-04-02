@@ -84,7 +84,7 @@ public class GooseAI : MonoBehaviour
     {
         Debug.Log("OnAttackEvent > " + eventType);
         if (c != cl) return;
-        if (eventType ==  AttackEvent.ATTACK_TARGET_HIT)
+        if (eventType == AttackEvent.ATTACK_TARGET_HIT)
         {
             Debug.Log("ATTACK_TARGET_HIT > A goose has been hit by Kitty!");
             // TODO: Subtract health and potentially enter die state?
@@ -124,6 +124,7 @@ public class GooseAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Goose sees Kitty");
             isNearKitty = true;
         }
     }
@@ -143,6 +144,7 @@ public class GooseAI : MonoBehaviour
 
         if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE)
         {
+            Debug.Log("Goose Entering Attack State");
             EnterAttackState();
         }
 
@@ -310,6 +312,7 @@ public class GooseAI : MonoBehaviour
 
     public void Honk()
     {
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1,3)}");
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1, 3)}");
     }
+    #endregion
 }

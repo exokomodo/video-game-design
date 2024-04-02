@@ -77,5 +77,4 @@ public class CoopGroupController : MonoBehaviour
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("ChickObjective", ObjectiveStatus.Completed);
         }
     }
-
 }
