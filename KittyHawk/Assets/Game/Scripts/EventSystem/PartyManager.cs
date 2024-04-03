@@ -63,7 +63,7 @@ public class PartyManager : MonoBehaviour
         anim.SetTrigger("FadeOut");
         yield return new WaitForSeconds(2f);
         Debug.Log("Loading next level");
-        // SceneManager.LoadScene("DuckLevel");
+        SceneManager.LoadScene("DuckLevel");
     }
 
     public void SkipCutscene()
