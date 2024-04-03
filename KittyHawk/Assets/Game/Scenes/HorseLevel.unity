@@ -1060,12 +1060,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001646809
+      value: 0.000000016468093
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000004986136
+      value: -0.0000000049861373
       objectReference: {fileID: 0}
     - target: {fileID: 900702413036734693, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -1159,8 +1159,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
+      propertyPath: m_YAxis.Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
       propertyPath: m_Lens.FieldOfView
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[0].m_Height
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[0].m_Radius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[1].m_Height
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[1].m_Radius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[2].m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[2].m_Radius
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1660656290098578738, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -12778,6 +12813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb989f082b17c41d59f3e4969eb32e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gooseTextObject: {fileID: 1209056270}
 --- !u!4 &1348162979 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4660027289843812, guid: 49683e4468311674398fda816c18b177,
