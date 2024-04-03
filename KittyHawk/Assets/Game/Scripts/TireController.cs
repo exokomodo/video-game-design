@@ -21,7 +21,7 @@ public class TireController : MonoBehaviour
     private Rigidbody playerRb;
     private PlayerController playerController;
 
-    [SerializeField] private float bounceForce = 10f;
+    [SerializeField] private float bounceForce = 1f;
     [SerializeField] private Vector3 approachDirection;
 
     // Start is called before the first frame update
@@ -56,9 +56,7 @@ public class TireController : MonoBehaviour
             approachDirection.y = 0;
             approachDirection = approachDirection.normalized;
 
-            // Add vertical velocity to kitty, keeps her remaining velocity, and adds force to the x and z bounce
-            // TODO: This doesn't feel natural yet
-            playerRb.velocity = new Vector3(approachDirection.x * -2f , bounceForce, approachDirection.z * -2f);
+            playerRb.velocity = new Vector3(Math.Abs(approachDirection.x) * 3f , bounceForce, Math.Abs(approachDirection.z) * 3f);
 
             // Normally we expect to Kitty to fall from some height, but here she's typically grounded.
             // We delay entering the fall state to give the kitty time to acquire some height
