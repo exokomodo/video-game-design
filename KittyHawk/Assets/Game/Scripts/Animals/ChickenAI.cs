@@ -61,9 +61,7 @@ public class ChickenAI : MonoBehaviour
     private bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
-    [SerializeField] private float rotationSpeed = 5f;
     private GameObject gate;
-
 
     public enum AIState
     {
@@ -131,11 +129,6 @@ public class ChickenAI : MonoBehaviour
             agent.ResetPath();
             SetChickenDestination(spawnPosition);
         }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        rb.velocity = Vector3.zero;
     }
 
     // These two functions help determine the flee state
@@ -285,7 +278,6 @@ public class ChickenAI : MonoBehaviour
             if (agent.remainingDistance < 0.2f) EnterPatrolState();
         } 
 
-        
     }
 
 
