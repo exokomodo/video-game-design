@@ -14,7 +14,7 @@ public class Hallway: Object {
     int width;
     float height;
     Transform rootTransform;
-    protected float wallWidth = 0.3f;
+    protected float wallWidth = 0.2f;
     protected Grid2D<Generator2D.CellType> grid;
     protected List<Vector2Int> path;
 
