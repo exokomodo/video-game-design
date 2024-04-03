@@ -202,6 +202,7 @@ public class Room: UnityEngine.Object {
         //     int ctrIndex = GetUniqueRandomInt(0, props.transform.childCount, propIndices);
         //     AddProp(5, props.transform.GetChild(ctrIndex));
         // }
+        props.SetActive(false);
     }
 
     protected void AddProp(int corner, Transform prop) {
@@ -229,7 +230,7 @@ public class Room: UnityEngine.Object {
                 offset = new Vector3(size.x/2, 0, size.y/2);
                 break;
         }
-        Instantiate(prop, pos + offset, rot);
+        Instantiate(prop, pos + offset, rot, roomParent.transform);
     }
 
     public override string ToString() {
