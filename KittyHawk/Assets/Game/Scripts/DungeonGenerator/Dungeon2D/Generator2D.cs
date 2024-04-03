@@ -5,7 +5,6 @@ using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
-using Rnd = UnityEngine.Random;
 using Graphs;
 using System;
 
