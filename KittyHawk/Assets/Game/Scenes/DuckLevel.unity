@@ -1643,12 +1643,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001646809
+      value: 0.000000016468093
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000004986136
+      value: -0.0000000049861373
       objectReference: {fileID: 0}
     - target: {fileID: 900702413036734693, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -22066,9 +22066,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ff569f1297349c698a434e52659d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalChickens: 0
+  totalCapturedChickens: 0
   chicksToWin: 3
+  playerController: {fileID: 0}
   winnerWinnerChickenDinner: 0
+  chickenCounter: {fileID: 0}
+  kittyNearCoops: 0
 --- !u!4 &1689890832
 Transform:
   m_ObjectHideFlags: 0
@@ -27515,7 +27518,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8309493695200898054, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8309493695200898054, guid: 3e6fe023e7a79403c9acd0cbe42218dd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3e6fe023e7a79403c9acd0cbe42218dd, type: 3}
 --- !u!1001 &6021986909266371539
 PrefabInstance:
@@ -27652,6 +27661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Horse
+      objectReference: {fileID: 0}
+    - target: {fileID: 2095234297038162980, guid: 46831293874c34d9b8aa6ed1b0727dba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7826609396657575965, guid: 46831293874c34d9b8aa6ed1b0727dba,
         type: 3}
