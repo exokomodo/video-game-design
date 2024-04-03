@@ -10,6 +10,8 @@ public class DataManager : MonoBehaviour
     public int Lives = 9;
     public int Catnip = 0;
 
+    public int Chickens = 0;
+
     public int Bunnies = 0;
     public int BunniesTotal = 0;
 

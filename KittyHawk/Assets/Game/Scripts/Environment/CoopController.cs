@@ -33,7 +33,7 @@ public class CoopController : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         // On collision with chicken increases the chicken counter and checks if it was enough to win.
-        if (other.gameObject.CompareTag("Chick"))
+        if (other.gameObject.CompareTag("Chick") && parentCoopGroupController.kittyNearCoops)
         {
             parentCoopGroupController.addChicken();
             parentCoopGroupController.checkForWin();
