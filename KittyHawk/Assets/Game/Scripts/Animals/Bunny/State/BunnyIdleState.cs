@@ -25,6 +25,7 @@ public sealed class BunnyIdleState : BunnyBaseState
         SwitchAnimState(b, (int)Bunny.BunnyAnimState.IDLE);
         b.anim.speed = 1.4f;
         b.UpdateAgent = false;
+        b.agent.ResetPath();
         b.anim.SetFloat(VelocityXHash, 0);
         b.anim.SetFloat(VelocityZHash, 0);
         b.anim.SetFloat(MagnitudeHash, 0);
