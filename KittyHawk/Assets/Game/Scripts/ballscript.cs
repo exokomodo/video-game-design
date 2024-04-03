@@ -27,6 +27,7 @@ public class ballscript : MonoBehaviour
         {
             // log it to console
             Debug.Log("Player swats ball into pond");
+            // EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "ScarecrowRustle");
             GetComponent<Rigidbody>().AddForce((pond.transform.position - transform.position+heightModifier).normalized*0.3f, ForceMode.Impulse);
         }
     }
@@ -40,8 +41,8 @@ public class ballscript : MonoBehaviour
             Debug.Log("Ball entered pond");
             // destroy the ball
             Destroy(gameObject);
-
-            cow.GetComponent<CowFollow>().UpdateScore();
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success1");
+            cow.GetComponent<CowGame>().UpdateScore();
 
         }
     }

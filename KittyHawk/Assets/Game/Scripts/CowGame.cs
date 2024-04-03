@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
     // Description: This script is used to trigger dialogue when the player enters the trigger zone of the cow. It also triggers a follow up dialogue if the player talks to the cow again.
     // After the initial dialogue, the balls will be launched at random angles and the player will have swat them into the pond. The player will have 60 seconds to swat 5 balls.
     
-public class CowFollow : MonoBehaviour
+public class CowGame: MonoBehaviour
 {
 
 
@@ -83,6 +83,7 @@ public class CowFollow : MonoBehaviour
         // enable canvas
         inventoryCanvas.enabled = true;
         alreadyTalked = true;
+        EventManager.TriggerEvent<MusicEvent, string>("Kitty Polka");
         EventManager.StopListening<DialogueCloseEvent, string>(OnDialogueFinished);
     }
 
@@ -90,16 +91,18 @@ public class CowFollow : MonoBehaviour
 
         if (alreadyTalked) {
             timeLeft -= Time.deltaTime;
-            timeDisplay.GetComponent<TextMeshProUGUI>().text = timeLeft.ToString("F2")+" sec";
+            timeDisplay.GetComponent<TextMeshProUGUI>().text = timeLeft.ToString("F0")+" sec";
             if (timeLeft < 0) {
                 // end the game
                 alreadyTalked = false;
                 if (score >= 5) {
-                //    success
+                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success-fanfare-trumpets");
+                    
                 }
                 else {
                 // restart scene
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatHit1");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
                 
             }
