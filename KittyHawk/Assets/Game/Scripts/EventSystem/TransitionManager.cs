@@ -50,8 +50,7 @@ public class TransitionManager : MonoBehaviour
         {
             case (Day.MONDAY):
                 DataManager.Instance.CurrentDay = Day.TUESDAY;
-                SceneManager.LoadScene("MainMenu"); // for testing
-                // SceneManager.LoadScene(); TO-DO: FILL IN TUESDAY SCENE
+                SceneManager.LoadScene("DuckLevel");
                 break;
             case (Day.TUESDAY):
                 DataManager.Instance.CurrentDay = Day.WEDNESDAY;
@@ -84,7 +83,7 @@ public class TransitionManager : MonoBehaviour
                 break;
             case Day.TUESDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
-                dialogueName = "";
+                dialogueName = "DuckLevelDone";
                 break;
             case Day.WEDNESDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
