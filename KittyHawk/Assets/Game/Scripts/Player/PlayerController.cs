@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour {
 
   private void OnKittyHit(string eventType, float pos, Collider c)
   {
-    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown)
+    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown && !_isAttacking)
     {
       Debug.Log("OnKittyHit!!!");
       ResetHitTimer();
