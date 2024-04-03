@@ -15,5 +15,5 @@ MonoBehaviour:
   DialogueName: CowDialoguePaul
   SpeakerName: Cow
   DialogueText:
-  - Hey Kitty! Try using the tires to jump up on to the roof to get the key! I think
-    that will help you out later.
+  - Hey Kitty! The chickens need help! Go talk to them by the barn.
+  - 'Oh, and the key on top of the garage opens the gate to the crops! '
