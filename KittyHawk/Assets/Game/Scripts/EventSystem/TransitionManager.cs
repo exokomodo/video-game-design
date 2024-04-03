@@ -54,7 +54,7 @@ public class TransitionManager : MonoBehaviour
                 break;
             case (Day.TUESDAY):
                 DataManager.Instance.CurrentDay = Day.WEDNESDAY;
-                // SceneManager.LoadScene(); TO-DO: FILL IN WEDNESDAY SCENE
+                SceneManager.LoadScene("BenScene");
                 break;
             case (Day.WEDNESDAY):
                 DataManager.Instance.CurrentDay = Day.THURSDAY;
@@ -82,7 +82,6 @@ public class TransitionManager : MonoBehaviour
                 dialogueName = "AlphaComplete";
                 break;
             case Day.TUESDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "DuckLevelDone";
                 break;
             case Day.WEDNESDAY:
