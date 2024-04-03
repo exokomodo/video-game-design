@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using KittyHawk.Extensions;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Construct a single hallway and its collection of grid cells
@@ -9,6 +12,7 @@ using UnityEngine.AI;
 /// </summary>
 public class Room: UnityEngine.Object {
     public RectInt bounds;
+    protected GameObject props;
 
     public static Grid2D<GameObject> Segments;
     protected GameObject roomParent;
@@ -52,15 +56,18 @@ public class Room: UnityEngine.Object {
         GameObject wallPreb,
         GameObject floorPrefab,
         GameObject ceilingPrefab,
+        GameObject props,
         int index
     ) {
         bounds = new RectInt(location, size);
         CreateParent(location, parent, RoomName);
+        this.height = height;
         this.wallPrefab = wallPreb;
         this.floorPrefab = floorPrefab;
         this.ceilingPrefab = ceilingPrefab;
+        this.props = props;
         this.index = index;
-        this.height = height;
+
     }
 
     public Room(Vector2Int location, Vector2Int size, Transform parent) {
@@ -152,7 +159,7 @@ public class Room: UnityEngine.Object {
         for (int x=0; x<2; x++) {
             for (int y=0; y<2; y++) {
                 int newY = Math.Abs(x - y);
-                Vector3 offset = new Vector3(x == 0? 1 : -1, 0, newY == 0? 1 : -1);
+                Vector3 offset = new Vector3(x == 0? 1 : -1, 0, newY == 0? 1 : -1) * 2f;
                 wp = CreateWaypoint(position + new Vector3(size.x * x, 0, size.y * newY) + offset);
                 waypoints.Add(wp);
             }
@@ -168,6 +175,62 @@ public class Room: UnityEngine.Object {
         go.transform.position = pos;
         // Debug.Log(go.name);
         return go;
+    }
+
+    protected int GetUniqueRandomInt(int min, int max, List<int> exclude) {
+        int maxIterations = 0;
+        int value = Random.Range(min, max);
+        while (exclude.Contains(value) && ++maxIterations < 10000) {
+            value = Random.Range(min, max);
+        }
+        if (exclude.Contains(value)) {
+            throw new Exception("Could not produce unique random int within the given range.");
+        }
+        exclude.Add(value);
+        return value;
+    }
+
+    public void PlaceProps() {
+        List<int> corners = new List<int>();
+        List<int> propIndices = new List<int>();
+        for (int i=0; i<4; i++) {
+            int corner = GetUniqueRandomInt(0, 4, corners);
+            int propIndex = GetUniqueRandomInt(0, props.transform.childCount, propIndices);
+            AddProp(corner, props.transform.GetChild(propIndex));
+        }
+        // if (!isStart && !isEnd) {
+        //     int ctrIndex = GetUniqueRandomInt(0, props.transform.childCount, propIndices);
+        //     AddProp(5, props.transform.GetChild(ctrIndex));
+        // }
+        props.SetActive(false);
+    }
+
+    protected void AddProp(int corner, Transform prop) {
+        Vector3 pos = position;
+        Vector3 offset = Vector3.zero;
+        Quaternion rot = Quaternion.identity;
+        float ww = wallWidth/2;
+        switch (corner) {
+            case 0:
+                offset = new Vector3(ww, 0, size.y - ww);
+                break;
+            case 1:
+                offset = new Vector3(size.x - ww, 0, size.y - ww);
+                rot = Quaternion.Euler(0, 90, 0);
+                break;
+            case 2:
+                offset = new Vector3(size.x - ww, 0, ww);
+                rot = Quaternion.Euler(0, 180, 0);
+                break;
+            case 3:
+                offset = new Vector3(ww, 0, ww);
+                rot = Quaternion.Euler(0, -90, 0);
+                break;
+            default:
+                offset = new Vector3(size.x/2, 0, size.y/2);
+                break;
+        }
+        Instantiate(prop, pos + offset, rot, roomParent.transform);
     }
 
     public override string ToString() {

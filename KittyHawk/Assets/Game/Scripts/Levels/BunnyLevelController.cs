@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Bunny Level Controller
@@ -24,6 +25,13 @@ public class BunnyLevelController : MonoBehaviour {
 
     [SerializeField]
     GameObject GoosePrefab;
+    [SerializeField]
+    GameObject startDoor;
+    [SerializeField]
+    GameObject endDoor;
+
+    [SerializeField]
+    GameObject TireStack;
 
     [SerializeField]
     bool Testing = false;
@@ -56,6 +64,7 @@ public class BunnyLevelController : MonoBehaviour {
         PlaceEnemies();
         PlaceGoal();
         Generator.CreateDoorways();
+        PlaceObstacles();
 
         inventory = PlayerController.GetComponent<PlayerInventory>();
         inventory.Bunnies = 0;
@@ -139,7 +148,8 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void PlacePlayer() {
-        Player.transform.position = startRoomPos;
+        Player.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 2);
+        startDoor.transform.position =  new Vector3(startRoomPos.x, 0, startRoom.position.z + 0.3f);
     }
 
     private void PlaceBunnies() {
@@ -152,9 +162,23 @@ public class BunnyLevelController : MonoBehaviour {
                 continue;
             };
 
-            baby.position = new Vector3(room.center.x, 0, room.center.y);
+            Vector3 center = new Vector3(room.center.x, 0, room.center.y);
+            baby.position = center;
             baby.Waypoints = room.GenerateWaypoints();
         }
+    }
+
+    private void PlaceObstacles() {
+        List<Room> rooms = Generator.Rooms;
+        int roomCount = rooms.Count;
+        for (int i=0; i<roomCount; i++) {
+            Vector3 pos = GetRoomCenter(rooms[i]);
+            if (pos == startRoomPos || pos == endRoomPos) continue;
+            // if (Random.Range(0f, 1f) > 0.1f) {
+                GameObject tire = Instantiate(TireStack, new Vector3(pos.x + Random.Range(-1,1), 0, pos.z + Random.Range(-1,1)), Quaternion.Euler(0, Random.Range(0, 360), 0));
+            // }
+        }
+        TireStack.SetActive(false);
     }
 
     private void PlaceEnemies() {
@@ -170,6 +194,7 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void PlaceGoal() {
         bunnyController.position = endRoomPos;
+        endDoor.transform.position = new Vector3(endRoomPos.x, 0, endRoom.position.z + endRoom.size.y - 0.3f);
     }
 
     private Vector3 GetRoomCenter(Room room)

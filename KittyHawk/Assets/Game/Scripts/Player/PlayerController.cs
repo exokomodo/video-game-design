@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour {
 
   private void OnKittyHit(string eventType, float pos, Collider c)
   {
-    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown)
+    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown && !_isAttacking)
     {
       Debug.Log("OnKittyHit!!!");
       ResetHitTimer();
@@ -192,14 +192,13 @@ public class PlayerController : MonoBehaviour {
 
   private void OnCollisionEnter(Collision c)
   {
-    if (c.collider.CompareTag("Wall") && _isJumping)
-    {
-      SwitchToFallState();
-      return;
-    }
     if (_isAttacking) {
         Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
         EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
+    }
+    if (_isJumping)
+    {
+      SwitchToFallState();
     }
   }
 
