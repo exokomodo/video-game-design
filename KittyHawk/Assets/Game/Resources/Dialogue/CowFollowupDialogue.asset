@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
-  m_Name: CowFollowupDialogue3
+  m_Name: CowFollowupDialogue
   m_EditorClassIdentifier: 
-  DialogueName: CowFollowupDialogue3
+  DialogueName: CowFollowupDialogue1
   SpeakerName: Cow
   DialogueText:
-  - Whoa. Back already?
-  - Have you figured out jumping? You can jump the fences and jump on objects.
+  - Hey! You're Back!
+  - 'Keep hiding those balls in the pond!
+
+'
