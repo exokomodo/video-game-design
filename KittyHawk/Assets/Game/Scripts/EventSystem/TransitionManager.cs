@@ -50,7 +50,7 @@ public class TransitionManager : MonoBehaviour
         {
             case (Day.MONDAY):
                 DataManager.Instance.CurrentDay = Day.TUESDAY;
-                SceneManager.LoadScene("DuckLevel");
+                SceneManager.LoadScene("DuckIntro");
                 break;
             case (Day.TUESDAY):
                 DataManager.Instance.CurrentDay = Day.WEDNESDAY;
