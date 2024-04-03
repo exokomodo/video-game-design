@@ -19,6 +19,7 @@ TagManager:
   - Horse
   - Patrol
   - Wall
+  - Tire
   layers:
   - Default
   - TransparentFX

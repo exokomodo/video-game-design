@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
   private bool _isRunning = false;
   private bool _isLanding = false;
   private bool _isAttacking = false;
+  private bool _isJumpAttacking = false;
   private bool _isActive = false;
   private bool _isDead = false;
   private float groundCheckTolerance = 0.1f;
@@ -156,9 +157,9 @@ public class PlayerController : MonoBehaviour {
 
   private void OnKittyHit(string eventType, float pos, Collider c)
   {
-    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown && !_isAttacking)
+    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown && !_isAttacking && !_isJumpAttacking)
     {
-      Debug.Log("OnKittyHit!!!");
+      Debug.Log($"OnKittyHit!!!");
       ResetHitTimer();
       if (--inventory.Lives > 0)
       {
@@ -181,10 +182,10 @@ public class PlayerController : MonoBehaviour {
       EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
       return;
     }
-    Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
+    // Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
     if (_isAttacking)
     {
-      Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
+      // Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
       EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
     }
   }
@@ -192,8 +193,11 @@ public class PlayerController : MonoBehaviour {
 
   private void OnCollisionEnter(Collision c)
   {
-    if (_isAttacking) {
-        Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
+    if (c.collider.CompareTag("Tire")) {
+      _isJumpAttacking = true;
+    }
+    if (c.collider.CompareTag("Goose") && (_isAttacking || (_isJumpAttacking && !isGrounded))) {
+        // Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
         EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
     }
     if (_isJumping)
@@ -307,6 +311,7 @@ public class PlayerController : MonoBehaviour {
 
     if (_isGrounded)
     {
+      _isJumpAttacking = false;
       if (_jump && !_isJumping && !_isFalling) {
         SwitchToJumpState();
       }
