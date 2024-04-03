@@ -11,6 +11,7 @@ public class PlayerInventory : MonoBehaviour
 
     public static event Action<int> OnLivesChanged = delegate { };
     public static event Action<int> OnCatnipChanged = delegate { };
+    public static event Action<int> OnChickensChanged = delegate { };
     public static event Action<int> OnBunniesChanged = delegate { };
     public static event Action<int> OnBunniesTotalChanged = delegate { };
 
@@ -31,6 +32,7 @@ public class PlayerInventory : MonoBehaviour
     private int catnip;
     private int bunnies;
     private int bunniesTotal;
+    private int chickens;
 
     #endregion
 
@@ -88,6 +90,16 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    public int Chickens
+    {
+        get { return chickens; }
+        set
+        {
+            chickens = value;
+            OnChickensChanged(value);
+        }
+    }
+
     #endregion
 
     #region Methods
@@ -96,6 +108,7 @@ public class PlayerInventory : MonoBehaviour
     {
         Lives = DataManager.Instance.Lives;
         Catnip = DataManager.Instance.Catnip;
+        Chickens = DataManager.Instance.Chickens;
         Bunnies = DataManager.Instance.Bunnies;
         BunniesTotal = DataManager.Instance.BunniesTotal;
     }

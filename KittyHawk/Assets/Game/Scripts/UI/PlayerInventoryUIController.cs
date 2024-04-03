@@ -12,11 +12,14 @@ public class PlayerInventoryUIController : MonoBehaviour
     private TextMeshProUGUI catnipTextObject;
     [SerializeField]
     private TextMeshProUGUI lifeTextObject;
+    [SerializeField]
+    private TextMeshProUGUI chickenTextObject;
 
     void Awake()
     {
         PlayerInventory.OnCatnipChanged += UpdateCatnip;
         PlayerInventory.OnLivesChanged += UpdateLives;
+        PlayerInventory.OnChickensChanged += UpdateChickens;
     }
 
     void UpdateCatnip(int catnip)
@@ -29,10 +32,16 @@ public class PlayerInventoryUIController : MonoBehaviour
         lifeTextObject.text = lives.ToString();
     }
 
+    void UpdateChickens(int chickens)
+    {
+        chickenTextObject.text = chickens.ToString();
+    }
+
     void OnDestroy()
     {
         PlayerInventory.OnCatnipChanged -= UpdateCatnip;
         PlayerInventory.OnLivesChanged -= UpdateLives;
+        PlayerInventory.OnChickensChanged -= UpdateChickens;
     }
 
 }
