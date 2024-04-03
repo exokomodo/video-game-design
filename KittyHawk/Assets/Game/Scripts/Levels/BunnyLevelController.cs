@@ -175,7 +175,10 @@ public class BunnyLevelController : MonoBehaviour {
             Vector3 pos = GetRoomCenter(rooms[i]);
             if (pos == startRoomPos || pos == endRoomPos) continue;
             // if (Random.Range(0f, 1f) > 0.1f) {
-                GameObject tire = Instantiate(TireStack, new Vector3(pos.x + Random.Range(-1,1), 0, pos.z + Random.Range(-1,1)), Quaternion.Euler(0, Random.Range(0, 360), 0));
+                float dx = Random.Range(0.5f, 1f) * Random.Range(0f, 1f) > 0.5? 1 : -1;
+                float dz = Random.Range(0.5f, 1f) * Random.Range(0f, 1f) > 0.5? 1 : -1;
+                Vector3 newPos = new Vector3(pos.x + dx, 0, pos.z + dz);
+                GameObject tire = Instantiate(TireStack, newPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
             // }
         }
         TireStack.SetActive(false);
