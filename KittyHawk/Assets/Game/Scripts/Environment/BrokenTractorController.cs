@@ -10,6 +10,7 @@ public class BrokenTractorController : MonoBehaviour
 
     bool gotHammer;
     bool gotTape;
+    bool isFixed;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class BrokenTractorController : MonoBehaviour
 
         gotHammer = false;
         gotTape = false;
+        isFixed = false;
     }
 
     private void OnDestroy()
@@ -40,8 +42,9 @@ public class BrokenTractorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && gotHammer && gotTape)
+        if (other.tag == "Player" && gotHammer && gotTape && !isFixed)
         {
+            isFixed = true;
             StartCoroutine(RepairTractor());
         }
     }

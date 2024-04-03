@@ -1,10 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// Handle key pickup
+/// Handle tape pickup
 /// Author: Calvin Ferst
 /// </summary>
-public class BarnKeyController : MonoBehaviour
+public class DuctTapeController : MonoBehaviour
 {
 
     void Update()
@@ -17,9 +17,8 @@ public class BarnKeyController : MonoBehaviour
         if (other.tag == "Player")
         {
             EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "ItemObtained");
-            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("GetBarnKey", ObjectiveStatus.Completed);
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("GetDuctTape", ObjectiveStatus.Completed);
             Destroy(gameObject);
         }
     }
-
 }
