@@ -18,26 +18,24 @@ public class GateController : MonoBehaviour
 {
     private Animator anim;
     public bool gateOpen = false;
+
+    BoxCollider boxCollider;
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         anim = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     public void setGateOpen()
     {
         gateOpen = true;
+        boxCollider.enabled = false;
     }
     // Update is called once per frame
     
     void Update()
     {
-        // Takes user input to open gate for now
-        if (Input.GetKeyDown("o"))
-        {
-            gateOpen = true;
-        }
         // Changes the state of the gate to GateOpen from GateClosed
         if (gateOpen)
         {

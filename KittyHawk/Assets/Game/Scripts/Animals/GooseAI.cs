@@ -216,9 +216,9 @@ public class GooseAI : MonoBehaviour
         // Check if it's time to try walking again
         if (agent.pathPending == false && agent.remainingDistance < 0.5f)
         {
-            // Debug.Log("Should be walking!");
             // Sets value for animator to switch back to idle
             anim.SetBool("isWalking", false);
+            agent.ResetPath();
 
             // Checks if enough time has elapsed
             if (timeSinceLastWalk >= timeUntilNextWalk)
