@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -825,6 +825,11 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
@@ -896,7 +901,6 @@ PrefabInstance:
       value: Goose
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
     - {fileID: 5201914194460781795, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
 --- !u!1 &57655707 stripped
@@ -1483,12 +1487,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016468093
+      value: -0.000000016468091
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000049861373
+      value: 0.000000004986137
       objectReference: {fileID: 0}
     - target: {fileID: 900702413036734693, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -2473,22 +2477,22 @@ PrefabInstance:
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.96220475
+      value: 0.9622047
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2723272
+      value: 0.27232718
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016556063
+      value: -1.2193145e-24
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000046857664
+      value: 3.4509544e-25
       objectReference: {fileID: 0}
     - target: {fileID: 8038719665413400320, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -3931,7 +3935,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189075769}
-  m_LocalRotation: {x: 0.2723272, y: -0.000000016556063, z: 0.000000004685767, w: 0.9622047}
+  m_LocalRotation: {x: 0.27232718, y: -0.000000028675938, z: 0.000000008115983, w: 0.9622047}
   m_LocalPosition: {x: 34.27, y: 2.026, z: -39.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4615,6 +4619,11 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
@@ -4686,7 +4695,6 @@ PrefabInstance:
       value: Goose
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
     - {fileID: 5201914194460781795, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
 --- !u!4 &258836353 stripped
@@ -6852,7 +6860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4102096043591610, guid: f823016012a708d448aa0acf3b3ff4e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4102096043591610, guid: f823016012a708d448aa0acf3b3ff4e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9865,6 +9873,11 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1536118431219790777, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9941,7 +9954,6 @@ PrefabInstance:
       value: Goose
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
     - {fileID: 5201914194460781795, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9f45bccc627204b1db2aa52dcb51e590, type: 3}
 --- !u!1001 &730705307
@@ -14496,11 +14508,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4102096043591610, guid: f823016012a708d448aa0acf3b3ff4e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.1
+      value: 35.47
       objectReference: {fileID: 0}
     - target: {fileID: 4102096043591610, guid: f823016012a708d448aa0acf3b3ff4e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.076
       objectReference: {fileID: 0}
     - target: {fileID: 4102096043591610, guid: f823016012a708d448aa0acf3b3ff4e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23896,6 +23908,11 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 780323663147243255, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4473144747326580866, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: kitty
@@ -26991,6 +27008,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309493695200898054, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
+        type: 3}
+      propertyPath: Lives
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309493695200898054, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
+        type: 3}
+      propertyPath: MusicVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309493695200898054, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
+        type: 3}
+      propertyPath: SoundVolume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e6fe023e7a79403c9acd0cbe42218dd, type: 3}
