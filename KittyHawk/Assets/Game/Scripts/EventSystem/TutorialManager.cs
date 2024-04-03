@@ -40,7 +40,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log("LOADING ALPHA");
         anim.SetTrigger("FadeOut");
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("Alpha");
+        SceneManager.LoadScene("PaulLevel");
     }
 
     public void SkipTutorial()
