@@ -1,4 +1,5 @@
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +9,8 @@ using UnityEngine;
 
 public class HorseLevelController : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshProUGUI gooseTextObject;
     private static int gooseSceneCount;
     private static HorseLevelController _instance;
     public static HorseLevelController Instance
@@ -30,12 +33,17 @@ public class HorseLevelController : MonoBehaviour
     private void Start()
     {
         gooseSceneCount = GameObject.FindGameObjectsWithTag("Goose").Where(x => x.activeInHierarchy).Count();
+        UpdateUI();
         EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
         EventManager.StartListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
                 "HorseObjective",
                 ObjectiveStatus.InProgress);
-        Debug.Log("Count of geese: " + gooseSceneCount);
+    }
+
+    private void UpdateUI()
+    {
+        gooseTextObject.text = gooseSceneCount.ToString();
     }
 
     private void OnHorseEnterPondEvent()
@@ -48,7 +56,7 @@ public class HorseLevelController : MonoBehaviour
     private void OnHorseTrampleGooseEvent()
     {
         gooseSceneCount--;
-        Debug.Log("New count of geese: " + gooseSceneCount);
+        UpdateUI();
         if (gooseSceneCount == 0)
         {
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
