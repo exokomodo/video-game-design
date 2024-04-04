@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
-  m_Name: CowDialogue
+  m_Name: CowFollowupDialogue2
   m_EditorClassIdentifier: 
-  DialogueName: CowDialogue
+  DialogueName: CowFollowupDialogue2
   SpeakerName: Cow
   DialogueText:
-  - Hi Kitty Hawk! I'm happy to see you here!
-  - Please come and visit me again soon! Tell me what you've been up to!
+  - Hey it's Kitty Hawk again!
+  - I hope you've enjoyed exploring the farm. Have you tried the bouncy tires?

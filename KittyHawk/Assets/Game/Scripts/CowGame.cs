@@ -67,10 +67,10 @@ public class CowGame: MonoBehaviour
             Debug.Log("KITTY HAWK TRIGGERING DIALOGUE");
             animator.SetBool("jumping", true);
             if (!alreadyTalked) {
-                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowDialogue");
+                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowScene");
                 EventManager.StartListening<DialogueCloseEvent, string>(OnDialogueFinished);
             } else {
-                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowFollowupDialogue");
+                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowSceneFollowupDialogue");
             }
         }
     }
