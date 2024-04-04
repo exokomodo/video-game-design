@@ -3,7 +3,7 @@
  * Authors: Paul Garza, Geoffrey Roth
  * Date: 03/09/24
  * Summary: This script serves as the control for bouncing tires in the game
- * 
+ *
  * Planned updates: This script can still be tweaked some to accommodate more natural and predictable movement
  *
  * Dependencies: Player components.
@@ -18,7 +18,7 @@ public class TireController : MonoBehaviour
     private Animator tireAnim;
     public GameObject player;
 
-    [SerializeField] public bool AbsoluteValueOn;
+    [SerializeField] public bool AbsoluteValueOn = true;
     private Rigidbody playerRb;
     private PlayerController playerController;
 
@@ -28,7 +28,6 @@ public class TireController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AbsoluteValueOn = true;
         tireAnim = GetComponent<Animator>();
         playerRb = player.GetComponent<Rigidbody>();
         playerController = player.GetComponent<PlayerController>();

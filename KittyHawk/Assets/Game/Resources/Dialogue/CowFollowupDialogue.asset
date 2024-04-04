@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
-  m_Name: CowFollowupDialogue2
+  m_Name: CowFollowupDialogue
   m_EditorClassIdentifier: 
-  DialogueName: CowFollowupDialogue2
+  DialogueName: CowFollowupDialogue1
   SpeakerName: Cow
   DialogueText:
-  - Hey it's Kitty Hawk again!
-  - I hope you've enjoyed exploring the farm. Have you tried the bouncy tires?
+  - Hey! You're Back!
+  - 'Keep hiding those balls in the pond!
+
+'
