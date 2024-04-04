@@ -64,7 +64,7 @@ public class TireController : MonoBehaviour
             }
             else
             {
-                playerRb.velocity = new Vector3(approachDirection.x * -1.0f, bounceForce, approachDirection.z * -1.0f);
+                playerRb.velocity = new Vector3(approachDirection.x * -2.0f, bounceForce, approachDirection.z * -2.0f);
             }
 
             // Normally we expect to Kitty to fall from some height, but here she's typically grounded.
