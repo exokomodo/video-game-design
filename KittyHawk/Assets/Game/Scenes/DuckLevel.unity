@@ -1579,7 +1579,7 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000003953217
+      value: -0.0000000039532173
       objectReference: {fileID: 0}
     - target: {fileID: 900702413036734693, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -4054,12 +4054,12 @@ PrefabInstance:
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -4.6744447e-38
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -6.430099e-39
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7973205119387743609, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -22505,7 +22505,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 403324704}
     - target: {fileID: 9056709368288311134, guid: 5aae919ebdbca4346b005f0a83ac46b3,
         type: 3}
       propertyPath: bounceForce
@@ -25285,7 +25285,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 403324704}
     - target: {fileID: 9056709368288311134, guid: 5aae919ebdbca4346b005f0a83ac46b3,
         type: 3}
       propertyPath: bounceForce
