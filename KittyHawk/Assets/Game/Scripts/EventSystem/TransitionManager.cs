@@ -79,17 +79,17 @@ public class TransitionManager : MonoBehaviour
         {
             case Day.MONDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
-                dialogueName = "AlphaComplete";
+                dialogueName = "ChickenLevelDone";
                 break;
             case Day.TUESDAY:
                 dialogueName = "DuckLevelDone";
                 break;
             case Day.WEDNESDAY:
                 // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
-                dialogueName = "";
+                dialogueName = "CowObjectiveComplete";
                 break;
             case Day.THURSDAY:
-                dialogueName = "BunnyCompleteDialogue";
+                dialogueName = "BunnyCompleteDialogueDuck";
                 break;
             case Day.FRIDAY:
                 dialogueName = "HorseComplete";
