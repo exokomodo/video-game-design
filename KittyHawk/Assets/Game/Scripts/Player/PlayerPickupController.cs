@@ -43,6 +43,7 @@ public class PlayerPickupController : MonoBehaviour
                     EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
                 }
                 */
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
                 inventory.Catnip++;
                 Destroy(other.gameObject);
                 break;
