@@ -32,6 +32,8 @@ public class BunnyLevelController : MonoBehaviour {
 
     [SerializeField]
     GameObject TireStack;
+    [SerializeField]
+    GameObject SmokingDuck;
 
     [SerializeField]
     bool Testing = false;
@@ -69,6 +71,12 @@ public class BunnyLevelController : MonoBehaviour {
         inventory = PlayerController.GetComponent<PlayerInventory>();
         inventory.Bunnies = 0;
         inventory.BunniesTotal = Generator.Rooms.Count - 2;
+
+        Invoke("DuckStartDialogue", 1f);
+    }
+
+    private void DuckStartDialogue() {
+        EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "BunnyStartDialogue");
     }
 
     private void OnLevelEvent(string eventType, Collider c) {
@@ -150,6 +158,8 @@ public class BunnyLevelController : MonoBehaviour {
     private void PlacePlayer() {
         Player.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 2);
         startDoor.transform.position =  new Vector3(startRoomPos.x, 0, startRoom.position.z + 0.3f);
+
+        SmokingDuck.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 3);
     }
 
     private void PlaceBunnies() {
