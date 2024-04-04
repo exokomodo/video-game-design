@@ -33,7 +33,7 @@ public class CowFollow : MonoBehaviour
 
                 // Original implementation
                 else {
-                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowDialogue");
+                EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowDialoguePaul");
                 }
 
                 alreadyTalked = true;
