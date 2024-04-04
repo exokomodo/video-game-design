@@ -3861,6 +3861,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1982906735}
+    - target: {fileID: 9056709368288311134, guid: 5aae919ebdbca4346b005f0a83ac46b3,
+        type: 3}
+      propertyPath: bounceForce
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aae919ebdbca4346b005f0a83ac46b3, type: 3}
 --- !u!4 &1059900335 stripped
@@ -7789,12 +7794,12 @@ PrefabInstance:
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 6.352747e-22
+      value: -0.00000003313895
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -7.940933e-23
+      value: 0.0000000034689418
       objectReference: {fileID: 0}
     - target: {fileID: 9009516357619613352, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
