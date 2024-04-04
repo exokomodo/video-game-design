@@ -41,6 +41,7 @@ public class TransitionManager : MonoBehaviour
         if (name == dialogueName)
         {
             Debug.Log("!LOADING NEXT SCENE! TODAY IS: " + DataManager.Instance.CurrentDay.ToString());
+            DataManager.Instance.Catnip = 0;
             StartCoroutine(LoadNextScene());
         }
             
