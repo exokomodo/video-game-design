@@ -22,7 +22,7 @@ public class TireController : MonoBehaviour
     private Rigidbody playerRb;
     private PlayerController playerController;
 
-    [SerializeField] private float bounceForce = 10f;
+    private float bounceForce = 10f;
     [SerializeField] private Vector3 approachDirection;
 
     // Start is called before the first frame update
