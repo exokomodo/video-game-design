@@ -39,6 +39,8 @@ public class MainMenuController : MonoBehaviour
 
         EventManager.TriggerEvent<MusicEvent, string>(menuMusicName);
         EventManager.TriggerEvent<CursorLockEvent, bool>(false);
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void StartGame()

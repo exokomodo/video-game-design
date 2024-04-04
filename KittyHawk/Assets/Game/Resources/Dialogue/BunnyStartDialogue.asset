@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BunnyStartDialogue
   m_EditorClassIdentifier: 
   DialogueName: BunnyComplete
-  SpeakerName: Beatrix Bunny
+  SpeakerName: Smoking?! Duck
   DialogueText:
   - Listen up Kitty - Beatrix Bunny needs your help!
   - Those geese are up to no good again. They've teamed up to snatch her little ones

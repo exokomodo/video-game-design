@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BunnyCompleteDialogueDuck
   m_EditorClassIdentifier: 
   DialogueName: BunnyComplete
-  SpeakerName: Smoking Duck ?!
+  SpeakerName: Smoking?! Duck
   DialogueText:
   - 'Thank you for rescuing Flipsie, Mipsie, Cottontush & Frank! '
   - We don't know who this 5th one is, but he seems happy to be here, so we'll keep
@@ -22,4 +22,5 @@ MonoBehaviour:
     and order to The Farm.
   - We owe you a debt of gratitude that we can never repay. We will never forget
     you Kitty Hawk.
-  - You are the Pro-est of all Pro-Farming kitties!
+  - Tomorrow, we'll turn the tables, and team up with horse and take the fight directly
+    to those pesky geese!
