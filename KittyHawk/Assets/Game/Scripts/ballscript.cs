@@ -27,7 +27,7 @@ public class ballscript : MonoBehaviour
         {
             // log it to console
             Debug.Log("Player swats ball into pond");
-            // EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "ScarecrowRustle");
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatAttack3");
             GetComponent<Rigidbody>().AddForce((pond.transform.position - transform.position+heightModifier).normalized*0.3f, ForceMode.Impulse);
         }
     }

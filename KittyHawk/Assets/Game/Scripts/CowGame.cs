@@ -37,8 +37,6 @@ public class CowGame: MonoBehaviour
            // hide inventory canvas
            minigameCanvas.enabled = false;
            Vector3 heightModifier = new Vector3(0, 10, 0);
-           Vector3 leftRightModifier = new Vector3(Random.Range(-10, 10), 0, 0);
-
     }
     private void LaunchBall() {
         // Launch a new ball at random force towards object (transform of cow)
@@ -49,12 +47,14 @@ public class CowGame: MonoBehaviour
 
         // Calculate the direction of the ball
         Vector3 direction = transform.position - ballObject.transform.position;
+        Vector3 leftRightModifier = new Vector3(Random.Range(-10, 10), 0, 0);
         direction += heightModifier + leftRightModifier;
         // Calculate the force
         float force = Random.Range(4, 6);
         // Launch the ball
         ballRb.AddForce(direction.normalized * force, ForceMode.Impulse);
         ballRb.useGravity = true;
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "tire-stack-bounce");
     }
 
     public void UpdateScore() {
@@ -87,6 +87,7 @@ public class CowGame: MonoBehaviour
         inventoryCanvas.enabled = false;
         alreadyTalked = true;
         EventManager.TriggerEvent<MusicEvent, string>("Kitty Polka");
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("CowObjective", ObjectiveStatus.InProgress);
         EventManager.StopListening<DialogueCloseEvent, string>(OnDialogueFinished);
     }
 
