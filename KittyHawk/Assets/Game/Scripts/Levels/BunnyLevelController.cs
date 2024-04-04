@@ -34,6 +34,8 @@ public class BunnyLevelController : MonoBehaviour {
     GameObject TireStack;
     [SerializeField]
     GameObject SmokingDuck;
+    [SerializeField]
+    GameObject Catnip;
 
     [SerializeField]
     bool Testing = false;
@@ -157,7 +159,8 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void PlacePlayer() {
         Player.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 2);
-        startDoor.transform.position =  new Vector3(startRoomPos.x, 0, startRoom.position.z + 0.3f);
+        // startDoor.transform.position =  new Vector3(startRoomPos.x, 0, startRoom.position.z + 0.3f);
+        startDoor.SetActive(false);
 
         SmokingDuck.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 3);
     }
@@ -207,7 +210,18 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void PlaceGoal() {
         bunnyController.position = endRoomPos;
-        endDoor.transform.position = new Vector3(endRoomPos.x, 0, endRoom.position.z + endRoom.size.y - 0.3f);
+        // endDoor.transform.position = new Vector3(endRoomPos.x, 0, endRoom.position.z + endRoom.size.y - 0.3f);
+        endDoor.SetActive(false);
+
+        Vector3 radius = new Vector3(1, 0, 0);
+        int dtheta = 30;
+        Vector3 newPos = Vector3.zero;
+        for (int i=0; i<360; i+=dtheta) {
+            newPos = endRoomPos + Quaternion.AngleAxis(i, Vector3.up) * radius * 3f;
+            newPos.y = 0.33f;
+            GameObject catnip = Instantiate(Catnip, newPos, Quaternion.identity, endRoom.transform);
+        }
+        Catnip.SetActive(false);
     }
 
     private Vector3 GetRoomCenter(Room room)

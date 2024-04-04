@@ -48,6 +48,12 @@ public class Room: UnityEngine.Object {
         }
     }
 
+    public Transform transform {
+        get {
+            return roomParent.transform;
+        }
+    }
+
     public Room(
         Vector2Int location,
         Vector2Int size,
