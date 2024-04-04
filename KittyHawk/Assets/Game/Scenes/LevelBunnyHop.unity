@@ -5794,6 +5794,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4488023641599610356, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
+        type: 3}
+      propertyPath: maxCatnip
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4488023641599610358, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
         type: 3}
       propertyPath: musicName
@@ -7784,12 +7789,12 @@ PrefabInstance:
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000003313895
+      value: 6.352747e-22
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000034689418
+      value: -7.940933e-23
       objectReference: {fileID: 0}
     - target: {fileID: 9009516357619613352, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
