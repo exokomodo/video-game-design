@@ -97,7 +97,7 @@ public class CowGame: MonoBehaviour
                 alreadyTalked = false;
                 if (score >= 5) {
                     EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success-fanfare-trumpets");
-                    
+                    EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("CowObjective", ObjectiveStatus.Completed);
                 }
                 else {
                 // restart scene
