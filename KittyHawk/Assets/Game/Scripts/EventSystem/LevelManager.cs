@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 /// <summary>
 /// Sets up the level (audio & fade-in)
@@ -19,6 +20,8 @@ public class LevelManager : MonoBehaviour
     Objective[] objectives;
     [SerializeField]
     string nextLevel;
+    [SerializeField]
+    bool displayDay = true;
 
     bool allObjectivesCompleted;
     Dictionary<string, Objective> objectivesDic;
@@ -27,6 +30,17 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        var dayText = GameObject.Find("DayName").GetComponent<TextMeshProUGUI>();
+        if (displayDay)
+        {
+            dayText.text = DataManager.Instance.CurrentDay.ToString();
+        }
+        else
+        {
+            dayText.text = "";
+        }
+
+
         anim = canvas.GetComponentInChildren<Animator>();
         anim.SetTrigger("FadeIn");
         EventManager.TriggerEvent<MusicEvent, string>(musicName);
