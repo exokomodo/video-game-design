@@ -30,7 +30,30 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        var dayText = GameObject.Find("DayName").GetComponent<TextMeshProUGUI>();
+        DisplayDayName();
+
+        anim = canvas.GetComponentInChildren<Animator>();
+        anim.SetTrigger("FadeIn");
+        EventManager.TriggerEvent<MusicEvent, string>(musicName);
+
+        Init();
+    }
+
+    void DisplayDayName()
+    {
+
+        TextMeshProUGUI dayText = null;
+        GameObject dayTextObject = GameObject.Find("DayName");
+
+        if (dayTextObject != null)
+        {
+            dayText = dayTextObject.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            return;
+        }
+
         if (displayDay)
         {
             dayText.text = DataManager.Instance.CurrentDay.ToString();
@@ -39,13 +62,6 @@ public class LevelManager : MonoBehaviour
         {
             dayText.text = "";
         }
-
-
-        anim = canvas.GetComponentInChildren<Animator>();
-        anim.SetTrigger("FadeIn");
-        EventManager.TriggerEvent<MusicEvent, string>(musicName);
-
-        Init();
     }
 
     void Init()
@@ -118,5 +134,13 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    // TODO: TESTING! COMMENT OUT!
+    /*
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
+            LevelComplete();
+    } */
 
 }

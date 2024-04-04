@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5676,32 +5676,6 @@ Transform:
   m_Father: {fileID: 98249738}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1333371525 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4488023642241541609, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1541691200}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1333371527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1333371525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7984dcf12b1813e45bb7045dac642854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentDay: 3
-  Lives: 9
-  Catnip: 0
-  Chickens: 0
-  Bunnies: 0
-  BunniesTotal: 0
-  SoundVolume: 1
-  MusicVolume: 1
 --- !u!1 &1342114120
 GameObject:
   m_ObjectHideFlags: 0
@@ -7758,7 +7732,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687610720}
-  m_LocalRotation: {x: 0.21201205, y: -0.000000047560654, z: 0.000000010317989, w: 0.9772671}
+  m_LocalRotation: {x: 0.21201204, y: 0, z: 0, w: 0.9772671}
   m_LocalPosition: {x: 7.64, y: 2, z: -13.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9237,17 +9211,17 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2297529
+      value: 0.22975291
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000023682555
+      value: 0.000000013762846
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000055906924
+      value: -0.000000003248967
       objectReference: {fileID: 0}
     - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
@@ -9457,12 +9431,12 @@ PrefabInstance:
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000023780327
+      value: -7.127872e-37
       objectReference: {fileID: 0}
     - target: {fileID: 7925880440691214573, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000005158994
+      value: -1.3186549e-38
       objectReference: {fileID: 0}
     - target: {fileID: 9009516357619613352, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}

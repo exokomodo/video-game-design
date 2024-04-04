@@ -5011,32 +5011,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 95974443}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &408842954 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4488023641599610350, guid: 3e6fe023e7a79403c9acd0cbe42218dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 4488023641645183748}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &408842956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 408842954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7984dcf12b1813e45bb7045dac642854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentDay: 4
-  Lives: 9
-  Catnip: 0
-  Chickens: 0
-  Bunnies: 0
-  BunniesTotal: 0
-  SoundVolume: 1
-  MusicVolume: 1
 --- !u!4 &409604718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4141445429281994, guid: ffb9f4b999c6f284993a78daf70b985e,
