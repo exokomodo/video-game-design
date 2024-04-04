@@ -1,8 +1,9 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-    // Author Ben Lee
-    // Date: April 2024
-    // Description: this script handles the ball swatting mechanic in the game. The player must swat the balls into the pond to score points. The player has 60 seconds to swat 5 balls.
+// Author Ben Lee
+// Date: April 2024
+// Description: this script handles the ball swatting mechanic in the game. The player must swat the balls into the pond to score points. The player has 60 seconds to swat 5 balls.
 
 public class ballscript : MonoBehaviour
 {
@@ -11,6 +12,13 @@ public class ballscript : MonoBehaviour
     public GameObject player;
     public GameObject cow;
     Vector3 heightModifier = new Vector3(0, 5, 0);
+
+    private float timeSinceLastMeow;
+
+    private float meowThreshold = 1.0f;
+
+
+
     public Canvas canvas;
 
     PlayerController playerController;
@@ -27,8 +35,16 @@ public class ballscript : MonoBehaviour
         {
             // log it to console
             Debug.Log("Player swats ball into pond");
+            timeSinceLastMeow += Time.deltaTime;
+
+            if (timeSinceLastMeow > meowThreshold)
+            {
+                timeSinceLastMeow = 0;
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatMeow");
+            }
+
             EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatAttack3");
-            GetComponent<Rigidbody>().AddForce((pond.transform.position - transform.position+heightModifier).normalized*0.3f, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce((pond.transform.position - transform.position + heightModifier).normalized * 0.3f, ForceMode.Impulse);
         }
     }
 
