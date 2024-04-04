@@ -78,7 +78,4 @@ public class TireController : MonoBehaviour
             EventManager.TriggerEvent<TireStackBounceEvent, Vector3>(transform.position);
         }
     }
-
-
-
 }
