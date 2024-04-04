@@ -20,6 +20,8 @@ public class CowGame: MonoBehaviour
     public GameObject player;
     public GameObject ball;
     public GameObject spawn;
+    public Canvas minigameCanvas;
+
     public Canvas inventoryCanvas;
     private int score = 0;
     private float timeLeft = 60.0f;
@@ -33,7 +35,7 @@ public class CowGame: MonoBehaviour
 
     private void Start() {
            // hide inventory canvas
-           inventoryCanvas.enabled = false;
+           minigameCanvas.enabled = false;
            Vector3 heightModifier = new Vector3(0, 10, 0);
            Vector3 leftRightModifier = new Vector3(Random.Range(-10, 10), 0, 0);
 
@@ -81,7 +83,8 @@ public class CowGame: MonoBehaviour
 
     private void OnDialogueFinished(string dialogueName) {
         // enable canvas
-        inventoryCanvas.enabled = true;
+        minigameCanvas.enabled = true;
+        inventoryCanvas.enabled = false;
         alreadyTalked = true;
         EventManager.TriggerEvent<MusicEvent, string>("Kitty Polka");
         EventManager.StopListening<DialogueCloseEvent, string>(OnDialogueFinished);
