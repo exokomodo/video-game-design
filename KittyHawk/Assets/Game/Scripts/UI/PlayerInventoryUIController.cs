@@ -12,6 +12,8 @@ public class PlayerInventoryUIController : MonoBehaviour
     private TextMeshProUGUI catnipTextObject;
     [SerializeField]
     private TextMeshProUGUI lifeTextObject;
+    [SerializeField]
+    private int maxCatnip = 0;
 
     void Awake()
     {
@@ -21,7 +23,7 @@ public class PlayerInventoryUIController : MonoBehaviour
 
     void UpdateCatnip(int catnip)
     {
-        catnipTextObject.text = catnip.ToString();
+        catnipTextObject.text = catnip.ToString() + "/" + maxCatnip.ToString();
     }
 
     void UpdateLives(int lives)
