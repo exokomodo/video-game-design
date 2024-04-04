@@ -16,8 +16,9 @@ using UnityEngine;
 public class TireController : MonoBehaviour
 {
     private Animator tireAnim;
-
     public GameObject player;
+
+    [SerializeField] public bool AbsoluteValueOn;
     private Rigidbody playerRb;
     private PlayerController playerController;
 
@@ -27,6 +28,7 @@ public class TireController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AbsoluteValueOn = true;
         tireAnim = GetComponent<Animator>();
         playerRb = player.GetComponent<Rigidbody>();
         playerController = player.GetComponent<PlayerController>();
@@ -56,7 +58,14 @@ public class TireController : MonoBehaviour
             approachDirection.y = 0;
             approachDirection = approachDirection.normalized;
 
-            playerRb.velocity = new Vector3(Math.Abs(approachDirection.x) * 3f , bounceForce, Math.Abs(approachDirection.z) * 3f);
+            if (AbsoluteValueOn)
+            {
+                playerRb.velocity = new Vector3(Math.Abs(approachDirection.x) * 3f, bounceForce, Math.Abs(approachDirection.z) * 3f);
+            }
+            else
+            {
+                playerRb.velocity = new Vector3(approachDirection.x * -1.0f, bounceForce, approachDirection.z * -1.0f);
+            }
 
             // Normally we expect to Kitty to fall from some height, but here she's typically grounded.
             // We delay entering the fall state to give the kitty time to acquire some height
