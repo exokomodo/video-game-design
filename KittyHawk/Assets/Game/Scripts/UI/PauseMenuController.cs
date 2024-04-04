@@ -125,6 +125,9 @@ public class PauseMenuController : MonoBehaviour
     public void ReturnToMenu()
     {
         TriggerPause();
+        DataManager.Instance.CurrentDay = Day.MONDAY;
+        DataManager.Instance.Lives = 9;
+        DataManager.Instance.Catnip = 0;
         SceneManager.LoadScene("MainMenu");
     }
 

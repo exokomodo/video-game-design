@@ -18,7 +18,7 @@ public class DuckHerdController : MonoBehaviour
         {
             foreach (Animator anim in anims)
             {
-                anim.SetBool("Talk", true);
+                StartCoroutine(Quack(anim));
             }
         }
     }
@@ -32,5 +32,11 @@ public class DuckHerdController : MonoBehaviour
                 anim.SetBool("Talk", false);
             }
         }
+    }
+
+    private IEnumerator Quack(Animator anim)
+    {
+        anim.SetBool("Talk", true);
+        yield return new WaitForSeconds(Random.Range(0.2f, 1f));
     }
 }

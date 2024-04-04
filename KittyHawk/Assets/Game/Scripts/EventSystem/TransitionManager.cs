@@ -66,6 +66,8 @@ public class TransitionManager : MonoBehaviour
                 break;
             case (Day.FRIDAY):
                 DataManager.Instance.CurrentDay = Day.MONDAY;
+                DataManager.Instance.Lives = 9;
+                DataManager.Instance.Catnip = 0;
                 SceneManager.LoadScene("MainMenu");
                 break;
         }
