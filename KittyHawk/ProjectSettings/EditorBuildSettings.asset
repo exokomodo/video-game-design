@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/LevelBunnyHop.unity
     guid: 9cd3266832e8a40f587f8f53ba6d5688
+  - enabled: 1
+    path: Assets/Game/Scenes/PaulScene.unity
+    guid: 08503ef10ac87064480b43d0e1025a7f
   m_configObjects: {}
