@@ -41,10 +41,10 @@ public class KeyController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             gateController.setGateOpen();
-            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "win31fanfare");
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success1");
             Destroy(this.gameObject);
         }
-           
+
     }
 
     // Animates key based on if kitty is in the sphere collider or not
