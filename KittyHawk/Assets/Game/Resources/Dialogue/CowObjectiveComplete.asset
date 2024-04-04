@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
   m_Name: CowObjectiveComplete
   m_EditorClassIdentifier: 
-  DialogueName: Cow Objective Complete
+  DialogueName: CowObjectiveComplete
   SpeakerName: Smoking Duck
   DialogueText:
   - I see you handled Cow's pesky children problem. I'm sure they won't be messing

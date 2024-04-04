@@ -36,8 +36,14 @@ public class TransitionManager : MonoBehaviour
 
     public void TriggerLoadNextScene(string name)
     {
+        Debug.Log("!DIALOGUE NAME IS: " + name);
+
         if (name == dialogueName)
+        {
+            Debug.Log("!LOADING NEXT SCENE! TODAY IS: " + DataManager.Instance.CurrentDay.ToString());
             StartCoroutine(LoadNextScene());
+        }
+            
     }
 
     IEnumerator LoadNextScene()
@@ -80,14 +86,12 @@ public class TransitionManager : MonoBehaviour
         switch (DataManager.Instance.CurrentDay)
         {
             case Day.MONDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "ChickenLevelDone";
                 break;
             case Day.TUESDAY:
                 dialogueName = "DuckLevelDone";
                 break;
             case Day.WEDNESDAY:
-                // TO-DO - Replace dialogue name with appropriate end-of-day dialogue
                 dialogueName = "CowObjectiveComplete";
                 break;
             case Day.THURSDAY:
@@ -97,8 +101,7 @@ public class TransitionManager : MonoBehaviour
                 dialogueName = "HorseComplete";
                 break;
         }
-        // NOTE: Moves to next day
-        DataManager.Instance.CurrentDay += 1;
+
         EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, dialogueName);
     }
 }
