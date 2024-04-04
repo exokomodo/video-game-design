@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +7,7 @@ using UnityEngine.SceneManagement;
     // Date: 2024
     // Description: This script is used to trigger dialogue when the player enters the trigger zone of the cow. It also triggers a follow up dialogue if the player talks to the cow again.
     // After the initial dialogue, the balls will be launched at random angles and the player will have swat them into the pond. The player will have 60 seconds to swat 5 balls.
-    
+
 public class CowGame: MonoBehaviour
 {
 
@@ -31,7 +30,7 @@ public class CowGame: MonoBehaviour
 
     public GameObject timeDisplay;
     public GameObject scoreDisplay;
- 
+
 
     private void Start() {
            // hide inventory canvas
@@ -108,7 +107,7 @@ public class CowGame: MonoBehaviour
                     EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatHit1");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
-                
+
             }
             // randomly determine if a ball should be launched
             if (Random.Range(0, 200) == 1) {
