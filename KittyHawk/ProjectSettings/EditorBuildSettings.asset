@@ -20,4 +20,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/Transition.unity
     guid: b520cb6cb7e8db04fa0702ef5874a0d0
+  - enabled: 1
+    path: Assets/Game/Scenes/BenScene.unity
+    guid: 710aff7506f134ff7ad7b606daa09396
+  - enabled: 1
+    path: Assets/Game/Scenes/DuckIntro.unity
+    guid: cfff08a4af7dead489ec831f367c7a1c
+  - enabled: 1
+    path: Assets/Game/Scenes/DuckLevel.unity
+    guid: 8867883f91baa054489a726fac8f1f27
+  - enabled: 1
+    path: Assets/Game/Scenes/HorseLevel.unity
+    guid: 583417c03c9984a16a7f096c427f3396
+  - enabled: 1
+    path: Assets/Game/Scenes/LevelBunnyHop.unity
+    guid: 9cd3266832e8a40f587f8f53ba6d5688
   m_configObjects: {}

@@ -19,6 +19,7 @@ TagManager:
   - Horse
   - Patrol
   - Wall
+  - Tire
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - Blue
   - Red

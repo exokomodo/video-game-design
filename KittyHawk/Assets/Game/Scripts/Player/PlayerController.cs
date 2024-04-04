@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
   private bool _isRunning = false;
   private bool _isLanding = false;
   private bool _isAttacking = false;
+  private bool _isJumpAttacking = false;
   private bool _isActive = false;
   private bool _isDead = false;
   private float groundCheckTolerance = 0.1f;
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour {
   public float RunSpeed = 2.0f;
   public float BaseJumpForce = 8.0f;
   public float TurnSpeed = 1.0f;
-  public float HitCooldown = 2.0f;
+  public float HitCooldown = 3.0f;
 
 
   public void Awake()
@@ -156,9 +157,9 @@ public class PlayerController : MonoBehaviour {
 
   private void OnKittyHit(string eventType, float pos, Collider c)
   {
-    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown)
+    if (eventType == AttackEvent.ATTACK_KITTY_HIT && hitTimer > HitCooldown && !_isAttacking && !_isJumpAttacking)
     {
-      Debug.Log("OnKittyHit!!!");
+      Debug.Log($"OnKittyHit!!!");
       ResetHitTimer();
       if (--inventory.Lives > 0)
       {
@@ -181,10 +182,10 @@ public class PlayerController : MonoBehaviour {
       EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
       return;
     }
-    Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
+    // Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
     if (_isAttacking)
     {
-      Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
+      // Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
       EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
     }
   }
@@ -192,14 +193,16 @@ public class PlayerController : MonoBehaviour {
 
   private void OnCollisionEnter(Collision c)
   {
-    if (c.collider.CompareTag("Wall") && _isJumping)
+    if (c.collider.CompareTag("Tire")) {
+      _isJumpAttacking = true;
+    }
+    if (c.collider.CompareTag("Goose") && (_isAttacking || (_isJumpAttacking && !isGrounded))) {
+        // Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
+        EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
+    }
+    if (_isJumping)
     {
       SwitchToFallState();
-      return;
-    }
-    if (_isAttacking) {
-        Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
-        EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
     }
   }
 
@@ -308,6 +311,7 @@ public class PlayerController : MonoBehaviour {
 
     if (_isGrounded)
     {
+      _isJumpAttacking = false;
       if (_jump && !_isJumping && !_isFalling) {
         SwitchToJumpState();
       }

@@ -43,6 +43,8 @@ public class Generator2D : MonoBehaviour {
     GameObject floorPrefab;
     [SerializeField]
     GameObject ceilingPrefab;
+    [SerializeField]
+    GameObject roomProps;
 
     [SerializeField]
     int RoomHeight = 10;
@@ -65,9 +67,6 @@ public class Generator2D : MonoBehaviour {
     GameObject root;
     private const string rootName = "Generator2DRoot";
 
-    private void Awake() {
-
-    }
 
     protected void Start() {
         retries = 0;
@@ -115,6 +114,7 @@ public class Generator2D : MonoBehaviour {
             return;
         }
         Hallway.RemoveWalls(grid);
+        PlaceProps();
 
         Debug.Log($"Final RoomCount: {Rooms.Count}");
     }
@@ -148,6 +148,7 @@ public class Generator2D : MonoBehaviour {
                 wallPrefab,
                 floorPrefab,
                 ceilingPrefab,
+                roomProps,
                 i
             );
             Room buffer = new Room(location + new Vector2Int(-hallWidth, -hallWidth), roomSize + new Vector2Int(hallWidth * 2, hallWidth * 2), root.transform);
@@ -270,6 +271,12 @@ public class Generator2D : MonoBehaviour {
     // void PlaceHallway(Vector2Int location) {
     //     PlaceCube(location, new Vector2Int(1, 1));
     // }
+
+    protected void PlaceProps() {
+        foreach (Room room in Rooms) {
+            room.PlaceProps();
+        }
+    }
 }
 
 #if UNITY_EDITOR

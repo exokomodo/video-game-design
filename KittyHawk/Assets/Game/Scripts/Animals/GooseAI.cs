@@ -70,7 +70,6 @@ public class GooseAI : MonoBehaviour
         anim = GetComponent<Animator>();
         kittyTransform = kitty.GetComponent<Transform>();
 
-        // I'll handle this.
         agent.updateRotation = false;
 
         // Initializing variables needed by states
@@ -85,7 +84,7 @@ public class GooseAI : MonoBehaviour
     {
         Debug.Log("OnAttackEvent > " + eventType);
         if (c != cl) return;
-        if (eventType ==  AttackEvent.ATTACK_TARGET_HIT)
+        if (eventType == AttackEvent.ATTACK_TARGET_HIT)
         {
             Debug.Log("ATTACK_TARGET_HIT > A goose has been hit by Kitty!");
             // TODO: Subtract health and potentially enter die state?
@@ -125,6 +124,7 @@ public class GooseAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Goose sees Kitty");
             isNearKitty = true;
         }
     }
@@ -144,6 +144,7 @@ public class GooseAI : MonoBehaviour
 
         if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE)
         {
+            Debug.Log("Goose Entering Attack State");
             EnterAttackState();
         }
 
@@ -178,17 +179,23 @@ public class GooseAI : MonoBehaviour
         timeUntilNextWalk = Random.Range(3.0f, 10.0f);
     }
 
-
-    private void ChangeLookDirection()
+    private void ChangeLookDirection(Vector3 targetPos)
     {
-        // Make the Goose look at the new position. Uses euler transformation because the model
+        // Make the chicken look at the new position. Uses euler transformation because the model 
         // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
-        // TODO: Quaternion.Slerp?
-        Vector3 lookPosition = newPosition - currentPosition;
+        Vector3 lookPosition = targetPos - currentPosition;
         Quaternion rotation = Quaternion.LookRotation(lookPosition);
         transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
     }
 
+    private void SetGooseDestination(Vector3 targetPos)
+    {
+        newPosition.y = transform.position.y;
+        ChangeLookDirection(targetPos);
+        agent.SetDestination(targetPos);
+    }
+
+    #region Patrol State
     private void EnterPatrolState()
     {
         Debug.Log("Goose Entering Patrol State");
@@ -209,9 +216,9 @@ public class GooseAI : MonoBehaviour
         // Check if it's time to try walking again
         if (agent.pathPending == false && agent.remainingDistance < 0.5f)
         {
-            // Debug.Log("Should be walking!");
             // Sets value for animator to switch back to idle
             anim.SetBool("isWalking", false);
+            agent.ResetPath();
 
             // Checks if enough time has elapsed
             if (timeSinceLastWalk >= timeUntilNextWalk)
@@ -233,19 +240,13 @@ public class GooseAI : MonoBehaviour
                     newPosition = randomDirection;
                 }
 
-                // We don't want the Goose walking around where it can't get to
-                newPosition.y = transform.position.y;
-
-                ChangeLookDirection();
-
-                // Sets the destination for the AI Goose
-                agent.SetDestination(newPosition);
-
+                SetGooseDestination(newPosition);
                 ResetPatrolTimer();
             }
         }
     }
-
+    #endregion
+    #region Flee State
     private void EnterFleeState()
     {
         Debug.Log("Goose Entering Flee State");
@@ -267,10 +268,7 @@ public class GooseAI : MonoBehaviour
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
 
-
-            agent.SetDestination(newPosition);
-            ChangeLookDirection();
-
+            SetGooseDestination(newPosition);
 
             // When the flee destination is reached, will patrol if kitty isn't around
             if (!isNearKitty) EnterPatrolState();
@@ -278,7 +276,8 @@ public class GooseAI : MonoBehaviour
         // As soon as kitty is away enters patrol
         //if (!isNearKitty) EnterPatrolState();
     }
-
+    #endregion
+    #region Attack State
     private void EnterAttackState()
     {
         // Plays small jump-like animation to let the player know that the goose is going to attack
@@ -296,14 +295,13 @@ public class GooseAI : MonoBehaviour
 
     private void UpdateAttackState()
     {
-            // Chases after kitty until she is caught or escapes
-            newPosition = kittyTransform.position;
-            ChangeLookDirection();
-            agent.SetDestination(newPosition);
+        // Chases after kitty until she is caught or escapes
+        newPosition = kittyTransform.position;
+        SetGooseDestination(newPosition);
 
-            // On collision has call for EnterFleeState()
+        // On collision has call for EnterFleeState()
 
-            if (!isNearKitty) EnterPatrolState();
+        if (!isNearKitty) EnterPatrolState();
     }
 
     private void ResetHonkTimer()
@@ -314,6 +312,7 @@ public class GooseAI : MonoBehaviour
 
     public void Honk()
     {
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1,3)}");
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1, 3)}");
     }
+    #endregion
 }
