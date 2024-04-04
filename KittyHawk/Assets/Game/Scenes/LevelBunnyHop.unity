@@ -7680,7 +7680,7 @@ MonoBehaviour:
   TireStack: {fileID: 527163552}
   SmokingDuck: {fileID: 1499766072}
   Catnip: {fileID: 826048244}
-  Testing: 1
+  Testing: 0
 --- !u!1 &1687610720
 GameObject:
   m_ObjectHideFlags: 0
@@ -9242,12 +9242,12 @@ PrefabInstance:
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000023682551
+      value: -0.000000023682555
       objectReference: {fileID: 0}
     - target: {fileID: 838122351484784730, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000055906915
+      value: 0.0000000055906924
       objectReference: {fileID: 0}
     - target: {fileID: 1382940239143689878, guid: 7c27731197a634fb781589a2039fde21,
         type: 3}
