@@ -41,6 +41,7 @@ public class KeyController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             gateController.setGateOpen();
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "win31fanfare");
             Destroy(this.gameObject);
         }
            

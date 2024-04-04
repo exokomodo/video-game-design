@@ -4,6 +4,7 @@ public class CowMondayController : MonoBehaviour
 {
 
     private Animator anim;
+    private bool alreadyTalked;
 
     private void Start()
     {
@@ -12,10 +13,11 @@ public class CowMondayController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !alreadyTalked)
         {
             anim.SetBool("jumping", true);
             EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowDialoguePaul");
+            alreadyTalked = true;
         }
     }
 
