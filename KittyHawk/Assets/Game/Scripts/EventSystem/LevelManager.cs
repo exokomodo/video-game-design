@@ -116,6 +116,8 @@ public class LevelManager : MonoBehaviour
 
     private void OnPlayerDie()
     {
+        DataManager.Instance.Lives = 9;
+        DataManager.Instance.Catnip = 0;
         StartCoroutine(ReloadLevel());
     }
 
