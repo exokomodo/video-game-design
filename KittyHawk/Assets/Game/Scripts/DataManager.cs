@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY};
 
@@ -19,6 +20,23 @@ public class DataManager : MonoBehaviour
     public float MusicVolume = 1f;
 
     public static DataManager Instance;
+
+    const string DIALOGUE_MONDAY = "ChickenLevelDone";
+    const string DIALOGUE_TUESDAY = "DuckLevelDone";
+    const string DIALOGUE_WEDNESDAY = "CowObjectiveComplete";
+    const string DIALOGUE_THURSDAY = "BunnyCompleteDialogueDuck";
+    const string DIALOGUE_FRIDAY = "HorseComplete";
+    const string LEVEL_MONDAY = "PaulScene";
+    const string LEVEL_TUESDAY = "DuckIntro";
+    const string LEVEL_WEDNESDAY = "BenScene";
+    const string LEVEL_THURSDAY = "LevelBunnyHop";
+    const string LEVEL_FRIDAY = "HorseLevel";
+    const string MAIN_MENU = "MainMenu";
+
+    // for level jumping
+    readonly KeyCode[] LEVEL_JUMP_COMMAND = { KeyCode.L, KeyCode.E, KeyCode.V, KeyCode.E, KeyCode.L };
+    int index = 0;
+    bool levelEntered = false;
 
     private void Awake()
     {
@@ -86,5 +104,69 @@ public class DataManager : MonoBehaviour
     {
         MusicVolume = volume;
     }
+
+    #region Level Jumping
+
+    private void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            if (levelEntered)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    Instance.CurrentDay = Day.MONDAY;
+                    SceneManager.LoadScene(LEVEL_MONDAY);
+
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    Instance.CurrentDay = Day.TUESDAY;
+                    SceneManager.LoadScene(LEVEL_TUESDAY);
+
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    Instance.CurrentDay = Day.WEDNESDAY;
+                    SceneManager.LoadScene(LEVEL_WEDNESDAY);
+
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    Instance.CurrentDay = Day.THURSDAY;
+                    SceneManager.LoadScene(LEVEL_THURSDAY);
+
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    Instance.CurrentDay = Day.FRIDAY;
+                    SceneManager.LoadScene(LEVEL_FRIDAY);
+
+                }
+
+                index = 0;
+                levelEntered = false;
+            }
+            else
+            {
+                if (Input.GetKeyDown(LEVEL_JUMP_COMMAND[index]))
+                {
+                    index++;
+                }
+                else
+                {
+                    index = 0;
+                    levelEntered = false;
+                }
+            }
+        }
+
+        if (index == LEVEL_JUMP_COMMAND.Length)
+        {
+            levelEntered = true;
+        }
+    }
+
+    #endregion
 
 }
