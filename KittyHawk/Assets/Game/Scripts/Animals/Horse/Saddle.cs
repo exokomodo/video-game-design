@@ -13,9 +13,7 @@ public class Saddle : MonoBehaviour
     public GameObject CinemachineVirtualCamera;
     [KittyHawk.Attributes.TagSelector]
     public string RiderTag = "Player";
-    public GameObject CarrotForward;
-    public GameObject CarrotLeft;
-    public GameObject CarrotRight;
+    public GameObject Carrot;
     public float RidingFov = 70f;
     public float RidingRigOrbitOffset = 1f;
     #endregion
@@ -36,17 +34,17 @@ public class Saddle : MonoBehaviour
     #region Protected methods
     protected void TurnLeft()
     {
-        _waypointAI.SetCarrot(CarrotLeft);
+        // TODO
     }
 
     protected void TurnRight()
     {
-        _waypointAI.SetCarrot(CarrotRight);
+        // TODO: 
     }
 
     protected void TurnStraight()
     {
-        _waypointAI.SetCarrot(CarrotForward);
+        _waypointAI.SetCarrot(Carrot);
     }
 
     protected void Mount()
@@ -58,14 +56,14 @@ public class Saddle : MonoBehaviour
         _rider = GameObject.FindGameObjectsWithTag("Player")
             .FirstOrDefault(x => x.GetComponent<PlayerController>());
         _playerController = _rider.GetComponent<PlayerController>();
-        _waypointAI.SetCarrot(CarrotForward);
+        _waypointAI.SetCarrot(Carrot);
         _playerController.ToggleActive(false);
         if (_cinemachineFreeLook != null)
         {
             _oldFollow = _cinemachineFreeLook.Follow;
             _oldLookAt = _cinemachineFreeLook.LookAt;
-            _cinemachineFreeLook.Follow = CarrotForward.transform;
-            _cinemachineFreeLook.LookAt = CarrotForward.transform;
+            _cinemachineFreeLook.Follow = transform;
+            _cinemachineFreeLook.LookAt = transform;
             AdjustRigHeights(SaddleOffset.y);
             AdjustRigOrbits(RidingRigOrbitOffset);
             AdjustFov(RidingFov);
