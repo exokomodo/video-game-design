@@ -16,6 +16,7 @@ public class Saddle : MonoBehaviour
     public GameObject Carrot;
     public float RidingFov = 70f;
     public float RidingRigOrbitOffset = 1f;
+    public float TurningStrength = 2f;
     #endregion
 
     #region Protected properties
@@ -32,19 +33,14 @@ public class Saddle : MonoBehaviour
     public bool IsMounted => _rider != null;
 
     #region Protected methods
-    protected void TurnLeft()
+    protected void Turn()
     {
-        // TODO
+        Carrot.transform.localPosition = new Vector3(_input.MovementValue.x * TurningStrength, 0f, 1f);
     }
 
-    protected void TurnRight()
+    protected void Straighten()
     {
-        // TODO: 
-    }
-
-    protected void TurnStraight()
-    {
-        _waypointAI.SetCarrot(Carrot);
+        Carrot.transform.localPosition = new Vector3(0f, 0f, 1f);
     }
 
     protected void Mount()
@@ -130,18 +126,7 @@ public class Saddle : MonoBehaviour
             _rider.transform.position = transform.position + SaddleOffset;
             _rider.transform.rotation = transform.rotation;
             Debug.Log("Movement value:" + _input.MovementValue);
-            if (_input.MovementValue.x < -0.2f)
-            {
-                TurnLeft();
-            }
-            else if (_input.MovementValue.x > 0.2f)
-            {
-                TurnRight();
-            }
-            else
-            {
-                TurnStraight();
-            }
+            Turn();
         }
     }
 
