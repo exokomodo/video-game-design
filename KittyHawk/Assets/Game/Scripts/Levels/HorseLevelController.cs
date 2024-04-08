@@ -1,7 +1,6 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 /// <summary>
 /// HorseLevelController tracks the objective for the horse level
