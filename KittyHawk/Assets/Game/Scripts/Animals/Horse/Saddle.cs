@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.InteropServices;
 using Cinemachine;
 using UnityEngine;
 
@@ -28,6 +29,12 @@ public class Saddle : MonoBehaviour
     protected Transform _oldFollow = null;
     protected Transform _oldLookAt = null;
     protected float _oldFov = 0f;
+    protected CinemachineFreeLook.Orbit[] _oldOrbits = null;
+    protected CinemachineFreeLook.Orbit[] _ridingOrbits = new CinemachineFreeLook.Orbit[3] {
+        new(8f, 4f), // Top
+        new(6f, 5f), // Middle
+        new(4f, 6f), // Bottom
+    };
     #endregion
 
     public bool IsMounted => _rider != null;
@@ -50,7 +57,7 @@ public class Saddle : MonoBehaviour
             return;
         }
         _rider = GameObject.FindGameObjectsWithTag("Player")
-            .FirstOrDefault(x => x.GetComponent<PlayerController>());
+            .First(x => x.GetComponent<PlayerController>());
         _playerController = _rider.GetComponent<PlayerController>();
         _waypointAI.SetCarrot(Carrot);
         _playerController.ToggleActive(false);
@@ -58,10 +65,10 @@ public class Saddle : MonoBehaviour
         {
             _oldFollow = _cinemachineFreeLook.Follow;
             _oldLookAt = _cinemachineFreeLook.LookAt;
+            _oldOrbits = _cinemachineFreeLook.m_Orbits;
             _cinemachineFreeLook.Follow = transform;
             _cinemachineFreeLook.LookAt = transform;
-            AdjustRigHeights(SaddleOffset.y);
-            AdjustRigOrbits(RidingRigOrbitOffset);
+            _cinemachineFreeLook.m_Orbits = _ridingOrbits;
             AdjustFov(RidingFov);
         }
     }
@@ -74,10 +81,9 @@ public class Saddle : MonoBehaviour
         if (_cinemachineFreeLook != null)
         {
             AdjustFov(_oldFov);
-            AdjustRigOrbits(-RidingRigOrbitOffset);
-            AdjustRigHeights(-SaddleOffset.y);
             _cinemachineFreeLook.Follow = _oldFollow;
             _cinemachineFreeLook.LookAt = _oldLookAt;
+            _cinemachineFreeLook.m_Orbits = _oldOrbits;
         }
         _rider = null;
     }
@@ -85,22 +91,6 @@ public class Saddle : MonoBehaviour
     protected void AdjustFov(float fov)
     {
         _cinemachineFreeLook.m_Lens.FieldOfView = fov;
-    }
-
-    protected void AdjustRigHeights(float height)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            _cinemachineFreeLook.m_Orbits[i].m_Height += height;
-        }
-    }
-
-    protected void AdjustRigOrbits(float radius)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            _cinemachineFreeLook.m_Orbits[i].m_Radius += radius;
-        }
     }
     #endregion
 

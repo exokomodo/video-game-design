@@ -43,8 +43,6 @@ public class WaypointAI : MonoBehaviour
     private void Start()
     {
         _waypointIndex = 0;
-
-        Debug.Assert(WaypointRoot != null, "WaypointRoot is null");
         _rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -77,6 +75,13 @@ public class WaypointAI : MonoBehaviour
         }
     }
 
-    private void Update() => FaceWaypoint();
+    private void Update()
+    {
+        if (Carrot == null && WaypointRoot == null)
+        {
+            return;
+        }
+        FaceWaypoint();
+    }
     #endregion
 }
