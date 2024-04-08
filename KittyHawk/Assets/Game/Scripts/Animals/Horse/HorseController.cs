@@ -20,8 +20,12 @@ public class HorseController : MonoBehaviour
 
     private void Trample(GameObject goose)
     {
-        goose.GetComponent<GooseAI>().Die();
-        EventManager.TriggerEvent<HorseTrampleGooseEvent>();
+        var gooseAi = goose.GetComponent<GooseAI>();
+        if (gooseAi.IsAlive)
+        {
+            gooseAi.Die();
+            EventManager.TriggerEvent<HorseTrampleGooseEvent>();
+        }
     }
 
     private void WhoaNelly()

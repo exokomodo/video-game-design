@@ -1,6 +1,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 /// <summary>
 /// HorseLevelController tracks the objective for the horse level
@@ -34,6 +35,11 @@ public class HorseLevelController : MonoBehaviour
     {
         gooseSceneCount = GameObject.FindGameObjectsWithTag("Goose")
             .Count(x => x.GetComponent<GooseAI>().IsAlive);
+        UpdateUI();
+    }
+
+    protected void UpdateUI()
+    {
         gooseTextObject.text = gooseSceneCount.ToString();
     }
     #endregion
@@ -58,7 +64,8 @@ public class HorseLevelController : MonoBehaviour
 
     private void OnHorseTrampleGooseEvent()
     {
-        CountGeese();
+        gooseSceneCount--;
+        UpdateUI();
         if (gooseSceneCount <= 0)
         {
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
