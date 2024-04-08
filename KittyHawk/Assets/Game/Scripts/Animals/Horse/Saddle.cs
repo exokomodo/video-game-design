@@ -31,10 +31,23 @@ public class Saddle : MonoBehaviour
     protected float _oldFov = 0f;
     protected CinemachineFreeLook.Orbit[] _oldOrbits = null;
     protected CinemachineFreeLook.Orbit[] _ridingOrbits = new CinemachineFreeLook.Orbit[3] {
-        new(8f, 4f), // Top
-        new(6f, 5f), // Middle
-        new(4f, 6f), // Bottom
+         // Top
+        new() {
+            m_Height = 10f,
+            m_Radius = 4f,
+        },
+        // Middle
+        new() {
+            m_Height = 8f,
+            m_Radius = 6f,
+        },
+        // Bottom
+        new() {
+            m_Height = 6f,
+            m_Radius = 8f,
+        },
     };
+    protected CinemachineTransposer.BindingMode _oldBindingMode;
     #endregion
 
     public bool IsMounted => _rider != null;
@@ -66,9 +79,11 @@ public class Saddle : MonoBehaviour
             _oldFollow = _cinemachineFreeLook.Follow;
             _oldLookAt = _cinemachineFreeLook.LookAt;
             _oldOrbits = _cinemachineFreeLook.m_Orbits;
+            _oldBindingMode = _cinemachineFreeLook.m_BindingMode;
             _cinemachineFreeLook.Follow = transform;
             _cinemachineFreeLook.LookAt = transform;
             _cinemachineFreeLook.m_Orbits = _ridingOrbits;
+            _cinemachineFreeLook.m_BindingMode = CinemachineTransposer.BindingMode.WorldSpace;
             AdjustFov(RidingFov);
         }
     }
@@ -84,6 +99,7 @@ public class Saddle : MonoBehaviour
             _cinemachineFreeLook.Follow = _oldFollow;
             _cinemachineFreeLook.LookAt = _oldLookAt;
             _cinemachineFreeLook.m_Orbits = _oldOrbits;
+            _cinemachineFreeLook.m_BindingMode = _oldBindingMode;
         }
         _rider = null;
     }
