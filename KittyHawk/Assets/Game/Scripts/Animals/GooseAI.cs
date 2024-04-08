@@ -43,6 +43,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] private bool isNearKitty;
 
     // All states
+    public bool IsAlive => isAlive;
     [SerializeField] private bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;

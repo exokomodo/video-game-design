@@ -13,15 +13,15 @@ public class HorseController : MonoBehaviour
     private AudioSource _gallopAudio;
     private Animator _animator;
     #endregion
-    public float Velocity = 1f;
+    public float Speed = 1f;
     private bool _isSlowing = false;
 
     private UnityAction<float> volumeChangeListener;
 
     private void Trample(GameObject goose)
     {
-        EventManager.TriggerEvent<HorseTrampleGooseEvent>();
         goose.GetComponent<GooseAI>().Die();
+        EventManager.TriggerEvent<HorseTrampleGooseEvent>();
     }
 
     private void WhoaNelly()
@@ -65,16 +65,16 @@ public class HorseController : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        _animator.SetFloat("Speed", Velocity);
+        _animator.SetFloat("Speed", 1);
     }
 
     private void UpdateAudio()
     {
-        if (Velocity > 0f && !_gallopAudio.isPlaying)
+        if (Speed > 0f && !_gallopAudio.isPlaying)
         {
             _gallopAudio.Play();
         }
-        else if (Velocity <= 0f && _gallopAudio.isPlaying)
+        else if (Speed <= 0f && _gallopAudio.isPlaying)
         {
             _gallopAudio.Stop();
         }
@@ -89,8 +89,8 @@ public class HorseController : MonoBehaviour
     {
         if (_isSlowing)
         {
-            Velocity = Mathf.Clamp(Velocity - Time.fixedDeltaTime, 0f, 1f);
-            if (Velocity <= 0.1f && saddle.IsMounted)
+            Speed = Mathf.Clamp(Speed - Time.fixedDeltaTime, 0f, 1f);
+            if (Speed <= 0.1f && saddle.IsMounted)
             {
                 EventManager.TriggerEvent<KillKittyEvent>();
                 _isSlowing = false;

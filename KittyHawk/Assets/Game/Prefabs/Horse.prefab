@@ -512,7 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saddle: {fileID: 0}
-  Velocity: 1
+  Speed: 1
 --- !u!114 &4169512664610290911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,11 +528,10 @@ MonoBehaviour:
   SaddleOffset: {x: 0, y: 2.65, z: 0}
   CinemachineVirtualCamera: {fileID: 0}
   RiderTag: Player
-  CarrotForward: {fileID: 0}
-  CarrotLeft: {fileID: 0}
-  CarrotRight: {fileID: 0}
+  Carrot: {fileID: 0}
   RidingFov: 70
   RidingRigOrbitOffset: 1
+  TurningStrength: 2
 --- !u!114 &7826609396657575965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,7 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaypointRoot: {fileID: 0}
-  Carrot: {fileID: 2928393991689174780}
+  Carrot: {fileID: 0}
   Velocity: 1
   RotationSpeed: 2
   WaypointTag: HorseWaypoint
