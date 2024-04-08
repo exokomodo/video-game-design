@@ -99,6 +99,6 @@ public class HorseController : MonoBehaviour
         UpdateAnimation();
         UpdateAudio();
     }
-    
+
     #endregion
 }
