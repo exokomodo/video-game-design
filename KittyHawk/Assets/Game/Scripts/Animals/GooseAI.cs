@@ -22,8 +22,8 @@ using Random = UnityEngine.Random;
 
 public class GooseAI : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    private Animator anim;
+    protected NavMeshAgent agent;
+    protected Animator anim;
     [SerializeField] private AIState aiState;
     private Rigidbody rb;
     private Collider cl;
@@ -31,8 +31,8 @@ public class GooseAI : MonoBehaviour
     // Patrol state
     [SerializeField] private float wanderRadius; // Maximum allowable distance the Goose can walk when patrolling
     [SerializeField] private float chanceToWalk; // Random chance
-    [SerializeField] private float timeUntilNextWalk = 5f; // Time between walks
-    [SerializeField] private float timeSinceLastWalk = 0f; // Time since the Goose last walked
+    [SerializeField] protected float timeUntilNextWalk = 5f; // Time between walks
+    [SerializeField] protected float timeSinceLastWalk = 0f; // Time since the Goose last walked
     [SerializeField] private Vector3 randomDirection;
     private NavMeshHit hit;
 
@@ -46,7 +46,7 @@ public class GooseAI : MonoBehaviour
     public bool IsAlive => isAlive;
     [SerializeField] private bool isAlive = true;
     private Vector3 currentPosition;
-    [SerializeField] private Vector3 newPosition;
+    [SerializeField] protected Vector3 newPosition;
 
     private float HonkTimer;
     private float HonkTime;
@@ -174,7 +174,7 @@ public class GooseAI : MonoBehaviour
     }
 
     // Used for patrol state timer
-    private void ResetPatrolTimer()
+    protected void ResetPatrolTimer()
     {
         timeSinceLastWalk = 0f;
         timeUntilNextWalk = Random.Range(3.0f, 10.0f);
@@ -182,14 +182,14 @@ public class GooseAI : MonoBehaviour
 
     private void ChangeLookDirection(Vector3 targetPos)
     {
-        // Make the chicken look at the new position. Uses euler transformation because the model 
+        // Make the chicken look at the new position. Uses euler transformation because the model
         // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
         Vector3 lookPosition = targetPos - currentPosition;
         Quaternion rotation = Quaternion.LookRotation(lookPosition);
         transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y - 270, 0);
     }
 
-    private void SetGooseDestination(Vector3 targetPos)
+    protected void SetGooseDestination(Vector3 targetPos)
     {
         newPosition.y = transform.position.y;
         ChangeLookDirection(targetPos);
@@ -197,7 +197,7 @@ public class GooseAI : MonoBehaviour
     }
 
     #region Patrol State
-    private void EnterPatrolState()
+    protected virtual void EnterPatrolState()
     {
         Debug.Log("Goose Entering Patrol State");
         agent.ResetPath();
@@ -209,7 +209,7 @@ public class GooseAI : MonoBehaviour
         ResetPatrolTimer();
     }
 
-    private void UpdatePatrolState()
+    protected virtual void UpdatePatrolState()
     {
         // Update the time since last walk
         timeSinceLastWalk += Time.deltaTime;

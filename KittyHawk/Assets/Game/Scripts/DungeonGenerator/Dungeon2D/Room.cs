@@ -55,6 +55,8 @@ public class Room: UnityEngine.Object {
         }
     }
 
+    public List<GameObject> Waypoints { get; private set; }
+
     public Room(
         Vector2Int location,
         Vector2Int size,
@@ -108,6 +110,8 @@ public class Room: UnityEngine.Object {
 
         // DrawCeiling();
         DrawFloor();
+
+        Waypoints = GenerateWaypoints();
     }
 
     private void DrawCeiling() {
@@ -162,7 +166,7 @@ public class Room: UnityEngine.Object {
         roomParent.transform.position = new Vector3(location.x, 0, location.y);
     }
 
-    public List<GameObject> GenerateWaypoints() {
+    protected List<GameObject> GenerateWaypoints() {
         List<GameObject> waypoints = new List<GameObject>();
         GameObject wp = CreateWaypoint(new Vector3(center.x, 0, center.y));
         wp.transform.parent = roomParent.transform;
@@ -186,7 +190,7 @@ public class Room: UnityEngine.Object {
         GameObject go = new GameObject($"Waypoint: {pos}");
         go.transform.parent = roomParent.transform;
         go.transform.localScale = Vector3.one * 1/scale;
-        go.transform.position = pos * scale;
+        go.transform.position = pos;// * scale;
         return go;
     }
 

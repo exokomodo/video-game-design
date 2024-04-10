@@ -72,7 +72,7 @@ public class Generator2D : MonoBehaviour {
 
     protected void Start() {
         retries = 0;
-        Generate();
+        // Generate();
     }
 
     public void Generate() {

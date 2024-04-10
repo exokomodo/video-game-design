@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour {
   public float RunSpeed = 2.0f;
   public float BaseJumpForce = 8.0f;
   public float TurnSpeed = 1.0f;
-  public float HitCooldown = 3.0f;
+  public float HitCooldown = 4.0f;
 
 
   public void Awake()
