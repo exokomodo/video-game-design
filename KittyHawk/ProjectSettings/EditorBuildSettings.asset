@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Game/Scenes/Tutorial.unity
     guid: 130e2b91272ac0044b864998a461dc88
   - enabled: 1
-    path: Assets/Game/Scenes/Alpha.unity
-    guid: 07ecdd06175de4d64be5f2e410a7981f
-  - enabled: 1
     path: Assets/Game/Scenes/Transition.unity
     guid: b520cb6cb7e8db04fa0702ef5874a0d0
   - enabled: 1
