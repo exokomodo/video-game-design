@@ -56,6 +56,7 @@ public class BunnyLevelController : MonoBehaviour {
     protected Vector3 endRoomPos;
 
     PlayerInventory inventory;
+    List<DungeonGooseController> geese;
 
     string ObjectiveName = "BunnyObjective";
 
@@ -65,19 +66,6 @@ public class BunnyLevelController : MonoBehaviour {
             Generator.minRoomCount = 4;
             Generator.roomCount = 4;
         }
-    }
-
-    public void Generate() {
-        if (IsUnityEditor)
-            Generator.Generate();
-
-        FindStartAndEnd();
-        PlacePlayer();
-        PlaceBunnies();
-        PlaceEnemies();
-        PlaceGoal();
-        Generator.CreateDoorways();
-        PlaceObstacles();
     }
 
     private void Start() {
@@ -92,6 +80,19 @@ public class BunnyLevelController : MonoBehaviour {
         inventory.BunniesTotal = Generator.Rooms.Count - 2;
 
         Invoke("DuckStartDialogue", 1f);
+    }
+
+    public void Generate() {
+        // if (IsUnityEditor)
+        Generator.Generate();
+
+        FindStartAndEnd();
+        PlacePlayer();
+        PlaceBunnies();
+        PlaceEnemies();
+        PlaceGoal();
+        Generator.CreateDoorways();
+        PlaceObstacles();
     }
 
     private void DuckStartDialogue() {
@@ -127,8 +128,14 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void LevelComplete() {
         Debug.Log("YOU WIN!!");
+        DisableGeese();
         Invoke("TriggerLevelCompleteSound", 1.25f);
         Invoke("TriggerBunnyObjective", 4f);
+
+    }
+
+    private void DisableGeese() {
+        // Dont allow geese to hurt Kitty
 
     }
 
@@ -194,7 +201,7 @@ public class BunnyLevelController : MonoBehaviour {
             };
             Vector3 center = new Vector3(room.center.x, 0, room.center.y) * Generator.scale;
             baby.position = center;
-            baby.Waypoints = room.GenerateWaypoints();
+            baby.Waypoints = room.Waypoints;
             Debug.Log("Place bunny: " + center);
         }
     }
@@ -217,15 +224,25 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void PlaceEnemies() {
+        geese = new List<DungeonGooseController>();
         int roomCount = Generator.Rooms.Count;
         for (int i=0; i<roomCount; i++) {
-            Vector3 pos = GetRoomCenter(Generator.Rooms[i]);
+            Room room = Generator.Rooms[i];
+            Vector3 pos = GetRoomCenter(room);
             if (pos == startRoomPos || pos == endRoomPos) continue;
             pos.y = 0.5f;
-            GameObject goose = Instantiate(GoosePrefab, pos * Generator.scale, Quaternion.identity);
+            GameObject goose = Instantiate(GoosePrefab, pos * Generator.scale, Quaternion.identity, room.roomParent.transform);
+            goose.transform.localScale *= 1/Generator.scale;
+            DungeonGooseController gc = goose.GetComponent<DungeonGooseController>();
+            GameObject[] tmp = new GameObject[room.Waypoints.Count];
+            room.Waypoints.CopyTo(tmp);
+            gc.Waypoints = new List<GameObject>(tmp);
+            gc.Waypoints.Reverse();
+            gc.Waypoints.RemoveAt(gc.Waypoints.Count - 1);
+            geese.Add(gc);
         }
-        if (!IsUnityEditor)
-            GoosePrefab.SetActive(false);
+        // if (!IsUnityEditor)
+        GoosePrefab.SetActive(false);
     }
 
     private void PlaceGoal() {
