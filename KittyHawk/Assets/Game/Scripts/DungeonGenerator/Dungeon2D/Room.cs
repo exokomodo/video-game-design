@@ -203,18 +203,18 @@ public class Room: UnityEngine.Object {
         return value;
     }
 
-    public void PlaceProps(float scale=1f) {
+    public void PlaceProps() {
         List<int> corners = new List<int>();
         List<int> propIndices = new List<int>();
         for (int i=0; i<4; i++) {
             int corner = GetUniqueRandomInt(0, 4, corners);
             int propIndex = GetUniqueRandomInt(0, props.transform.childCount, propIndices);
-            AddProp(corner, props.transform.GetChild(propIndex), scale);
+            AddProp(corner, props.transform.GetChild(propIndex));
         }
         props.SetActive(false);
     }
 
-    protected void AddProp(int corner, Transform prop, float scale=1f) {
+    protected void AddProp(int corner, Transform prop) {
         Vector3 pos = position;
         Vector3 offset = Vector3.zero;
         Quaternion rot = Quaternion.identity;

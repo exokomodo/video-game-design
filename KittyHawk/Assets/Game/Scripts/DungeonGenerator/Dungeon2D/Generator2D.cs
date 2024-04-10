@@ -282,7 +282,7 @@ public class Generator2D : MonoBehaviour {
 
     protected void PlaceProps() {
         foreach (Room room in Rooms) {
-            room.PlaceProps(scale);
+            room.PlaceProps();
         }
     }
 }
