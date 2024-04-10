@@ -15,7 +15,7 @@ public class ballscript : MonoBehaviour
 
     private float timeSinceLastMeow;
 
-    private float meowThreshold = 1.0f;
+    private float meowThreshold = 30.0f;
 
 
 

@@ -196,7 +196,7 @@ MonoBehaviour:
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 2
-    m_InheritPosition: 0
+    m_InheritPosition: 1
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -1285,153 +1285,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   m_CustomBlends: {fileID: 0}
-  m_ParentHash:
-  - m_Hash: 1432961145
-    m_ParentHash: 756556552
-  - m_Hash: -1972082446
-    m_ParentHash: 1432961145
-  - m_Hash: -1404575940
-    m_ParentHash: -1972082446
-  - m_Hash: 894340742
-    m_ParentHash: -1972082446
-  - m_Hash: -531885825
-    m_ParentHash: -1972082446
-  - m_Hash: -601019469
-    m_ParentHash: -1972082446
-  - m_Hash: 1160018441
-    m_ParentHash: -1972082446
-  - m_Hash: -844928873
-    m_ParentHash: -1972082446
-  - m_Hash: -729815479
-    m_ParentHash: 756556552
-  - m_Hash: -2142308466
-    m_ParentHash: -729815479
-  - m_Hash: -128717729
-    m_ParentHash: -2142308466
-  - m_Hash: -139457116
-    m_ParentHash: -2142308466
-  - m_Hash: -2135474894
-    m_ParentHash: -2142308466
-  - m_Hash: 281199419
-    m_ParentHash: -2142308466
-  - m_Hash: -1447746826
-    m_ParentHash: 756556552
-  - m_Hash: 541840114
-    m_ParentHash: -1447746826
-  - m_Hash: -700760164
-    m_ParentHash: 541840114
-  - m_Hash: -1726596895
-    m_ParentHash: 541840114
-  - m_Hash: -1646008876
-    m_ParentHash: 541840114
-  - m_Hash: 1718862356
-    m_ParentHash: 756556552
-  - m_Hash: -1694871789
-    m_ParentHash: 1718862356
-  - m_Hash: 75254061
-    m_ParentHash: -1694871789
-  - m_Hash: 2033276170
-    m_ParentHash: -1694871789
-  - m_Hash: -906529370
-    m_ParentHash: -1694871789
-  - m_Hash: -1327710118
-    m_ParentHash: -1694871789
-  - m_Hash: -547282882
-    m_ParentHash: -1694871789
-  - m_Hash: 1873215634
-    m_ParentHash: -1694871789
-  - m_Hash: -1207082876
-    m_ParentHash: -1694871789
-  - m_Hash: -676298528
-    m_ParentHash: -1694871789
-  - m_Hash: 1735827532
-    m_ParentHash: -1694871789
-  - m_Hash: -949292361
-    m_ParentHash: -1694871789
-  - m_Hash: -1462299949
-    m_ParentHash: -1694871789
-  - m_Hash: 403780223
-    m_ParentHash: -1694871789
-  - m_Hash: -89183035
-    m_ParentHash: 1718862356
-  - m_Hash: -310472288
-    m_ParentHash: -89183035
-  - m_Hash: 1005908256
-    m_ParentHash: -89183035
-  - m_Hash: 858083838
-    m_ParentHash: -89183035
-  - m_Hash: -36430617
-    m_ParentHash: -89183035
-  - m_Hash: 1553510810
-    m_ParentHash: -89183035
-  - m_Hash: -329346762
-    m_ParentHash: -89183035
-  - m_Hash: 1414074692
-    m_ParentHash: -89183035
-  - m_Hash: -460377624
-    m_ParentHash: -89183035
-  - m_Hash: -2101120572
-    m_ParentHash: -89183035
-  - m_Hash: 839209320
-    m_ParentHash: -89183035
-  - m_Hash: 1914514016
-    m_ParentHash: 756556552
-  - m_Hash: -1146208174
-    m_ParentHash: 1914514016
-  - m_Hash: -1648371178
-    m_ParentHash: 1914514016
-  - m_Hash: -509267365
-    m_ParentHash: -1648371178
-  - m_Hash: -400282565
-    m_ParentHash: -1648371178
-  - m_Hash: 1927119739
-    m_ParentHash: -1648371178
-  - m_Hash: -315630530
-    m_ParentHash: -1648371178
-  - m_Hash: -823144254
-    m_ParentHash: 1914514016
-  - m_Hash: -558925783
-    m_ParentHash: -823144254
-  - m_Hash: 52558806
-    m_ParentHash: -823144254
-  - m_Hash: 788460410
-    m_ParentHash: 756556552
-  - m_Hash: -1760886081
-    m_ParentHash: 788460410
-  - m_Hash: 1692339217
-    m_ParentHash: -1760886081
-  - m_Hash: -1294459249
-    m_ParentHash: 788460410
-  - m_Hash: -1888225464
-    m_ParentHash: -1294459249
-  - m_Hash: -850822319
-    m_ParentHash: 788460410
-  - m_Hash: -165362625
-    m_ParentHash: -850822319
-  - m_Hash: 251016917
-    m_ParentHash: 756556552
-  - m_Hash: -1022382678
-    m_ParentHash: 251016917
-  - m_Hash: 822960213
-    m_ParentHash: 251016917
-  - m_Hash: -1671741617
-    m_ParentHash: 822960213
-  - m_Hash: -1450920374
-    m_ParentHash: 822960213
-  - m_Hash: 423545164
-    m_ParentHash: 822960213
-  - m_Hash: 564612319
-    m_ParentHash: 822960213
-  - m_Hash: 1289760801
-    m_ParentHash: 822960213
-  - m_Hash: -693705288
-    m_ParentHash: 822960213
-  - m_Hash: -1482263730
-    m_ParentHash: 756556552
-  - m_Hash: 1521264723
-    m_ParentHash: -1482263730
-  - m_Hash: -1599892176
-    m_ParentHash: -1482263730
+  m_ParentHash: []
 --- !u!114 &3978797596292646272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1451,17 +1305,17 @@ MonoBehaviour:
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 64
-  m_MinimumDistanceFromTarget: 0.5
+  m_MinimumDistanceFromTarget: 0.25
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
   m_CameraRadius: 0.1
-  m_Strategy: 0
-  m_MaximumEffort: 4
-  m_SmoothingTime: 0
-  m_Damping: 0
+  m_Strategy: 2
+  m_MaximumEffort: 8
+  m_SmoothingTime: 0.4
+  m_Damping: 1.5
   m_DampingWhenOccluded: 0
-  m_OptimalTargetDistance: 0.5
+  m_OptimalTargetDistance: 1
 --- !u!1 &3978797596621298785
 GameObject:
   m_ObjectHideFlags: 3

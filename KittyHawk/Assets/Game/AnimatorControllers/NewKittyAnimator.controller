@@ -3166,7 +3166,7 @@ MonoBehaviour:
   enterEventValue: 
   exitEventValue: 
   timeEventValue: LandComplete
-  sendTime: 0.8
+  sendTime: 0.54
 --- !u!114 &3071299935930097686
 MonoBehaviour:
   m_ObjectHideFlags: 1
