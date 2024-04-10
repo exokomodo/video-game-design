@@ -60,6 +60,7 @@ public class AudioManager : MonoBehaviour
             {
                 soundVolume = value;
                 EventManager.TriggerEvent<VolumeChangeEvent, float>(soundVolume);
+                DataManager.Instance.SoundVolume = soundVolume;
             }
         }
     }
@@ -82,6 +83,7 @@ public class AudioManager : MonoBehaviour
                 musicVolume = value;
                 musicSource.volume = musicVolume;
                 EventManager.TriggerEvent<MusicVolumeChangeEvent, float>(musicVolume);
+                DataManager.Instance.MusicVolume = musicVolume;
             }
         }
     }
