@@ -37,6 +37,11 @@ public class BabyBunny : Bunny {
         ChangeState(GetState());
     }
 
+    public void Enable() {
+        isEnabled = true;
+        gameObject.SetActive(true);
+    }
+
     public void Disable() {
         isEnabled = false;
         gameObject.SetActive(false);

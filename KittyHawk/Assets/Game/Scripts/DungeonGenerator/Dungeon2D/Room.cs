@@ -15,13 +15,14 @@ public class Room: UnityEngine.Object {
     protected GameObject props;
 
     public static Grid2D<GameObject> Segments;
-    protected GameObject roomParent;
+    public GameObject roomParent;
     protected GameObject wallPrefab;
     protected GameObject floorPrefab;
     protected GameObject ceilingPrefab;
     protected int index;
     protected int height = 1;
     protected float wallWidth = 0.3f;
+    protected float scale = 1f;
 
     protected static string RoomName = "Room";
     protected static string BufferName = "Buffer";
@@ -63,6 +64,7 @@ public class Room: UnityEngine.Object {
         GameObject floorPrefab,
         GameObject ceilingPrefab,
         GameObject props,
+        float scale,
         int index
     ) {
         bounds = new RectInt(location, size);
@@ -72,8 +74,10 @@ public class Room: UnityEngine.Object {
         this.floorPrefab = floorPrefab;
         this.ceilingPrefab = ceilingPrefab;
         this.props = props;
+        this.scale = scale;
         this.index = index;
 
+        wallWidth /= scale;
     }
 
     public Room(Vector2Int location, Vector2Int size, Transform parent) {
@@ -161,12 +165,15 @@ public class Room: UnityEngine.Object {
     public List<GameObject> GenerateWaypoints() {
         List<GameObject> waypoints = new List<GameObject>();
         GameObject wp = CreateWaypoint(new Vector3(center.x, 0, center.y));
+        wp.transform.parent = roomParent.transform;
         waypoints.Add(wp);
+
         for (int x=0; x<2; x++) {
             for (int y=0; y<2; y++) {
                 int newY = Math.Abs(x - y);
-                Vector3 offset = new Vector3(x == 0? 1 : -1, 0, newY == 0? 1 : -1) * 2f;
-                wp = CreateWaypoint(position + new Vector3(size.x * x, 0, size.y * newY) + offset);
+                Vector3 offset = new Vector3(x == 0? 1 : -1, 0, newY == 0? 1 : -1) * 2f / scale;
+                Vector3 wpos = position + new Vector3(size.x * x, 0, size.y * newY) + offset;
+                wp = CreateWaypoint(wpos);
                 waypoints.Add(wp);
             }
         }
@@ -177,9 +184,9 @@ public class Room: UnityEngine.Object {
         // GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         // go.GetComponent<Collider>().enabled = false;
         GameObject go = new GameObject($"Waypoint: {pos}");
-        go.transform.localScale = new Vector3(1f, 1, 1f);
-        go.transform.position = pos;
-        // Debug.Log(go.name);
+        go.transform.parent = roomParent.transform;
+        go.transform.localScale = Vector3.one * 1/scale;
+        go.transform.position = pos * scale;
         return go;
     }
 
@@ -196,22 +203,18 @@ public class Room: UnityEngine.Object {
         return value;
     }
 
-    public void PlaceProps() {
+    public void PlaceProps(float scale=1f) {
         List<int> corners = new List<int>();
         List<int> propIndices = new List<int>();
         for (int i=0; i<4; i++) {
             int corner = GetUniqueRandomInt(0, 4, corners);
             int propIndex = GetUniqueRandomInt(0, props.transform.childCount, propIndices);
-            AddProp(corner, props.transform.GetChild(propIndex));
+            AddProp(corner, props.transform.GetChild(propIndex), scale);
         }
-        // if (!isStart && !isEnd) {
-        //     int ctrIndex = GetUniqueRandomInt(0, props.transform.childCount, propIndices);
-        //     AddProp(5, props.transform.GetChild(ctrIndex));
-        // }
         props.SetActive(false);
     }
 
-    protected void AddProp(int corner, Transform prop) {
+    protected void AddProp(int corner, Transform prop, float scale=1f) {
         Vector3 pos = position;
         Vector3 offset = Vector3.zero;
         Quaternion rot = Quaternion.identity;
@@ -236,7 +239,8 @@ public class Room: UnityEngine.Object {
                 offset = new Vector3(size.x/2, 0, size.y/2);
                 break;
         }
-        Instantiate(prop, pos + offset, rot, roomParent.transform);
+        Transform added = Instantiate(prop, (pos + offset) * scale, rot, roomParent.transform);
+        added.localScale *= 1/scale;
     }
 
     public override string ToString() {
