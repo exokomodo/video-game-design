@@ -14,9 +14,10 @@ public class Hallway: Object {
     int width;
     float height;
     Transform rootTransform;
-    protected float wallWidth = 0.2f;
+    protected float wallWidth = 0.3f;
     protected Grid2D<Generator2D.CellType> grid;
     protected List<Vector2Int> path;
+    protected float scale;
 
     public static Grid2D<HallwayCell> HallwayCells;
 
@@ -30,7 +31,8 @@ public class Hallway: Object {
         Transform rootTransform,
         GameObject hallPrefab,
         GameObject ceilingPrefab,
-        GameObject floorPrefab
+        GameObject floorPrefab,
+        float scale
     ) {
         this.grid = grid;
         this.path = path;
@@ -39,12 +41,23 @@ public class Hallway: Object {
         this.width = width;
         this.height = height;
         this.rootTransform = rootTransform;
+        this.scale = scale;
+        wallWidth *= 1/scale;
 
         for (int i=0; i<path.Count; i++) {
             Vector2Int pos = path[i];
             if (grid[pos] == Generator2D.CellType.Hallway) {
                 if (!CellExistsAtPos(pos)) {
-                    HallwayCell cell = new HallwayCell(rootTransform, pos, width, height, wallWidth, hallPrefab, ceilingPrefab, floorPrefab, i);
+                    HallwayCell cell = new HallwayCell(
+                        rootTransform,
+                        pos,
+                        width,
+                        height,
+                        wallWidth,
+                        hallPrefab,
+                        ceilingPrefab,
+                        floorPrefab,
+                        i);
                     HallwayCells[pos] = cell;
                 }
             }
