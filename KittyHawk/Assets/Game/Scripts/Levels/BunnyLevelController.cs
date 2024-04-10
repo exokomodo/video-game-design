@@ -1,3 +1,7 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +12,12 @@ using Random = UnityEngine.Random;
 /// Author: Geoffrey Roth
 /// </summary>
 public class BunnyLevelController : MonoBehaviour {
+
+    #if UNITY_EDITOR
+        public static bool IsUnityEditor = true;
+    #else
+        public static bool IsUnityEditor = false;
+    #endif
 
     [SerializeField]
     Generator2D Generator;
@@ -57,10 +67,9 @@ public class BunnyLevelController : MonoBehaviour {
         }
     }
 
-    private void Start() {
-        // Place characters in dungeon
-        EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
-        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
+    public void Generate() {
+        if (IsUnityEditor)
+            Generator.Generate();
 
         FindStartAndEnd();
         PlacePlayer();
@@ -69,6 +78,14 @@ public class BunnyLevelController : MonoBehaviour {
         PlaceGoal();
         Generator.CreateDoorways();
         PlaceObstacles();
+    }
+
+    private void Start() {
+        // Place characters in dungeon
+        EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
+
+        Generate();
 
         inventory = PlayerController.GetComponent<PlayerInventory>();
         inventory.Bunnies = 0;
@@ -158,11 +175,11 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void PlacePlayer() {
-        Player.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 2);
+        Player.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 2/Generator.scale) * Generator.scale;
         // startDoor.transform.position =  new Vector3(startRoomPos.x, 0, startRoom.position.z + 0.3f);
         startDoor.SetActive(false);
 
-        SmokingDuck.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 3);
+        SmokingDuck.transform.position = new Vector3(startRoomPos.x, 0, startRoomPos.z - startRoom.size.y/2 + 3/Generator.scale) * Generator.scale;
     }
 
     private void PlaceBunnies() {
@@ -170,14 +187,15 @@ public class BunnyLevelController : MonoBehaviour {
         for (int i=0; i<limit; i++) {
             Room room = Generator.Rooms[i];
             BabyBunny baby = babyBunnies[i];
+            baby.Enable();
             if (room.position == startRoom.position || room.position == endRoom.position) {
                 baby.Disable();
                 continue;
             };
-
-            Vector3 center = new Vector3(room.center.x, 0, room.center.y);
+            Vector3 center = new Vector3(room.center.x, 0, room.center.y) * Generator.scale;
             baby.position = center;
             baby.Waypoints = room.GenerateWaypoints();
+            Debug.Log("Place bunny: " + center);
         }
     }
 
@@ -185,16 +203,17 @@ public class BunnyLevelController : MonoBehaviour {
         List<Room> rooms = Generator.Rooms;
         int roomCount = rooms.Count;
         for (int i=0; i<roomCount; i++) {
-            Vector3 pos = GetRoomCenter(rooms[i]);
+            Room r = rooms[i];
+            Vector3 pos = GetRoomCenter(r);
             if (pos == startRoomPos || pos == endRoomPos) continue;
-            // if (Random.Range(0f, 1f) > 0.1f) {
                 float dx = Random.Range(0.5f, 1f) * Random.Range(0f, 1f) > 0.5? 1 : -1;
                 float dz = Random.Range(0.5f, 1f) * Random.Range(0f, 1f) > 0.5? 1 : -1;
-                Vector3 newPos = new Vector3(pos.x + dx, 0, pos.z + dz);
-                GameObject tire = Instantiate(TireStack, newPos, Quaternion.Euler(0, Random.Range(0, 360), 0));
-            // }
+                Vector3 newPos = new Vector3(pos.x, 0, pos.z) * Generator.scale + new Vector3(dx, 0, dz);
+                GameObject tire = Instantiate(TireStack, newPos, Quaternion.Euler(0, Random.Range(0, 360), 0), r.roomParent.transform);
+                tire.transform.localScale *= 1/Generator.scale;
         }
-        TireStack.SetActive(false);
+        if (!IsUnityEditor)
+            TireStack.SetActive(false);
     }
 
     private void PlaceEnemies() {
@@ -203,13 +222,14 @@ public class BunnyLevelController : MonoBehaviour {
             Vector3 pos = GetRoomCenter(Generator.Rooms[i]);
             if (pos == startRoomPos || pos == endRoomPos) continue;
             pos.y = 0.5f;
-            GameObject goose = Instantiate(GoosePrefab, pos, Quaternion.identity);
+            GameObject goose = Instantiate(GoosePrefab, pos * Generator.scale, Quaternion.identity);
         }
-        GoosePrefab.SetActive(false);
+        if (!IsUnityEditor)
+            GoosePrefab.SetActive(false);
     }
 
     private void PlaceGoal() {
-        bunnyController.position = endRoomPos;
+        bunnyController.position = endRoomPos * Generator.scale;
         // endDoor.transform.position = new Vector3(endRoomPos.x, 0, endRoom.position.z + endRoom.size.y - 0.3f);
         endDoor.SetActive(false);
 
@@ -217,11 +237,13 @@ public class BunnyLevelController : MonoBehaviour {
         int dtheta = 30;
         Vector3 newPos = Vector3.zero;
         for (int i=0; i<360; i+=dtheta) {
-            newPos = endRoomPos + Quaternion.AngleAxis(i, Vector3.up) * radius * 3f;
+            newPos = (endRoomPos * Generator.scale) + Quaternion.AngleAxis(i, Vector3.up) * radius * 3f;
             newPos.y = 0.33f;
             GameObject catnip = Instantiate(Catnip, newPos, Quaternion.identity, endRoom.transform);
+            catnip.transform.localScale *= 1/Generator.scale;
         }
-        Catnip.SetActive(false);
+        if (!IsUnityEditor)
+            Catnip.SetActive(false);
     }
 
     private Vector3 GetRoomCenter(Room room)
@@ -240,3 +262,19 @@ public class BunnyLevelController : MonoBehaviour {
         EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(BunnyLevelController))]
+public class BunnyLevelControllerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        BunnyLevelController script = (BunnyLevelController)target;
+        DrawDefaultInspector();
+        if (GUILayout.Button("Generate"))
+        {
+            script.Generate();
+        }
+    }
+}
+#endif

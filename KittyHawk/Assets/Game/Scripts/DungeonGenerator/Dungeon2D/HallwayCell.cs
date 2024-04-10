@@ -17,6 +17,7 @@ public class HallwayCell: Object {
     float cellWidth;
     float height;
     float wallWidth;
+    float scale;
     GameObject topWall;
     GameObject rightWall;
     GameObject botWall;

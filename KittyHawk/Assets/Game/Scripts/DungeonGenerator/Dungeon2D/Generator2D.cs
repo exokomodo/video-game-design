@@ -56,6 +56,8 @@ public class Generator2D : MonoBehaviour {
     public int retries = 0;
     [SerializeField]
     public int maxRetries = 1000;
+    [SerializeField]
+    public float scale = 1.0f;
 
     Random random;
     Grid2D<CellType> grid;
@@ -92,6 +94,7 @@ public class Generator2D : MonoBehaviour {
         if (root != null) DestroyImmediate(root);
         root = new GameObject(rootName);
 
+
         PlaceRooms();
         if (Rooms.Count < minRoomCount) {
             // Debug.Log($"Rooms: {Rooms.Count}, {roomCount}");
@@ -114,7 +117,10 @@ public class Generator2D : MonoBehaviour {
             return;
         }
         Hallway.RemoveWalls(grid);
+        root.transform.localScale = Vector3.one * scale;
         PlaceProps();
+
+
 
         Debug.Log($"Final RoomCount: {Rooms.Count}");
     }
@@ -149,6 +155,7 @@ public class Generator2D : MonoBehaviour {
                 floorPrefab,
                 ceilingPrefab,
                 roomProps,
+                scale,
                 i
             );
             Room buffer = new Room(location + new Vector2Int(-hallWidth, -hallWidth), roomSize + new Vector2Int(hallWidth * 2, hallWidth * 2), root.transform);
@@ -257,7 +264,8 @@ public class Generator2D : MonoBehaviour {
                     root.transform,
                     hallPrefab,
                     ceilingPrefab,
-                    hallFloorPrefab
+                    hallFloorPrefab,
+                    scale
                 ));
             }
         }
