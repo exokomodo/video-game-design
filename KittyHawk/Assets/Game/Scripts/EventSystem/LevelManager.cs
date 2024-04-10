@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
 /// Sets up the level (audio & fade-in)
@@ -27,6 +28,11 @@ public class LevelManager : MonoBehaviour
     Dictionary<string, Objective> objectivesDic;
 
     Animator anim;
+
+    // Game Over content
+    Canvas gameOverCanvas;
+    Button restartButton;
+    Button quitButton;
 
     void Start()
     {
@@ -76,12 +82,25 @@ public class LevelManager : MonoBehaviour
 
         EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
         EventManager.StartListening<ObjectiveChangeEvent, string, ObjectiveStatus>(OnObjectiveChange);
+
+        // Set things up for Game Over
+
+        gameOverCanvas = GameObject.Find("GameOverCanvas").GetComponent<Canvas>();
+        if (gameOverCanvas != null) gameOverCanvas.enabled = false;
+
+        restartButton = GameObject.Find("GORestartButton").GetComponent<Button>();
+        if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
+        quitButton = GameObject.Find("GOQuitButton").GetComponent<Button>();
+        if (quitButton != null) quitButton.onClick.AddListener(ReturnToMenu);
     }
 
     private void OnDestroy()
     {
         EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
         EventManager.StopListening<ObjectiveChangeEvent, string, ObjectiveStatus>(OnObjectiveChange);
+
+        restartButton.onClick.RemoveAllListeners();
+        quitButton.onClick.RemoveAllListeners();
     }
 
     void OnObjectiveChange(string name, ObjectiveStatus status)
@@ -118,7 +137,7 @@ public class LevelManager : MonoBehaviour
     {
         DataManager.Instance.Lives = 9;
         DataManager.Instance.Catnip = 0;
-        StartCoroutine(ReloadLevel());
+        StartCoroutine(GameOver());
     }
 
     IEnumerator LoadNextLevel()
@@ -129,20 +148,25 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene("Transition");
     }
 
-    public IEnumerator ReloadLevel()
+    public IEnumerator GameOver()
     {
         yield return new WaitForSeconds(2f);
         anim.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        if (gameOverCanvas != null) gameOverCanvas.enabled = true;
+    }
+
+    public void RestartLevel()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // TODO: TESTING! COMMENT OUT!
-    /*
-    private void Update()
+    public void ReturnToMenu()
     {
-        if (Input.GetKeyDown(KeyCode.LeftBracket))
-            LevelComplete();
-    } */
+        DataManager.Instance.CurrentDay = Day.MONDAY;
+        DataManager.Instance.Lives = 9;
+        DataManager.Instance.Catnip = 0;
+        SceneManager.LoadScene("MainMenu");
+    }
 
 }

@@ -57,13 +57,15 @@ public class PauseMenuController : MonoBehaviour
 
         if (soundSlider != null)
         {
-            soundSlider.value = AudioManager.instance.SoundVolume;
+            soundSlider.value = DataManager.Instance.SoundVolume;
             soundSlider.onValueChanged.AddListener(SetSoundVolume);
         }
 
         if (musicSlider != null)
         {
-            musicSlider.value = AudioManager.instance.MusicVolume;
+            Debug.Log("!!!DATA MANAGER VOLUME IS " + DataManager.Instance.MusicVolume + "!!!");
+            Debug.Log("!!!AUDIO MANAGER VOLUME IS " + AudioManager.instance.MusicVolume + "!!!");
+            musicSlider.value = DataManager.Instance.MusicVolume;
             musicSlider.onValueChanged.AddListener(SetMusicVolume);
         }
 
@@ -106,13 +108,13 @@ public class PauseMenuController : MonoBehaviour
 
     public void SetSoundVolume(float value)
     {
-        Debug.Log("Sound volume is now " + value);
+        // Debug.Log("Sound volume is now " + value);
         AudioManager.instance.SoundVolume = value;
     }
 
     public void SetMusicVolume(float value)
     {
-        Debug.Log("Music volume is now " + value);
+        // Debug.Log("Music volume is now " + value);
         AudioManager.instance.MusicVolume = value;
     }
 
