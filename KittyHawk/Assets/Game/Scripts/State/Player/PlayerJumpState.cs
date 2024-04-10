@@ -36,7 +36,7 @@ public class PlayerJumpState : PlayerMoveBase
         // Allow player to move in air a bit
         if (jumpForceApplied)
         {
-            Vector3 movement = CalculateRelativeMovement();
+            Vector3 movement = CalculateHeading();
             Move(movement, deltaTime);
         }
 

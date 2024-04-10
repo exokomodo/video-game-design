@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
 /// <summary>
 /// A Player Controller that manages the Kitty Hawk Player model, finite state machine,
@@ -200,7 +196,7 @@ public class PlayerController : MonoBehaviour {
         // Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
         EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
     }
-    if (_isJumping)
+    if (_isJumping && !isGrounded)
     {
       SwitchToFallState();
     }
@@ -253,17 +249,6 @@ public class PlayerController : MonoBehaviour {
         ToggleActive(true);
         break;
 
-      case AnimationStateEvent.JUMP_COMPLETE:
-        if (isGrounded)
-        {
-          SwitchToMoveState();
-        }
-        else
-        {
-          SwitchToFallState();
-        }
-        break;
-
       case AnimationStateEvent.LAND_BEGIN:
         float dist = CheckGroundDistance();
         if (dist > 3f)
@@ -273,6 +258,18 @@ public class PlayerController : MonoBehaviour {
         else
         {
           _isLanding = true;
+        }
+        break;
+
+      case AnimationStateEvent.JUMP_COMPLETE:
+        _isGrounded = CheckGrounded();
+        if (isGrounded)
+        {
+          SwitchToMoveState();
+        }
+        else
+        {
+          SwitchToFallState();
         }
         break;
 

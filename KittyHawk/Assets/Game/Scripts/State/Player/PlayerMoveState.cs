@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +18,23 @@ public class PlayerMoveState : PlayerMoveBase
     {
         Debug.Log("PlayerMoveState Enter");
         // stateMachine.Animator.Play(MoveHash); // Begin moving immediately
-        stateMachine.Animator.CrossFadeInFixedTime(MoveHash, CrossFadeDuration);
+        // stateMachine.Animator.CrossFadeInFixedTime(MoveHash, CrossFadeDuration);
+    }
+
+    public override void Execute(float deltaTime)
+    {
+        Move(deltaTime);
+    }
+
+    protected void Move(float deltaTime) {
+        float damp = AnimatorDampTime * 1/stateMachine.Controller.Speed;
+        Vector3 rawMovement = GetNormalizedMovement() * stateMachine.Controller.Speed;
+        Vector3 movement = CalculateHeading();
+        FaceMovementDirection(movement, deltaTime);
+        stateMachine.Animator.SetFloat(VelocityXHash, rawMovement.x, damp, deltaTime);
+        stateMachine.Animator.SetFloat(VelocityZHash, rawMovement.z, damp, deltaTime);
+        if (Math.Abs(movement.x) < Mathf.Epsilon && Math.Abs(movement.z) < Mathf.Epsilon) {
+            stateMachine.SwitchState(new PlayerIdleState(stateMachine));
+        }
     }
 }

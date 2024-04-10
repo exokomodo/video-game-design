@@ -107,6 +107,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Recenter"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6cbd28e-2e56-4bc0-8dad-f333787ada8a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -417,6 +426,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""291eadd4-602d-4d8c-977c-af2983e041ce"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Recenter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2fa2e67-bf69-453e-ab98-c6c0e94f0935"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Recenter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -462,6 +493,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_AttackLeft = m_Player.FindAction("AttackLeft", throwIfNotFound: true);
         m_Player_Meow = m_Player.FindAction("Meow", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_Recenter = m_Player.FindAction("Recenter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -532,6 +564,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_AttackLeft;
     private readonly InputAction m_Player_Meow;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_Recenter;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -545,6 +578,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @AttackLeft => m_Wrapper.m_Player_AttackLeft;
         public InputAction @Meow => m_Wrapper.m_Player_Meow;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Recenter => m_Wrapper.m_Player_Recenter;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -581,6 +615,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Recenter.started += instance.OnRecenter;
+            @Recenter.performed += instance.OnRecenter;
+            @Recenter.canceled += instance.OnRecenter;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -612,6 +649,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Recenter.started -= instance.OnRecenter;
+            @Recenter.performed -= instance.OnRecenter;
+            @Recenter.canceled -= instance.OnRecenter;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -658,5 +698,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnAttackLeft(InputAction.CallbackContext context);
         void OnMeow(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnRecenter(InputAction.CallbackContext context);
     }
 }
