@@ -50,4 +50,17 @@ public class DungeonGooseController : GooseAI
             }
         }
     }
+
+    public void Disable() {
+        // Turns everything off and reduces Goose velocity
+        isAlive = false;
+        agent.ResetPath();
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+
+        anim.SetBool("isWalking", false);
+        anim.Play("Idle");
+
+        cl.isTrigger = true;
+    }
 }

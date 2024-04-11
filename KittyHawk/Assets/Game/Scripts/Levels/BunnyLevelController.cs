@@ -135,7 +135,10 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void DisableGeese() {
-        // Dont allow geese to hurt Kitty
+        // Dont allow geese to hurt Kitty after the level is complete
+        foreach (DungeonGooseController goose in geese) {
+            goose.Disable();
+        }
 
     }
 

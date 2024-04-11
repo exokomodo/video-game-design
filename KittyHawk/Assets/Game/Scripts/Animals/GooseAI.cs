@@ -25,8 +25,8 @@ public class GooseAI : MonoBehaviour
     protected NavMeshAgent agent;
     protected Animator anim;
     [SerializeField] private AIState aiState;
-    private Rigidbody rb;
-    private Collider cl;
+    protected Rigidbody rb;
+    protected Collider cl;
 
     // Patrol state
     [SerializeField] private float wanderRadius; // Maximum allowable distance the Goose can walk when patrolling
@@ -44,7 +44,7 @@ public class GooseAI : MonoBehaviour
 
     // All states
     public bool IsAlive => isAlive;
-    [SerializeField] private bool isAlive = true;
+    [SerializeField] protected bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] protected Vector3 newPosition;
 
