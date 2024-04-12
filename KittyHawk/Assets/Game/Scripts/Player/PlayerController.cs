@@ -29,12 +29,13 @@ public class PlayerController : MonoBehaviour {
   private bool _isActive = false;
   private bool _isDead = false;
   private bool _isTurning = false;
-  private float groundCheckTolerance = 0.1f;
+  private float groundCheckTolerance = 0.25f;
   private readonly int isAttackingHash = Animator.StringToHash("isAttacking");
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
   private readonly int isGroundedHash = Animator.StringToHash("isGrounded");
   private readonly int GroundDistanceHash = Animator.StringToHash("GroundDistance");
   private readonly int FallModifierHash = Animator.StringToHash("FallModifier");
+  private int fallingBuffer = 0;
   private Vector3 pendingMotion = Vector3.zero;
   private Quaternion pendingRotation = Quaternion.identity;
   private float hitTimer;
@@ -310,6 +311,7 @@ public class PlayerController : MonoBehaviour {
 
     if (_isGrounded)
     {
+      fallingBuffer = 0;
       _isJumpAttacking = false;
       if (_jump && !_isJumping && !_isFalling) {
         SwitchToJumpState();
@@ -317,8 +319,9 @@ public class PlayerController : MonoBehaviour {
     }
     else
     {
-      if (_prevGrounded && !_jump && !_isJumping && !_isFalling)
+      if (!_jump && !_isJumping && !_isFalling  && ++fallingBuffer > 2)
       {
+        Debug.Log("SWITCH_TO_FALL_STATE");
         SwitchToFallState();
       }
       if (_isFalling)
