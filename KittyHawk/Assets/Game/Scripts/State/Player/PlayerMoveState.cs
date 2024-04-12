@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerMoveState : PlayerMoveBase
 {
     private readonly int MoveHash = Animator.StringToHash("Move");
+    private Vector3 delta;
 
     public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -17,8 +18,7 @@ public class PlayerMoveState : PlayerMoveBase
     public override void Enter()
     {
         Debug.Log("PlayerMoveState Enter");
-        // stateMachine.Animator.Play(MoveHash); // Begin moving immediately
-        // stateMachine.Animator.CrossFadeInFixedTime(MoveHash, CrossFadeDuration);
+        stateMachine.Animator.CrossFadeInFixedTime(MoveHash, CrossFadeDuration);
     }
 
     public override void Execute(float deltaTime)
@@ -27,13 +27,32 @@ public class PlayerMoveState : PlayerMoveBase
     }
 
     protected void Move(float deltaTime) {
-        float damp = AnimatorDampTime * 1/stateMachine.Controller.Speed;
+        float damp = AnimatorDampTime * stateMachine.Controller.Speed;
+        Vector3 prevMovement = new Vector3(stateMachine.Animator.GetFloat(VelocityXHash), 0, stateMachine.Animator.GetFloat(VelocityZHash));
         Vector3 rawMovement = GetNormalizedMovement() * stateMachine.Controller.Speed;
-        Vector3 movement = CalculateHeading();
-        FaceMovementDirection(movement, deltaTime);
+        delta = rawMovement - prevMovement;
+
+        if (delta.magnitude >= 0.8f) {
+            // Notable change in movement
+            // Debug.Log($"raw: {rawMovement}, delta: {delta}");
+            if (delta.z <= -0.8f && rawMovement.z < -0.8f) {
+                // Debug.Log($"TURN BACKWARDS 180");
+                if (delta.x >= 0) {
+                    stateMachine.Controller.SwitchToTurnState(PlayerTurnState.Turn.RIGHT180);
+                } else {
+                    stateMachine.Controller.SwitchToTurnState(PlayerTurnState.Turn.LEFT180);
+                }
+                return;
+            }
+        }
+
         stateMachine.Animator.SetFloat(VelocityXHash, rawMovement.x, damp, deltaTime);
         stateMachine.Animator.SetFloat(VelocityZHash, rawMovement.z, damp, deltaTime);
-        if (Math.Abs(movement.x) < Mathf.Epsilon && Math.Abs(movement.z) < Mathf.Epsilon) {
+
+        Vector3 heading = CalculateHeading();
+        FaceMovementDirection(heading, deltaTime);
+
+        if (Math.Abs(rawMovement.x) < Mathf.Epsilon && Math.Abs(rawMovement.z) < Mathf.Epsilon) {
             stateMachine.SwitchState(new PlayerIdleState(stateMachine));
         }
     }

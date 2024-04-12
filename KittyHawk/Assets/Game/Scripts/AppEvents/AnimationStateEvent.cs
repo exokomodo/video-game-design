@@ -13,6 +13,7 @@ public class AnimationStateEvent: UnityEvent<AnimationStateEventBehavior.Animati
     public const string LAND_COMPLETE = "LandComplete";
     public const string MEOW = "Meow";
     public const string MEOW_COMPLETE = "MeowComplete";
+    public const string TURN_COMPLETE = "TurnComplete";
 
     // Bunny
     public const string BUNNY_JUMP_COMPLETE = "BunnyJumpComplete";

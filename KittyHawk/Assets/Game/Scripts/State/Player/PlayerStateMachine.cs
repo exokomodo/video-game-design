@@ -11,7 +11,6 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public InputReader InputReader { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
-    [field: SerializeField] public float RotationDamping { get; private set; }
 
     public enum StateEnum
     {
@@ -24,7 +23,8 @@ public class PlayerStateMachine : StateMachine
         INTERACT,
         CRAWL,
         SWIM,
-        DIE
+        DIE,
+        TURN
     }
 
     public enum InteractionEnum
@@ -63,8 +63,7 @@ public class PlayerStateMachine : StateMachine
     public bool isFalling => currentState?.StateID == (int) StateEnum.FALL;
     public bool isCrawling => currentState?.StateID == (int) StateEnum.CRAWL;
 
-    [HideInInspector]
-    public int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE, (int)StateEnum.FALL};
+    private int[] motionStates = {(int) StateEnum.JUMP, (int) StateEnum.MOVE, (int)StateEnum.FALL, (int)StateEnum.TURN};
     [HideInInspector]
     public int[] idleStates = {(int) StateEnum.IDLE, (int) StateEnum.SIT, (int)StateEnum.LIE};
     private int StateChangeHash = Animator.StringToHash("StateChange");
