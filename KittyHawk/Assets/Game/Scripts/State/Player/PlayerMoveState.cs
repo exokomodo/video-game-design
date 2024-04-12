@@ -31,11 +31,12 @@ public class PlayerMoveState : PlayerMoveBase
         Vector3 prevMovement = new Vector3(stateMachine.Animator.GetFloat(VelocityXHash), 0, stateMachine.Animator.GetFloat(VelocityZHash));
         Vector3 rawMovement = GetNormalizedMovement() * stateMachine.Controller.Speed;
         delta = rawMovement - prevMovement;
+        float magnitude = 0.8f * stateMachine.Controller.Speed;
 
-        if (delta.magnitude >= 0.8f) {
+        if (delta.magnitude >= magnitude) {
             // Notable change in movement
             // Debug.Log($"raw: {rawMovement}, delta: {delta}");
-            if (delta.z <= -0.8f && rawMovement.z < -0.8f) {
+            if (delta.z <= -magnitude && rawMovement.z < -magnitude) {
                 // Debug.Log($"TURN BACKWARDS 180");
                 if (delta.x >= 0) {
                     stateMachine.Controller.SwitchToTurnState(PlayerTurnState.Turn.RIGHT180);

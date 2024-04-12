@@ -369,8 +369,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     rb.MovePosition(newRootPosition);
-    // rb.MoveRotation(newRootRotation);
-    rb.rotation = newRootRotation;
+    rb.MoveRotation(newRootRotation);
   }
 
   public void Enable()
