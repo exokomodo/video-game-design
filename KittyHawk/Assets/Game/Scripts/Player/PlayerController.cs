@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour {
     MIDDLE
   }
   private AudioSource _walkAudio;
+  private bool StopX = false;
+  private bool StopZ = false;
 
   public Vector3 velocity => stateMachine.Animator.velocity;
   public bool isAttacking => _isAttacking;
@@ -101,6 +103,7 @@ public class PlayerController : MonoBehaviour {
     if (inventory == null) throw new Exception("PlayerInventory component could not be found");
 
     attackCol = GetComponent<BoxCollider>();
+    if (attackCol == null) throw new Exception("Attack collider component could not be found");
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
@@ -321,7 +324,6 @@ public class PlayerController : MonoBehaviour {
     {
       if (!_jump && !_isJumping && !_isFalling  && ++fallingBuffer > 2)
       {
-        Debug.Log("SWITCH_TO_FALL_STATE");
         SwitchToFallState();
       }
       if (_isFalling)
@@ -341,6 +343,25 @@ public class PlayerController : MonoBehaviour {
   {
     if (isDialogOpen) return;
 
+    Vector3 previousPosition = rb.transform.position;
+    StopX = false;
+    StopZ = false;
+    RaycastHit? hitInfo = CheckCollisionHit();
+    if (hitInfo != null) {
+      RaycastHit hit = (RaycastHit)hitInfo;
+      float dist = hit.distance;
+      Rigidbody hrb = hit.collider?.gameObject.GetComponent<Rigidbody>();
+      float padding = 0.5f * Speed;
+      if (dist < Math.Pow(padding, 2) && hrb == null) {
+        Debug.LogWarning("STOP");
+        float dx = hit.transform.position.x;
+        float dz = hit.transform.position.z;
+        if (dx < padding) StopX = true;
+        if (dz < padding) StopZ = true;
+      }
+    }
+
+
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -357,6 +378,9 @@ public class PlayerController : MonoBehaviour {
     newRootPosition = Vector3.LerpUnclamped(transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
+
+    if (StopX) newRootPosition.x = previousPosition.x;
+    if (StopZ) newRootPosition.z = previousPosition.z;
 
     Quaternion newRootRotation;
     if (pendingRotation != Quaternion.identity)
@@ -534,6 +558,22 @@ public class PlayerController : MonoBehaviour {
       return Quaternion.LerpUnclamped(rot, newRotation, Time.fixedDeltaTime * TurnSpeed);
     }
     return rot;
+  }
+
+  private RaycastHit? CheckCollisionHit()
+  {
+    Vector3 frontOrigin = frontPivot.transform.position;
+    Vector3 backOrigin = backPivot.transform.position;
+    Vector3 direction = frontOrigin - backOrigin;
+    Quaternion rot = Quaternion.LookRotation(direction);
+    // float offsetZ = attackCol.size.z - 0.0999f;
+    // Vector3 origin = attackCol.transform.position + rot * new Vector3(0, attackCol.size.y, offsetZ);
+    Vector3 origin = frontOrigin + new Vector3(0, attackCol.size.y, 0);
+    origin.y -= 0.04f;
+    LayerMask layerMask = LayerMask.NameToLayer("Ignore Raycast");
+    RaycastHit hitInfo;
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, direction, out hitInfo, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both, ~layerMask);
+    return hit? hitInfo : null;
   }
 
   public void Attack(bool b)
