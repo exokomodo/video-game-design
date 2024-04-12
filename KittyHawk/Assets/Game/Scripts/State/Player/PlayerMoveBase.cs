@@ -71,7 +71,7 @@ public class PlayerMoveBase : PlayerBaseState
         stateMachine.transform.rotation = Quaternion.Lerp(
             stateMachine.transform.rotation,
             Quaternion.LookRotation(movement),
-            deltaTime * stateMachine.RotationDamping
+            deltaTime * stateMachine.Controller.RotationDamping
         );
     }
 

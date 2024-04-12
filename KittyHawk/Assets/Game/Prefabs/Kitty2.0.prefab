@@ -706,8 +706,9 @@ MonoBehaviour:
   WalkSpeed: 1
   RunSpeed: 2
   BaseJumpForce: 8
-  TurnSpeed: 0.3
+  TurnSpeed: 1
   HitCooldown: 3
+  RotationDamping: 0.45
 --- !u!114 &5880034425804953106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -737,8 +738,6 @@ MonoBehaviour:
   <InputReader>k__BackingField: {fileID: 2951795978765711219}
   <Animator>k__BackingField: {fileID: 3574299840218274453}
   <ForceReceiver>k__BackingField: {fileID: 5880034425804953106}
-  <RotationDamping>k__BackingField: 0.25
-  motionStates: 040000000300000005000000
   idleStates: 000000000100000002000000
 --- !u!114 &7251232747347182649
 MonoBehaviour:

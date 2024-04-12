@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
   private bool _isJumpAttacking = false;
   private bool _isActive = false;
   private bool _isDead = false;
+  private bool _isTurning = false;
   private float groundCheckTolerance = 0.1f;
   private readonly int isAttackingHash = Animator.StringToHash("isAttacking");
   private readonly int isRunningHash = Animator.StringToHash("isRunning");
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour {
   public float BaseJumpForce = 8.0f;
   public float TurnSpeed = 1.0f;
   public float HitCooldown = 4.0f;
+  public float RotationDamping = 0.25f;
 
 
   public void Awake()
@@ -345,11 +347,11 @@ public class PlayerController : MonoBehaviour {
     else
     {
         // Simple trick to keep model from climbing other rigidbodies that aren't the ground
-        newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
+        newRootPosition = new Vector3(anim.rootPosition.x, transform.position.y, anim.rootPosition.z);
     }
     newRootPosition = newRootPosition + pendingMotion;
     pendingMotion = Vector3.zero;
-    newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, Speed);
+    newRootPosition = Vector3.LerpUnclamped(transform.position, newRootPosition, Speed);
     float newY = Mathf.Max(0, newRootPosition.y);
     newRootPosition.y = newY;
 
@@ -361,12 +363,14 @@ public class PlayerController : MonoBehaviour {
     }
     else
     {
+      float damping = _isTurning? 1 : RotationDamping;
       newRootRotation = isMoving? GetGroundAngle() : anim.rootRotation;
-      newRootRotation = Quaternion.LerpUnclamped(this.transform.rotation, newRootRotation, TurnSpeed);
+      newRootRotation = Quaternion.LerpUnclamped(transform.rotation, newRootRotation, TurnSpeed * damping);
     }
 
     rb.MovePosition(newRootPosition);
-    rb.MoveRotation(newRootRotation);
+    // rb.MoveRotation(newRootRotation);
+    rb.rotation = newRootRotation;
   }
 
   public void Enable()
@@ -419,6 +423,7 @@ public class PlayerController : MonoBehaviour {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
+    _isTurning = false;
     stateMachine.SwitchState(new PlayerIdleState(stateMachine));
   }
 
@@ -427,7 +432,17 @@ public class PlayerController : MonoBehaviour {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
+    _isTurning = false;
     stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+  }
+
+  public void SwitchToTurnState(PlayerTurnState.Turn turnType)
+  {
+    _isJumping = false;
+    _isFalling = false;
+    _isLanding = false;
+    _isTurning = true;
+    stateMachine.SwitchState(new PlayerTurnState(stateMachine, turnType));
   }
 
   public void SwitchToJumpState()
@@ -436,6 +451,7 @@ public class PlayerController : MonoBehaviour {
     _isJumping = true;
     _isFalling = false;
     _isLanding = false;
+    _isTurning = false;
     stateMachine.SwitchState(new PlayerJumpState(stateMachine));
   }
 
@@ -444,6 +460,7 @@ public class PlayerController : MonoBehaviour {
     _isJumping = false;
     _isFalling = true;
     _isLanding = false;
+    _isTurning = false;
     stateMachine.SwitchState(new PlayerFallState(stateMachine));
   }
 
@@ -452,6 +469,7 @@ public class PlayerController : MonoBehaviour {
     _isJumping = false;
     _isFalling = false;
     _isLanding = false;
+    _isTurning = false;
     ToggleListeners(false);
     isActive = false;
     stateMachine.SwitchState(new PlayerInteractState(stateMachine, eventType, target));
