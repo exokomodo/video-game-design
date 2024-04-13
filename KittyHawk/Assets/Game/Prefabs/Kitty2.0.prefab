@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5268301186397392596}
   m_Layer: 0
   m_Name: front_pivot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 8847999040543130460}
   m_Layer: 0
   m_Name: back_pivot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,7 +247,7 @@ PrefabInstance:
     - target: {fileID: -9004448038221463141, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
@@ -307,7 +307,7 @@ PrefabInstance:
     - target: {fileID: -7970711837325857497, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -7878049624755235113, guid: d5b39b8b4eb2f174aaa0bcfa7235cfd5,
         type: 3}
@@ -634,19 +634,6 @@ CapsuleCollider:
   m_Height: 0.5
   m_Direction: 2
   m_Center: {x: -0, y: 0.17585541, z: -0.008500934}
---- !u!65 &6395173018064352318
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7796164972014180949}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.4, z: 0.4}
-  m_Center: {x: 0, y: 0.26, z: 0.5}
 --- !u!82 &4546116046966660991
 AudioSource:
   m_ObjectHideFlags: 0

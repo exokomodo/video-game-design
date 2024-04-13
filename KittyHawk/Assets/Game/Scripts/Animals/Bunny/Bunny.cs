@@ -31,9 +31,8 @@ public class Bunny : MonoBehaviour
   // public GameObject[] waypoints;
   public List<GameObject> Waypoints;
   public bool followMode = false;
+  [SerializeField]
   public GameObject followTarget;
-  // [SerializeField]
-  // public GameObject followTarget;
   public enum BunnyAnimState
   {
     IDLE,
