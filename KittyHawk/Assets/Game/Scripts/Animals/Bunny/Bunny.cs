@@ -22,7 +22,9 @@ public class Bunny : MonoBehaviour
   protected int VelocityXHash = Animator.StringToHash("VelocityX");
   protected int VelocityZHash = Animator.StringToHash("VelocityZ");
   protected AgentLinkMover mover;
-  protected bool lookAt;
+
+  [SerializeField]
+  protected bool lookAt = false;
 
   public NavMeshAgent agent;
   public Animator anim;
@@ -84,7 +86,7 @@ public class Bunny : MonoBehaviour
     col = GetComponent<CapsuleCollider>();
     if (col == null) throw new Exception("Collider could not be found");
 
-    EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+    // EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
 
     // followTarget = null;
     // try {
@@ -102,13 +104,13 @@ public class Bunny : MonoBehaviour
     FSM.Configure(this, GetState());
   }
 
-  protected void OnLevelEvent(string eventType, Collider c) {
-    switch (eventType) {
-      case LevelEvent<Collider>.END_ROOM_ENTERED:
-        lookAt = true;
-        break;
-    }
-  }
+  // protected void OnLevelEvent(string eventType, Collider c) {
+  //   switch (eventType) {
+  //     case LevelEvent<Collider>.END_ROOM_ENTERED:
+  //       lookAt = true;
+  //       break;
+  //   }
+  // }
 
   public void ChangeState(FSMState<Bunny> e)
   {
@@ -216,6 +218,6 @@ public class Bunny : MonoBehaviour
     ChangeState(GetState());
   }
   protected void OnDestroy() {
-        EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        // EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
     }
 }

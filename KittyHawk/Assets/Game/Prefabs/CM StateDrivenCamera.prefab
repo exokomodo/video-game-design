@@ -1239,7 +1239,9 @@ MonoBehaviour:
   m_AnimatedTarget: {fileID: 0}
   m_LayerIndex: 0
   m_ShowDebugText: 0
-  m_ChildCameras: []
+  m_ChildCameras:
+  - {fileID: 3978797594987310333}
+  - {fileID: 3978797596916888756}
   m_Instructions:
   - m_FullHash: 1432961145
     m_VirtualCamera: {fileID: 3978797594987310333}
@@ -1302,7 +1304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4105
   m_IgnoreTag: Player
   m_TransparentLayers:
     serializedVersion: 2
