@@ -46,10 +46,8 @@ public class PlayerController : MonoBehaviour {
   }
   private AudioSource _walkAudio;
   private LayerMask StaticObstacle;
-  private int collisionCount = 0;
-  private bool isColliding { get { return collisionCount > 0; } }
   private float hitBuffer { get { return 0.2f * Speed; } }
-  private Vector3 lastVelocity;
+
 
   public Vector3 velocity => stateMachine.Animator.velocity;
   public bool isAttacking => _isAttacking;
@@ -70,10 +68,6 @@ public class PlayerController : MonoBehaviour {
   public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
   public AudioClip WalkClip;
   public AudioClip RunClip;
-
-  // [SerializeField]
-  // private BoxCollider attackCol;
-
   public bool RootMotion = true;
   public float WalkSpeed = 1.0f;
   public float RunSpeed = 2.0f;
@@ -179,44 +173,14 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  // void OnTriggerEnter(Collider c)
-  // {
-  //   // if (c.CompareTag("Finish")) {
-  //   //   // Debug.Log("Kitty has entered finish room");
-  //   //   EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.END_ROOM_ENTERED, c);
-  //   // }
-  //   if (c.CompareTag("Bunny")) {
-  //     EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
-  //     return;
-  //   }
-  //   // if (c.CompareTag("Goose") && (_isAttacking || (_isJumpAttacking && !isGrounded))) {
-  //   //     Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
-  //   //     EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
-  //   // }
-  // }
-
-
   private void OnCollisionEnter(Collision c)
   {
     if (c.collider.CompareTag("Tire")) {
       _isJumpAttacking = true;
     }
-    // if (c.collider.CompareTag("Goose") && (_isAttacking || _isJumpAttacking)) {
-    //     // Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
-    //     EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
-    // }
     if (_isJumping && !isGrounded)
     {
       SwitchToFallState();
-    }
-    if (c.collider.gameObject.layer == StaticObstacle && c.collider.gameObject.activeInHierarchy) {
-      ++collisionCount;
-    }
-  }
-
-  private void OnCollisionExit(Collision c) {
-    if (c.collider.gameObject.layer == StaticObstacle && c.collider.gameObject.activeInHierarchy) {
-      --collisionCount;
     }
   }
 
@@ -243,19 +207,6 @@ public class PlayerController : MonoBehaviour {
         break;
     }
   }
-
-  // private void OnAttackEvent(string eventType, float attackTime, Collider c)
-  // {
-  //   switch (eventType)
-  //   {
-  //     case AttackEvent.ATTACK_BEGIN:
-  //       Attack(true);
-  //       break;
-  //     case AttackEvent.ATTACK_END:
-  //       Attack(false);
-  //       break;
-  //   }
-  // }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
@@ -320,13 +271,9 @@ public class PlayerController : MonoBehaviour {
     Vector3 frontOrigin = frontPivot.transform.position;
     Vector3 backOrigin = backPivot.transform.position;
     Vector3 direction = frontOrigin - backOrigin;
-    // Quaternion rot = Quaternion.LookRotation(direction);
-    // float offsetZ = attackCol.size.z - 0.0999f;
-    // Vector3 origin = attackCol.transform.position + rot * new Vector3(0, attackCol.size.y, offsetZ);
     Vector3 origin = headCol.transform.position;
-    // origin.y -= 0.04f;
     RaycastHit hitInfo;
-    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, direction, out hitInfo, 0.5f, StaticObstacle, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Both);
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, direction, out hitInfo, 0.5f, StaticObstacle, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
     return hit? hitInfo : null;
   }
 
@@ -351,7 +298,7 @@ public class PlayerController : MonoBehaviour {
     {
       if (!_jump && !_isJumping && !_isFalling  && ++fallingBuffer > 2)
       {
-        Debug.Log("SWITCH_TO_FALL_STATE");
+        // Debug.Log("SWITCH_TO_FALL_STATE");
         SwitchToFallState();
       }
       if (_isFalling)
@@ -372,7 +319,6 @@ public class PlayerController : MonoBehaviour {
     if (isDialogOpen) return;
 
     Vector3 previousPosition = rb.transform.position;
-
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -403,31 +349,19 @@ public class PlayerController : MonoBehaviour {
       newRootRotation = Quaternion.LerpUnclamped(transform.rotation, newRootRotation, TurnSpeed * damping);
     }
 
-
-    bool StopX = false;
-    bool StopZ = false;
     RaycastHit? hitInfo = CheckCollisionHit();
     if (hitInfo != null) {
       RaycastHit hit = (RaycastHit)hitInfo;
       Vector3 loc = hit.collider.ClosestPointOnBounds(transform.position);
       Vector3 dist = transform.position - loc;
-      // pendingMotion = -dist;
-      Debug.LogWarning($"STOP: {loc}, {dist}");
-      // float dist = hit.distance;
-      // float dx = hit.transform.position.x;
-      // float dz = hit.transform.position.z;
+      // Debug.LogWarning($"STOP: {loc}, {dist}");
       if (Math.Abs(dist.x) < hitBuffer) {
-        StopX = true;
         newRootPosition.x = previousPosition.x;
       }
       if (Math.Abs(dist.z) < hitBuffer) {
-        StopZ = true;
         newRootPosition.z = previousPosition.z;
       }
     }
-    // if ((StopX || StopZ || isColliding) && (_jump || _isJumping)) {
-    //   SwitchToFallState();
-    // }
 
     rb.MovePosition(newRootPosition);
     rb.MoveRotation(newRootRotation);

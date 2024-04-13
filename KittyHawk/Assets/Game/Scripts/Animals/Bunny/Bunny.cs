@@ -86,15 +86,6 @@ public class Bunny : MonoBehaviour
     col = GetComponent<CapsuleCollider>();
     if (col == null) throw new Exception("Collider could not be found");
 
-    // EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
-
-    // followTarget = null;
-    // try {
-    //   followTarget = FindObjectsByType<FollowTarget>(FindObjectsSortMode.None)[0].gameObject;
-    // } catch (Exception e) {
-    //   Debug.LogWarning($"No followTarget found for Bunny. followMode is set to false. \n{e.Message}");
-    //   followMode = false;
-    // }
     if (followTarget == null) followMode = false;
 
     mover = GetComponent<AgentLinkMover>();
@@ -103,14 +94,6 @@ public class Bunny : MonoBehaviour
     FSM = new FiniteStateMachine<Bunny>();
     FSM.Configure(this, GetState());
   }
-
-  // protected void OnLevelEvent(string eventType, Collider c) {
-  //   switch (eventType) {
-  //     case LevelEvent<Collider>.END_ROOM_ENTERED:
-  //       lookAt = true;
-  //       break;
-  //   }
-  // }
 
   public void ChangeState(FSMState<Bunny> e)
   {
@@ -217,7 +200,4 @@ public class Bunny : MonoBehaviour
     followMode = true;
     ChangeState(GetState());
   }
-  protected void OnDestroy() {
-        // EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
-    }
 }

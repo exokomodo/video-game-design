@@ -134,7 +134,6 @@ public class Room: UnityEngine.Object {
         Destroy(segment);
         // if (!isEnd) {
         //     segment?.SetActive(false);
-        //     Destroy(segment);
         //     return;
         // }
         // BoxCollider c = segment.GetComponent<BoxCollider>();
