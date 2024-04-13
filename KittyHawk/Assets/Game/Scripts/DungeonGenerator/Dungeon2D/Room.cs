@@ -131,17 +131,18 @@ public class Room: UnityEngine.Object {
         GameObject segment = Segments[point];
         // segment?.SetActive(false);
         // Debug.Log("isEnd: " + isEnd);
-        if (!isEnd) {
-            segment?.SetActive(false);
-            return;
-        }
-        BoxCollider c = segment.GetComponent<BoxCollider>();
-        NavMeshObstacle ob = segment.GetComponent<NavMeshObstacle>();
-        MeshRenderer r = segment.GetComponent<MeshRenderer>();
-        r.enabled = false;
-        ob.enabled = false;
-        c.isTrigger = true;
-        segment.tag = "Finish";
+        Destroy(segment);
+        // if (!isEnd) {
+        //     segment?.SetActive(false);
+        //     return;
+        // }
+        // BoxCollider c = segment.GetComponent<BoxCollider>();
+        // NavMeshObstacle ob = segment.GetComponent<NavMeshObstacle>();
+        // MeshRenderer r = segment.GetComponent<MeshRenderer>();
+        // r.enabled = false;
+        // ob.enabled = false;
+        // c.isTrigger = true;
+        // segment.tag = "Finish";
     }
 
     private void DrawWallCells(GameObject wallPrefab, Vector2 origin, int width=0, int depth=0) {

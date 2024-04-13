@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,12 +8,10 @@ public class BabyBunny : Bunny {
 
     protected bool collected = false;
     protected bool withMomma = false;
-
     public bool isEnabled = true;
 
     protected void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player") && !collected) {
-            Debug.Log("OnTriggerEnter");
             EventManager.TriggerEvent<LevelEvent<BabyBunny>, string, BabyBunny>(LevelEvent<BabyBunny>.BUNNY_COLLECTED, this);
             EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success1");
             Follow(other.gameObject);

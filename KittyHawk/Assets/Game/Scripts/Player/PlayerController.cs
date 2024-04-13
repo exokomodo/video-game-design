@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour {
   private PlayerStateMachine stateMachine;
   private CapsuleCollider col;
   private SphereCollider headCol;
-  private BoxCollider attackCol;
   private GameObject frontPivot;
   private GameObject backPivot;
   private PlayerInventory inventory;
@@ -46,6 +45,9 @@ public class PlayerController : MonoBehaviour {
     MIDDLE
   }
   private AudioSource _walkAudio;
+  private LayerMask StaticObstacle;
+  private float hitBuffer { get { return 0.2f * Speed; } }
+
 
   public Vector3 velocity => stateMachine.Animator.velocity;
   public bool isAttacking => _isAttacking;
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour {
   public bool isRunning => _isRunning;
   public bool isLanding => _isLanding;
   public bool isMoving => stateMachine.isMoving;
+  public bool isJumpAttacking => _isJumpAttacking;
   public bool isActive {
     get { return _isActive; }
     private set {
@@ -65,8 +68,6 @@ public class PlayerController : MonoBehaviour {
   public float JumpForce => isRunning? BaseJumpForce * 0.8f : BaseJumpForce;
   public AudioClip WalkClip;
   public AudioClip RunClip;
-
-
   public bool RootMotion = true;
   public float WalkSpeed = 1.0f;
   public float RunSpeed = 2.0f;
@@ -100,7 +101,8 @@ public class PlayerController : MonoBehaviour {
     inventory = GetComponent<PlayerInventory>();
     if (inventory == null) throw new Exception("PlayerInventory component could not be found");
 
-    attackCol = GetComponent<BoxCollider>();
+    // attackCol = GetComponent<BoxCollider>();
+    StaticObstacle = LayerMask.GetMask("static_obstacle");
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
@@ -171,33 +173,10 @@ public class PlayerController : MonoBehaviour {
     }
   }
 
-  void OnTriggerEnter(Collider c)
-  {
-    if (c.CompareTag("Finish")) {
-      // Debug.Log("Kitty has entered finish room");
-      EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.END_ROOM_ENTERED, c);
-    }
-    if (c.CompareTag("Bunny")) {
-      EventManager.TriggerEvent<LevelEvent<Collider>, string, Collider>(LevelEvent<Room>.BUNNY_COLLIDER_ENTERED, c);
-      return;
-    }
-    // Debug.Log($"OnTriggerEnter > isAttacking: {_isAttacking}");
-    if (_isAttacking)
-    {
-      // Debug.Log($"OnTriggerEnter> ATTACK_TARGET_HIT {c}");
-      EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
-    }
-  }
-
-
   private void OnCollisionEnter(Collision c)
   {
     if (c.collider.CompareTag("Tire")) {
       _isJumpAttacking = true;
-    }
-    if (c.collider.CompareTag("Goose") && (_isAttacking || (_isJumpAttacking && !isGrounded))) {
-        // Debug.Log($"OnCollisionEnter > ATTACK_TARGET_HIT {c}");
-        EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
     }
     if (_isJumping && !isGrounded)
     {
@@ -228,19 +207,6 @@ public class PlayerController : MonoBehaviour {
         break;
     }
   }
-
-  // private void OnAttackEvent(string eventType, float attackTime, Collider c)
-  // {
-  //   switch (eventType)
-  //   {
-  //     case AttackEvent.ATTACK_BEGIN:
-  //       Attack(true);
-  //       break;
-  //     case AttackEvent.ATTACK_END:
-  //       Attack(false);
-  //       break;
-  //   }
-  // }
 
   private void OnAnimationEvent(AnimationStateEventBehavior.AnimationEventType eventType, string eventName)
   {
@@ -300,6 +266,17 @@ public class PlayerController : MonoBehaviour {
     if (anim.updateMode == AnimatorUpdateMode.AnimatePhysics) Execute(Time.fixedDeltaTime);
   }
 
+  private RaycastHit? CheckCollisionHit()
+  {
+    Vector3 frontOrigin = frontPivot.transform.position;
+    Vector3 backOrigin = backPivot.transform.position;
+    Vector3 direction = frontOrigin - backOrigin;
+    Vector3 origin = headCol.transform.position;
+    RaycastHit hitInfo;
+    bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, direction, out hitInfo, 0.5f, StaticObstacle, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+    return hit? hitInfo : null;
+  }
+
   private void Execute(float deltaTime)
   {
     hitTimer += deltaTime;
@@ -321,7 +298,7 @@ public class PlayerController : MonoBehaviour {
     {
       if (!_jump && !_isJumping && !_isFalling  && ++fallingBuffer > 2)
       {
-        Debug.Log("SWITCH_TO_FALL_STATE");
+        // Debug.Log("SWITCH_TO_FALL_STATE");
         SwitchToFallState();
       }
       if (_isFalling)
@@ -341,6 +318,7 @@ public class PlayerController : MonoBehaviour {
   {
     if (isDialogOpen) return;
 
+    Vector3 previousPosition = rb.transform.position;
     Vector3 newRootPosition;
     if (isGrounded)
     {
@@ -369,6 +347,20 @@ public class PlayerController : MonoBehaviour {
       float damping = _isTurning? 1 : RotationDamping;
       newRootRotation = isMoving? GetGroundAngle() : anim.rootRotation;
       newRootRotation = Quaternion.LerpUnclamped(transform.rotation, newRootRotation, TurnSpeed * damping);
+    }
+
+    RaycastHit? hitInfo = CheckCollisionHit();
+    if (hitInfo != null) {
+      RaycastHit hit = (RaycastHit)hitInfo;
+      Vector3 loc = hit.collider.ClosestPointOnBounds(transform.position);
+      Vector3 dist = transform.position - loc;
+      // Debug.LogWarning($"STOP: {loc}, {dist}");
+      if (Math.Abs(dist.x) < hitBuffer) {
+        newRootPosition.x = previousPosition.x;
+      }
+      if (Math.Abs(dist.z) < hitBuffer) {
+        newRootPosition.z = previousPosition.z;
+      }
     }
 
     rb.MovePosition(newRootPosition);
