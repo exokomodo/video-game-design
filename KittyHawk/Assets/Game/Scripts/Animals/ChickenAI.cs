@@ -256,6 +256,7 @@ public class ChickenAI : MonoBehaviour
         UnityEngine.Debug.Log("Chicken Entering Flee State");
         agent.ResetPath();
         aiState = AIState.FLEE;
+        anim.Play("OnFleeEnter");
         anim.SetBool("isWalking", true);
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
