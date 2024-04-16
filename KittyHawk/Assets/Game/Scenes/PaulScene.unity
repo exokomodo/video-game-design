@@ -625,6 +625,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_Gate_01 (11)
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -846,6 +850,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -1192,6 +1200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -1487,6 +1499,10 @@ PrefabInstance:
     - target: {fileID: 1530472777391812, guid: 234eb6795015c054996f7f72310146e5, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530472777391812, guid: 234eb6795015c054996f7f72310146e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1530472777391812, guid: 234eb6795015c054996f7f72310146e5, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2039,6 +2055,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2128,6 +2148,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1097265253}
     m_Modifications:
     - target: {fileID: 1257406544074148, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257406544074148, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2140,6 +2164,10 @@ PrefabInstance:
       value: SM_Bld_Farmhouse_01
       objectReference: {fileID: 0}
     - target: {fileID: 1572243783172642, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572243783172642, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2148,6 +2176,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1875201363225048, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875201363225048, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2156,12 +2188,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1909860827850162, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909860827850162, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1909860827850162, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965132566611222, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1965132566611222, guid: 72c07751c5ab1274e907d46aa40a3134, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2604,6 +2644,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Pole_01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4700640777581492, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2666,6 +2710,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -3355,6 +3403,10 @@ PrefabInstance:
     - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Hay_Bale_Square_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4180601995338058, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_RootOrder
@@ -4737,6 +4789,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Hay_Bale_Square_02 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4180601995338058, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -5069,6 +5125,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -5425,6 +5485,10 @@ PrefabInstance:
     - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Pole_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4700640777581492, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_RootOrder
@@ -6164,6 +6228,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -7067,6 +7135,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -8335,6 +8407,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Hay_Bale_Square_02
       objectReference: {fileID: 0}
+    - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4180601995338058, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -8391,6 +8467,10 @@ PrefabInstance:
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Gate_01 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
@@ -9770,6 +9850,10 @@ PrefabInstance:
     - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Hay_Bale_Square_02 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4180601995338058, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_RootOrder
@@ -11181,6 +11265,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -11459,6 +11547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 23
@@ -11715,6 +11807,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Pole_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4700640777581492, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -11870,6 +11966,10 @@ PrefabInstance:
     - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Pole_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4700640777581492, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_RootOrder
@@ -12619,6 +12719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Hay_Bale_Square_02 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4180601995338058, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -12931,6 +13035,10 @@ PrefabInstance:
       value: SM_Bld_Barn_01
       objectReference: {fileID: 0}
     - target: {fileID: 1427016662113696, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427016662113696, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12939,6 +13047,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1668543662975604, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668543662975604, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12947,6 +13059,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1748190229370546, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748190229370546, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12955,6 +13071,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1932742277392558, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932742277392558, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12963,6 +13083,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1937548780348638, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937548780348638, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -12971,12 +13095,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1977957806117260, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1977957806117260, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977957806117260, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993758987245400, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1993758987245400, guid: 1135f5bcd489da04cb5f4fcb4355006b, type: 3}
       propertyPath: m_NavMeshLayer
@@ -13942,6 +14074,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_02 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1530472777391812, guid: 234eb6795015c054996f7f72310146e5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530472777391812, guid: 234eb6795015c054996f7f72310146e5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -14191,6 +14327,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -14289,6 +14429,10 @@ PrefabInstance:
     - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Pole_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4700640777581492, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_RootOrder
@@ -14561,6 +14705,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_03 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1180001922870540, guid: 884bbdb73a830a3478e6e8623a6e5ae8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180001922870540, guid: 884bbdb73a830a3478e6e8623a6e5ae8, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -14658,12 +14806,12 @@ PrefabInstance:
     - target: {fileID: 3483170510682119970, guid: 33847608e7580431cac63d2786b09b06,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000032620704
+      value: -0.000000032621468
       objectReference: {fileID: 0}
     - target: {fileID: 3483170510682119970, guid: 33847608e7580431cac63d2786b09b06,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000010957727
+      value: 0.000000010957984
       objectReference: {fileID: 0}
     - target: {fileID: 3483170510682119970, guid: 33847608e7580431cac63d2786b09b06,
         type: 3}
@@ -15405,6 +15553,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_Gate_01 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -15623,6 +15775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Pole_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1535940774186120, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4700640777581492, guid: 286d328b8dca35848a0ff503fe6e2030, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -15685,6 +15841,10 @@ PrefabInstance:
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Gate_01 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
@@ -17089,6 +17249,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -19431,6 +19595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -19516,6 +19684,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -19788,6 +19960,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -20355,6 +20531,10 @@ PrefabInstance:
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Gate_01 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
@@ -21387,6 +21567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 21
@@ -21537,6 +21721,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1097265253}
     m_Modifications:
+    - target: {fileID: 5837115007655791535, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838848032079613136, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7062115038940235490, guid: 5de770892a1874541839b85f7dd81c86,
         type: 3}
       propertyPath: m_RootOrder
@@ -21596,6 +21790,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ShedAndTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062115038940235491, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062888248469213999, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063103197732972697, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063132572770257974, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063316864396580687, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063631909639944292, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063684402455601937, guid: 5de770892a1874541839b85f7dd81c86,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5de770892a1874541839b85f7dd81c86, type: 3}
@@ -21734,6 +21963,10 @@ PrefabInstance:
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Gate_01 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
@@ -22978,6 +23211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -23696,12 +23933,12 @@ PrefabInstance:
     - target: {fileID: 3978797595586578946, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000004229003
+      value: -0.000000042291312
       objectReference: {fileID: 0}
     - target: {fileID: 3978797595586578946, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000032025206
+      value: 0.00000003202618
       objectReference: {fileID: 0}
     - target: {fileID: 3978797595662462356, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
@@ -23731,12 +23968,12 @@ PrefabInstance:
     - target: {fileID: 3978797595662462356, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000009008334
+      value: -0.000000009011048
       objectReference: {fileID: 0}
     - target: {fileID: 3978797595662462356, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000007158025
+      value: 0.0000000071601822
       objectReference: {fileID: 0}
     - target: {fileID: 3978797596292646273, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
@@ -24631,12 +24868,12 @@ PrefabInstance:
     - target: {fileID: 3978797596621298787, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000430215
+      value: -0.00000004302281
       objectReference: {fileID: 0}
     - target: {fileID: 3978797596621298787, guid: eedbe114441e541f3805172ea58da801,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000031035643
+      value: 0.00000003103659
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eedbe114441e541f3805172ea58da801, type: 3}
@@ -25610,6 +25847,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 364778136}
     m_Modifications:
     - target: {fileID: 1232012297095456, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232012297095456, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -25620,6 +25861,10 @@ PrefabInstance:
     - target: {fileID: 1497001144474008, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Garage_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497001144474008, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1497001144474008, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
       propertyPath: m_NavMeshLayer
@@ -26287,6 +26532,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -27073,6 +27322,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_03
       objectReference: {fileID: 0}
     - target: {fileID: 1180001922870540, guid: 884bbdb73a830a3478e6e8623a6e5ae8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180001922870540, guid: 884bbdb73a830a3478e6e8623a6e5ae8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -27774,6 +28027,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -28537,6 +28794,10 @@ PrefabInstance:
     - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Hay_Bale_Square_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013958053533176, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4180601995338058, guid: 5581399079cfb63478df90ac8ba4a595, type: 3}
       propertyPath: m_RootOrder
@@ -29653,6 +29914,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_Gate_01
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -29912,6 +30177,10 @@ PrefabInstance:
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Gate_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
@@ -30612,6 +30881,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_Gate_01 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -30909,6 +31182,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -31112,6 +31389,10 @@ PrefabInstance:
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Fence_Wood_Gate_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
@@ -31796,6 +32077,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -32871,6 +33156,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -33644,6 +33933,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -34010,6 +34303,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_03 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 1180001922870540, guid: 884bbdb73a830a3478e6e8623a6e5ae8, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180001922870540, guid: 884bbdb73a830a3478e6e8623a6e5ae8, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -34108,6 +34405,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
@@ -34819,6 +35120,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_Gate_01 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -35396,6 +35701,10 @@ PrefabInstance:
       value: SM_Prop_Fence_Wood_Gate_01 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004119151508924, guid: 0931ee8cbbf53854a8ee49bdd9194045, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -35875,6 +36184,10 @@ PrefabInstance:
     - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_Name
       value: Crate (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832056302862754, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4589889085841980, guid: 95d2c2750aa2d2241bfc8372b1891ab0, type: 3}
       propertyPath: m_RootOrder
