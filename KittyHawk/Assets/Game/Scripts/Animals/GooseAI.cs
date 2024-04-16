@@ -48,6 +48,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] protected bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] protected Vector3 newPosition;
+    [SerializeField] protected Vector3 spawnPosition;
 
     private float HonkTimer;
     private float HonkTime;
@@ -120,6 +121,12 @@ public class GooseAI : MonoBehaviour
             // Run away from kitty after attacking. Coward.
             EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_KITTY_HIT, 0f, other.collider);
             EnterFleeState();
+        }
+
+        if (other.gameObject.CompareTag("ChickenCoop")) 
+        {
+            anim.SetBool("isWalking", false);
+            agent.ResetPath();
         }
     }
 
