@@ -43,6 +43,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] private bool isNearKitty;
 
     // All states
+    private bool attackEnabled = true;
     public bool IsAlive => isAlive;
     [SerializeField] protected bool isAlive = true;
     private Vector3 currentPosition;
@@ -62,6 +63,8 @@ public class GooseAI : MonoBehaviour
     {
         cl = GetComponent<CapsuleCollider>();
         EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
+        EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogueOpen);
+        EventManager.StartListening<DialogueCloseEvent, string>(OnDialogueClose);
     }
 
     void Start()
@@ -143,7 +146,8 @@ public class GooseAI : MonoBehaviour
         if (!isAlive) return;
         currentPosition = transform.position;
 
-        if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE)
+        // Debug.Log($"attackEnabled: {attackEnabled}, aiState: {aiState}");
+        if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE && attackEnabled)
         {
             Debug.Log("Goose Entering Attack State");
             EnterAttackState();
@@ -316,4 +320,19 @@ public class GooseAI : MonoBehaviour
         EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, $"GooseHonk{Random.Range(1, 3)}");
     }
     #endregion
+
+    void OnDialogueOpen(Vector3 point, string arg) {
+        attackEnabled = false;
+        if (aiState != AIState.PATROL) EnterPatrolState();
+    }
+
+    void OnDialogueClose(string arg) {
+        attackEnabled = true;
+    }
+
+    void OnDestroy() {
+        EventManager.StopListening<AttackEvent, string, float, Collider>(OnAttackEvent);
+        EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogueOpen);
+        EventManager.StopListening<DialogueCloseEvent, string>(OnDialogueClose);
+    }
 }
