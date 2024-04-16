@@ -26,8 +26,14 @@ public class MainMenuController : MonoBehaviour
     GameObject optionsPanel;
     [SerializeField]
     Image fadeImage;
+    [SerializeField]
+    Button optionsReturnButton;
+    [SerializeField]
+    Button creditsReturnButton;
 
     private Animator anim;
+    private Button optionsButton;
+    private Button creditsButton;
 
     private void Start()
     {
@@ -41,6 +47,11 @@ public class MainMenuController : MonoBehaviour
         EventManager.TriggerEvent<CursorLockEvent, bool>(false);
 
         Cursor.lockState = CursorLockMode.None;
+
+        Button startButton = GameObject.Find("StartButton").GetComponent<Button>();
+        startButton.Select();
+        optionsButton = GameObject.Find("OptionsButton").GetComponent<Button>();
+        creditsButton = GameObject.Find("CreditsButton").GetComponent<Button>();
     }
 
     public void StartGame()
@@ -64,10 +75,12 @@ public class MainMenuController : MonoBehaviour
         if (optionsPanel.activeSelf)
         {
             optionsPanel.SetActive(false);
+            optionsButton.Select();
         }
         else
         {
             optionsPanel.SetActive(true);
+            optionsReturnButton.Select();
         }
     }
 
@@ -78,9 +91,11 @@ public class MainMenuController : MonoBehaviour
         if (creditsPanel.activeSelf)
         {
             creditsPanel.SetActive(false);
+            creditsButton.Select();
         }
         else
         {
+            creditsReturnButton.Select();
             creditsPanel.SetActive(true);
         }
     }

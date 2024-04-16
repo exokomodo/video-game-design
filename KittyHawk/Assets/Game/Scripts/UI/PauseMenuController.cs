@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Class controlling pause menu and game pause/time
@@ -89,12 +90,14 @@ public class PauseMenuController : MonoBehaviour
             pauseCanvas.enabled = false;
             Time.timeScale = 1f;
             isPaused = false;
-            // PlayConfirmSound();
+            EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
+            //PlayConfirmSound();
         }
         else
         {
             EventManager.TriggerEvent<CursorLockEvent, bool>(false);
-            // PlayConfirmSound();
+            //PlayConfirmSound();
+            resumeButton.Select();
             pauseCanvas.enabled = true;
             Time.timeScale = 0f;
             isPaused = true;
