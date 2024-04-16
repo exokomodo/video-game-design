@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 3014230564954446833}
   - component: {fileID: 9214292207175322977}
   - component: {fileID: 7320851417107042114}
-  - component: {fileID: 222663441451838312}
   m_Layer: 0
   m_Name: InteractionTrigger
   m_TagString: Untagged
@@ -114,7 +113,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5628457095392452602}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -175,22 +174,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 5534293841525425911}
---- !u!54 &222663441451838312
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628457095392452602}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!1 &6957102245705525876
 GameObject:
   m_ObjectHideFlags: 0
