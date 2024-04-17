@@ -285,39 +285,40 @@ public class ChickenAI : MonoBehaviour
         fleeDirection = fleeDirection.normalized;
         newPosition = (fleeDirection * wanderRadius) + currentPosition;
     
-        if (isNearKitty)
-        {
-            UnityEngine.Debug.Log("Chicken is near kitty and will flee.");
-            ray = new Ray(currentPosition, fleeDirection);
-            
-            if (Physics.Raycast(ray, out rayHit, KITTY_FLEE_DISTANCE)) 
+            if (isNearKitty)
             {
-                if (rayHit.collider.tag == "Fence")
+                UnityEngine.Debug.Log("Chicken is near kitty and will flee.");
+                ray = new Ray(currentPosition, fleeDirection);
+                
+                if (Physics.Raycast(ray, out rayHit, KITTY_FLEE_DISTANCE)) 
                 {
-                    UnityEngine.Debug.Log("Hit gate, rotating 90 degrees.");
-                    // Rotate 90 degrees to the right
-                    Quaternion rotationChange = Quaternion.Euler(0, 90, 0); // Adjusts only the y-axis
-                    fleeDirection = rotationChange * fleeDirection;
-                    newPosition = currentPosition + (fleeDirection * wanderRadius); // Recalculate the new position                }
-            }
-            // Stays within the navmesh
-            if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
-            {
-                randomDirection = Random.insideUnitSphere * wanderRadius;
-                randomDirection += currentPosition;
-                newPosition = randomDirection;
-            }
+                    if (rayHit.collider.tag == "Fence")
+                    {
+                        UnityEngine.Debug.Log("Hit gate, rotating 90 degrees.");
+                        // Rotate 90 degrees to the right
+                        Quaternion rotationChange = Quaternion.Euler(0, 90, 0); // Adjusts only the y-axis
+                        fleeDirection = rotationChange * fleeDirection;
+                        newPosition = currentPosition + (fleeDirection * wanderRadius); // Recalculate the new position                }
+                }
+                // Stays within the navmesh
+                if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
+                {
+                    randomDirection = Random.insideUnitSphere * wanderRadius;
+                    randomDirection += currentPosition;
+                    newPosition = randomDirection;
+                }
 
+                
+                }
             SetChickenDestination(newPosition);
-        }
-        else
-        {
-            UnityEngine.Debug.Log("Chicken is no longer near kitty and will be entering patrol state.");
-            if (agent.remainingDistance < 0.2f) EnterPatrolState();
-        }
-
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Chicken is no longer near kitty and will be entering patrol state.");
+                if (agent.remainingDistance < 0.2f) EnterPatrolState();
+            }
     }
-    }
+    
 
     #endregion
     #region InCoop State
@@ -337,5 +338,4 @@ public class ChickenAI : MonoBehaviour
 
     }
     #endregion
-    
 }
