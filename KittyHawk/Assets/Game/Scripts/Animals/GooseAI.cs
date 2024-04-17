@@ -48,6 +48,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] protected bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] protected Vector3 newPosition;
+    [SerializeField] protected Vector3 spawnPosition;
 
     private float HonkTimer;
     private float HonkTime;
@@ -121,6 +122,12 @@ public class GooseAI : MonoBehaviour
             EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_KITTY_HIT, 0f, other.collider);
             EnterFleeState();
         }
+
+        if (other.gameObject.CompareTag("ChickenCoop")) 
+        {
+            anim.SetBool("isWalking", false);
+            agent.ResetPath();
+        }
     }
 
     // These two functions help determine the flee state
@@ -186,7 +193,7 @@ public class GooseAI : MonoBehaviour
 
     private void ChangeLookDirection(Vector3 targetPos)
     {
-        // Make the chicken look at the new position. Uses euler transformation because the model
+        // Make the goose look at the new position. Uses euler transformation because the model
         // is oriented the wrong way. +90 didn't work for some reason so -270 it is.
         Vector3 lookPosition = targetPos - currentPosition;
         Quaternion rotation = Quaternion.LookRotation(lookPosition);
@@ -207,6 +214,7 @@ public class GooseAI : MonoBehaviour
         agent.ResetPath();
         aiState = AIState.PATROL;
         rb.velocity = Vector3.zero;
+        rb.rotation = Quaternion.identity;
         agent.speed = 0.6f;
         anim.SetBool("isWalking", false);
         anim.SetBool("isAttacking", false);
@@ -273,13 +281,19 @@ public class GooseAI : MonoBehaviour
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
 
+            // Stays in the Navmesh
+            if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
+            {
+                  newPosition = hit.position;
+            }
+
             SetGooseDestination(newPosition);
 
             // When the flee destination is reached, will patrol if kitty isn't around
-            if (!isNearKitty) EnterPatrolState();
+            //if (!isNearKitty) EnterPatrolState();
         }
         // As soon as kitty is away enters patrol
-        //if (!isNearKitty) EnterPatrolState();
+        if (!isNearKitty) EnterPatrolState();
     }
     #endregion
     #region Attack State

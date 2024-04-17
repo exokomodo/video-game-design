@@ -53,6 +53,7 @@ public class ChickenAI : MonoBehaviour
     private const float KITTY_FLEE_DISTANCE = 2.0f;
     private Transform kittyTransform;
     private Vector3 fleeDirection;
+    private Ray ray;
 
     private Vector3 spawnPosition;
     [SerializeField] private bool isNearKitty;
@@ -62,6 +63,7 @@ public class ChickenAI : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField] private Vector3 newPosition;
     private GameObject gate;
+    private RaycastHit rayHit;
 
     public enum AIState
     {
@@ -141,8 +143,17 @@ public class ChickenAI : MonoBehaviour
 
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isNearKitty = true;
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
+        UnityEngine.Debug.Log("Chicken has exited the trigger");
         if (other.CompareTag("Player"))
         {
             isNearKitty = false;
@@ -151,10 +162,12 @@ public class ChickenAI : MonoBehaviour
 
     void FixedUpdate()
     {
+        UnityEngine.Debug.Log("isNearKitty" + isNearKitty);
         if (!isAlive) return;
         currentPosition = this.transform.position;
         if (isNearKitty && aiState != AIState.FLEE)
         {
+            UnityEngine.Debug.Log("Chicken is entering flee state");
             EnterFleeState();
             //TODO: Small jump flee animation for feedback to player
         }
@@ -256,34 +269,60 @@ public class ChickenAI : MonoBehaviour
         UnityEngine.Debug.Log("Chicken Entering Flee State");
         agent.ResetPath();
         aiState = AIState.FLEE;
+        anim.Play("OnFleeEnter");
         anim.SetBool("isWalking", true);
         rb.velocity = Vector3.zero;
         agent.speed = 2.5f;
+        aiState = AIState.FLEE;
     }
 
     private void UpdateFleeState()
     {
+        UnityEngine.Debug.Log("Chicken is in flee state currently so this SHOULD BE WORKING");
         // Finds the vector which points away from kitty, normalizes it,
         // places it at the end of the wander radius and sets it as the new destination
         fleeDirection = currentPosition - kittyTransform.position;
         fleeDirection = fleeDirection.normalized;
         newPosition = (fleeDirection * wanderRadius) + currentPosition;
+    
+            if (isNearKitty)
+            {
+                UnityEngine.Debug.Log("Chicken is near kitty and will flee.");
+                ray = new Ray(currentPosition, fleeDirection);
+                
+                if (Physics.Raycast(ray, out rayHit, KITTY_FLEE_DISTANCE)) 
+                {
+                    if (rayHit.collider.tag == "Fence")
+                    {
+                        UnityEngine.Debug.Log("Hit gate, rotating 90 degrees.");
+                        // Rotate 90 degrees to the right
+                        Quaternion rotationChange = Quaternion.Euler(0, 90, 0); // Adjusts only the y-axis
+                        fleeDirection = rotationChange * fleeDirection;
+                        newPosition = currentPosition + (fleeDirection * wanderRadius); // Recalculate the new position                }
+                }
+                // Stays within the navmesh
+                if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
+                {
+                    randomDirection = Random.insideUnitSphere * wanderRadius;
+                    randomDirection += currentPosition;
+                    newPosition = randomDirection;
+                }
 
-        
-
-        if (isNearKitty) 
-        {
+                
+                }
             SetChickenDestination(newPosition);
-        } else {
-            if (agent.remainingDistance < 0.2f) EnterPatrolState();
-        } 
-
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Chicken is no longer near kitty and will be entering patrol state.");
+                if (agent.remainingDistance < 0.2f) EnterPatrolState();
+            }
     }
-
+    
 
     #endregion
     #region InCoop State
-    private void EnterInCoopState(GameObject coop)
+    void EnterInCoopState(GameObject coop)
     {
         UnityEngine.Debug.Log("Chicken Entering InCoop State");
         aiState = AIState.INCOOP;
@@ -294,7 +333,7 @@ public class ChickenAI : MonoBehaviour
         transform.position = coop.transform.position;
     }
 
-    private void UpdateInCoopState()
+    void UpdateInCoopState()
     {
 
     }
