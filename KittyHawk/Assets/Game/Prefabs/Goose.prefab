@@ -1164,7 +1164,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: -0.06
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 23
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4473144747326580866
 MonoBehaviour:
@@ -1188,6 +1188,7 @@ MonoBehaviour:
   isNearKitty: 0
   isAlive: 1
   newPosition: {x: 0, y: 0, z: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &7030614025834919491
 GameObject:
   m_ObjectHideFlags: 0
