@@ -563,7 +563,7 @@ public class PlayerController : MonoBehaviour {
 
   private void OnJump()
   {
-      if (!_isJumping && !_isFalling) _jump = true;
+      if (!isDialogOpen && !_isJumping && !_isFalling) _jump = true;
   }
 
   private void OnMeow()
