@@ -20,6 +20,9 @@ TagManager:
   - Patrol
   - Wall
   - Tire
+  - CoopGroup
+  - HorseWaypoints
+  - Fence
   layers:
   - Default
   - TransparentFX
