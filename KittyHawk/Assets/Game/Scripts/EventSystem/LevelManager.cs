@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     bool displayDay = true;
 
     bool allObjectivesCompleted;
-    Dictionary<string, Objective> objectivesDic;
+    public Dictionary<string, Objective> objectivesDic;
 
     Animator anim;
 
@@ -77,6 +77,7 @@ public class LevelManager : MonoBehaviour
 
         foreach (Objective objective in objectives)
         {
+            objective.Status = ObjectiveStatus.NotStarted;
             objectivesDic.Add(objective.ObjectiveName, objective);
         }
 
@@ -114,7 +115,8 @@ public class LevelManager : MonoBehaviour
 
         foreach (KeyValuePair<string, Objective> objective in objectivesDic)
         {
-            if (objective.Value.Status != ObjectiveStatus.Completed)
+            Objective obj = objective.Value;
+            if (obj.Required && obj.Status != ObjectiveStatus.Completed)
             {
                 allObjectivesCompleted = false;
                 break;
@@ -129,7 +131,7 @@ public class LevelManager : MonoBehaviour
 
     void LevelComplete()
     {
-        Debug.Log("YAY YOU BEAT THE LEVEL");
+        Debug.Log("LevelManager > YAY YOU BEAT THE LEVEL");
         StartCoroutine(LoadNextLevel());
     }
 
