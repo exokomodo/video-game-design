@@ -1471,6 +1471,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 104560403194836928, guid: e765a33c3762a4410b2a27f384065778,
         type: 3}
+      propertyPath: MarkerPrefab
+      value: 
+      objectReference: {fileID: 5888504938069198990, guid: ef50178c31c5343469d99af0fe76eaa9,
+        type: 3}
+    - target: {fileID: 104560403194836928, guid: e765a33c3762a4410b2a27f384065778,
+        type: 3}
       propertyPath: objectives.Array.size
       value: 1
       objectReference: {fileID: 0}
