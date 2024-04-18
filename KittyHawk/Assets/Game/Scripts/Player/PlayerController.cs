@@ -296,7 +296,7 @@ public class PlayerController : MonoBehaviour {
     }
     else
     {
-      if (!_jump && !_isJumping && !_isFalling  && ++fallingBuffer > 2)
+      if (!_jump && !_isJumping && !_isFalling  && ++fallingBuffer > 2 && isActive)
       {
         // Debug.Log("SWITCH_TO_FALL_STATE");
         SwitchToFallState();

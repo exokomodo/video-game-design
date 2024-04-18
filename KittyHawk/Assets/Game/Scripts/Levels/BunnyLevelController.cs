@@ -46,8 +46,6 @@ public class BunnyLevelController : MonoBehaviour {
     GameObject SmokingDuck;
     [SerializeField]
     GameObject Catnip;
-    [SerializeField]
-    GameObject MarkerPrefab;
 
     [SerializeField]
     bool Testing = false;
@@ -211,7 +209,7 @@ public class BunnyLevelController : MonoBehaviour {
             Vector3 center = new Vector3(room.center.x, 0, room.center.y) * Generator.scale;
             baby.position = center;
             baby.Waypoints = room.Waypoints;
-            Objective obj = CreateObjective(
+            Objective obj = levelManager.CreateObjective(
                 $"Bunny{i}_Objective",
                 new Vector3(center.x, 1.25f, center.z),
                 0.05f,
@@ -222,18 +220,6 @@ public class BunnyLevelController : MonoBehaviour {
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(obj.ObjectiveName, ObjectiveStatus.InProgress);
             Debug.Log("Place bunny: " + center);
         }
-    }
-
-    private Objective CreateObjective(string name, Vector3 location, float scale=0.2f, Transform target=null) {
-        Objective obj = ScriptableObject.CreateInstance<Objective>();
-        obj.ObjectiveName = name;
-        obj.Required = false;
-        obj.FollowTarget = target;
-        obj.ShowMarker = true;
-        obj.MarkerPrefab = MarkerPrefab;
-        obj.MarkerLocation = location;
-        obj.Scale = new Vector3(scale, scale, scale);
-        return obj;
     }
 
     private void PlaceObstacles() {
@@ -277,7 +263,7 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void PlaceGoal() {
         bunnyController.position = endRoomPos * Generator.scale;
-        Objective obj = CreateObjective(
+        Objective obj = levelManager.CreateObjective(
             "BunnyCompleteObjective",
             new Vector3(bunnyController.position.x, 2f, bunnyController.position.z),
             0.1f
