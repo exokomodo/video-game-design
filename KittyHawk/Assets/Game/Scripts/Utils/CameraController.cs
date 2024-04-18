@@ -7,11 +7,13 @@ public struct RecenterSettings {
     public bool enabled;
     public float recenterTime;
     public float waitTime;
+    public CinemachineInputProvider inputProvider;
 
-    public RecenterSettings(bool enabled, float recenterTime, float waitTime) {
+    public RecenterSettings(bool enabled, float recenterTime, float waitTime, CinemachineInputProvider inputProvider) {
         this.enabled = enabled;
         this.recenterTime = recenterTime;
         this.waitTime = waitTime;
+        this.inputProvider = inputProvider;
     }
 }
 
@@ -32,6 +34,32 @@ public class CameraController : MonoBehaviour {
     private bool inited = false;
     private bool hasFreeLook = false;
 
+    private void Start() {
+        EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
+        EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
+    }
+
+    private void OnDialogOpen(Vector3 position, string dialogueName) {
+        foreach (ICinemachineCamera cam in sdc.ChildCameras) {
+            if (cam.GetType() == typeof(CinemachineFreeLook)) {
+                CinemachineFreeLook freeLook = cam as CinemachineFreeLook;
+                RecenterSettings s = cameraSettings[freeLook.GetHashCode()];
+                s.inputProvider.enabled = false;
+            }
+        }
+        Invoke("OnRecenter", 0.05f);
+    }
+
+    private void OnDialogClose(string dialogueName) {
+        foreach (ICinemachineCamera cam in sdc.ChildCameras) {
+            if (cam.GetType() == typeof(CinemachineFreeLook)) {
+                CinemachineFreeLook freeLook = cam as CinemachineFreeLook;
+                RecenterSettings s = cameraSettings[freeLook.GetHashCode()];
+                s.inputProvider.enabled = true;
+            }
+        }
+    }
+
     private void Init() {
         brain = GetComponent<CinemachineBrain>();
         if (brain == null) throw new Exception("CinemachineBrain component is required but was not found. Exiting...");
@@ -47,7 +75,8 @@ public class CameraController : MonoBehaviour {
                 cameraSettings[cam.GetHashCode()] = new RecenterSettings(
                     freeLook.m_RecenterToTargetHeading.m_enabled,
                     freeLook.m_RecenterToTargetHeading.m_RecenteringTime,
-                    freeLook.m_RecenterToTargetHeading.m_WaitTime
+                    freeLook.m_RecenterToTargetHeading.m_WaitTime,
+                    freeLook.GetComponent<CinemachineInputProvider>()
                 );
             }
         }
@@ -80,7 +109,9 @@ public class CameraController : MonoBehaviour {
             }
         }
         if (current && recentering) {
-            bool recenterComplete = Math.Abs(current.m_XAxis.Value) <= 0.01f;
+            float deltaY = Math.Abs(current.m_YAxis.Value - 0.1f);
+            if (current.m_YAxis.Value > 0.1f) current.m_YAxis.Value -= deltaY/10;
+            bool recenterComplete = Math.Abs(current.m_XAxis.Value) <= 0.01f && Math.Abs(current.m_YAxis.Value) - 0.1f < 0.01f;
             if (recenterComplete) {
                 RecenterSettings s = cameraSettings[current.GetHashCode()];
                 current.m_RecenterToTargetHeading.m_RecenteringTime = s.recenterTime;
@@ -93,5 +124,7 @@ public class CameraController : MonoBehaviour {
 
     private void OnDestroy() {
         if (hasFreeLook) input.RecenterEvent -= OnRecenter;
+        EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
+        EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
     }
 }

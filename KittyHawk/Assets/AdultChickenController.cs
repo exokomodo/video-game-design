@@ -3,7 +3,7 @@ using UnityEngine;
 public class AdultChickenController : MonoBehaviour
 {
 
-    protected float talkCooldown = 5f;
+    protected float talkCooldown = 10f;
     protected float timer;
     protected bool isTalking = false;
     protected string dialogueName = "ChickenDialogue";
