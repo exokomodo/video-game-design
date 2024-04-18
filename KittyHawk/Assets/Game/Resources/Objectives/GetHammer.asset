@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: GetHammer
   m_EditorClassIdentifier: 
   ObjectiveName: GetHammer
-  Status: 1
+  Required: 1
+  ShowMarker: 1
+  MarkerLocation: {x: -40.4, y: 4.6, z: -13}
+  MarkerPrefab: {fileID: 5888504938069198990, guid: ef50178c31c5343469d99af0fe76eaa9,
+    type: 3}
+  FollowTarget: {fileID: 0}
+  Scale: {x: 0.1, y: 0.1, z: 0.1}
