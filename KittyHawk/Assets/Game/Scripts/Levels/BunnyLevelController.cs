@@ -225,16 +225,14 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private Objective CreateObjective(string name, Vector3 location, float scale=0.2f, Transform target=null) {
-        Objective obj = new Objective
-        {
-            ObjectiveName = name,
-            Required = false,
-            FollowTarget = target,
-            ShowMarker = true,
-            MarkerPrefab = MarkerPrefab,
-            MarkerLocation = location,
-            Scale = new Vector3(scale, scale, scale)
-        };
+        Objective obj = ScriptableObject.CreateInstance<Objective>();
+        obj.ObjectiveName = name;
+        obj.Required = false;
+        obj.FollowTarget = target;
+        obj.ShowMarker = true;
+        obj.MarkerPrefab = MarkerPrefab;
+        obj.MarkerLocation = location;
+        obj.Scale = new Vector3(scale, scale, scale);
         return obj;
     }
 
