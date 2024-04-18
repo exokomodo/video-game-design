@@ -23,8 +23,11 @@ public class ArrowMarker : MonoBehaviour
     }
 
     void Update() {
-        offset = FollowTarget? FollowTarget.position - origin  : origin - transform.position;
-        offset.y = 0;
+        if (FollowTarget) {
+            offset = FollowTarget.position - origin;
+            offset.y = 0;
+        }
+
     }
 
     void FixedUpdate() {

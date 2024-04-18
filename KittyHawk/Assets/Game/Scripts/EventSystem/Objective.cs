@@ -42,16 +42,16 @@ public class Objective : ScriptableObject
         }
     }
 
-    public Vector3 Scale;
+    public Vector3 Scale = Vector3.zero;
 
     private void PlaceMarker() {
-        if (ShowMarker && MarkerPrefab != null) {
+        if (ShowMarker && MarkerPrefab != null && marker == null) {
             marker = Instantiate(MarkerPrefab, MarkerLocation, Quaternion.identity);
             ArrowMarker am = marker.GetComponentInChildren<ArrowMarker>();
             if (FollowTarget) {
                 am.FollowTarget = FollowTarget;
             }
-            if (Scale != null) am.gameObject.transform.localScale = Scale;
+            if (Scale != Vector3.zero) am.gameObject.transform.localScale = Scale;
         }
     }
 }
