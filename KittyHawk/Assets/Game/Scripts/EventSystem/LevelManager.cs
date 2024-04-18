@@ -23,9 +23,13 @@ public class LevelManager : MonoBehaviour
     string nextLevel;
     [SerializeField]
     bool displayDay = true;
+    [SerializeField]
+    public GameObject MarkerPrefab;
+    [HideInInspector]
+    public Dictionary<string, Objective> objectivesDic { get; private set; }
 
     bool allObjectivesCompleted;
-    public Dictionary<string, Objective> objectivesDic { get; private set; }
+
 
     Animator anim;
 
@@ -176,6 +180,18 @@ public class LevelManager : MonoBehaviour
         DataManager.Instance.Lives = 9;
         DataManager.Instance.Catnip = 0;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public Objective CreateObjective(string name, Vector3 location, float scale=0.2f, Transform target=null, bool required=false) {
+        Objective obj = ScriptableObject.CreateInstance<Objective>();
+        obj.ObjectiveName = name;
+        obj.Required = required;
+        obj.FollowTarget = target;
+        obj.ShowMarker = true;
+        obj.MarkerPrefab = MarkerPrefab;
+        obj.MarkerLocation = location;
+        obj.Scale = new Vector3(scale, scale, scale);
+        return obj;
     }
 
 }

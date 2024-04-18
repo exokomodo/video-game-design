@@ -12,6 +12,10 @@ public class HorseLevelController : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI gooseTextObject;
+    [SerializeField]
+    private LevelManager levelManager;
+    private const string MOUNT_OBJECTIVE_NAME = "MountHorseObjective";
+    private const string LEVEL_OBJECTIVE_NAME = "HorseObjective";
     private static int gooseSceneCount;
     private static HorseLevelController _instance;
     public static HorseLevelController Instance
@@ -50,26 +54,49 @@ public class HorseLevelController : MonoBehaviour
         CountGeese();
         EventManager.StartListening<HorseTrampleGooseEvent>(OnHorseTrampleGooseEvent);
         EventManager.StartListening<HorseEnterPondEvent>(OnHorseEnterPondEvent);
+        EventManager.StartListening<RiderEnterEvent>(OnMount);
+        SetObjectives();
+    }
+
+    private void SetObjectives() {
+        Vector3 pos = transform.position;
+        Objective mountObjective = levelManager.CreateObjective(
+            MOUNT_OBJECTIVE_NAME,
+            new Vector3(pos.x, 3f, pos.z),
+            0.1f,
+            transform
+        );
+        levelManager.AddObjective(mountObjective);
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
-                "HorseObjective",
+                MOUNT_OBJECTIVE_NAME,
                 ObjectiveStatus.InProgress);
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
+                LEVEL_OBJECTIVE_NAME,
+                ObjectiveStatus.InProgress);
+    }
+
+    private void OnMount() {
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
+                MOUNT_OBJECTIVE_NAME,
+                ObjectiveStatus.Completed);
     }
 
     private void OnHorseEnterPondEvent()
     {
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
-                "HorseObjective",
+                LEVEL_OBJECTIVE_NAME,
                 ObjectiveStatus.Failed);
     }
 
     private void OnHorseTrampleGooseEvent()
     {
         gooseSceneCount--;
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "GooseHit1");
         UpdateUI();
         if (gooseSceneCount <= 0)
         {
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
-                "HorseObjective",
+                LEVEL_OBJECTIVE_NAME,
                 ObjectiveStatus.Completed);
         }
     }
