@@ -18,6 +18,7 @@ public class Saddle : MonoBehaviour
     public float RidingFov = 70f;
     public float RidingRigOrbitOffset = 1f;
     public float TurningStrength = 2f;
+    public bool HasRider = false;
     #endregion
 
     #region Protected properties
@@ -69,6 +70,7 @@ public class Saddle : MonoBehaviour
         {
             return;
         }
+        HasRider = true;
         _rider = GameObject.FindGameObjectsWithTag("Player")
             .First(x => x.GetComponent<PlayerController>());
         _playerController = _rider.GetComponent<PlayerController>();
@@ -90,6 +92,7 @@ public class Saddle : MonoBehaviour
 
     protected void Dismount()
     {
+        HasRider = false;
         _input.JumpEvent -= Dismount;
         _playerController.ToggleActive(true);
         _waypointAI.SetCarrot(null);
