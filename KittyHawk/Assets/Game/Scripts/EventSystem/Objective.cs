@@ -1,3 +1,4 @@
+using KittyHawk.Extensions;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +11,9 @@ public enum ObjectiveStatus { NotStarted, InProgress, Failed, Completed }
 [CreateAssetMenu(fileName = "New Objective", menuName = "Pentaclaw/Objective")]
 public class Objective : ScriptableObject
 {
+    private GameObject marker;
+    private ObjectiveStatus _status;
+
     public string ObjectiveName;
     public bool Required = true;
     public ObjectiveStatus Status {
@@ -30,12 +34,25 @@ public class Objective : ScriptableObject
     public bool ShowMarker = false;
     public Vector3 MarkerLocation;
     public GameObject MarkerPrefab;
-    private GameObject marker;
-    private ObjectiveStatus _status;
+    [HideInInspector]
+    public Transform FollowTarget;
+    public Transform transform {
+        get {
+            return marker?.transform;
+        }
+    }
+
+    public Vector3 Scale;
 
     private void PlaceMarker() {
-        // Debug.Log("Objective > PLACE MARKER");
-        marker = Instantiate(MarkerPrefab, MarkerLocation, Quaternion.identity);
+        if (ShowMarker && MarkerPrefab != null) {
+            marker = Instantiate(MarkerPrefab, MarkerLocation, Quaternion.identity);
+            ArrowMarker am = marker.GetComponentInChildren<ArrowMarker>();
+            if (FollowTarget) {
+                am.FollowTarget = FollowTarget;
+            }
+            if (Scale != null) am.gameObject.transform.localScale = Scale;
+        }
     }
 }
 

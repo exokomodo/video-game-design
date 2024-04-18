@@ -1,7 +1,10 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// ChickLevelController manages Objective Markers
+/// Author: Geoffrey Roth
+/// </summary>
 public class ChickLevelController : MonoBehaviour {
 
     [SerializeField]

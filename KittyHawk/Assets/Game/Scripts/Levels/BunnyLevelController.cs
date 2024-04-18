@@ -18,10 +18,10 @@ public class BunnyLevelController : MonoBehaviour {
     #else
         public static bool IsUnityEditor = false;
     #endif
-
+    [SerializeField]
+    LevelManager levelManager;
     [SerializeField]
     Generator2D Generator;
-
     [SerializeField]
     Rigidbody Player;
     [SerializeField]
@@ -46,9 +46,12 @@ public class BunnyLevelController : MonoBehaviour {
     GameObject SmokingDuck;
     [SerializeField]
     GameObject Catnip;
+    [SerializeField]
+    GameObject MarkerPrefab;
 
     [SerializeField]
     bool Testing = false;
+
 
     protected Room startRoom;
     protected Room endRoom;
@@ -58,7 +61,10 @@ public class BunnyLevelController : MonoBehaviour {
     PlayerInventory inventory;
     List<DungeonGooseController> geese;
 
-    string ObjectiveName = "BunnyObjective";
+    private class Objectives {
+        public static string BABY_BUNNY1 = "BabyBunnyObjective";
+        public static string BUNNY_OBJECTIVE = "BunnyObjective";
+    }
 
 
     private void Awake() {
@@ -148,7 +154,7 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void TriggerBunnyObjective() {
         Debug.Log("BunnyObjective ObjectiveStatus.Completed");
-        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(ObjectiveName, ObjectiveStatus.Completed);
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(Objectives.BUNNY_OBJECTIVE, ObjectiveStatus.Completed);
     }
 
     private List<BabyBunny> GetFollowers() {
@@ -205,8 +211,31 @@ public class BunnyLevelController : MonoBehaviour {
             Vector3 center = new Vector3(room.center.x, 0, room.center.y) * Generator.scale;
             baby.position = center;
             baby.Waypoints = room.Waypoints;
+            Objective obj = CreateObjective(
+                $"Bunny{i}_Objective",
+                new Vector3(center.x, 1.25f, center.z),
+                0.05f,
+                baby.gameObject.transform
+            );
+            baby.objective = obj;
+            levelManager.AddObjective(obj);
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(obj.ObjectiveName, ObjectiveStatus.InProgress);
             Debug.Log("Place bunny: " + center);
         }
+    }
+
+    private Objective CreateObjective(string name, Vector3 location, float scale=0.2f, Transform target=null) {
+        Objective obj = new Objective
+        {
+            ObjectiveName = name,
+            Required = false,
+            FollowTarget = target,
+            ShowMarker = true,
+            MarkerPrefab = MarkerPrefab,
+            MarkerLocation = location,
+            Scale = new Vector3(scale, scale, scale)
+        };
+        return obj;
     }
 
     private void PlaceObstacles() {
@@ -250,6 +279,14 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void PlaceGoal() {
         bunnyController.position = endRoomPos * Generator.scale;
+        Objective obj = CreateObjective(
+            "BunnyCompleteObjective",
+            new Vector3(bunnyController.position.x, 2f, bunnyController.position.z),
+            0.1f
+        );
+        bunnyController.objective = obj;
+        levelManager.AddObjective(obj);
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(obj.ObjectiveName, ObjectiveStatus.InProgress);
         // endDoor.transform.position = new Vector3(endRoomPos.x, 0, endRoom.position.z + endRoom.size.y - 0.3f);
         endDoor.SetActive(false);
 
@@ -273,7 +310,7 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void OnPlayerDie() {
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(
-                ObjectiveName,
+                Objectives.BUNNY_OBJECTIVE,
                 ObjectiveStatus.Failed);
     }
 
