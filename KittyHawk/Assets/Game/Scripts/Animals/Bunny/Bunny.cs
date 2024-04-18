@@ -76,6 +76,8 @@ public class Bunny : MonoBehaviour
 
   public Vector3 velocity => rb.velocity;
   public bool isGrounded => CheckGrounded();
+  public Objective objective;
+
 
   public void Awake()
   {
