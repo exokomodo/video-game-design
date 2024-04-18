@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour {
   private AudioSource _walkAudio;
   private LayerMask StaticObstacle;
   private float hitBuffer { get { return 0.2f * Speed; } }
+  private GameObject hat;
 
 
   public Vector3 velocity => stateMachine.Animator.velocity;
@@ -106,6 +107,8 @@ public class PlayerController : MonoBehaviour {
 
     frontPivot = GameObject.Find("front_pivot");
     backPivot = GameObject.Find("back_pivot");
+    hat = GameObject.Find("KittyCowboyHat");
+    hat.SetActive(false);
 
     _walkAudio = GetComponent<AudioSource>();
 
@@ -116,6 +119,8 @@ public class PlayerController : MonoBehaviour {
     EventManager.StartListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StartListening<VolumeChangeEvent, float>(VolumeChangeHandler);
     EventManager.StartListening<KillKittyEvent>(Die);
+    EventManager.StartListening<RiderEnterEvent>(Mount);
+    EventManager.StartListening<RiderExitEvent>(Dismount);
   }
 
   private void Die()
@@ -617,6 +622,14 @@ public class PlayerController : MonoBehaviour {
     isDialogOpen = b;
   }
 
+  private void Mount() {
+    hat.SetActive(true);
+  }
+
+  private void Dismount() {
+    hat.SetActive(false);
+  }
+
   private void OnDestroy()
   {
     ToggleListeners(false);
@@ -626,5 +639,7 @@ public class PlayerController : MonoBehaviour {
     EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
     EventManager.StopListening<InteractionEvent, string, string, InteractionTarget>(OnInteractionEvent);
     EventManager.StopListening<VolumeChangeEvent, float>(VolumeChangeHandler);
+    EventManager.StopListening<RiderEnterEvent>(Mount);
+    EventManager.StopListening<RiderExitEvent>(Dismount);
   }
 }
