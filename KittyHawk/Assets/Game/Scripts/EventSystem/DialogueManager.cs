@@ -102,17 +102,22 @@ public class DialogueManager : MonoBehaviour
 
         if (dialogueCount >= currentDialogue.DialogueText.Length)
         {
-            canvas.enabled = false;
-            displayingDialogue = false;
-            dialogueCount = 0;
-            input.JumpEvent -= UpdateDialogue;
-            subscribed = false;
-            EventManager.TriggerEvent<DialogueCloseEvent, string>(currentDialogue.DialogueName);
+            // Prevent race-condition which caused Kitty to jump on dialogue close
+            Invoke("CloseDialog", 0.01f);
         }
         else
         {
             dialogueText.text = currentDialogue.DialogueText[dialogueCount];
         }
+    }
+
+    void CloseDialog() {
+        canvas.enabled = false;
+        displayingDialogue = false;
+        dialogueCount = 0;
+        subscribed = false;
+        EventManager.TriggerEvent<DialogueCloseEvent, string>(currentDialogue.DialogueName);
+        input.JumpEvent -= UpdateDialogue;
     }
 
     #endregion
