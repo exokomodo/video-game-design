@@ -30,6 +30,7 @@ public class BarnController : MonoBehaviour
             open = true;
             anim.SetTrigger("Open");
             EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "BarnDoorsOpen");
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(DuckLevelController.Objectives.BARN, ObjectiveStatus.Completed);
         }
     }
 
