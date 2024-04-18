@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: GetBarnKey
   m_EditorClassIdentifier: 
   ObjectiveName: GetBarnKey
-  Status: 1
+  Required: 1
+  ShowMarker: 1
+  MarkerLocation: {x: 31, y: 8.5, z: 39}
+  MarkerPrefab: {fileID: 5888504938069198990, guid: ef50178c31c5343469d99af0fe76eaa9,
+    type: 3}
+  FollowTarget: {fileID: 0}
+  Scale: {x: 0, y: 0, z: 0}

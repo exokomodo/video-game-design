@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87e3c2c2382a96e41820f9f7bcf35b36, type: 3}
-  m_Name: GetDuctTape
+  m_Name: Level2_Barn
   m_EditorClassIdentifier: 
-  ObjectiveName: GetDuctTape
-  Required: 1
+  ObjectiveName: Level2_Barn
+  Required: 0
   ShowMarker: 1
-  MarkerLocation: {x: -17.68, y: 2, z: -41.52}
+  MarkerLocation: {x: -30.5, y: 3.5, z: -13.4}
   MarkerPrefab: {fileID: 5888504938069198990, guid: ef50178c31c5343469d99af0fe76eaa9,
     type: 3}
   FollowTarget: {fileID: 0}
-  Scale: {x: 0.1, y: 0.1, z: 0.1}
+  Scale: {x: 0, y: 0, z: 0}
