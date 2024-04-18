@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     bool displayDay = true;
 
     bool allObjectivesCompleted;
-    public Dictionary<string, Objective> objectivesDic;
+    public Dictionary<string, Objective> objectivesDic { get; private set; }
 
     Animator anim;
 
@@ -77,8 +77,7 @@ public class LevelManager : MonoBehaviour
 
         foreach (Objective objective in objectives)
         {
-            objective.Status = ObjectiveStatus.NotStarted;
-            objectivesDic.Add(objective.ObjectiveName, objective);
+            AddObjective(objective);
         }
 
         EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
@@ -95,6 +94,12 @@ public class LevelManager : MonoBehaviour
         if (quitButton != null) quitButton.onClick.AddListener(ReturnToMenu);
     }
 
+    public void AddObjective(Objective obj)
+    {
+        obj.Status = ObjectiveStatus.NotStarted;
+        objectivesDic.Add(obj.ObjectiveName, obj);
+    }
+
     private void OnDestroy()
     {
         EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
@@ -106,8 +111,10 @@ public class LevelManager : MonoBehaviour
 
     void OnObjectiveChange(string name, ObjectiveStatus status)
     {
+        Debug.Log($"OnObjectiveChange: {name}");
         if (objectivesDic[name] != null)
         {
+            Debug.Log($"OnObjectiveChange: {name} FOUND");
             objectivesDic[name].Status = status;
         }
 

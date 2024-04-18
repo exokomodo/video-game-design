@@ -8,6 +8,7 @@ public class BabyBunny : Bunny {
 
     protected bool collected = false;
     protected bool withMomma = false;
+
     public bool isEnabled = true;
 
     protected void OnTriggerEnter(Collider other) {
@@ -17,6 +18,7 @@ public class BabyBunny : Bunny {
             Follow(other.gameObject);
             GetComponent<BoxCollider>().enabled = false;
             collected = true;
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(objective.ObjectiveName, ObjectiveStatus.Completed);
         }
     }
 
