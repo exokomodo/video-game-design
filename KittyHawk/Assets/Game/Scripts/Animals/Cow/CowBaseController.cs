@@ -4,7 +4,7 @@ public class CowBaseController : MonoBehaviour
 {
 
     protected Animator anim;
-    protected float talkCooldown = 5f;
+    protected float talkCooldown = 10f;
     protected float timer;
     protected bool isTalking = false;
     protected string dialogueName = "";
@@ -18,7 +18,7 @@ public class CowBaseController : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        // Allow Kitty to talk to cow again, but only after a 5 second cool down
+        // Allow Kitty to talk to cow again, but only after a 10 second cool down
         // in order to avoid accidental re-triggering of dialogue
         if (other.CompareTag("Player") && timer > talkCooldown)
         {
