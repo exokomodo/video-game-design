@@ -1,31 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class AdultChickenController : MonoBehaviour
 {
 
-    Animator anim;
-    private bool alreadyTalked;
-    // Start is called before the first frame update
-    void Start()
+    protected float talkCooldown = 5f;
+    protected float timer;
+    protected bool isTalking = false;
+    protected string dialogueName = "ChickenDialogue";
+
+    protected virtual void Start()
     {
-        anim = GetComponent<Animator>();
+        timer = talkCooldown;
+        EventManager.StartListening<DialogueCloseEvent, string>(OnDialogClose);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") && !alreadyTalked)
+        if (other.CompareTag("Player") && timer > talkCooldown)
         {
-            EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "ChickenDialogue");
-            alreadyTalked = true;
+            timer = 0;
+            isTalking = true;
+            EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, dialogueName);
         }
+    }
+
+    protected void Update() {
+        if (!isTalking) timer += Time.deltaTime;
+    }
+
+    protected void OnDialogClose(string name) {
+        if (name == dialogueName) {
+            isTalking = false;
+        }
+    }
+
+    protected void OnDestroy() {
+        EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
     }
 }

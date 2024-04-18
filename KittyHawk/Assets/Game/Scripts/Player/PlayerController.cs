@@ -623,7 +623,8 @@ public class PlayerController : MonoBehaviour {
   }
 
   private void Mount() {
-    hat.SetActive(true);
+    if (DataManager.Instance.CurrentDay == Day.FRIDAY)
+      hat.SetActive(true);
   }
 
   private void Dismount() {
