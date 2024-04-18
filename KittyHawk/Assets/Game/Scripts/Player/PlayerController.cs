@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviour {
     EventManager.StartListening<KillKittyEvent>(Die);
     EventManager.StartListening<RiderEnterEvent>(Mount);
     EventManager.StartListening<RiderExitEvent>(Dismount);
+    EventManager.StartListening<PauseOpenEvent>(OnPauseOpen);
+    EventManager.StartListening<PauseCloseEvent>(OnPauseClose);
   }
 
   private void Die()
@@ -631,6 +633,16 @@ public class PlayerController : MonoBehaviour {
     hat.SetActive(false);
   }
 
+  private void OnPauseOpen() {
+    isActive = false;
+    ToggleListeners(false);
+  }
+
+  private void OnPauseClose() {
+    isActive = true;
+    ToggleListeners(true);
+  }
+
   private void OnDestroy()
   {
     ToggleListeners(false);
@@ -642,5 +654,7 @@ public class PlayerController : MonoBehaviour {
     EventManager.StopListening<VolumeChangeEvent, float>(VolumeChangeHandler);
     EventManager.StopListening<RiderEnterEvent>(Mount);
     EventManager.StopListening<RiderExitEvent>(Dismount);
+    EventManager.StopListening<PauseOpenEvent>(OnPauseOpen);
+    EventManager.StopListening<PauseCloseEvent>(OnPauseClose);
   }
 }

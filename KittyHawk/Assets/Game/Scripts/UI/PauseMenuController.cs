@@ -91,10 +91,12 @@ public class PauseMenuController : MonoBehaviour
             Time.timeScale = 1f;
             isPaused = false;
             EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
+            Invoke("ResumeGame", 0.01f);
             //PlayConfirmSound();
         }
         else
         {
+            EventManager.TriggerEvent<PauseOpenEvent>();
             EventManager.TriggerEvent<CursorLockEvent, bool>(false);
             //PlayConfirmSound();
             resumeButton.Select();
@@ -102,6 +104,10 @@ public class PauseMenuController : MonoBehaviour
             Time.timeScale = 0f;
             isPaused = true;
         }
+    }
+
+    private void ResumeGame() {
+        EventManager.TriggerEvent<PauseCloseEvent>();
     }
 
     public void PlayConfirmSound()
