@@ -21,7 +21,7 @@ public class HorseController : MonoBehaviour
     private void Trample(GameObject goose)
     {
         var gooseAi = goose.GetComponent<GooseAI>();
-        if (gooseAi.IsAlive)
+        if (gooseAi.IsAlive && saddle.HasRider)
         {
             gooseAi.Die();
             EventManager.TriggerEvent<HorseTrampleGooseEvent>();
