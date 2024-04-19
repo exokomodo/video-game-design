@@ -31,7 +31,8 @@ public class ballscript : MonoBehaviour
     void FixedUpdate()
     {
         // player touching ball and facing pond?
-        if (Vector3.Distance(player.transform.position, transform.position) < 1.0f && Vector3.Angle(player.transform.forward, pond.transform.position - player.transform.position) < 45)
+        // if (Vector3.Distance(player.transform.position, transform.position) < 1.0f && Vector3.Angle(player.transform.forward, pond.transform.position - player.transform.position) < 45)
+        if (Vector3.Distance(player.transform.position, transform.position) < 0.4f)
         {
             // log it to console
             Debug.Log("Player swats ball into pond");
@@ -44,7 +45,14 @@ public class ballscript : MonoBehaviour
             }
 
             EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatAttack3");
-            GetComponent<Rigidbody>().AddForce((pond.transform.position - transform.position + heightModifier).normalized * 0.3f, ForceMode.Impulse);
+            // if player is facing the pond force is stronger. A little bit of assistance to help the player
+            if  (Vector3.Angle(player.transform.forward, pond.transform.position - player.transform.position) < 45) {   
+                GetComponent<Rigidbody>().AddForce((pond.transform.position - transform.position + heightModifier).normalized * 0.4f, ForceMode.Impulse);
+            } 
+            else {
+                GetComponent<Rigidbody>().AddForce((player.transform.forward).normalized * 0.1f, ForceMode.Impulse);
+            }
+
         }
     }
 
