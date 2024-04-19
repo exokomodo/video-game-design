@@ -3,10 +3,10 @@ Start Scene File:
 	SplashScreen.unity is the starting scene of the game
 	Alpha.unity is the starting scene for actual gameplay
 
-How to Play: 
+How to Play:
 
-	Use a controller or keyboard (inputs explained in tutorial, but for left stick/WASD 
-	control movement, right stick/mouse to look around, RT/shift to run, Controller A or 
+	Use a controller or keyboard (inputs explained in tutorial, but for left stick/WASD
+	control movement, right stick/mouse to look around, RT/shift to run, Controller A or
 	Controller X or keyboard space to jump or interact)
 
 	The objective for this level is to find the three chicks on the map and herd them into the chicken coops near their parents. 
@@ -29,10 +29,10 @@ Where to Observe Technology Requirements: 
 		Goals communicated to player via smoking duck
 		Player is able to interact with game world objects and inhabitants
 			AI Animals, Chainsaw, Tires, Key
-	
+
 	3D world with Physics and Spatial simulation
 		Synthesized environment (with use of 3rd party assets) with boundaries which confine the player. 
-		
+
 
 	Interact-able physics simulated world with environment
 		Tires, which bounce kitty in the air upon interaction
@@ -45,7 +45,7 @@ Where to Observe Technology Requirements: 
 	Real-time NPC Steering Behaviors
 		Several animals implemented, several with state machines
 		Animations play for some animals on state change (chicks, geese)
-		Animals also have appropriate AI 
+		Animals also have appropriate AI
 			Horse, who run to waypoints
 			Chickens, who patrol and flee when kitty is too close
 			Geese, who patrol and attack kitty when she is close, and flee after
@@ -60,7 +60,7 @@ Where to Observe Technology Requirements: 
 		EventManger implemented
 			AudioManager, as well.
 		Dialogue system implemented
-	
+
 
 Known Problem Areas:
 	Menus not working properly with controllers yet. Unity's built-in functionality for that is limited and we’ll probably have to do it via code.
@@ -88,14 +88,17 @@ Individual Contributions:
 	PlayerMoveBase.cs
 	PlayerMoveState.cs
 	PlayerSitState.cs
+	PlayerTurnState.cs
 	PlayerStateMachine.cs
 
-	Built Kitty’s Animation Controller
+	Built (and rebuilt following alpha feedback) Kitty’s Animation Controller
 	⁃	States: Idle, Move, Jump, Fall, Interact Die
 	⁃	Actions: Attack, Hit
 	⁃	Additive Actions: Meow
 	Set up the input controls
-	Set up the Cinemachine camera
+	Set up the Cinemachine StateDrivenCamera
+		CameraController.cs
+		Recentering on level load, right-stick click
 	Created an “Interactable” component to easily generate trigger collider events. Features a custom EditorGUI with dropdowns.
 		InteractionEvent.cs
 		Interactable.cs
@@ -104,6 +107,24 @@ Individual Contributions:
 	AnimationStateEvent behavior for alerting the PlayerController or other listeners of key events on animation enter, exit or time.
 		AnimationStateEvent.cs
 		AnimationStateEventBehavior.cs
+	Created AttackTrigger.cs and AttackEventBehavior.cs for tracking at what timestamps in the animation Kitty should be allowed to hit its target.
+	Created procedural dungeon bunny level, loosely based on this tutorial: https://vazgriz.com/119/procedurally-generated-dungeons/
+		BunnyLevelController.cs
+		BunnyUIController.cs
+		DungeonGenerator/Dungeon2D/
+			Generator2D.cs
+			Hallway.cs
+			HallwayCell.cs
+			Room.cs
+		DungeonGooseController.cs
+		DungeonDuckController.cs
+		Bunny, BabyBunny and Bunny State files
+	Created Objective Marker system based on Calvin's Objectives files.
+		ArrowMarker.cs
+	Created the following controllers to manage level objectives:
+		ChickLevelController.cs
+		DuckLevelController.cs
+
 
 
 James 
@@ -142,7 +163,7 @@ Paul 
 	Composed original music for Main Menu and GameWorld
 
 Ben
-	NPC Cow jumps about excitedly when interacted with. The Cow initially gives an introduction Dialogue, but then randomly selects from 3 follow 	
+	NPC Cow jumps about excitedly when interacted with. The Cow initially gives an introduction Dialogue, but then randomly selects from 3 follow
 	up dialogues when the player returns.
 	CowFollow.cs
 	CowDialogue.asset
@@ -222,8 +243,19 @@ Calvin
 
     Wooden Signs used for UI
     Name: Brown Wood Signboard Cartoon
-    Auhtor: alit_design
+    Author: alit_design
     https://elements.envato.com/brown-wood-signboard-cartoon-2XWVAC6
+
+	Cowboy Hat
+	Name: Cowboy Hat_1
+	Author: Inari_Green
+	https://assetstore.unity.com/packages/3d/props/clothing/cowboy-hat-1-200835
+
+	Dungeon Generator (uses solid cubes to represent rooms and hallways)
+	Name: DungeonGenerator
+	Author: vazgriz
+	https://github.com/vazgriz/DungeonGenerator
+
 
     Sound effects licensed via Envato Elements:
     https://elements.envato.com/duck-quack-7HS2REN
