@@ -11,6 +11,7 @@ public class DungeonGooseController : GooseAI
 {
     [SerializeField]
     public List<GameObject> Waypoints;
+    public Room room;
     protected int currWaypoint = 0;
 
     public DungeonGooseController() : base() {
@@ -49,6 +50,31 @@ public class DungeonGooseController : GooseAI
                 ResetPatrolTimer();
             }
         }
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && IsInRoom())
+        {
+            // Is kitty in the room where it happened?
+            Debug.Log("Goose sees Kitty");
+            isNearKitty = true;
+        }
+    }
+
+    protected void OnTriggerStay(Collider other)
+    {
+        if (isNearKitty) return;
+        if (other.CompareTag("Player") && IsInRoom())
+        {
+            Debug.Log("Goose sees Kitty");
+            isNearKitty = true;
+        }
+    }
+
+    protected bool IsInRoom() {
+        // Debug.Log($"Room.IsInRoom(room, kitty): {room.IsInRoom(kitty)}");
+        return room.IsInRoom(kitty);
     }
 
     public void Disable() {

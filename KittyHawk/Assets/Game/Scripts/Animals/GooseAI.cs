@@ -40,7 +40,7 @@ public class GooseAI : MonoBehaviour
     public GameObject kitty;
     private Transform kittyTransform;
     private Vector3 fleeDirection;
-    [SerializeField] private bool isNearKitty;
+    [SerializeField] protected bool isNearKitty;
 
     // All states
     private bool attackEnabled = true;
@@ -123,7 +123,7 @@ public class GooseAI : MonoBehaviour
             EnterFleeState();
         }
 
-        if (other.gameObject.CompareTag("ChickenCoop")) 
+        if (other.gameObject.CompareTag("ChickenCoop"))
         {
             anim.SetBool("isWalking", false);
             agent.ResetPath();
@@ -131,7 +131,7 @@ public class GooseAI : MonoBehaviour
     }
 
     // These two functions help determine the flee state
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
