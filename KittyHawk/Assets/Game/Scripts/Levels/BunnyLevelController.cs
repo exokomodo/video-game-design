@@ -76,6 +76,7 @@ public class BunnyLevelController : MonoBehaviour {
         // Place characters in dungeon
         EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
         EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
+        EventManager.StartListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
 
         Generate();
 
@@ -103,6 +104,12 @@ public class BunnyLevelController : MonoBehaviour {
         EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, $"BunnyStartDialogue{Random.Range(1,5)}");
     }
 
+    private void OnLevelEvent(string eventType, BabyBunny b) {
+        if (eventType == LevelEvent<BabyBunny>.BUNNY_COLLECTED) {
+            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(bunnyController.objective.ObjectiveName, ObjectiveStatus.InProgress);
+        }
+    }
+
     private void OnLevelEvent(string eventType, Collider c) {
         if (eventType == LevelEvent<Collider>.BUNNY_COLLIDER_ENTERED) {
             bool hasFollowers = false;
@@ -120,7 +127,8 @@ public class BunnyLevelController : MonoBehaviour {
                 }
             }
             if (hasFollowers) {
-                EventManager.TriggerEvent<AudioEvent, Vector3, string>(Player.transform.position, "success1");
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(Player.transform.position, "success3");
+                EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(bunnyController.objective.ObjectiveName, ObjectiveStatus.NotStarted);
                 inventory.Bunnies += followerCount;
                 if (inventory.Bunnies == inventory.BunniesTotal) {
                     LevelComplete();
@@ -266,12 +274,11 @@ public class BunnyLevelController : MonoBehaviour {
         bunnyController.position = endRoomPos * Generator.scale;
         Objective obj = levelManager.CreateObjective(
             "BunnyCompleteObjective",
-            new Vector3(bunnyController.position.x, 2f, bunnyController.position.z),
+            new Vector3(bunnyController.position.x, 1.75f, bunnyController.position.z),
             0.1f
         );
         bunnyController.objective = obj;
         levelManager.AddObjective(obj);
-        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(obj.ObjectiveName, ObjectiveStatus.InProgress);
         // endDoor.transform.position = new Vector3(endRoomPos.x, 0, endRoom.position.z + endRoom.size.y - 0.3f);
         endDoor.SetActive(false);
 

@@ -20,6 +20,9 @@ public class Objective : ScriptableObject
         get { return _status; }
         set {
             switch (value) {
+                case ObjectiveStatus.NotStarted:
+                    if (marker) marker.SetActive(false);
+                    break;
                 case ObjectiveStatus.InProgress:
                     PlaceMarker();
                     break;
@@ -45,7 +48,11 @@ public class Objective : ScriptableObject
     public Vector3 Scale = Vector3.zero;
 
     private void PlaceMarker() {
-        if (ShowMarker && MarkerPrefab != null && marker == null) {
+        if (ShowMarker && MarkerPrefab != null) {
+            if (marker != null) {
+                marker.SetActive(true);
+                return;
+            }
             marker = Instantiate(MarkerPrefab, MarkerLocation, Quaternion.identity);
             ArrowMarker am = marker.GetComponentInChildren<ArrowMarker>();
             if (FollowTarget) {
