@@ -5966,7 +5966,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d48e325f3aa9747cb81cfca0f1a0c88f, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3379473001130989903, guid: a49555f39a439224d83a3a3f49453c60, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a49555f39a439224d83a3a3f49453c60, type: 3}
 --- !u!1001 &1059900334
 PrefabInstance:
@@ -7874,6 +7875,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1982906735}
+--- !u!135 &1499766082
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499766072}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1499766083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499766072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa9eddd0ea2044ea965542d17ad064e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioName: Quack
 --- !u!1001 &1500260421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9051,8 +9078,6 @@ MonoBehaviour:
   TireStack: {fileID: 527163552}
   SmokingDuck: {fileID: 1499766072}
   Catnip: {fileID: 826048244}
-  MarkerPrefab: {fileID: 5888504938069198990, guid: ef50178c31c5343469d99af0fe76eaa9,
-    type: 3}
   Testing: 0
 --- !u!1001 &1756923956
 PrefabInstance:
@@ -9698,6 +9723,7 @@ MonoBehaviour:
   spawnPosition: {x: 0, y: 0, z: 0}
   Waypoints:
   - {fileID: 1602868447}
+  room: {fileID: 0}
 --- !u!1001 &1762412922
 PrefabInstance:
   m_ObjectHideFlags: 0

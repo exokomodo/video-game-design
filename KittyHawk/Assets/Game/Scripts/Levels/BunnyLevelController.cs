@@ -100,7 +100,7 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void DuckStartDialogue() {
-        EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "BunnyStartDialogue");
+        EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, $"BunnyStartDialogue{Random.Range(1,5)}");
     }
 
     private void OnLevelEvent(string eventType, Collider c) {

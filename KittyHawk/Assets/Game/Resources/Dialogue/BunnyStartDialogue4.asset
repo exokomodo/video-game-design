@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
-  m_Name: BunnyStartDialogue
+  m_Name: BunnyStartDialogue4
   m_EditorClassIdentifier: 
-  DialogueName: BunnyComplete
+  DialogueName: BunnyStartDialogue4
   SpeakerName: Smoking (!?) Duck
   DialogueText:
   - Listen up Kitty - Beatrix Bunny needs your help!
   - Those geese are up to no good again. They've teamed up to snatch her little ones
-    while she was out at the club.
+    while she was out at the bar.
   - Your mission, should you choose to accept it, is to find each bunny and lead
     it back to its momma.
   - But the geese aren't just going to hand the bunnies to you. You can scare them
