@@ -25,7 +25,7 @@ public class DungeonDuckController : SmokingDuckController {
             ToggleTalking(true);
             timer = 0;
             isTalking = true;
-            string dialogueName = $"BunnyFollowUpDialogue{Random.Range(1, 5)}";
+            string dialogueName = $"BunnyFollowUpDialogue{Random.Range(1, 6)}";
             EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, dialogueName);
         }
     }
