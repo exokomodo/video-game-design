@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Sets up the level (audio & fade-in)
@@ -38,7 +39,7 @@ public class LevelManager : MonoBehaviour
     Button restartButton;
     Button quitButton;
 
-    void Start()
+    void Awake()
     {
         DisplayDayName();
 
@@ -100,8 +101,14 @@ public class LevelManager : MonoBehaviour
 
     public void AddObjective(Objective obj)
     {
-        obj.Status = ObjectiveStatus.NotStarted;
-        objectivesDic.Add(obj.ObjectiveName, obj);
+        try {
+            obj.Status = ObjectiveStatus.NotStarted;
+            objectivesDic.Add(obj.ObjectiveName, obj);
+        } catch (Exception e) {
+            Debug.Log($"Could NOT add objective: {obj}, {objectivesDic}");
+            Debug.LogException(e);
+        }
+
     }
 
     private void OnDestroy()
