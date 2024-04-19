@@ -10,9 +10,9 @@ public class SmokingDuckController : MonoBehaviour
     [SerializeField]
     string audioName = "Quack";
 
-    Animator anim;
+    protected Animator anim;
 
-    void Awake()
+    protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         ToggleTalking(false);
