@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa69cb2b5da90cf4ba0a5e5c95a5c28c, type: 3}
+  m_Name: BunnyCompleteDialogue4
+  m_EditorClassIdentifier: 
+  DialogueName: BunnyCompleteDialogue4
+  SpeakerName: Smoking (!?) Duck
+  DialogueText:
+  - 'Thank you for rescuing Sonny, Cher, Chaz & Frank! '
+  - We don't know who this 5th one is, but he seems happy to be here, so we'll keep
+    him.
+  - I was right about you Kitty, you really are the Chosen One who will restore peace
+    and order yada yada yada to The Farm.
+  - We owe you a debt of gratitude that we can never repay. We will never forget
+    you Kitty Hawk.
+  - Tomorrow, we'll turn the tables, and team up with Horse and take the fight directly
+    to those pesky geese!

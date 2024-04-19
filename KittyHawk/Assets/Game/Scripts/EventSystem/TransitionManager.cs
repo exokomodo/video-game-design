@@ -44,7 +44,7 @@ public class TransitionManager : MonoBehaviour
             DataManager.Instance.Catnip = 0;
             StartCoroutine(LoadNextScene());
         }
-            
+
     }
 
     IEnumerator LoadNextScene()
@@ -96,7 +96,7 @@ public class TransitionManager : MonoBehaviour
                 dialogueName = "CowObjectiveComplete";
                 break;
             case Day.THURSDAY:
-                dialogueName = "BunnyCompleteDialogueDuck";
+                dialogueName = $"BunnyCompleteDialogue{Random.Range(1, 6)}";
                 break;
             case Day.FRIDAY:
                 dialogueName = "HorseComplete";

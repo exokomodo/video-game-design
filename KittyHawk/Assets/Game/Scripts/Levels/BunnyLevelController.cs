@@ -83,7 +83,7 @@ public class BunnyLevelController : MonoBehaviour {
         inventory.Bunnies = 0;
         inventory.BunniesTotal = Generator.Rooms.Count - 2;
 
-        Invoke("DuckStartDialogue", 1f);
+        Invoke("DuckStartDialogue", 0.5f);
     }
 
     public void Generate() {
@@ -158,7 +158,7 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void TriggerBunnyObjective() {
-        Debug.Log("BunnyObjective ObjectiveStatus.Completed");
+        // Debug.Log("BunnyObjective ObjectiveStatus.Completed");
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(Objectives.BUNNY_OBJECTIVE, ObjectiveStatus.Completed);
     }
 
@@ -225,7 +225,7 @@ public class BunnyLevelController : MonoBehaviour {
             baby.objective = obj;
             levelManager.AddObjective(obj);
             EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>(obj.ObjectiveName, ObjectiveStatus.InProgress);
-            Debug.Log("Place bunny: " + center);
+            // Debug.Log("Place bunny: " + center);
         }
     }
 
