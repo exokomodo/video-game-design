@@ -21,6 +21,15 @@ public class PlayerPickupController : MonoBehaviour
 
         if (inventory == null || other.tag == null) return;
 
+        if (other.tag == "Catnip")
+        {
+            inventory.Catnip++;
+            Destroy(other.gameObject);
+            EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
+        }
+
+        /* REMOVING
+
         switch(other.tag)
         {
             case "Catnip":
@@ -49,6 +58,7 @@ public class PlayerPickupController : MonoBehaviour
             default:
                 break;
         }
+        */
 
     }
 
