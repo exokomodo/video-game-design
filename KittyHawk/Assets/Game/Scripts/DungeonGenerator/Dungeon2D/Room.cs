@@ -4,6 +4,7 @@ using System.Linq;
 using KittyHawk.Extensions;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -90,6 +91,16 @@ public class Room: UnityEngine.Object {
     public static bool Intersect(Room a, Room b) {
         return !((a.bounds.position.x >= (b.bounds.position.x + b.bounds.size.x)) || ((a.bounds.position.x + a.bounds.size.x) <= b.bounds.position.x)
             || (a.bounds.position.y >= (b.bounds.position.y + b.bounds.size.y)) || ((a.bounds.position.y + a.bounds.size.y) <= b.bounds.position.y));
+    }
+
+    public bool IsInRoom(GameObject b) {
+        float scale = 2;
+        Vector3 apos = transform.position;
+        Vector3 bpos = b.transform.position;
+        Vector2Int size = bounds.size * (int)scale;
+        // Debug.Log($"IsInRoom > {apos}, {bpos}");
+        return !((apos.x >= bpos.x) || ((apos.x + size.x) <= bpos.x)
+            || (apos.z >= bpos.z) || ((apos.z + size.y) <= bpos.z));
     }
 
     public void Build() {
