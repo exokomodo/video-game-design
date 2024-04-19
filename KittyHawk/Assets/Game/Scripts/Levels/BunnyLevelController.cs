@@ -252,6 +252,7 @@ public class BunnyLevelController : MonoBehaviour {
             DungeonGooseController gc = goose.GetComponent<DungeonGooseController>();
             GameObject[] tmp = new GameObject[room.Waypoints.Count];
             room.Waypoints.CopyTo(tmp);
+            gc.room = room;
             gc.Waypoints = new List<GameObject>(tmp);
             gc.Waypoints.Reverse();
             gc.Waypoints.RemoveAt(gc.Waypoints.Count - 1);
