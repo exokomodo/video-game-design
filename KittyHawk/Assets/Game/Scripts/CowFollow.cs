@@ -37,7 +37,7 @@ public class CowFollow : MonoBehaviour
                 }
 
                 alreadyTalked = true;
-            } else {
+            } else if (sceneName == "PaulScene") { //removing this from BenScene with this conditional
                 int randomInt = Random.Range(1, 4);
                 EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowFollowupDialogue" + randomInt);
             }

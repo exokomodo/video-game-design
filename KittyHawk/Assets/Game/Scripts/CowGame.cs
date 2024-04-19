@@ -26,7 +26,7 @@ public class CowGame: MonoBehaviour
     private float timeLeft = 60.0f;
 
     private Vector3 heightModifier;
-    private Vector3 leftRightModifier;
+    // private Vector3 leftRightModifier;
 
     public GameObject timeDisplay;
     public GameObject scoreDisplay;
@@ -36,6 +36,7 @@ public class CowGame: MonoBehaviour
            // hide inventory canvas
            minigameCanvas.enabled = false;
            Vector3 heightModifier = new Vector3(0, 10, 0);
+           EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("Level3_Cow", ObjectiveStatus.InProgress);
     }
     private void LaunchBall() {
         // Launch a new ball at random force towards object (transform of cow)
@@ -46,8 +47,8 @@ public class CowGame: MonoBehaviour
 
         // Calculate the direction of the ball
         Vector3 direction = transform.position - ballObject.transform.position;
-        Vector3 leftRightModifier = new Vector3(Random.Range(-10, 10), 0, 0);
-        direction += heightModifier + leftRightModifier;
+        // Vector3 leftRightModifier = new Vector3(Random.Range(5, 10), 0, 0);
+        direction += heightModifier;
         // Calculate the force
         float force = Random.Range(4, 6);
         // Launch the ball
@@ -85,6 +86,7 @@ public class CowGame: MonoBehaviour
         minigameCanvas.enabled = true;
         inventoryCanvas.enabled = false;
         alreadyTalked = true;
+        EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("Level3_Cow", ObjectiveStatus.Completed);
         EventManager.TriggerEvent<MusicEvent, string>("Kitty Polka");
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("CowObjective", ObjectiveStatus.InProgress);
         EventManager.StopListening<DialogueCloseEvent, string>(OnDialogueFinished);
