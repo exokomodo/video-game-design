@@ -35,7 +35,7 @@ public class CowGame: MonoBehaviour
     private void Start() {
            // hide inventory canvas
            minigameCanvas.enabled = false;
-           Vector3 heightModifier = new Vector3(0, 10, 0);
+           heightModifier = new Vector3(0, 10, 0);
            EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("Level3_Cow", ObjectiveStatus.InProgress);
     }
     private void LaunchBall() {
@@ -46,7 +46,7 @@ public class CowGame: MonoBehaviour
         Rigidbody ballRb = ballObject.GetComponent<Rigidbody>();
 
         // Calculate the direction of the ball
-        Vector3 direction = transform.position - ballObject.transform.position;
+        Vector3 direction = GetLaunchDirection();
         // Vector3 leftRightModifier = new Vector3(Random.Range(5, 10), 0, 0);
         direction += heightModifier;
         // Calculate the force
@@ -54,7 +54,17 @@ public class CowGame: MonoBehaviour
         // Launch the ball
         ballRb.AddForce(direction.normalized * force, ForceMode.Impulse);
         ballRb.useGravity = true;
-        EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "tire-stack-bounce");
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(spawn.transform.position, "tire-stack-bounce");
+    }
+
+    private Vector3 GetLaunchDirection() {
+        Vector3 dir;
+        if (Random.Range(0,2) == 1) {
+            dir = new Vector3(40, 0, Random.Range(-7, 8));
+        } else {
+            dir = new Vector3(Random.Range(14, 27), 0, -20);
+        }
+        return dir - spawn.transform.position;
     }
 
     public void UpdateScore() {
@@ -90,10 +100,25 @@ public class CowGame: MonoBehaviour
         EventManager.TriggerEvent<MusicEvent, string>("Kitty Polka");
         EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("CowObjective", ObjectiveStatus.InProgress);
         EventManager.StopListening<DialogueCloseEvent, string>(OnDialogueFinished);
+        EventManager.StartListening<DialogueCloseEvent, string>(Restart);
+    }
+
+    private void Restart(string dialogueName) {
+        EventManager.StopListening<DialogueCloseEvent, string>(Restart);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void LevelFailed() {
+        EventManager.TriggerEvent<AudioEvent, Vector3, string>(player.transform.position, "CatHit1");
+        EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "CowSceneFail");
+        Invoke("PlayMainTheme", 1f);
+    }
+
+    private void PlayMainTheme() {
+        EventManager.TriggerEvent<MusicEvent, string>("MainGameMusic");
     }
 
     private void FixedUpdate() {
-
         if (alreadyTalked) {
             timeLeft -= Time.deltaTime;
             timeDisplay.GetComponent<TextMeshProUGUI>().text = timeLeft.ToString("F0")+" sec";
@@ -101,18 +126,17 @@ public class CowGame: MonoBehaviour
                 // end the game
                 alreadyTalked = false;
                 if (score >= 5) {
-                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success-fanfare-trumpets");
+                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(player.transform.position, "success-fanfare-trumpets");
                     EventManager.TriggerEvent<ObjectiveChangeEvent, string, ObjectiveStatus>("CowObjective", ObjectiveStatus.Completed);
                 }
                 else {
                 // restart scene
-                    EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "CatHit1");
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    Invoke("LevelFailed", 1.5f);
                 }
 
             }
             // randomly determine if a ball should be launched
-            if (Random.Range(0, 200) == 1) {
+            if (Random.Range(0, 180) == 1) {
                 LaunchBall();
             }
         }

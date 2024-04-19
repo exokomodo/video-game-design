@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour {
     private bool inited = false;
     private bool hasFreeLook = false;
     private float easing = 10;
+    private bool isDialogue = false;
 
 
     private void Start() {
@@ -42,11 +43,13 @@ public class CameraController : MonoBehaviour {
     }
 
     private void OnDialogOpen(Vector3 position, string dialogueName) {
+        isDialogue = true;
         ToggleEnabled(false);
         Invoke("Recenter", 0.05f);
     }
 
     private void OnDialogClose(string dialogueName) {
+        isDialogue = false;
         ToggleEnabled(true);
     }
 
@@ -130,7 +133,7 @@ public class CameraController : MonoBehaviour {
                 current.m_RecenterToTargetHeading.m_WaitTime = s.waitTime;
                 current.m_RecenterToTargetHeading.m_enabled = s.enabled;
                 recentering = false;
-                ToggleEnabled(true);
+                if (!isDialogue) ToggleEnabled(true);
             }
         }
     }
