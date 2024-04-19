@@ -33,6 +33,8 @@ public class CameraController : MonoBehaviour {
     private bool recentering;
     private bool inited = false;
     private bool hasFreeLook = false;
+    private float easing = 10;
+
 
     private void Start() {
         EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
@@ -40,22 +42,20 @@ public class CameraController : MonoBehaviour {
     }
 
     private void OnDialogOpen(Vector3 position, string dialogueName) {
-        foreach (ICinemachineCamera cam in sdc.ChildCameras) {
-            if (cam.GetType() == typeof(CinemachineFreeLook)) {
-                CinemachineFreeLook freeLook = cam as CinemachineFreeLook;
-                RecenterSettings s = cameraSettings[freeLook.GetHashCode()];
-                s.inputProvider.enabled = false;
-            }
-        }
-        Invoke("OnRecenter", 0.05f);
+        ToggleEnabled(false);
+        Invoke("Recenter", 0.05f);
     }
 
     private void OnDialogClose(string dialogueName) {
+        ToggleEnabled(true);
+    }
+
+    public void ToggleEnabled(bool b) {
         foreach (ICinemachineCamera cam in sdc.ChildCameras) {
             if (cam.GetType() == typeof(CinemachineFreeLook)) {
                 CinemachineFreeLook freeLook = cam as CinemachineFreeLook;
                 RecenterSettings s = cameraSettings[freeLook.GetHashCode()];
-                s.inputProvider.enabled = true;
+                s.inputProvider.enabled = b;
             }
         }
     }
@@ -81,12 +81,22 @@ public class CameraController : MonoBehaviour {
             }
         }
         recentering = false;
-        if (hasFreeLook) input.RecenterEvent += OnRecenter;
+        if (hasFreeLook) input.RecenterEvent += Recenter;
     }
 
-    private void OnRecenter() {
+    public void Recenter() {
         if (recentering) return;
+        easing = 10;
+        doRecenter();
+    }
 
+    public void LevelStartRecenter() {
+        if (recentering) return;
+        easing = 25;
+        doRecenter();
+    }
+
+    private void doRecenter() {
         recentering = true;
         if (sdc.LiveChild.GetType() == typeof(CinemachineFreeLook)) {
             current = sdc.LiveChild as CinemachineFreeLook;
@@ -94,6 +104,7 @@ public class CameraController : MonoBehaviour {
             current.m_RecenterToTargetHeading.m_WaitTime = 0f;
             current.m_RecenterToTargetHeading.m_enabled = true;
         }
+        ToggleEnabled(false);
     }
 
     private void FixedUpdate() {
@@ -109,8 +120,9 @@ public class CameraController : MonoBehaviour {
             }
         }
         if (current && recentering) {
+
             float deltaY = Math.Abs(current.m_YAxis.Value - 0.1f);
-            if (current.m_YAxis.Value > 0.1f) current.m_YAxis.Value -= deltaY/10;
+            if (current.m_YAxis.Value > 0.1f) current.m_YAxis.Value -= deltaY/easing;
             bool recenterComplete = Math.Abs(current.m_XAxis.Value) <= 0.01f && Math.Abs(current.m_YAxis.Value) - 0.1f < 0.01f;
             if (recenterComplete) {
                 RecenterSettings s = cameraSettings[current.GetHashCode()];
@@ -118,12 +130,13 @@ public class CameraController : MonoBehaviour {
                 current.m_RecenterToTargetHeading.m_WaitTime = s.waitTime;
                 current.m_RecenterToTargetHeading.m_enabled = s.enabled;
                 recentering = false;
+                ToggleEnabled(true);
             }
         }
     }
 
     private void OnDestroy() {
-        if (hasFreeLook) input.RecenterEvent -= OnRecenter;
+        if (hasFreeLook) input.RecenterEvent -= Recenter;
         EventManager.StopListening<DialogueOpenEvent, Vector3, string>(OnDialogOpen);
         EventManager.StopListening<DialogueCloseEvent, string>(OnDialogClose);
     }

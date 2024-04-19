@@ -40,6 +40,7 @@ public class LevelManager : MonoBehaviour
     Button restartButton;
     Button quitButton;
 
+
     void Awake()
     {
         DisplayDayName();
@@ -49,6 +50,16 @@ public class LevelManager : MonoBehaviour
         EventManager.TriggerEvent<MusicEvent, string>(musicName);
 
         Init();
+        Invoke("Recenter", 0.5f);
+    }
+
+    void Recenter() {
+        try {
+            CameraController camController = Camera.main.GetComponent<CameraController>();
+            camController.LevelStartRecenter();
+        } catch (Exception e) {
+            Debug.LogWarning(e);
+        }
     }
 
     void DisplayDayName()
@@ -107,7 +118,7 @@ public class LevelManager : MonoBehaviour
             objectivesDic.Add(obj.ObjectiveName, obj);
         } catch (Exception e) {
             Debug.Log($"Could NOT add objective: {obj}, {objectivesDic}");
-            Debug.LogException(e);
+            Debug.LogWarning(e);
         }
 
     }
