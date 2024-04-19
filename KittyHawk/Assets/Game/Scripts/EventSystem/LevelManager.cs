@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System;
 
 /// <summary>
@@ -174,6 +175,7 @@ public class LevelManager : MonoBehaviour
         anim.SetTrigger("FadeOut");
         yield return new WaitForSeconds(1f);
         if (gameOverCanvas != null) gameOverCanvas.enabled = true;
+        EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(restartButton.gameObject);
     }
 
     public void RestartLevel()

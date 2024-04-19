@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ public class TutorialManager : MonoBehaviour
     public void TriggerInitialDialogue()
     {
         EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "DuckIntroduction");
+        EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
     }
 
     private void OnDialogueFinished(string dialogueName)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Controls the party scne introducing trash level
@@ -48,6 +49,7 @@ public class PartyManager : MonoBehaviour
     public void TriggerInitialDialogue()
     {
         EventManager.TriggerEvent<DialogueOpenEvent, Vector3, string>(transform.position, "GoosePartyIntro");
+        EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
     }
 
     private void OnDialogueFinished(string dialogueName)

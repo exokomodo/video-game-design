@@ -24,6 +24,7 @@ public class PlayerInventoryUIController : MonoBehaviour
     void UpdateCatnip(int catnip)
     {
         catnipTextObject.text = catnip.ToString() + "/" + maxCatnip.ToString();
+        // catnipTextObject.text = catnip.ToString() + "/10";
     }
 
     void UpdateLives(int lives)
