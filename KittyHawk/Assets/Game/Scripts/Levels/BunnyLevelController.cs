@@ -73,10 +73,9 @@ public class BunnyLevelController : MonoBehaviour {
     }
 
     private void Start() {
-        // Place characters in dungeon
         EventManager.StartListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
-        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
         EventManager.StartListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
+        EventManager.StartListening<PlayerDeathEvent>(OnPlayerDie);
 
         Generate();
 
@@ -308,6 +307,7 @@ public class BunnyLevelController : MonoBehaviour {
 
     private void OnDestroy() {
         EventManager.StopListening<LevelEvent<Collider>, string, Collider>(OnLevelEvent);
+        EventManager.StopListening<LevelEvent<BabyBunny>, string, BabyBunny>(OnLevelEvent);
         EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
     }
 }
