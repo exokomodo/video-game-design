@@ -26,6 +26,8 @@ MonoBehaviour:
   - You can use left/right mouse button or X/B or Square/Circle to attack geese.
   - But be careful to time it right or they'll get you first!
   - Oh and if you see any catnip laying around, try to pick some up!
+  - Collecting 10 catnip gives you an extra life.
+  - Although being a cat and all, you can't have more than 9 lives.
   - Hey, looks like the chicks escaped the coop!
   - Can you herd them back in?
   - Good luck!

@@ -1,6 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// Logic for tractor in goose party scene
+/// Author: Calvin Ferst
+/// </summary>
 
 public class TractorController : MonoBehaviour
 {
