@@ -141,8 +141,16 @@ public class LevelManager : MonoBehaviour
         EventManager.StopListening<PlayerDeathEvent>(OnPlayerDie);
         EventManager.StopListening<ObjectiveChangeEvent, string, ObjectiveStatus>(OnObjectiveChange);
 
-        restartButton.onClick.RemoveAllListeners();
-        quitButton.onClick.RemoveAllListeners();
+        try
+        {
+            restartButton.onClick.RemoveAllListeners();
+            quitButton.onClick.RemoveAllListeners();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("No Game over canvas found.");
+        }
+        
     }
 
     void OnObjectiveChange(string name, ObjectiveStatus status)
