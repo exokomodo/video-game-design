@@ -39,7 +39,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] private Vector3 randomDirection;
 
     private const float GOOSE_FLEE_STATE_SPEED = 2.5f;
-    private float hitBuffer { get { return 0.2f * GOOSE_FLEE_STATE_SPEED; } } 
+    private float hitBuffer { get { return 0.2f * GOOSE_FLEE_STATE_SPEED; } }
     private NavMeshHit hit;
 
     // Flee state
@@ -315,7 +315,7 @@ public class GooseAI : MonoBehaviour
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
 
-            
+
             // Stays in the Navmesh
             if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
             {
@@ -323,17 +323,17 @@ public class GooseAI : MonoBehaviour
             }
 
             RaycastHit? hitInfo = CheckCollisionHit();
-            if (hitInfo != null) 
+            if (hitInfo != null)
             {
                 RaycastHit hit = (RaycastHit)hitInfo;
                 Vector3 loc = hit.collider.ClosestPointOnBounds(transform.position);
                 Vector3 dist = transform.position - loc;
                 // Debug.LogWarning($"STOP: {loc}, {dist}");
-                if (Math.Abs(dist.x) < hitBuffer) 
+                if (Math.Abs(dist.x) < hitBuffer)
                 {
                     newPosition.x = currentPosition.x;
                 }
-                if (Math.Abs(dist.z) < hitBuffer) 
+                if (Math.Abs(dist.z) < hitBuffer)
                 {
                     newPosition.z = currentPosition.z;
                 }
@@ -345,8 +345,7 @@ public class GooseAI : MonoBehaviour
             //if (!isNearKitty) EnterPatrolState();
         }
         // As soon as kitty is away enters patrol
-        if (!isNearKitty) {
-            Debug.Log($"UpdateFleeState > {isNearKitty}");
+        if (!isNearKitty || (agent.pathPending == false && agent.remainingDistance < 0.5f)) {
             EnterPatrolState();
         }
     }
