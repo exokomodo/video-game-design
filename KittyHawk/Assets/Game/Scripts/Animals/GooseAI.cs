@@ -50,10 +50,12 @@ public class GooseAI : MonoBehaviour
     private Vector3 currentPosition;
     [SerializeField] protected Vector3 newPosition;
     [SerializeField] protected Vector3 spawnPosition;
+    [SerializeField] protected float FollowRadius = 7f;
 
     private float HonkTimer;
     private float HonkTime;
     private float AttackCoolDown = 0;
+    private float AttackCoolDownTime = 7.5f;
 
     public enum AIState
     {
@@ -81,6 +83,7 @@ public class GooseAI : MonoBehaviour
 
         // Initializing variables needed by states
         wanderRadius = 4f;
+        AttackCoolDown = AttackCoolDownTime;
 
         // Starts the navigation process
         EnterPatrolState();
@@ -158,14 +161,15 @@ public class GooseAI : MonoBehaviour
     {
         if (!isAlive) return;
         currentPosition = transform.position;
-
         // Added to replace the OnTriggerExit
-        float dist = Vector3.Distance(currentPosition, kitty.transform.position);
-        isNearKitty = dist < 5f;
+        if (isNearKitty) {
+            float dist = Vector3.Distance(currentPosition, kitty.transform.position);
+            isNearKitty = dist < FollowRadius;
+        }
         AttackCoolDown += Time.fixedDeltaTime;
 
-        // Debug.Log($"attackEnabled: {attackEnabled}, aiState: {aiState}");
-        if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE && attackEnabled && AttackCoolDown > 7.5f)
+        // Debug.Log($"isNearKitty: {isNearKitty}, AttackCoolDown: {AttackCoolDown}");
+        if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE && attackEnabled && AttackCoolDown > AttackCoolDownTime)
         {
             Debug.Log("Goose Entering Attack State");
             EnterAttackState();
