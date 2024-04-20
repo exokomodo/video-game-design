@@ -1,14 +1,13 @@
 /*
  * GooseAI.cs
  * Authors: Paul Garza, James Orson (edits on goose death)
- * Date: 03/09/24
+ * Date: 04/19/24
  * Summary: This script serves as the AI control for geese  within the game.
  *  It utilizes a finite state machine to manage different states of behavior - primarily patrol, attack, and flee.
  *  Patrol state allows geese to wander within a defined radius randomly.
  *  Attack state is triggered when kitty comes within a certain proximity and ends when kitty is far away enough or...
  *  Flee state is triggered when the goose hits kitty
  *
- * Planned updates: This script anticipates future integration into a more general animal AI system
  *
  * Dependencies: NavMesh Component. Animator Component.
  *
