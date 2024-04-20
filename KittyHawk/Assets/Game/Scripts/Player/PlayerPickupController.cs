@@ -24,9 +24,15 @@ public class PlayerPickupController : MonoBehaviour
         if (other.tag == "Catnip")
         {
             inventory.Catnip++;
-            Destroy(other.gameObject);
             EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, catnipAudio);
+
+            if (inventory.Catnip % 10 == 0 && inventory.Lives < 9) {
+                inventory.Lives++;
+                EventManager.TriggerEvent<AudioEvent, Vector3, string>(transform.position, "success3");
+            }
+            Destroy(other.gameObject);
         }
+
 
         /* REMOVING
 
