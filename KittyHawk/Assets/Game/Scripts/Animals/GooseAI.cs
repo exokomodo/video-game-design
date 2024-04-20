@@ -15,8 +15,10 @@
  */
 
 using UnityEngine;
+using System;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+
 
 [RequireComponent(typeof(NavMeshAgent))]
 
@@ -27,6 +29,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] private AIState aiState;
     protected Rigidbody rb;
     protected Collider cl;
+    private LayerMask StaticObstacle;
 
     // Patrol state
     [SerializeField] private float wanderRadius; // Maximum allowable distance the Goose can walk when patrolling
@@ -34,6 +37,9 @@ public class GooseAI : MonoBehaviour
     [SerializeField] protected float timeUntilNextWalk = 5f; // Time between walks
     [SerializeField] protected float timeSinceLastWalk = 0f; // Time since the Goose last walked
     [SerializeField] private Vector3 randomDirection;
+
+    private const float GOOSE_FLEE_STATE_SPEED = 2.5f;
+    private float hitBuffer { get { return 0.2f * GOOSE_FLEE_STATE_SPEED; } } 
     private NavMeshHit hit;
 
     // Flee state
@@ -70,6 +76,7 @@ public class GooseAI : MonoBehaviour
         EventManager.StartListening<AttackEvent, string, float, Collider>(OnAttackEvent);
         EventManager.StartListening<DialogueOpenEvent, Vector3, string>(OnDialogueOpen);
         EventManager.StartListening<DialogueCloseEvent, string>(OnDialogueClose);
+        StaticObstacle = LayerMask.GetMask("static_obstacle");
     }
 
     void Start()
@@ -287,9 +294,20 @@ public class GooseAI : MonoBehaviour
         anim.SetBool("isWalking", true);
     }
 
+    private RaycastHit? CheckCollisionHit()
+    {
+        Vector3 direction = Vector3.forward;
+        Vector3 origin = transform.position;
+        RaycastHit hitInfo;
+        bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, direction, out hitInfo, 0.5f, StaticObstacle, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
+        return hit? hitInfo : null;
+    }
+
+
+
     private void UpdateFleeState()
     {
-        if (agent.pathPending == false && agent.remainingDistance < 0.2f)
+        if (isNearKitty)
         {
             // Finds the vector which points away from kitty, normalizes it,
             // places it at the end of the wander radius and sets it as the new destination
@@ -297,10 +315,28 @@ public class GooseAI : MonoBehaviour
             fleeDirection = fleeDirection.normalized;
             newPosition = (fleeDirection * wanderRadius) + currentPosition;
 
+            
             // Stays in the Navmesh
             if (NavMesh.Raycast(currentPosition, randomDirection, out hit, NavMesh.AllAreas))
             {
                   newPosition = hit.position;
+            }
+
+            RaycastHit? hitInfo = CheckCollisionHit();
+            if (hitInfo != null) 
+            {
+                RaycastHit hit = (RaycastHit)hitInfo;
+                Vector3 loc = hit.collider.ClosestPointOnBounds(transform.position);
+                Vector3 dist = transform.position - loc;
+                // Debug.LogWarning($"STOP: {loc}, {dist}");
+                if (Math.Abs(dist.x) < hitBuffer) 
+                {
+                    newPosition.x = currentPosition.x;
+                }
+                if (Math.Abs(dist.z) < hitBuffer) 
+                {
+                    newPosition.z = currentPosition.z;
+                }
             }
 
             SetGooseDestination(newPosition);
@@ -322,7 +358,7 @@ public class GooseAI : MonoBehaviour
         Debug.Log("Goose Entering Attack State");
         agent.ResetPath();
         rb.velocity = Vector3.zero;
-        agent.speed = 2.5f;
+        agent.speed = GOOSE_FLEE_STATE_SPEED;
         aiState = AIState.ATTACK;
 
         anim.SetBool("isAttacking", true);
