@@ -52,6 +52,7 @@ public class GooseAI : MonoBehaviour
     [SerializeField] protected Vector3 spawnPosition;
     [SerializeField] protected float FollowRadius = 7f;
 
+    private float MinFollowRadius = 5.25f;
     private float HonkTimer;
     private float HonkTime;
     private float AttackCoolDown = 0;
@@ -83,6 +84,7 @@ public class GooseAI : MonoBehaviour
 
         // Initializing variables needed by states
         wanderRadius = 4f;
+        if (FollowRadius < MinFollowRadius) FollowRadius = MinFollowRadius;
         AttackCoolDown = AttackCoolDownTime;
 
         // Starts the navigation process
