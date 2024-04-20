@@ -3209,7 +3209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -161}
+  m_AnchoredPosition: {x: 0, y: -145}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &227133353
@@ -6799,7 +6799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420, y: -20}
+  m_AnchoredPosition: {x: -420, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &680126312
@@ -6830,7 +6830,7 @@ MonoBehaviour:
 
     https://assetstore.unity.com/packages/3d/characters/animals/mammals/cat-simple-82328
 
-
+    
 
     General
     Farm Assets
@@ -6841,7 +6841,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/3d-models/exterior/industrial-exterior/polygon-farm-7dbbfd32-9335-495f-8c45-faf622ad8595
 
-
+    
 
     Smoking
     Accessories
@@ -6852,7 +6852,18 @@ MonoBehaviour:
 
     https://www.cgtrader.com/3d-models/household/other/smoking-props-17ed43c3-8c42-4485-aa8e-48f1366e6d07
 
+    
 
+    Bottles
+
+    Name:
+    Beer juice wine and champagne bottles Low-poly 3D model
+
+    Author: 32cm
+
+    https://www.cgtrader.com/3d-models/food/beverage/beer-juice-wine-and-champagne-bottles
+
+    
 
     Letter/Envelope
     Model
@@ -6863,7 +6874,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/free-3d-models/various/various-models/simple-letter
 
-
+    
 
     Duck''s
     Hat
@@ -6874,7 +6885,7 @@ MonoBehaviour:
 
     https://www.cgtrader.com/free-3d-print-models/fashion/other/hat-customizable
 
-
+    
 
     Farm
     Animals
@@ -6883,7 +6894,40 @@ MonoBehaviour:
 
     Author: 9t5
 
-    https://www.cgtrader.com/3d-models/animals/other/9t5-low-poly-farm-animals'
+    https://www.cgtrader.com/3d-models/animals/other/9t5-low-poly-farm-animals
+
+    
+
+    Duck
+
+    Name:
+    Duck lowpoly
+
+    Author: Rifat_Bilalov
+
+    https://assetstore.unity.com/packages/3d/characters/animals/birds/duck-lowpoly-102094
+
+    
+
+    Cat
+    Head for UI
+
+    Name: Drawing of Cat Heads
+
+    Author: yusufdemirci
+
+    https://elements.envato.com/drawing-of-cat-heads-CG8MXHP
+
+    
+
+    Wooden
+    Signs used for UI
+
+    Name: Brown Wood Signboard Cartoon
+
+    Author: alit_design
+
+    https://elements.envato.com/brown-wood-signboard-cartoon-2XWVAC6'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 436a34d74235ecc438ffc5db386348e8, type: 2}
   m_sharedMaterial: {fileID: 6020313930202915520, guid: 436a34d74235ecc438ffc5db386348e8,
@@ -6911,12 +6955,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 11.3
   m_fontSizeBase: 16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 8
+  m_fontSizeMax: 14
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -10148,37 +10192,82 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Duck
+  m_text: 'Key to open gate
 
-    Name: Duck lowpoly
+    Name: Simple Keys
 
-    Author: Rifat_Bilalov
+    Author: Gabies Assets
 
-    https://assetstore.unity.com/packages/3d/characters/animals/birds/duck-lowpoly-102094
+    https://assetstore.unity.com/packages/3d/props/tools/simple-keys-231162
 
+    
 
+    Cowboy
+    Hat
 
-    Cat
-    Head for UI
+    Name: Cowboy Hat_1
 
-    Name: Drawing of Cat Heads
+    Author: Inari_Green
 
-    Author: yusufdemirci
+    https://assetstore.unity.com/packages/3d/props/clothing/cowboy-hat-1-200835
 
-    https://elements.envato.com/drawing-of-cat-heads-CG8MXHP
+    
 
+    Dungeon
+    Generator (uses solid cubes to represent rooms and hallways)
 
+    Name: DungeonGenerator
 
-    Wooden
-    Signs used for UI
+    Author:
+    vazgriz
 
-    Name: Brown Wood Signboard Cartoon
+    https://github.com/vazgriz/DungeonGenerator
 
-    Auhtor: alit_design
+    
 
-    https://elements.envato.com/brown-wood-signboard-cartoon-2XWVAC6
+    Turntable
 
+    Name:
+    Turntable record player Free 3D model
 
+    Author: bhm-manuel
+
+    https://www.cgtrader.com/free-3d-models/electronics/audio/turntable-ee0a2445-5e18-4669-a568-b4681dc12ae0
+
+    
+
+    Speakers
+
+    Name:
+    Custom Brand Stereo Free low-poly 3D model
+
+    Author: RobiZ
+
+    https://www.cgtrader.com/free-3d-models/electronics/audio/custom-brand-stereo
+
+    
+
+    Duct
+    Tape
+
+    Name: Duct Tape Free low-poly 3D model
+
+    Author: voidknight3d
+
+    https://www.cgtrader.com/free-3d-models/household/household-tools/duct-tape-940383d8-be82-4037-b293-c7e70d087b6c
+
+    
+
+    Glasses
+
+    Name:
+    LOW POLY PARTY GLASSES Free low-poly 3D model
+
+    Author: lislecanning
+
+    https://www.cgtrader.com/free-3d-models/various/various-models/low-poly-party-glasses
+
+    
 
     Sound
     effects licensed via Envato Elements:
@@ -10195,7 +10284,19 @@ MonoBehaviour:
 
     https://elements.envato.com/game-menu-revealed-Q3N64Y2
 
-    https://elements.envato.com/sunshine-game-menu-open-V9EJHXY'
+    https://elements.envato.com/sunshine-game-menu-open-V9EJHXY
+
+    https://elements.envato.com/coin-A68U5FC
+
+    https://elements.envato.com/door-opening-creak-T7665SG
+
+    https://elements.envato.com/anvil-and-hammers-J679E2Q
+
+    https://elements.envato.com/empire-game-warfare-repair-weapon-tape-fix-tool-BM9HTDA
+
+    https://elements.envato.com/pickup-65MPUWH
+
+    https://elements.envato.com/on-party-JB4KQPP'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 436a34d74235ecc438ffc5db386348e8, type: 2}
   m_sharedMaterial: {fileID: 6020313930202915520, guid: 436a34d74235ecc438ffc5db386348e8,
@@ -10223,12 +10324,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 11.3
   m_fontSizeBase: 16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 6
+  m_fontSizeMax: 14
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -14018,7 +14119,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 43}
-  m_SizeDelta: {x: 460, y: 173}
+  m_SizeDelta: {x: 460, y: 160}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!95 &1817558518
 Animator:
