@@ -1,6 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// Script controlling barn doors on Tuesday level
+/// Author: Calvin Ferst
+/// </summary>
 
 public class BarnController : MonoBehaviour
 {

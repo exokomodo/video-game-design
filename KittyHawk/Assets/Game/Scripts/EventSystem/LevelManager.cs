@@ -8,9 +8,8 @@ using UnityEngine.EventSystems;
 using System;
 
 /// <summary>
-/// Sets up the level (audio & fade-in)
-/// TODO: keep track of objectives
-/// Author: Calvin
+/// Sets up the level (audio & fade-in), handle objectives, game over
+/// Authors: Calvin & Geoff
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
