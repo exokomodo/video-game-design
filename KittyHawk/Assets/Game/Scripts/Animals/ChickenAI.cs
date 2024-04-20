@@ -214,6 +214,7 @@ public class ChickenAI : MonoBehaviour
         agent.ResetPath();
         ResetPatrolTimer();
         rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         agent.speed = 0.6f;
         anim.SetBool("isWalking", false);
     }
