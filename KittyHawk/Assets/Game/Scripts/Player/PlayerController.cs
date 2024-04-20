@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
   private bool _isLanding = false;
   private bool _isAttacking = false;
   private bool _isJumpAttacking = false;
+  private int groundedCount = 0;
   private bool _isActive = false;
   private bool _isDead = false;
   private bool _isTurning = false;
@@ -76,6 +77,8 @@ public class PlayerController : MonoBehaviour {
   public float TurnSpeed = 1.0f;
   public float HitCooldown = 4.0f;
   public float RotationDamping = 0.25f;
+  public bool JumpAttackHit = false;
+  public float JumpAttackCooldown = 0;
 
 
   public void Awake()
@@ -185,6 +188,12 @@ public class PlayerController : MonoBehaviour {
     if (c.collider.CompareTag("Tire")) {
       _isJumpAttacking = true;
     }
+    if (c.collider.CompareTag("Goose") && _isJumpAttacking && !JumpAttackHit) {
+      JumpAttackCooldown = 0;
+      JumpAttackHit = true;
+      // Debug.Log($"IS_JUMP_ATTACKING!!!!! {_isJumpAttacking}");
+      EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c.collider);
+    }
     if (_isJumping && !isGrounded)
     {
       SwitchToFallState();
@@ -287,6 +296,12 @@ public class PlayerController : MonoBehaviour {
   private void Execute(float deltaTime)
   {
     hitTimer += deltaTime;
+    if (JumpAttackHit) {
+      JumpAttackCooldown += deltaTime;
+      if (JumpAttackCooldown > 60) {
+        JumpAttackHit = false;
+      }
+    }
     _prevGrounded = _isGrounded;
     float distance = CheckGroundDistance();
     _isGrounded = CheckGrounded() || distance < 0.01f;
@@ -296,7 +311,13 @@ public class PlayerController : MonoBehaviour {
     if (_isGrounded)
     {
       fallingBuffer = 0;
-      _isJumpAttacking = false;
+      if (_isJumpAttacking) {
+        if (++groundedCount > 60) {
+          _isJumpAttacking = false;
+          groundedCount = 0;
+        }
+
+      }
       if (_jump && !_isJumping && !_isFalling) {
         SwitchToJumpState();
       }
