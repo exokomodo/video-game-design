@@ -31,7 +31,7 @@ public class PlayerMoveState : PlayerMoveBase
         Vector3 prevMovement = new Vector3(stateMachine.Animator.GetFloat(VelocityXHash), 0, stateMachine.Animator.GetFloat(VelocityZHash));
         Vector3 rawMovement = GetNormalizedMovement() * stateMachine.Controller.Speed;
         delta = rawMovement - prevMovement;
-        float magnitude = 0.9f * stateMachine.Controller.Speed;
+        float magnitude = 0.98f * stateMachine.Controller.Speed;
 
         if (delta.magnitude >= magnitude) {
             // Notable change in movement

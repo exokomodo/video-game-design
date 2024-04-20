@@ -107,13 +107,21 @@ public class LevelManager : MonoBehaviour
 
         // Set things up for Game Over
 
-        gameOverCanvas = GameObject.Find("GameOverCanvas").GetComponent<Canvas>();
-        if (gameOverCanvas != null) gameOverCanvas.enabled = false;
+        try
+        {
+            gameOverCanvas = GameObject.Find("GameOverCanvas").GetComponent<Canvas>();
+            if (gameOverCanvas != null) gameOverCanvas.enabled = false;
 
-        restartButton = GameObject.Find("GORestartButton").GetComponent<Button>();
-        if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
-        quitButton = GameObject.Find("GOQuitButton").GetComponent<Button>();
-        if (quitButton != null) quitButton.onClick.AddListener(ReturnToMenu);
+            restartButton = GameObject.Find("GORestartButton").GetComponent<Button>();
+            if (restartButton != null) restartButton.onClick.AddListener(RestartLevel);
+            quitButton = GameObject.Find("GOQuitButton").GetComponent<Button>();
+            if (quitButton != null) quitButton.onClick.AddListener(ReturnToMenu);
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Couldn't find game over panel.");
+        }
+        
     }
 
     public void AddObjective(Objective obj)
