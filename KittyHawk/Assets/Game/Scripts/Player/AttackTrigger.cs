@@ -39,12 +39,12 @@ public class AttackTrigger : MonoBehaviour {
 
     protected void OnGooseHit(Collider c) {
         // Debug.Log($"OnGooseHit > isAttacking: {Controller.isAttacking}");
-        if (Controller.isAttacking || Controller.isJumpAttacking) {
-            if (HitTimer > MaxTimer) {
-                // Debug.Log($"OnGooseHit > ATTACK_TARGET_HIT {c}");
-                EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
-                HitTimer = 0;
-            }
+        if ((Controller.isAttacking && HitTimer > MaxTimer) || (Controller.isJumpAttacking && !Controller.JumpAttackHit)) {
+            // Debug.Log($"OnGooseHit > ATTACK_TARGET_HIT {c}");
+            Controller.JumpAttackCooldown = 0;
+            Controller.JumpAttackHit = true;
+            EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_TARGET_HIT, 0f, c);
+            HitTimer = 0;
         }
     }
 }
