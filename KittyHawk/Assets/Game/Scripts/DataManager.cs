@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Class to keep track of important game data between scenes
+/// Author: Calvin Ferst
+/// </summary>
+
 public enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY};
 
 public class DataManager : MonoBehaviour

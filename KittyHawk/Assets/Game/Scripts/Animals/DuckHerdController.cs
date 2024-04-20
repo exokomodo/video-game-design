@@ -1,7 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script controlling behavior of ducks in response to Kitty Hawk
+/// Author: Calvin Ferst
+/// </summary>
 public class DuckHerdController : MonoBehaviour
 {
 
