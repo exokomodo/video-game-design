@@ -43,7 +43,7 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        DisplayDayName();
+        // DisplayDayName();
 
         anim = canvas.GetComponentInChildren<Animator>();
         anim.SetTrigger("FadeIn");
@@ -56,6 +56,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         EventManager.TriggerEvent<MusicEvent, string>(musicName);
+        DisplayDayName();
     }
 
     void Recenter() {
