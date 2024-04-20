@@ -296,7 +296,7 @@ public class GooseAI : MonoBehaviour
 
     private RaycastHit? CheckCollisionHit()
     {
-        Vector3 direction = Vector3.forward;
+        Vector3 direction = transform.forward;
         Vector3 origin = transform.position;
         RaycastHit hitInfo;
         bool hit = RotaryHeart.Lib.PhysicsExtension.Physics.Raycast(origin, direction, out hitInfo, 0.5f, StaticObstacle, RotaryHeart.Lib.PhysicsExtension.PreviewCondition.Editor);
