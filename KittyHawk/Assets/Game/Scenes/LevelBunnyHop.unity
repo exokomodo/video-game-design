@@ -9378,6 +9378,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.7290713
       objectReference: {fileID: 0}
+    - target: {fileID: 3815552804540225326, guid: 9f45bccc627204b1db2aa52dcb51e590,
+        type: 3}
+      propertyPath: Controller
+      value: 
+      objectReference: {fileID: 1759681928}
     - target: {fileID: 3840864387991265835, guid: 9f45bccc627204b1db2aa52dcb51e590,
         type: 3}
       propertyPath: m_UpdateMode
