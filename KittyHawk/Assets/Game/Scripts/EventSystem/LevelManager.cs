@@ -47,10 +47,15 @@ public class LevelManager : MonoBehaviour
 
         anim = canvas.GetComponentInChildren<Animator>();
         anim.SetTrigger("FadeIn");
-        EventManager.TriggerEvent<MusicEvent, string>(musicName);
+        // EventManager.TriggerEvent<MusicEvent, string>(musicName); ISSUE
 
         Init();
         Invoke("Recenter", 0.5f);
+    }
+
+    private void Start()
+    {
+        EventManager.TriggerEvent<MusicEvent, string>(musicName);
     }
 
     void Recenter() {
