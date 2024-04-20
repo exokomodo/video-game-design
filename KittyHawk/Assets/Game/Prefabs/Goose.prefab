@@ -1231,9 +1231,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.477746
-  m_Height: 1.9799945
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: -0.09072018, y: 0.48999727, z: 0}
+  m_Center: {x: -0.09072018, y: 0.75, z: 0}
 --- !u!95 &3840864387991265835
 Animator:
   serializedVersion: 5
@@ -1300,6 +1300,7 @@ MonoBehaviour:
   isAlive: 1
   newPosition: {x: 0, y: 0, z: 0}
   spawnPosition: {x: 0, y: 0, z: 0}
+  FollowRadius: 7
 --- !u!1 &7030614025834919491
 GameObject:
   m_ObjectHideFlags: 0
