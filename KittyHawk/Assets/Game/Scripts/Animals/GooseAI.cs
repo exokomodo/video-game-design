@@ -236,7 +236,8 @@ public class GooseAI : MonoBehaviour
         agent.ResetPath();
         aiState = AIState.PATROL;
         rb.velocity = Vector3.zero;
-        rb.rotation = Quaternion.identity;
+        //rb.rotation = Quaternion.identity;
+        rb.angularVelocity = Vector3.zero;
         agent.speed = 0.6f;
         anim.SetBool("isWalking", false);
         anim.SetBool("isAttacking", false);
