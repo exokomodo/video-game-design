@@ -87,7 +87,7 @@ public class GooseAI : MonoBehaviour
         kittyTransform = kitty.GetComponent<Transform>();
 
         agent.updateRotation = false;
-
+        rb.angularDrag = 10f;
         // Initializing variables needed by states
         wanderRadius = 4f;
         AttackCoolDown = AttackCoolDownTime;
