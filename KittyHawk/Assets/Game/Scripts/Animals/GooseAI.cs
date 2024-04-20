@@ -45,13 +45,17 @@ public class GooseAI : MonoBehaviour
     // All states
     private bool attackEnabled = true;
     public bool IsAlive => isAlive;
+    public bool IsAttacking => aiState == AIState.ATTACK;
     [SerializeField] protected bool isAlive = true;
     private Vector3 currentPosition;
     [SerializeField] protected Vector3 newPosition;
     [SerializeField] protected Vector3 spawnPosition;
+    [SerializeField] protected float FollowRadius = 7f;
 
     private float HonkTimer;
     private float HonkTime;
+    private float AttackCoolDown = 0;
+    private float AttackCoolDownTime = 7.5f;
 
     public enum AIState
     {
@@ -79,6 +83,7 @@ public class GooseAI : MonoBehaviour
 
         // Initializing variables needed by states
         wanderRadius = 4f;
+        AttackCoolDown = AttackCoolDownTime;
 
         // Starts the navigation process
         EnterPatrolState();
@@ -116,12 +121,14 @@ public class GooseAI : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        /*
         if (other.gameObject.CompareTag("Player") && isAlive && aiState == AIState.ATTACK)
         {
             // Run away from kitty after attacking. Coward.
             EventManager.TriggerEvent<AttackEvent, string, float, Collider>(AttackEvent.ATTACK_KITTY_HIT, 0f, other.collider);
             EnterFleeState();
         }
+        */
 
         if (other.gameObject.CompareTag("ChickenCoop"))
         {
@@ -140,21 +147,29 @@ public class GooseAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isNearKitty = false;
-        }
-    }
+    // Entering the attack trigger made this trigger exit
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         Debug.Log("Goose is away from kitty");
+
+    //     }
+    // }
 
     void FixedUpdate()
     {
         if (!isAlive) return;
         currentPosition = transform.position;
+        // Added to replace the OnTriggerExit
+        if (isNearKitty) {
+            float dist = Vector3.Distance(currentPosition, kitty.transform.position);
+            isNearKitty = dist < FollowRadius;
+        }
+        AttackCoolDown += Time.fixedDeltaTime;
 
-        // Debug.Log($"attackEnabled: {attackEnabled}, aiState: {aiState}");
-        if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE && attackEnabled)
+        // Debug.Log($"isNearKitty: {isNearKitty}, AttackCoolDown: {AttackCoolDown}");
+        if (isNearKitty && aiState != AIState.ATTACK && aiState != AIState.FLEE && attackEnabled && AttackCoolDown > AttackCoolDownTime)
         {
             Debug.Log("Goose Entering Attack State");
             EnterAttackState();
@@ -260,9 +275,10 @@ public class GooseAI : MonoBehaviour
     }
     #endregion
     #region Flee State
-    private void EnterFleeState()
+    public void EnterFleeState()
     {
         Debug.Log("Goose Entering Flee State");
+        AttackCoolDown = 0;
         agent.ResetPath();
         aiState = AIState.FLEE;
         rb.velocity = Vector3.zero;
@@ -293,7 +309,10 @@ public class GooseAI : MonoBehaviour
             //if (!isNearKitty) EnterPatrolState();
         }
         // As soon as kitty is away enters patrol
-        if (!isNearKitty) EnterPatrolState();
+        if (!isNearKitty) {
+            Debug.Log($"UpdateFleeState > {isNearKitty}");
+            EnterPatrolState();
+        }
     }
     #endregion
     #region Attack State
