@@ -1,9 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
+/// <summary>
+/// Class controlling the game's ending cutscene
+/// Author: Calvin Ferst
+/// </summary>
 public class EndManager : MonoBehaviour
 {
     [SerializeField]
