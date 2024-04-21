@@ -42,7 +42,7 @@ public class BrokenTractorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && gotHammer && gotTape && !isFixed)
+        if (other.CompareTag("Player") && gotHammer && gotTape && !isFixed)
         {
             isFixed = true;
             StartCoroutine(RepairTractor());
