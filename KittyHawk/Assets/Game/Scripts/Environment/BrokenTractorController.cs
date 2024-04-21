@@ -45,7 +45,15 @@ public class BrokenTractorController : MonoBehaviour
         if (other.CompareTag("Player") && gotHammer && gotTape && !isFixed)
         {
             isFixed = true;
+            DisableGeese();
             StartCoroutine(RepairTractor());
+        }
+    }
+
+    private void DisableGeese() {
+        GooseAI[] geese = FindObjectsOfType<GooseAI>();
+        foreach (GooseAI goose in geese) {
+            goose.Disable();
         }
     }
 

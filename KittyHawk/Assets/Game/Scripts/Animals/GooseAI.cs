@@ -127,6 +127,19 @@ public class GooseAI : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void Disable() {
+        // Turns everything off and reduces Goose velocity
+        isAlive = false;
+        agent.ResetPath();
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+
+        anim.SetBool("isWalking", false);
+        anim.Play("Idle");
+
+        cl.isTrigger = true;
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         /*

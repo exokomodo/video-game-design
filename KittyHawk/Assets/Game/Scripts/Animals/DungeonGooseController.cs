@@ -76,17 +76,4 @@ public class DungeonGooseController : GooseAI
         // Debug.Log($"Room.IsInRoom(room, kitty): {room.IsInRoom(kitty)}");
         return room.IsInRoom(kitty);
     }
-
-    public void Disable() {
-        // Turns everything off and reduces Goose velocity
-        isAlive = false;
-        agent.ResetPath();
-        rb.isKinematic = true;
-        rb.velocity = Vector3.zero;
-
-        anim.SetBool("isWalking", false);
-        anim.Play("Idle");
-
-        cl.isTrigger = true;
-    }
 }
