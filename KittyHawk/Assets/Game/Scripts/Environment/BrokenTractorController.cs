@@ -42,10 +42,18 @@ public class BrokenTractorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && gotHammer && gotTape && !isFixed)
+        if (other.CompareTag("Player") && gotHammer && gotTape && !isFixed)
         {
             isFixed = true;
+            DisableGeese();
             StartCoroutine(RepairTractor());
+        }
+    }
+
+    private void DisableGeese() {
+        GooseAI[] geese = FindObjectsOfType<GooseAI>();
+        foreach (GooseAI goose in geese) {
+            goose.Disable();
         }
     }
 
